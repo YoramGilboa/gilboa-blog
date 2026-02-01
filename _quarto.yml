@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Yoram Gilboa"
+  site-url: "https://gilboa.blog"
+  description: "Data visualization and predictive modeling"
+
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - href: posts/
+        text: Blog
+    right:
+      - icon: github
+        href: https://github.com/YoramGilboa
+
+  page-footer:
+    center: "© 2025 Yoram Gilboa"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+    code-copy: true
+
+execute:
+  freeze: auto
