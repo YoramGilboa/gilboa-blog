@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "posts/2025-02-01-first-visualization/index.html",
+    "href": "posts/2025-02-01-first-visualization/index.html",
+    "title": "Setting Up My Data Science Blog",
+    "section": "",
+    "text": "This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here."
+  },
+  {
+    "objectID": "posts/2025-02-01-first-visualization/index.html#welcome",
+    "href": "posts/2025-02-01-first-visualization/index.html#welcome",
+    "title": "Setting Up My Data Science Blog",
+    "section": "",
+    "text": "This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here."
+  },
+  {
+    "objectID": "posts/2025-02-01-first-visualization/index.html#testing-the-setup",
+    "href": "posts/2025-02-01-first-visualization/index.html#testing-the-setup",
+    "title": "Setting Up My Data Science Blog",
+    "section": "Testing the Setup",
+    "text": "Testing the Setup\nLet me verify that Python code execution and visualization rendering work correctly.\n\nimport matplotlib.pyplot as plt\nimport numpy as np\n\n# Generate sample data\nx = np.linspace(0, 2 * np.pi, 100)\ny_sin = np.sin(x)\ny_cos = np.cos(x)\n\n# Create visualization\nfig, ax = plt.subplots(figsize=(10, 6))\nax.plot(x, y_sin, label='sin(x)', linewidth=2)\nax.plot(x, y_cos, label='cos(x)', linewidth=2)\nax.set_xlabel('x')\nax.set_ylabel('y')\nax.set_title('Trigonometric Functions')\nax.legend()\nax.grid(True, alpha=0.3)\nplt.tight_layout()\nplt.show()"
+  },
+  {
+    "objectID": "posts/2025-02-01-first-visualization/index.html#whats-next",
+    "href": "posts/2025-02-01-first-visualization/index.html#whats-next",
+    "title": "Setting Up My Data Science Blog",
+    "section": "What’s Next",
+    "text": "What’s Next\nI plan to explore:\n\nFinancial data visualization (particularly nuclear energy stocks)\nTime series analysis\nPredictive modeling techniques\nInteractive visualizations\n\nStay tuned for more technical content!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "gilboa-blog",
+    "section": "",
+    "text": "Setting Up My Data Science Blog\n\n\n\nmeta\n\nvisualization\n\npython\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\nNo matching items"
+  }
+]

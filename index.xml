@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Yoram Gilboa</title>
+<link>https://gilboa.blog/</link>
+<atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
+<description>Data visualization and predictive modeling</description>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Sat, 01 Feb 2025 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Setting Up My Data Science Blog</title>
+  <link>https://gilboa.blog/posts/2025-02-01-first-visualization/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="welcome" class="level2">
+<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
+<p>This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.</p>
+</section>
+<section id="testing-the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
+<p>Let me verify that Python code execution and visualization rendering work correctly.</p>
+<div id="158841b9" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generate sample data</span></span>
+<span id="cb1-5">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.pi, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb1-6">y_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.sin(x)</span>
+<span id="cb1-7">y_cos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.cos(x)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create visualization</span></span>
+<span id="cb1-10">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb1-11">ax.plot(x, y_sin, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sin(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-12">ax.plot(x, y_cos, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cos(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-13">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'x'</span>)</span>
+<span id="cb1-14">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>)</span>
+<span id="cb1-15">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Trigonometric Functions'</span>)</span>
+<span id="cb1-16">ax.legend()</span>
+<span id="cb1-17">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb1-18">plt.tight_layout()</span>
+<span id="cb1-19">plt.show()</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://gilboa.blog/posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>I plan to explore:</p>
+<ul>
+<li>Financial data visualization (particularly nuclear energy stocks)</li>
+<li>Time series analysis</li>
+<li>Predictive modeling techniques</li>
+<li>Interactive visualizations</li>
+</ul>
+<p>Stay tuned for more technical content!</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>meta</category>
+  <category>visualization</category>
+  <category>python</category>
+  <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
+  <pubDate>Sat, 01 Feb 2025 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
