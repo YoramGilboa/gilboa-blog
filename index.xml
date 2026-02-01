@@ -27,7 +27,7 @@
 <section id="testing-the-setup" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
 <p>Let me verify that Python code execution and visualization rendering work correctly.</p>
-<div id="4b08599d" class="cell" data-execution_count="1">
+<div id="52013200" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -226,7 +226,7 @@ font-style: inherit;">0.3</span>)</span>
 </section>
 <section id="current-results" class="level2">
 <h2 class="anchored" data-anchor-id="current-results">Current Results</h2>
-<div id="1495e584" class="cell" data-execution_count="1">
+<div id="456e08d7" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
@@ -253,7 +253,7 @@ font-style: inherit;">0.3</span>)</span>
 </section>
 <section id="pc-severity-cpi-vs-cpi-u" class="level2">
 <h2 class="anchored" data-anchor-id="pc-severity-cpi-vs-cpi-u">P&amp;C Severity CPI vs CPI-U</h2>
-<div id="ff9324ad" class="cell" data-execution_count="2">
+<div id="718d743f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
@@ -468,7 +468,7 @@ font-style: inherit;">'%Y'</span>))</span>
 </section>
 <section id="annual-growth-rates" class="level2">
 <h2 class="anchored" data-anchor-id="annual-growth-rates">Annual Growth Rates</h2>
-<div id="212980b8" class="cell" data-execution_count="3">
+<div id="4bae85b3" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
