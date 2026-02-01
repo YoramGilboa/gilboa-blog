@@ -1,5 +1,82 @@
 [
   {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "",
+    "text": "The standard Consumer Price Index (CPI-U) is designed to measure inflation for typical household consumption. But for Property & Casualty insurance actuaries, it significantly underweights the cost components that actually drive claims severity:\n\nMedical care gets only ~6% weight in CPI-U, while bodily injury claims can be 30-50% of auto liability losses\nShelter receives ~33% but doesn’t reflect specific materials and labor costs in property claims\nAuto repair, hospital costs, and physician fees are underrepresented relative to claims exposure\n\nThis creates a systematic gap when using CPI-U for loss trending and rate adequacy analysis."
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#the-problem-with-cpi-u-for-insurance",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#the-problem-with-cpi-u-for-insurance",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "",
+    "text": "The standard Consumer Price Index (CPI-U) is designed to measure inflation for typical household consumption. But for Property & Casualty insurance actuaries, it significantly underweights the cost components that actually drive claims severity:\n\nMedical care gets only ~6% weight in CPI-U, while bodily injury claims can be 30-50% of auto liability losses\nShelter receives ~33% but doesn’t reflect specific materials and labor costs in property claims\nAuto repair, hospital costs, and physician fees are underrepresented relative to claims exposure\n\nThis creates a systematic gap when using CPI-U for loss trending and rate adequacy analysis."
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#a-custom-solution",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#a-custom-solution",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "A Custom Solution",
+    "text": "A Custom Solution\nI built a P&C Severity CPI that reweights Bureau of Labor Statistics CPI components to better approximate the inflation experienced in insurance claims payments.\n\nIndex Weights\n\n\n\n\n\n\n\n\nCategory\nWeight\nP&C Rationale\n\n\n\n\nAuto Repair\n20%\nParts, labor, glass, paint for auto PD and collision\n\n\nPhysicians\n15%\nMedical evaluations, IMEs, treatment costs in BI claims\n\n\nHospital\n15%\nInpatient costs for severe bodily injury claims\n\n\nShelter\n20%\nProxy for construction/rebuild costs (lumber, labor)\n\n\nCore CPI (Wages)\n15%\nLegal fees, adjusters, administrative costs\n\n\nCore CPI (General)\n15%\nResidual services, general inflation exposure\n\n\n\n\n\nThe Formula\nThe index is calculated as:\n\\[\\text{P\\&C\\_CPI}(t) = \\sum_i w_i \\times \\frac{\\text{CPI}_i(t)}{\\text{CPI}_i(2010)} \\times 100\\]\nWhere:\n\n\\(w_i\\) = weight assigned to component \\(i\\) (summing to 1.0)\n\\(\\text{CPI}_i(t)\\) = BLS CPI index value for component \\(i\\) at time \\(t\\)\nJanuary 2010 is the base period (= 100)"
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#current-results",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#current-results",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "Current Results",
+    "text": "Current Results\n\n\n\n\n  \n    155.3\n    P&C Severity CPI\n  \n  \n    +3.1%\n    YoY Change\n  \n  \n    149.5\n    CPI-U Index\n  \n  \n    +5.7\n    Gap vs CPI-U\n  \n\nData as of December 2025 | Base: January 2010 = 100"
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#pc-severity-cpi-vs-cpi-u",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#pc-severity-cpi-vs-cpi-u",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "P&C Severity CPI vs CPI-U",
+    "text": "P&C Severity CPI vs CPI-U\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport matplotlib.dates as mdates\n\n# Load both datasets\ndf_severity = pd.read_csv('data/severity_cpi.csv', parse_dates=['date'])\ndf_cpi = pd.read_csv('data/All_Items.csv', parse_dates=['date'])\n\n# Rebase CPI-U to Jan 2010 = 100\nbase_value = df_cpi[df_cpi['date'] == '2010-01-01']['value'].values[0]\ndf_cpi['CPI_U_rebased'] = (df_cpi['value'] / base_value) * 100\n\n# Merge datasets\ndf = df_severity.merge(df_cpi[['date', 'CPI_U_rebased']], on='date', how='inner')\n\nfig, ax = plt.subplots(figsize=(8, 4.5))\n\n# Plot CPI-U (solid blue line)\nax.plot(df['date'], df['CPI_U_rebased'],\n        color='#1e3a8a', linewidth=2.5, linestyle='-', label='CPI-U (All Items)')\n\n# Plot P&C Severity CPI (dotted red line)\nax.plot(df['date'], df['P&C_Severity_CPI'],\n        color='#dc2626', linewidth=2.5, linestyle=':', label='P&C Severity CPI')\n\n# Formatting\nax.set_xlabel('Date', fontsize=12)\nax.set_ylabel('Index (Jan 2010 = 100)', fontsize=12)\nax.set_title('P&C Severity CPI vs CPI-U (2010 = 100)', fontsize=14, fontweight='bold')\nax.legend(loc='upper left')\nax.grid(True, alpha=0.3)\n\n# Format x-axis\nax.xaxis.set_major_locator(mdates.YearLocator(2))\nax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))\n\nplt.tight_layout()\nplt.show()\n\n\n\n\nThe red dotted line shows the P&C-weighted severity index. The blue line shows CPI-U (all items). When the gap widens, claims inflation is outpacing general inflation."
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#annual-growth-rates",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#annual-growth-rates",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "Annual Growth Rates",
+    "text": "Annual Growth Rates\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv('data/severity_cpi.csv', parse_dates=['date'])\n\n# Calculate YoY change\ndf['YoY_Change'] = df['P&C_Severity_CPI'].pct_change(periods=12) * 100\ndf_yoy = df.dropna(subset=['YoY_Change'])\n\nfig, ax = plt.subplots(figsize=(8, 4.5))\n\ncolors = ['#22c55e' if x &lt; 3 else '#eab308' if x &lt; 5 else '#dc2626' for x in df_yoy['YoY_Change']]\nax.bar(df_yoy['date'], df_yoy['YoY_Change'], color=colors, width=25, alpha=0.8)\n\nax.axhline(y=0, color='black', linewidth=0.5)\nax.axhline(y=3, color='gray', linestyle='--', alpha=0.5, label='3% threshold')\n\nax.set_xlabel('Date', fontsize=12)\nax.set_ylabel('YoY Change (%)', fontsize=12)\nax.set_title('Annual Inflation Rate: P&C Severity CPI', fontsize=14, fontweight='bold')\nax.grid(True, alpha=0.3, axis='y')\n\nplt.tight_layout()\nplt.show()\n\n\n\n\nYear-over-year percentage change in P&C Severity CPI"
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#key-insights",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#key-insights",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "Key Insights",
+    "text": "Key Insights\nThe P&C Severity CPI has consistently outpaced general CPI-U inflation since 2010, with notable acceleration during:\n\n2021-2022: Supply chain disruptions drove auto parts and repair costs sharply higher\n2023-2024: Medical inflation and construction labor costs remained elevated\nCurrent: The gap between P&C severity inflation and CPI-U remains significant"
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#what-this-index-doesnt-capture",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#what-this-index-doesnt-capture",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "What This Index Doesn’t Capture",
+    "text": "What This Index Doesn’t Capture\nImportant caveats:\n\nSocial inflation and litigation trends\nRegulatory changes or fee schedule modifications\nClaim frequency shifts\nRegional variation\n\nAlways supplement with loss development analysis and market-specific data."
+  },
+  {
+    "objectID": "posts/2025-02-01-pc-severity-cpi/index.html#learn-more",
+    "href": "posts/2025-02-01-pc-severity-cpi/index.html#learn-more",
+    "title": "P&C Severity CPI: A Claims-Weighted Inflation Index",
+    "section": "Learn More",
+    "text": "Learn More\nThe full methodology, data pipeline, and source code are available on GitHub: P&C Severity CPI Repository\nThe index updates monthly via GitHub Actions, pulling fresh data from the Bureau of Labor Statistics API."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "gilboa-blog",
+    "section": "",
+    "text": "Setting Up My Data Science Blog\n\n\n\nmeta\n\nvisualization\n\npython\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nP&C Severity CPI: A Claims-Weighted Inflation Index\n\n\n\nactuarial\n\ninflation\n\nvisualization\n\ninsurance\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
     "objectID": "posts/2025-02-01-first-visualization/index.html",
     "href": "posts/2025-02-01-first-visualization/index.html",
     "title": "Setting Up My Data Science Blog",
@@ -26,19 +103,5 @@
     "title": "Setting Up My Data Science Blog",
     "section": "What’s Next",
     "text": "What’s Next\nI plan to explore:\n\nFinancial data visualization (particularly nuclear energy stocks)\nTime series analysis\nPredictive modeling techniques\nInteractive visualizations\n\nStay tuned for more technical content!"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "gilboa-blog",
-    "section": "",
-    "text": "Setting Up My Data Science Blog\n\n\n\nmeta\n\nvisualization\n\npython\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\nNo matching items"
   }
 ]

@@ -27,7 +27,7 @@
 <section id="testing-the-setup" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
 <p>Let me verify that Python code execution and visualization rendering work correctly.</p>
-<div id="158841b9" class="cell" data-execution_count="1">
+<div id="4b08599d" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
@@ -139,6 +139,566 @@ font-style: inherit;">0.3</span>)</span>
   <category>visualization</category>
   <category>python</category>
   <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
+  <pubDate>Sat, 01 Feb 2025 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>P&amp;C Severity CPI: A Claims-Weighted Inflation Index</title>
+  <link>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="the-problem-with-cpi-u-for-insurance" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem-with-cpi-u-for-insurance">The Problem with CPI-U for Insurance</h2>
+<p>The standard Consumer Price Index (CPI-U) is designed to measure inflation for typical household consumption. But for Property &amp; Casualty insurance actuaries, it significantly underweights the cost components that actually drive claims severity:</p>
+<ul>
+<li><strong>Medical care</strong> gets only ~6% weight in CPI-U, while bodily injury claims can be 30-50% of auto liability losses</li>
+<li><strong>Shelter</strong> receives ~33% but doesn’t reflect specific materials and labor costs in property claims</li>
+<li><strong>Auto repair</strong>, hospital costs, and physician fees are underrepresented relative to claims exposure</li>
+</ul>
+<p>This creates a systematic gap when using CPI-U for loss trending and rate adequacy analysis.</p>
+</section>
+<section id="a-custom-solution" class="level2">
+<h2 class="anchored" data-anchor-id="a-custom-solution">A Custom Solution</h2>
+<p>I built a <strong>P&amp;C Severity CPI</strong> that reweights Bureau of Labor Statistics CPI components to better approximate the inflation experienced in insurance claims payments.</p>
+<section id="index-weights" class="level3">
+<h3 class="anchored" data-anchor-id="index-weights">Index Weights</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 24%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Weight</th>
+<th>P&amp;C Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Auto Repair</td>
+<td>20%</td>
+<td>Parts, labor, glass, paint for auto PD and collision</td>
+</tr>
+<tr class="even">
+<td>Physicians</td>
+<td>15%</td>
+<td>Medical evaluations, IMEs, treatment costs in BI claims</td>
+</tr>
+<tr class="odd">
+<td>Hospital</td>
+<td>15%</td>
+<td>Inpatient costs for severe bodily injury claims</td>
+</tr>
+<tr class="even">
+<td>Shelter</td>
+<td>20%</td>
+<td>Proxy for construction/rebuild costs (lumber, labor)</td>
+</tr>
+<tr class="odd">
+<td>Core CPI (Wages)</td>
+<td>15%</td>
+<td>Legal fees, adjusters, administrative costs</td>
+</tr>
+<tr class="even">
+<td>Core CPI (General)</td>
+<td>15%</td>
+<td>Residual services, general inflation exposure</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-formula" class="level3">
+<h3 class="anchored" data-anchor-id="the-formula">The Formula</h3>
+<p>The index is calculated as:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BP%5C&amp;C%5C_CPI%7D(t)%20=%20%5Csum_i%20w_i%20%5Ctimes%20%5Cfrac%7B%5Ctext%7BCPI%7D_i(t)%7D%7B%5Ctext%7BCPI%7D_i(2010)%7D%20%5Ctimes%20100"></p>
+<p>Where:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?w_i"> = weight assigned to component <img src="https://latex.codecogs.com/png.latex?i"> (summing to 1.0)</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BCPI%7D_i(t)"> = BLS CPI index value for component <img src="https://latex.codecogs.com/png.latex?i"> at time <img src="https://latex.codecogs.com/png.latex?t"></li>
+<li>January 2010 is the base period (= 100)</li>
+</ul>
+</section>
+</section>
+<section id="current-results" class="level2">
+<h2 class="anchored" data-anchor-id="current-results">Current Results</h2>
+<div id="1495e584" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">155.3</div>
+    <div style="font-size: 0.875rem; color: #64748b;">P&amp;C Severity CPI</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #1e3a5f;">+3.1%</div>
+    <div style="font-size: 0.875rem; color: #64748b;">YoY Change</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #1e3a5f;">149.5</div>
+    <div style="font-size: 0.875rem; color: #64748b;">CPI-U Index</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">+5.7</div>
+    <div style="font-size: 0.875rem; color: #64748b;">Gap vs CPI-U</div>
+  </div>
+</div>
+<p style="font-size: 0.85rem; color: #64748b; text-align: center; margin-top: -0.5rem;">Data as of December 2025 | Base: January 2010 = 100</p>
+</div>
+</div>
+</section>
+<section id="pc-severity-cpi-vs-cpi-u" class="level2">
+<h2 class="anchored" data-anchor-id="pc-severity-cpi-vs-cpi-u">P&amp;C Severity CPI vs CPI-U</h2>
+<div id="ff9324ad" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.dates <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> mdates</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load both datasets</span></span>
+<span id="cb1-6">df_severity <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data/severity_cpi.csv'</span>, parse_dates<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>])</span>
+<span id="cb1-7">df_cpi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data/All_Items.csv'</span>, parse_dates<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>])</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Rebase CPI-U to Jan 2010 = 100</span></span>
+<span id="cb1-10">base_value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_cpi[df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2010-01-01'</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>].values[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb1-11">df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CPI_U_rebased'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> base_value) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Merge datasets</span></span>
+<span id="cb1-14">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_severity.merge(df_cpi[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CPI_U_rebased'</span>]], on<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>, how<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'inner'</span>)</span>
+<span id="cb1-15"></span>
+<span id="cb1-16">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>))</span>
+<span id="cb1-17"></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot CPI-U (solid blue line)</span></span>
+<span id="cb1-19">ax.plot(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>], df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CPI_U_rebased'</span>],</span>
+<span id="cb1-20">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#1e3a8a'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CPI-U (All Items)'</span>)</span>
+<span id="cb1-21"></span>
+<span id="cb1-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot P&amp;C Severity CPI (dotted red line)</span></span>
+<span id="cb1-23">ax.plot(df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>], df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'P&amp;C_Severity_CPI'</span>],</span>
+<span id="cb1-24">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#dc2626'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'P&amp;C Severity CPI'</span>)</span>
+<span id="cb1-25"></span>
+<span id="cb1-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Formatting</span></span>
+<span id="cb1-27">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Date'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb1-28">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Index (Jan 2010 = 100)'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb1-29">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'P&amp;C Severity CPI vs CPI-U (2010 = 100)'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb1-30">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper left'</span>)</span>
+<span id="cb1-31">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb1-32"></span>
+<span id="cb1-33"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Format x-axis</span></span>
+<span id="cb1-34">ax.xaxis.set_major_locator(mdates.YearLocator(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb1-35">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%Y'</span>))</span>
+<span id="cb1-36"></span>
+<span id="cb1-37">plt.tight_layout()</span>
+<span id="cb1-38">plt.show()</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/index_files/figure-html/cell-3-output-1.png" width="759" height="422" class="figure-img"></p>
+<figcaption>The red dotted line shows the P&amp;C-weighted severity index. The blue line shows CPI-U (all items). When the gap widens, claims inflation is outpacing general inflation.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="annual-growth-rates" class="level2">
+<h2 class="anchored" data-anchor-id="annual-growth-rates">Annual Growth Rates</h2>
+<div id="212980b8" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data/severity_cpi.csv'</span>, parse_dates<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>])</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calculate YoY change</span></span>
+<span id="cb2-7">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YoY_Change'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'P&amp;C_Severity_CPI'</span>].pct_change(periods<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb2-8">df_yoy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.dropna(subset<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YoY_Change'</span>])</span>
+<span id="cb2-9"></span>
+<span id="cb2-10">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>))</span>
+<span id="cb2-11"></span>
+<span id="cb2-12">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#22c55e'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#eab308'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#dc2626'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_yoy[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YoY_Change'</span>]]</span>
+<span id="cb2-13">ax.bar(df_yoy[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>], df_yoy[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YoY_Change'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb2-14"></span>
+<span id="cb2-15">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'black'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-16">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'gray'</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'3% threshold'</span>)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Date'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb2-19">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YoY Change (%)'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb2-20">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Annual Inflation Rate: P&amp;C Severity CPI'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb2-21">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>)</span>
+<span id="cb2-22"></span>
+<span id="cb2-23">plt.tight_layout()</span>
+<span id="cb2-24">plt.show()</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/index_files/figure-html/cell-4-output-1.png" width="759" height="422" class="figure-img"></p>
+<figcaption>Year-over-year percentage change in P&amp;C Severity CPI</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="key-insights" class="level2">
+<h2 class="anchored" data-anchor-id="key-insights">Key Insights</h2>
+<p>The P&amp;C Severity CPI has consistently outpaced general CPI-U inflation since 2010, with notable acceleration during:</p>
+<ol type="1">
+<li><strong>2021-2022</strong>: Supply chain disruptions drove auto parts and repair costs sharply higher</li>
+<li><strong>2023-2024</strong>: Medical inflation and construction labor costs remained elevated</li>
+<li><strong>Current</strong>: The gap between P&amp;C severity inflation and CPI-U remains significant</li>
+</ol>
+</section>
+<section id="what-this-index-doesnt-capture" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-index-doesnt-capture">What This Index Doesn’t Capture</h2>
+<p>Important caveats:</p>
+<ul>
+<li><strong>Social inflation</strong> and litigation trends</li>
+<li><strong>Regulatory changes</strong> or fee schedule modifications</li>
+<li><strong>Claim frequency</strong> shifts</li>
+<li><strong>Regional variation</strong></li>
+</ul>
+<p>Always supplement with loss development analysis and market-specific data.</p>
+</section>
+<section id="learn-more" class="level2">
+<h2 class="anchored" data-anchor-id="learn-more">Learn More</h2>
+<p>The full methodology, data pipeline, and source code are available on GitHub: <a href="https://github.com/YoramGilboa/p-c-cpi-blog">P&amp;C Severity CPI Repository</a></p>
+<p>The index updates monthly via GitHub Actions, pulling fresh data from the Bureau of Labor Statistics API.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>actuarial</category>
+  <category>inflation</category>
+  <category>visualization</category>
+  <category>insurance</category>
+  <guid>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</guid>
   <pubDate>Sat, 01 Feb 2025 05:00:00 GMT</pubDate>
 </item>
 </channel>
