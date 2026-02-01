@@ -1,0 +1,7 @@
+category,series_file,weight,rationale
+Auto Repair,Auto_Repair.csv,0.20,"Parts + labor (glass, paint, mechanics)"
+Medical,Physicians.csv,0.15,"Physician fees in BI claims"
+Medical,Hospital.csv,0.15,"Hospital stays in severe BI"
+Construction,Shelter.csv,0.20,"Proxy for rebuild costs (lumber, labor)"
+Wages,Core_CPI.csv,0.15,"Legal, adjuster, admin inflation"
+General,Core_CPI.csv,0.15,"Residual services"

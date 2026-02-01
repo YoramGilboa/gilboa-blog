@@ -1,0 +1,193 @@
+---
+title: "P&C Severity CPI: A Claims-Weighted Inflation Index"
+date: "2025-02-01"
+categories: [actuarial, inflation, visualization, insurance]
+freeze: false
+---
+
+## The Problem with CPI-U for Insurance
+
+The standard Consumer Price Index (CPI-U) is designed to measure inflation for typical household consumption. But for Property & Casualty insurance actuaries, it significantly underweights the cost components that actually drive claims severity:
+
+- **Medical care** gets only ~6% weight in CPI-U, while bodily injury claims can be 30-50% of auto liability losses
+- **Shelter** receives ~33% but doesn't reflect specific materials and labor costs in property claims
+- **Auto repair**, hospital costs, and physician fees are underrepresented relative to claims exposure
+
+This creates a systematic gap when using CPI-U for loss trending and rate adequacy analysis.
+
+## A Custom Solution
+
+I built a **P&C Severity CPI** that reweights Bureau of Labor Statistics CPI components to better approximate the inflation experienced in insurance claims payments.
+
+### Index Weights
+
+| Category | Weight | P&C Rationale |
+|----------|--------|---------------|
+| Auto Repair | 20% | Parts, labor, glass, paint for auto PD and collision |
+| Physicians | 15% | Medical evaluations, IMEs, treatment costs in BI claims |
+| Hospital | 15% | Inpatient costs for severe bodily injury claims |
+| Shelter | 20% | Proxy for construction/rebuild costs (lumber, labor) |
+| Core CPI (Wages) | 15% | Legal fees, adjusters, administrative costs |
+| Core CPI (General) | 15% | Residual services, general inflation exposure |
+
+### The Formula
+
+The index is calculated as:
+
+$$\text{P\&C\_CPI}(t) = \sum_i w_i \times \frac{\text{CPI}_i(t)}{\text{CPI}_i(2010)} \times 100$$
+
+Where:
+
+- $w_i$ = weight assigned to component $i$ (summing to 1.0)
+- $\text{CPI}_i(t)$ = BLS CPI index value for component $i$ at time $t$
+- January 2010 is the base period (= 100)
+
+## Current Results
+
+```{python}
+#| echo: false
+import pandas as pd
+from IPython.display import HTML
+
+# Load both datasets
+df_severity = pd.read_csv('data/severity_cpi.csv', parse_dates=['date'])
+df_cpi = pd.read_csv('data/All_Items.csv', parse_dates=['date'])
+
+# Rebase CPI-U to Jan 2010 = 100
+base_value = df_cpi[df_cpi['date'] == '2010-01-01']['value'].values[0]
+df_cpi['CPI_U_rebased'] = (df_cpi['value'] / base_value) * 100
+
+# Merge and get latest values
+df = df_severity.merge(df_cpi[['date', 'CPI_U_rebased']], on='date', how='inner')
+latest = df.iloc[-1]
+one_year_ago = df[df['date'] <= latest['date'] - pd.DateOffset(years=1)].iloc[-1]
+
+current_severity = latest['P&C_Severity_CPI']
+current_cpi = latest['CPI_U_rebased']
+gap = current_severity - current_cpi
+yoy_severity = ((current_severity / one_year_ago['P&C_Severity_CPI']) - 1) * 100
+yoy_cpi = ((current_cpi / one_year_ago['CPI_U_rebased']) - 1) * 100
+last_date = latest['date'].strftime('%B %Y')
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">{current_severity:.1f}</div>
+    <div style="font-size: 0.875rem; color: #64748b;">P&C Severity CPI</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #1e3a5f;">+{yoy_severity:.1f}%</div>
+    <div style="font-size: 0.875rem; color: #64748b;">YoY Change</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #1e3a5f;">{current_cpi:.1f}</div>
+    <div style="font-size: 0.875rem; color: #64748b;">CPI-U Index</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: 700; color: #dc2626;">+{gap:.1f}</div>
+    <div style="font-size: 0.875rem; color: #64748b;">Gap vs CPI-U</div>
+  </div>
+</div>
+<p style="font-size: 0.85rem; color: #64748b; text-align: center; margin-top: -0.5rem;">Data as of {last_date} | Base: January 2010 = 100</p>
+"""
+HTML(html)
+```
+
+## P&C Severity CPI vs CPI-U
+
+```{python}
+#| fig-cap: "The red dotted line shows the P&C-weighted severity index. The blue line shows CPI-U (all items). When the gap widens, claims inflation is outpacing general inflation."
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# Load both datasets
+df_severity = pd.read_csv('data/severity_cpi.csv', parse_dates=['date'])
+df_cpi = pd.read_csv('data/All_Items.csv', parse_dates=['date'])
+
+# Rebase CPI-U to Jan 2010 = 100
+base_value = df_cpi[df_cpi['date'] == '2010-01-01']['value'].values[0]
+df_cpi['CPI_U_rebased'] = (df_cpi['value'] / base_value) * 100
+
+# Merge datasets
+df = df_severity.merge(df_cpi[['date', 'CPI_U_rebased']], on='date', how='inner')
+
+fig, ax = plt.subplots(figsize=(8, 4.5))
+
+# Plot CPI-U (solid blue line)
+ax.plot(df['date'], df['CPI_U_rebased'],
+        color='#1e3a8a', linewidth=2.5, linestyle='-', label='CPI-U (All Items)')
+
+# Plot P&C Severity CPI (dotted red line)
+ax.plot(df['date'], df['P&C_Severity_CPI'],
+        color='#dc2626', linewidth=2.5, linestyle=':', label='P&C Severity CPI')
+
+# Formatting
+ax.set_xlabel('Date', fontsize=12)
+ax.set_ylabel('Index (Jan 2010 = 100)', fontsize=12)
+ax.set_title('P&C Severity CPI vs CPI-U (2010 = 100)', fontsize=14, fontweight='bold')
+ax.legend(loc='upper left')
+ax.grid(True, alpha=0.3)
+
+# Format x-axis
+ax.xaxis.set_major_locator(mdates.YearLocator(2))
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+
+plt.tight_layout()
+plt.show()
+```
+
+## Annual Growth Rates
+
+```{python}
+#| fig-cap: "Year-over-year percentage change in P&C Severity CPI"
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('data/severity_cpi.csv', parse_dates=['date'])
+
+# Calculate YoY change
+df['YoY_Change'] = df['P&C_Severity_CPI'].pct_change(periods=12) * 100
+df_yoy = df.dropna(subset=['YoY_Change'])
+
+fig, ax = plt.subplots(figsize=(8, 4.5))
+
+colors = ['#22c55e' if x < 3 else '#eab308' if x < 5 else '#dc2626' for x in df_yoy['YoY_Change']]
+ax.bar(df_yoy['date'], df_yoy['YoY_Change'], color=colors, width=25, alpha=0.8)
+
+ax.axhline(y=0, color='black', linewidth=0.5)
+ax.axhline(y=3, color='gray', linestyle='--', alpha=0.5, label='3% threshold')
+
+ax.set_xlabel('Date', fontsize=12)
+ax.set_ylabel('YoY Change (%)', fontsize=12)
+ax.set_title('Annual Inflation Rate: P&C Severity CPI', fontsize=14, fontweight='bold')
+ax.grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.show()
+```
+
+## Key Insights
+
+The P&C Severity CPI has consistently outpaced general CPI-U inflation since 2010, with notable acceleration during:
+
+1. **2021-2022**: Supply chain disruptions drove auto parts and repair costs sharply higher
+2. **2023-2024**: Medical inflation and construction labor costs remained elevated
+3. **Current**: The gap between P&C severity inflation and CPI-U remains significant
+
+## What This Index Doesn't Capture
+
+Important caveats:
+
+- **Social inflation** and litigation trends
+- **Regulatory changes** or fee schedule modifications
+- **Claim frequency** shifts
+- **Regional variation**
+
+Always supplement with loss development analysis and market-specific data.
+
+## Learn More
+
+The full methodology, data pipeline, and source code are available on GitHub: [P&C Severity CPI Repository](https://github.com/YoramGilboa/p-c-cpi-blog)
+
+The index updates monthly via GitHub Actions, pulling fresh data from the Bureau of Labor Statistics API.
