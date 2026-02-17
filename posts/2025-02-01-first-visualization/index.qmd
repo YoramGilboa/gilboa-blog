@@ -2,7 +2,6 @@
 title: "Setting Up My Data Science Blog"
 date: "2025-02-01"
 categories: [meta, visualization, python]
-freeze: false
 ---
 
 ## Welcome

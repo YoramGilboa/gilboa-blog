@@ -2,7 +2,6 @@
 title: "P&C Severity CPI: A Claims-Weighted Inflation Index"
 date: "2025-02-01"
 categories: [actuarial, inflation, visualization, insurance]
-freeze: false
 ---
 
 ## The Problem with CPI-U for Insurance
