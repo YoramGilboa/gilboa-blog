@@ -1,7 +1,6 @@
 # Quarto
 /.quarto/
 /_site/
-/_freeze/
 
 # Python
 __pycache__/
