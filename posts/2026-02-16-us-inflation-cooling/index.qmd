@@ -1,0 +1,606 @@
+---
+title: "US Inflation Is Cooling Off — Here's What the Numbers Really Say"
+date: "2026-02-16"
+categories: [economics, data analysis, inflation]
+freeze: false
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+US consumer prices rose 2.8% year-over-year in January 2026 — down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story isn't in the headline number. It's in the momentum, the decomposition, and the structural dynamics underneath.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` — Fetches data from FRED (requires free API key)
+- `02_clean_data.py` — Cleans and computes derived series
+- `03_visualizations.py` — Generates all charts
+- `04_compute_stats.py` — Computes summary statistics
+
+All data sourced from [FRED](https://fred.stlouisfed.org/) (Federal Reserve Economic Data).
+:::
+
+```{python}
+#| echo: false
+
+# =============================================================================
+# SETUP: Load pre-computed statistics and configure visualization style
+# =============================================================================
+
+import json
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import matplotlib.dates as mdates
+from IPython.display import HTML
+
+# Load pre-computed statistics
+with open("stats/summary_stats.json") as f:
+    stats = json.load(f)
+
+# Load cleaned data for inline visualizations
+df_main = pd.read_csv("data/clean/cpi_main.csv", index_col=0, parse_dates=True)
+df_comp = pd.read_csv("data/clean/cpi_components.csv", index_col=0, parse_dates=True)
+df_alt = pd.read_csv("data/clean/alt_measures.csv", index_col=0, parse_dates=True)
+df_long = pd.read_csv("data/clean/cpi_long_history.csv", index_col=0, parse_dates=True)
+
+# Tufte-Inspired Style Configuration
+COLORS = {
+    'primary': '#2e5984',
+    'accent': '#8b0000',
+    'secondary': '#6b8e6b',
+    'neutral': '#4a4a4a',
+    'light': '#b0b0b0',
+    'fed_target': '#cc0000',
+}
+
+plt.rcParams.update({
+    'font.family': 'serif',
+    'font.size': 10,
+    'axes.spines.top': False,
+    'axes.spines.right': False,
+    'axes.grid': False,
+    'figure.facecolor': 'white',
+    'axes.facecolor': '#fafafa',
+    'axes.linewidth': 0.5,
+})
+
+def fmt(n):
+    """Format numbers for display."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+```
+
+## Key Metrics
+
+```{python}
+#| echo: false
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">{stats['headline_yoy']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Headline CPI</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">{stats['core_yoy']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">{stats['supercore_yoy']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Supercore</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">{stats['headline_3m_ann']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">3-Month Annualized</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">Data as of {stats['latest_month']} | Source: Bureau of Labor Statistics via FRED</p>
+"""
+HTML(html)
+```
+
+## The Big Picture
+
+Headline CPI fell to **`{python} fmt(stats['headline_yoy'])`%** in `{python} stats['latest_month']`, down from `{python} fmt(stats['prev_headline_yoy'])`% in `{python} stats['prev_month']`. That's the lowest reading since `{python} stats['headline_lowest_since']`.
+
+```{python}
+#| echo: true
+#| label: fig-headline
+#| fig-cap: "CPI year-over-year change since 2019, with the Fed's 2% target for reference. The COVID-era spike peaked at 9.0% in mid-2022 and has been grinding lower since."
+
+# =============================================================================
+# Exhibit 1: The Headline Story
+# =============================================================================
+
+df = df_main.dropna(subset=["headline_yoy"])
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+# COVID recession shading
+ax.axvspan(pd.Timestamp("2020-02-01"), pd.Timestamp("2020-04-01"),
+           alpha=0.1, color="#888888", zorder=0)
+ax.annotate('COVID\nrecession', xy=(pd.Timestamp("2020-03-01"), 0.5),
+            fontsize=8, color='#888888', ha='center', va='bottom')
+
+# Fed 2% target
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.7)
+ax.text(df.index[-1], 2.15, 'Fed 2% target', fontsize=8, color=COLORS['fed_target'],
+        ha='right', va='bottom')
+
+# CPI YoY
+ax.plot(df.index, df['headline_yoy'], color=COLORS['primary'], linewidth=2)
+ax.fill_between(df.index, df['headline_yoy'], alpha=0.1, color=COLORS['primary'])
+
+# Peak annotation
+peak_idx = df['headline_yoy'].idxmax()
+peak_val = df['headline_yoy'].max()
+ax.annotate(f'Peak: {peak_val:.1f}%', xy=(peak_idx, peak_val),
+            xytext=(20, 10), textcoords='offset points',
+            fontsize=9, fontweight='bold', color=COLORS['accent'],
+            arrowprops=dict(arrowstyle='->', color=COLORS['accent'], lw=0.8))
+
+# Latest value
+latest_val = df['headline_yoy'].iloc[-1]
+ax.annotate(f'Jan 2026: {latest_val:.1f}%', xy=(df.index[-1], latest_val),
+            xytext=(-60, 20), textcoords='offset points',
+            fontsize=9, fontweight='bold', color=COLORS['primary'],
+            arrowprops=dict(arrowstyle='->', color=COLORS['primary'], lw=0.8))
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.xaxis.set_major_locator(mdates.YearLocator())
+plt.tight_layout()
+plt.show()
+```
+
+The trend is clear: inflation has been on a slow, grinding path lower since the post-pandemic peak. But the headline number can be misleading — it's a trailing 12-month average that smooths over what's actually happening right now.
+
+## Beyond the Headline
+
+Two measures matter more than headline CPI for understanding where inflation is actually headed: **core CPI** (excluding volatile food and energy) and **supercore** (services excluding energy, which the Fed closely watches for underlying price pressure).
+
+```{python}
+#| echo: true
+#| label: fig-three-measures
+#| fig-cap: "Headline, core, and supercore inflation. Supercore — services excluding energy — is the Fed's preferred gauge of underlying price pressure."
+
+# =============================================================================
+# Exhibit 2: Headline vs Core vs Supercore
+# =============================================================================
+
+df = df_main.dropna(subset=['headline_yoy', 'core_yoy', 'supercore_yoy'])
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+ax.plot(df.index, df['headline_yoy'], color=COLORS['primary'], linewidth=2,
+        label='Headline CPI')
+ax.plot(df.index, df['core_yoy'], color=COLORS['accent'], linewidth=2,
+        label='Core CPI (ex food & energy)')
+ax.plot(df.index, df['supercore_yoy'], color=COLORS['secondary'], linewidth=2,
+        label='Supercore (services ex energy)')
+
+# Direct labels at end of each line
+for col, color, label in [
+    ('headline_yoy', COLORS['primary'], 'Headline'),
+    ('core_yoy', COLORS['accent'], 'Core'),
+    ('supercore_yoy', COLORS['secondary'], 'Supercore'),
+]:
+    last_val = df[col].iloc[-1]
+    ax.text(df.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=9, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.legend(loc='upper right', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.set_xlim(right=df.index[-1] + pd.Timedelta(days=180))
+plt.tight_layout()
+plt.show()
+```
+
+Core CPI at **`{python} fmt(stats['core_yoy'])`%** is still above the Fed's target. This matters because core strips out the noise of gas prices and grocery bills, revealing the underlying inflation trend.
+
+### Momentum: What's Happening Right Now
+
+The most important chart most people never see: **inflation momentum**. Instead of looking at trailing 12-month averages, we can annualize shorter windows — 1-month, 3-month, 6-month — to see whether inflation is accelerating or decelerating *right now*.
+
+```{python}
+#| echo: true
+#| label: fig-momentum
+#| fig-cap: "Inflation momentum — short-run annualized rates vs the trailing 12-month average. When the 3-month rate falls below the 12-month rate, it signals genuine cooling."
+
+# =============================================================================
+# Exhibit 3: Inflation Momentum
+# =============================================================================
+
+df = df_main.dropna(subset=['headline_yoy', 'headline_3m_ann']).copy()
+df = df[df.index >= '2022-01-01']
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+ax.plot(df.index, df['headline_yoy'], color=COLORS['primary'], linewidth=2.5,
+        label='12-month YoY', zorder=3)
+ax.plot(df.index, df['headline_6m_ann'], color=COLORS['secondary'], linewidth=1.5,
+        alpha=0.8, label='6-month annualized')
+ax.plot(df.index, df['headline_3m_ann'], color=COLORS['accent'], linewidth=1.5,
+        alpha=0.8, label='3-month annualized')
+ax.plot(df.index, df['headline_1m_ann'], color=COLORS['light'], linewidth=1,
+        alpha=0.6, label='1-month annualized')
+
+for col, color, label in [
+    ('headline_yoy', COLORS['primary'], '12m'),
+    ('headline_6m_ann', COLORS['secondary'], '6m'),
+    ('headline_3m_ann', COLORS['accent'], '3m'),
+]:
+    last_val = df[col].iloc[-1]
+    ax.text(df.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=8, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Annualized Rate (%)')
+ax.legend(loc='upper right', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+ax.set_xlim(right=df.index[-1] + pd.Timedelta(days=90))
+plt.tight_layout()
+plt.show()
+```
+
+The 3-month annualized rate is **`{python} fmt(stats['headline_3m_ann'])`%**, which is **`{python} fmt(stats['momentum_diff_headline'])`pp** `{python} "below" if stats['momentum_diff_headline'] < 0 else "above"` the 12-month rate. `{python} "This confirms genuine disinflation momentum — prices are rising more slowly in the recent months than the trailing average suggests." if stats['momentum_diff_headline'] < 0 else "This suggests near-term price pressures are running hotter than the trailing average."`
+
+## What's Driving the Drop
+
+Not all prices move together. Breaking down inflation into its major components reveals where the cooling is coming from — and where stickiness remains.
+
+```{python}
+#| echo: true
+#| label: fig-components
+#| fig-cap: "Radar chart showing year-over-year inflation by component across four time periods. The web shrinks toward the center as inflation cools — except shelter, which remains elevated. Energy (highlighted) has collapsed from its 2022 peak."
+
+# =============================================================================
+# Exhibit 4: Component Radar Chart
+# =============================================================================
+
+from matplotlib.patches import FancyBboxPatch
+
+component_names = ['Shelter', 'Food', 'Energy', 'Medical', 'Transport.', 'Apparel']
+component_cols = ['shelter_yoy', 'food_yoy', 'energy_yoy', 'medical_yoy',
+                  'transportation_yoy', 'apparel_yoy']
+
+# Pick 4 time snapshots (January of each year where available)
+snapshots = {}
+for year in [2023, 2024, 2025, 2026]:
+    target = f'{year}-01'
+    matches = df_comp[df_comp.index.strftime('%Y-%m') == target]
+    if len(matches) > 0:
+        snapshots[f'Jan {year}'] = matches.iloc[0]
+
+# Radar chart setup
+N = len(component_names)
+angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
+angles += angles[:1]  # Close the polygon
+
+fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+
+snapshot_styles = {
+    'Jan 2023': {'color': COLORS['light'], 'ls': '--', 'lw': 1.5, 'alpha': 0.6},
+    'Jan 2024': {'color': COLORS['secondary'], 'ls': '--', 'lw': 1.5, 'alpha': 0.7},
+    'Jan 2025': {'color': COLORS['primary'], 'ls': '-', 'lw': 2, 'alpha': 0.8},
+    'Jan 2026': {'color': COLORS['accent'], 'ls': '-', 'lw': 2.5, 'alpha': 1.0},
+}
+
+for label, row in snapshots.items():
+    values = [row[col] for col in component_cols]
+    values += values[:1]  # Close
+    style = snapshot_styles.get(label, {'color': 'gray', 'ls': '-', 'lw': 1, 'alpha': 0.5})
+    ax.plot(angles, values, label=label, **style)
+    if label == 'Jan 2026':
+        ax.fill(angles, values, alpha=0.08, color=style['color'])
+
+# Highlight energy axis
+energy_idx = component_names.index('Energy')
+energy_angle = angles[energy_idx]
+ax.plot([energy_angle, energy_angle], [0, ax.get_ylim()[1]], color=COLORS['secondary'],
+        linewidth=2, alpha=0.3, zorder=0)
+
+ax.set_xticks(angles[:-1])
+ax.set_xticklabels(component_names, fontsize=10)
+ax.set_title('Inflation by Component: How the Shape Has Changed', pad=20)
+ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), fontsize=9)
+
+plt.tight_layout()
+plt.show()
+```
+
+The radar chart shows how the inflation "footprint" has shrunk over the past three years. **Energy** (highlighted axis) has collapsed from double-digit increases to near zero. **Shelter** remains the stubborn outlier — still elevated while other categories have normalized. **Transportation** has turned negative, reflecting falling used car prices.
+
+The story is clear: **shelter** remains the single largest contributor to above-target inflation. At `{python} fmt(stats['shelter_yoy'])`% YoY, it accounts for roughly `{python} fmt(stats['contributions']['shelter']['contribution'])`pp of the headline number.
+
+## The Shelter Question
+
+Shelter is the key to the "last mile" of disinflation — and there's reason to believe it will keep falling.
+
+```{python}
+#| echo: true
+#| label: fig-shelter
+#| fig-cap: "Shelter CPI vs headline CPI (year-over-year). Note how shelter peaks and troughs lag headline by roughly 12-18 months — the 'last mile' of disinflation is already baked in."
+
+# =============================================================================
+# Exhibit 5a: Shelter vs Headline — Showing the Lag
+# =============================================================================
+
+df_sh = pd.read_csv("data/clean/shelter_detail.csv", index_col=0, parse_dates=True)
+df_sh = df_sh.dropna(subset=['shelter_yoy', 'headline_yoy'])
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+ax.plot(df_sh.index, df_sh['headline_yoy'], color=COLORS['primary'], linewidth=2,
+        label='Headline CPI')
+ax.plot(df_sh.index, df_sh['shelter_yoy'], color=COLORS['accent'], linewidth=2.5,
+        label='Shelter CPI')
+
+# Annotate the lag with arrows between peaks
+headline_peak = df_sh['headline_yoy'].idxmax()
+shelter_peak = df_sh['shelter_yoy'].idxmax()
+ax.annotate('', xy=(shelter_peak, df_sh['shelter_yoy'].max() + 0.3),
+            xytext=(headline_peak, df_sh['shelter_yoy'].max() + 0.3),
+            arrowprops=dict(arrowstyle='<->', color=COLORS['neutral'], lw=1.5))
+lag_months = (shelter_peak - headline_peak).days // 30
+ax.text(headline_peak + (shelter_peak - headline_peak) / 2,
+        df_sh['shelter_yoy'].max() + 0.6,
+        f'~{lag_months}-month lag', ha='center', fontsize=9,
+        color=COLORS['neutral'], fontweight='bold')
+
+# Direct labels
+for col, color, label in [
+    ('headline_yoy', COLORS['primary'], 'Headline'),
+    ('shelter_yoy', COLORS['accent'], 'Shelter'),
+]:
+    last_val = df_sh[col].iloc[-1]
+    ax.text(df_sh.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=9, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.legend(loc='upper left', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.set_xlim(right=df_sh.index[-1] + pd.Timedelta(days=120))
+plt.tight_layout()
+plt.show()
+```
+
+The chart above makes the lag crystal clear: headline CPI peaked months before shelter CPI did. The BLS shelter measure reflects the average rent across *all existing leases*, not just new ones — so it takes 12-18 months for market-rate changes to fully flow through.
+
+```{python}
+#| echo: true
+#| label: fig-shelter-detail
+#| fig-cap: "Shelter decomposed into its two main components: Owners' Equivalent Rent (OER, ~26% of CPI) and Rent of Primary Residence (~8% of CPI). Both are declining from their 2023 peaks."
+
+# =============================================================================
+# Exhibit 5b: Shelter Subcategories
+# =============================================================================
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+ax.plot(df_sh.index, df_sh['shelter_yoy'], color=COLORS['accent'], linewidth=2.5,
+        label='Shelter (total)', alpha=0.5)
+ax.plot(df_sh.index, df_sh['oer_yoy'], color=COLORS['primary'], linewidth=2,
+        label="Owners' Equiv. Rent (OER)")
+ax.plot(df_sh.index, df_sh['rent_yoy'], color=COLORS['secondary'], linewidth=2,
+        label='Rent of Primary Residence')
+
+# Direct labels
+for col, color, label in [
+    ('oer_yoy', COLORS['primary'], 'OER'),
+    ('rent_yoy', COLORS['secondary'], 'Rent'),
+    ('shelter_yoy', COLORS['accent'], 'Shelter'),
+]:
+    last_val = df_sh[col].iloc[-1]
+    ax.text(df_sh.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=9, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.legend(loc='upper right', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.set_xlim(right=df_sh.index[-1] + pd.Timedelta(days=120))
+plt.tight_layout()
+plt.show()
+```
+
+Shelter peaked at `{python} fmt(stats['shelter_peak'])`% in `{python} stats['shelter_peak_date']` and has been falling steadily since. At `{python} fmt(stats['shelter_yoy'])`% now, both OER and primary rent are on a clear downward trajectory. Private-sector data on new tenant rents (from Zillow, Apartment List, and others) has been running near or below the pre-pandemic trend for months — meaning further shelter disinflation is **already baked into the pipeline**.
+
+## Broad-Based or Narrow?
+
+Is the cooling concentrated in a few volatile categories, or is it broad-based? Two sets of measures help answer this question.
+
+### Sticky vs Flexible CPI
+
+The Atlanta Fed splits the CPI basket into **sticky** items (things that change price infrequently, like rent, insurance, and education) and **flexible** items (things that change frequently, like gas, food, and airfares).
+
+```{python}
+#| echo: true
+#| label: fig-sticky-flexible
+#| fig-cap: "Atlanta Fed Sticky vs Flexible CPI. Flexible prices normalized quickly after the pandemic shock. Sticky prices — the holdout — are now declining too."
+
+# =============================================================================
+# Exhibit 6: Sticky vs Flexible CPI
+# =============================================================================
+
+df = df_alt.dropna(subset=['sticky_cpi', 'flexible_cpi']).copy()
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+ax.plot(df.index, df['sticky_cpi'], color=COLORS['accent'], linewidth=2.5,
+        label='Sticky CPI (rent, insurance, education)')
+ax.plot(df.index, df['flexible_cpi'], color=COLORS['primary'], linewidth=2,
+        label='Flexible CPI (gas, food, airfares)')
+
+for col, color, label in [
+    ('sticky_cpi', COLORS['accent'], 'Sticky'),
+    ('flexible_cpi', COLORS['primary'], 'Flexible'),
+]:
+    last_val = df[col].iloc[-1]
+    ax.text(df.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=9, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.legend(loc='upper right', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.set_xlim(right=df.index[-1] + pd.Timedelta(days=180))
+plt.tight_layout()
+plt.show()
+```
+
+Flexible CPI at **`{python} fmt(stats['flexible_cpi'])`%** has essentially normalized. The remaining inflation is concentrated in sticky prices at **`{python} fmt(stats['sticky_cpi'])`%** — but these too are on a clear downtrend.
+
+### Median & Trimmed-Mean CPI
+
+The Cleveland Fed's **median CPI** and **16% trimmed-mean CPI** strip out the tails of the price-change distribution. When these measures fall, it means disinflation is *broad-based*, not driven by a few outlier categories collapsing.
+
+```{python}
+#| echo: true
+#| label: fig-median-trimmed
+#| fig-cap: "Cleveland Fed Median and Trimmed-Mean CPI (with headline for reference). These outlier-robust measures confirm that disinflation is broad-based."
+
+# =============================================================================
+# Exhibit 7: Median & Trimmed-Mean CPI
+# =============================================================================
+
+df = df_alt.dropna(subset=['median_cpi', 'trimmed_mean_cpi']).copy()
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+
+# Headline as light reference
+ax.plot(df_main.index, df_main['headline_yoy'], color=COLORS['light'], linewidth=1,
+        alpha=0.6, label='Headline CPI (reference)')
+
+ax.plot(df.index, df['median_cpi'], color=COLORS['accent'], linewidth=2.5,
+        label='Median CPI')
+ax.plot(df.index, df['trimmed_mean_cpi'], color=COLORS['primary'], linewidth=2,
+        label='16% Trimmed Mean CPI')
+
+for col, color, label in [
+    ('median_cpi', COLORS['accent'], 'Median'),
+    ('trimmed_mean_cpi', COLORS['primary'], 'Trimmed Mean'),
+]:
+    last_val = df[col].iloc[-1]
+    ax.text(df.index[-1], last_val, f'  {label}: {last_val:.1f}%',
+            fontsize=9, color=color, va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.legend(loc='upper right', fontsize=8)
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.set_xlim(right=df.index[-1] + pd.Timedelta(days=180))
+plt.tight_layout()
+plt.show()
+```
+
+Median CPI is at **`{python} fmt(stats['median_cpi'])`%** and trimmed-mean at **`{python} fmt(stats['trimmed_mean_cpi'])`%**. Both are declining, confirming this isn't just energy prices doing the heavy lifting.
+
+## Historical Context
+
+Finally, where does `{python} fmt(stats['headline_yoy'])`% sit in the long arc of American inflation?
+
+```{python}
+#| echo: true
+#| label: fig-long-view
+#| fig-cap: "CPI year-over-year from 1960 to present. Gray bars indicate NBER recessions. The current reading is unremarkable by historical standards — well within the 'normal' range of the post-Volcker era."
+
+# =============================================================================
+# Exhibit 8: The Long View
+# =============================================================================
+
+df = df_long.dropna(subset=['headline_yoy'])
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.4)
+
+# Recession shading
+long_recessions = [
+    ('1969-12-01', '1970-11-01'), ('1973-11-01', '1975-03-01'),
+    ('1980-01-01', '1980-07-01'), ('1981-07-01', '1982-11-01'),
+    ('1990-07-01', '1991-03-01'), ('2001-03-01', '2001-11-01'),
+    ('2007-12-01', '2009-06-01'), ('2020-02-01', '2020-04-01'),
+]
+for start, end in long_recessions:
+    ax.axvspan(pd.Timestamp(start), pd.Timestamp(end), alpha=0.08, color='#888888')
+
+ax.plot(df.index, df['headline_yoy'], color=COLORS['primary'], linewidth=1.5)
+ax.fill_between(df.index, df['headline_yoy'], alpha=0.1, color=COLORS['primary'])
+
+# Historical annotations
+annotations = [
+    (pd.Timestamp('1974-12-01'), 12.3, 'Oil Shock I'),
+    (pd.Timestamp('1980-03-01'), 14.8, 'Volcker Era Peak'),
+    (pd.Timestamp('2008-07-01'), 5.6, 'GFC'),
+    (pd.Timestamp('2022-06-01'), 9.1, 'Post-COVID Peak'),
+]
+for date, yval, label in annotations:
+    ax.annotate(label, xy=(date, yval),
+                xytext=(0, 12), textcoords='offset points',
+                fontsize=8, ha='center', color=COLORS['neutral'], fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='white',
+                         edgecolor='none', alpha=0.8))
+
+latest_val = df['headline_yoy'].iloc[-1]
+ax.annotate(f'Jan 2026:\n{latest_val:.1f}%', xy=(df.index[-1], latest_val),
+            xytext=(-50, 30), textcoords='offset points',
+            fontsize=9, fontweight='bold', color=COLORS['primary'],
+            arrowprops=dict(arrowstyle='->', color=COLORS['primary'], lw=0.8))
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+ax.xaxis.set_major_locator(mdates.YearLocator(10))
+plt.tight_layout()
+plt.show()
+```
+
+In historical context, `{python} fmt(stats['headline_yoy'])`% is utterly unremarkable. The long-run average since 1960 is `{python} fmt(stats['long_run_mean_yoy'])`%, and the post-COVID spike of `{python} fmt(stats['long_run_peak_yoy'])`% in `{python} stats['long_run_peak_date']` now looks like an acute episode, not a regime change. The "Great Moderation" of inflation that characterized the 1990s-2010s appears to be reasserting itself.
+
+## What It Means
+
+**For the Fed:** The data gives the Federal Open Market Committee (FOMC) more room to cut rates, but the sticky-price holdouts (shelter, insurance) mean they won't rush. Markets are pricing in further easing, but the pace will depend on whether the 3-month momentum continues to run below the 12-month average.
+
+**For consumers:** The relief is real but gradual. Prices aren't falling — they're rising more slowly. Shelter costs are still elevated, and services inflation remains above the Fed's target. The squeeze on household budgets is easing, not ending.
+
+**For markets:** The disinflation trend supports risk assets and argues against a second inflation wave. The breadth of the cooling (confirmed by median and trimmed-mean measures) makes this more durable than if it were driven by a single volatile category.
+
+## Methodology & Data
+
+All data sourced from FRED (Federal Reserve Economic Data):
+
+| Series | Description | Source |
+|------|---------|------|
+| CPIAUCSL | CPI-U All Items | BLS |
+| CPILFESL | CPI-U Less Food & Energy | BLS |
+| CUSR0000SAH1 | Shelter | BLS |
+| CUUR0000SASLE | Services Less Energy | BLS |
+| STICKCPIM157SFRBATL | Sticky CPI | Atlanta Fed |
+| FLEXCPIM157SFRBATL | Flexible CPI | Atlanta Fed |
+| MEDCPIM158SFRBCLE | Median CPI | Cleveland Fed |
+| TRMMEANCPIM158SFRBCLE | 16% Trimmed Mean CPI | Cleveland Fed |
+
+: Key data series used in this analysis
+
+Component weights are approximate CPI-U weights as of December 2025. Momentum rates are computed by annualizing the N-month price change: $\left(\frac{P_t}{P_{t-N}}\right)^{12/N} - 1$.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*

@@ -1,0 +1,56 @@
+{
+  "headline_yoy": 2.8,
+  "core_yoy": 2.9,
+  "supercore_yoy": 3.5,
+  "prev_headline_yoy": 3.0,
+  "prev_core_yoy": 2.8,
+  "headline_change_from_prev": -0.2,
+  "core_change_from_prev": 0.1,
+  "latest_month": "January 2026",
+  "prev_month": "December 2025",
+  "headline_3m_ann": 2.9,
+  "headline_6m_ann": 3.2,
+  "core_3m_ann": 2.9,
+  "core_6m_ann": 3.2,
+  "momentum_diff_headline": 0.1,
+  "momentum_diff_core": 0.0,
+  "headline_lowest_since": "July 2025",
+  "core_lowest_since": "December 2025",
+  "contributions": {
+    "shelter": {
+      "yoy": 3.4,
+      "contribution": 1.25
+    },
+    "food": {
+      "yoy": 3.2,
+      "contribution": 0.44
+    },
+    "energy": {
+      "yoy": 0.6,
+      "contribution": 0.04
+    },
+    "medical": {
+      "yoy": 3.4,
+      "contribution": 0.22
+    },
+    "transportation": {
+      "yoy": -0.1,
+      "contribution": -0.01
+    },
+    "apparel": {
+      "yoy": 0.9,
+      "contribution": 0.02
+    }
+  },
+  "shelter_yoy": 3.4,
+  "shelter_peak": 8.2,
+  "shelter_peak_date": "March 2023",
+  "sticky_cpi": 3.0,
+  "flexible_cpi": 0.7,
+  "median_cpi": 3.0,
+  "trimmed_mean_cpi": 2.7,
+  "long_run_peak_yoy": 14.6,
+  "long_run_peak_date": "March 1980",
+  "long_run_mean_yoy": 3.7,
+  "data_current_as_of": "February 16, 2026"
+}
