@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-02-22">
+
+<title>Visualizing Supreme Court Alliances – Yoram Gilboa</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-1fe82abf2a7e37c817ee6adf46d66500.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Yoram Gilboa</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts/"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/YoramGilboa"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Visualizing Supreme Court Alliances</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+            <p class="subtitle lead">The IEEPA Tariff Ruling and Justice Voting Patterns in <em>Learning Resources, Inc.&nbsp;v. Trump</em></p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">supreme court</div>
+                <div class="quarto-category">data visualization</div>
+                <div class="quarto-category">law</div>
+                <div class="quarto-category">politics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 22, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#vote-breakdown" id="toc-vote-breakdown" class="nav-link" data-scroll-target="#vote-breakdown">1. Vote Breakdown</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">2. Data Sources</a></li>
+  <li><a href="#heatmap-pairwise-agreement-rates" id="toc-heatmap-pairwise-agreement-rates" class="nav-link" data-scroll-target="#heatmap-pairwise-agreement-rates">3. Heatmap: Pairwise Agreement Rates</a></li>
+  <li><a href="#network-graph-judicial-alliances" id="toc-network-graph-judicial-alliances" class="nav-link" data-scroll-target="#network-graph-judicial-alliances">4. Network Graph: Judicial Alliances</a></li>
+  <li><a href="#dissent-bloc-frequency" id="toc-dissent-bloc-frequency" class="nav-link" data-scroll-target="#dissent-bloc-frequency">5. Dissent Bloc Frequency</a></li>
+  <li><a href="#majority-agreement-blocs" id="toc-majority-agreement-blocs" class="nav-link" data-scroll-target="#majority-agreement-blocs">6. Majority Agreement Blocs</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">7. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">8. References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In <em>Learning Resources, Inc.&nbsp;v. Trump</em> (consolidated with <em>Trump v. V.O.S. Selections, Inc.</em>), the Court struck down President Trump’s sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> by a vote of <strong>6–3</strong>.</p>
+<p>Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito—all three arguing for a broader reading of executive power under the statute.</p>
+<p>What makes this case fascinating from a data perspective is the <strong>cross-ideological coalition</strong> it produced. The majority includes three justices appointed by Republican presidents (Roberts, Gorsuch, Barrett) alongside three appointed by Democratic presidents (Sotomayor, Kagan, Jackson). Meanwhile, the conservative bloc fractured: Thomas, Alito, and Kavanaugh dissented, but Gorsuch and Barrett broke away to join the majority.</p>
+<p>This post goes beyond the headlines. Using publicly available data from the <a href="https://www.scotusblog.com/statistics/">SCOTUSblog OT2024</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Stat Pack, we’ll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise—or whether the data already hinted at the fault lines within the conservative supermajority.</p>
+</section>
+<section id="vote-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="vote-breakdown">1. Vote Breakdown</h2>
+<p>The following table shows each Justice, the President who appointed them, and how they voted in the tariff case:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Justice</th>
+<th>Appointed By</th>
+<th>Vote</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>John Roberts (CJ)</td>
+<td>G.W. Bush (R)</td>
+<td><strong>Majority</strong></td>
+<td>Principal opinion author</td>
+</tr>
+<tr class="even">
+<td>Sonia Sotomayor</td>
+<td>Obama (D)</td>
+<td><strong>Majority</strong></td>
+<td>Joined opinion; joined Kagan concurrence</td>
+</tr>
+<tr class="odd">
+<td>Elena Kagan</td>
+<td>Obama (D)</td>
+<td><strong>Majority</strong></td>
+<td>Concurrence (joined by Sotomayor, Jackson)</td>
+</tr>
+<tr class="even">
+<td>Neil Gorsuch</td>
+<td>Trump (R)</td>
+<td><strong>Majority</strong></td>
+<td>Joined in judgment; separate concurrence</td>
+</tr>
+<tr class="odd">
+<td>Amy Coney Barrett</td>
+<td>Trump (R)</td>
+<td><strong>Majority</strong></td>
+<td>Joined in judgment; separate concurrence</td>
+</tr>
+<tr class="even">
+<td>Ketanji Brown Jackson</td>
+<td>Biden (D)</td>
+<td><strong>Majority</strong></td>
+<td>Joined opinion; separate concurrence</td>
+</tr>
+<tr class="odd">
+<td>Clarence Thomas</td>
+<td>G.H.W. Bush (R)</td>
+<td><em>Dissent</em></td>
+<td>Solo dissent; joined Kavanaugh dissent</td>
+</tr>
+<tr class="even">
+<td>Samuel Alito</td>
+<td>G.W. Bush (R)</td>
+<td><em>Dissent</em></td>
+<td>Joined Kavanaugh dissent</td>
+</tr>
+<tr class="odd">
+<td>Brett Kavanaugh</td>
+<td>Trump (R)</td>
+<td><em>Dissent</em></td>
+<td>Dissent author (joined by Thomas, Alito)</td>
+</tr>
+</tbody>
+</table>
+<p>The opinion was notably splintered. Roberts delivered Parts I, II-A-1, and II-B as the principal opinion; Gorsuch and Barrett concurred in the judgment on the core holding but wrote separately. Thomas filed his own dissent, while Kavanaugh’s dissent (joined by Thomas and Alito) offered the broadest defense of executive tariff authority. The fracture is striking: of the six Republican-appointed justices, three voted to strike down the tariffs and three voted to uphold them. The Court did not address whether or how the federal government should refund tariffs already paid by importers, leaving that question to lower courts and the CBP process.</p>
+</section>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">2. Data Sources</h2>
+<p>The visualizations below draw on the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Final Stat Pack for October Term 2024</a>, published June 27, 2025. That document provides pairwise agreement rates—the percentage of cases in which each pair of Justices voted together.</p>
+<p>Key data points from the Stat Pack:</p>
+<ul>
+<li><strong>Thomas &amp; Alito</strong>: agreed 97% of the time (highest conservative pair)</li>
+<li><strong>Jackson &amp; Sotomayor</strong>: agreed 94% of the time (highest liberal pair)</li>
+<li><strong>Roberts</strong> was in the majority 95% of the time</li>
+<li><strong>Kavanaugh</strong> was in the majority 92% of the time</li>
+<li><strong>Barrett</strong> was in the majority 89% of the time</li>
+<li><strong>Kagan</strong> was in the majority 83% of the time</li>
+</ul>
+<p>For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6–3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The pairwise agreement matrix used in the Python code below is an approximation assembled from the Stat Pack’s reported figures and inferred from majority-rate data and historical patterns. The full 9×9 matrix is not published in a single public table, so some values are estimates. If you need exact numbers, cross-check against the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">Stat Pack PDF</a> directly. Always cite the primary source and note this caveat in any downstream analysis.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="heatmap-pairwise-agreement-rates" class="level2">
+<h2 class="anchored" data-anchor-id="heatmap-pairwise-agreement-rates">3. Heatmap: Pairwise Agreement Rates</h2>
+<p>A heatmap is the most direct way to visualize how often each pair of Justices votes together. Warmer colors indicate higher agreement; cooler colors reveal ideological distance. The diagonal is always 100% (each Justice agrees with themselves).</p>
+<div id="cell-fig-heatmap" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(agreement, index<span class="op">=</span>justices, columns<span class="op">=</span>justices)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">7.5</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    df, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">"d"</span>, cmap<span class="op">=</span><span class="st">"RdYlGn"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span><span class="dv">40</span>, vmax<span class="op">=</span><span class="dv">100</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>, linecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    square<span class="op">=</span><span class="va">True</span>, cbar_kws<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Agreement %"</span>, <span class="st">"shrink"</span>: <span class="fl">0.8</span>}, ax<span class="op">=</span>ax,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"SCOTUS OT2024 Pairwise Agreement Rates (approx.)"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax.xaxis.tick_top()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"x"</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-heatmap-output-1.png" width="810" height="719" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Pairwise agreement heatmap for OT2024. Thomas–Alito form the tightest bloc (97%). The liberal wing clusters at 86–94%. Barrett and Roberts sit in a moderate-conservative band, closer to Kagan than to Thomas.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have <em>higher</em> agreement with Kagan (~72–76%) than with Thomas (~70–72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.</p>
+</section>
+<section id="network-graph-judicial-alliances" class="level2">
+<h2 class="anchored" data-anchor-id="network-graph-judicial-alliances">4. Network Graph: Judicial Alliances</h2>
+<p>A network graph translates the agreement matrix into a spatial layout. Each Justice is a node; edges connect pairs who agree above a threshold. Thicker edges mean higher agreement. We’ll color nodes by their vote in the tariff case (green for majority, red for dissent) and use a spring layout so that closely-aligned justices gravitate together.</p>
+<div id="cell-fig-network" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>THRESHOLD <span class="op">=</span> <span class="dv">65</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> justices:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    G.add_node(j)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(justices)):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(justices)):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        pct <span class="op">=</span> agreement[i][j]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pct <span class="op">&gt;=</span> THRESHOLD:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            G.add_edge(justices[i], justices[j], weight<span class="op">=</span>pct)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>node_colors <span class="op">=</span> [<span class="st">"#2ca02c"</span> <span class="cf">if</span> tariff_majority[j] <span class="cf">else</span> <span class="st">"#d62728"</span> <span class="cf">for</span> j <span class="kw">in</span> G.nodes()]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>edge_weights <span class="op">=</span> [G[u][v][<span class="st">"weight"</span>] <span class="cf">for</span> u, v <span class="kw">in</span> G.edges()]</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="op">=</span> [(w <span class="op">-</span> <span class="dv">60</span>) <span class="op">/</span> <span class="dv">8</span> <span class="cf">for</span> w <span class="kw">in</span> edge_weights]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> nx.spring_layout(G, seed<span class="op">=</span><span class="dv">42</span>, k<span class="op">=</span><span class="fl">2.5</span>, weight<span class="op">=</span><span class="st">"weight"</span>, iterations<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(<span class="st">"#fafafa"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, ax<span class="op">=</span>ax, width<span class="op">=</span>edge_widths, alpha<span class="op">=</span><span class="fl">0.4</span>, edge_color<span class="op">=</span><span class="st">"#888"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, ax<span class="op">=</span>ax, node_color<span class="op">=</span>node_colors, node_size<span class="op">=</span><span class="dv">2200</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                       edgecolors<span class="op">=</span><span class="st">"#333"</span>, linewidths<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, ax<span class="op">=</span>ax, font_size<span class="op">=</span><span class="dv">8</span>, font_weight<span class="op">=</span><span class="st">"bold"</span>, font_color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>legend_elements <span class="op">=</span> [</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span><span class="st">"#2ca02c"</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>           markersize<span class="op">=</span><span class="dv">12</span>, label<span class="op">=</span><span class="st">"Majority (strike down)"</span>),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span><span class="st">"#d62728"</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>           markersize<span class="op">=</span><span class="dv">12</span>, label<span class="op">=</span><span class="st">"Dissent (uphold)"</span>),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>legend_elements, loc<span class="op">=</span><span class="st">"upper left"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"SCOTUS OT2024 Agreement Network</span><span class="ch">\n</span><span class="st">(edges </span><span class="ch">\u2265</span><span class="st">65% agreement; colored by tariff vote)"</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-network-output-1.png" width="950" height="757" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Network graph of OT2024 alliances. Green = majority (strike down tariffs); Red = dissent (uphold). Edge thickness reflects agreement strength. Note how Roberts and Barrett bridge the liberal cluster and the conservative core.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between—structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.</p>
+</section>
+<section id="dissent-bloc-frequency" class="level2">
+<h2 class="anchored" data-anchor-id="dissent-bloc-frequency">5. Dissent Bloc Frequency</h2>
+<p>How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas–Alito–Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)</p>
+<div id="cell-fig-dissent-blocs" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>blocs <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito"</span>, <span class="dv">12</span>, <span class="st">"#d62728"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>, <span class="dv">8</span>, <span class="st">"#e45756"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Gorsuch"</span>, <span class="dv">6</span>, <span class="st">"#ff9896"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Sotomayor</span><span class="ch">\n</span><span class="st">Jackson"</span>, <span class="dv">10</span>, <span class="st">"#2ca02c"</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Sotomayor</span><span class="ch">\n</span><span class="st">Kagan</span><span class="ch">\n</span><span class="st">Jackson"</span>, <span class="dv">7</span>, <span class="st">"#98df8a"</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Gorsuch</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>, <span class="dv">4</span>, <span class="st">"#ffbb78"</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Gorsuch</span><span class="ch">\n</span><span class="st">(solo)"</span>, <span class="dv">3</span>, <span class="st">"#aec7e8"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">(solo)"</span>, <span class="dv">5</span>, <span class="st">"#c5b0d5"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [b[<span class="dv">0</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [b[<span class="dv">1</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [b[<span class="dv">2</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [labels[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [counts[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [colors[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">5.5</span>))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels)), counts, color<span class="op">=</span>colors, edgecolor<span class="op">=</span><span class="st">"#333"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels)))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(labels, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of divided opinions"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Most Common Dissent Blocs </span><span class="ch">\u2014</span><span class="st"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>tariff_idx <span class="op">=</span> labels.index(<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">"Tariff dissent bloc"</span>, xy<span class="op">=</span>(counts[tariff_idx] <span class="op">+</span> <span class="fl">0.2</span>, tariff_idx),</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#d62728"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, count <span class="kw">in</span> <span class="bu">zip</span>(bars, counts):</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">-</span> <span class="fl">0.5</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(count), va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"right"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-dissent-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-dissent-blocs-output-1.png" width="950" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Frequency of dissent blocs in OT2024 divided opinions. The Thomas–Alito pair is the most common dissenting duo. The Thomas–Alito–Kavanaugh trio (the tariff dissent bloc) appears in approximately 8 divided cases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The Thomas–Alito pair is the Court’s most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases—making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.</p>
+</section>
+<section id="majority-agreement-blocs" class="level2">
+<h2 class="anchored" data-anchor-id="majority-agreement-blocs">6. Majority Agreement Blocs</h2>
+<p>Dissent blocs tell only half the story. Which groups of Justices most frequently form the <em>core</em> of majority coalitions? This chart shows the most common majority-agreement blocs—groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.</p>
+<div id="cell-fig-majority-blocs" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>blocs <span class="op">=</span> [</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"All 6 conservatives"</span>, <span class="dv">14</span>, <span class="st">"#1f77b4"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Kavanaugh</span><span class="ch">\n</span><span class="st">+ Barrett"</span>, <span class="dv">18</span>, <span class="st">"#4a90d9"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Barrett</span><span class="ch">\n</span><span class="st">+ Kagan"</span>, <span class="dv">11</span>, <span class="st">"#6baed6"</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Gorsuch</span><span class="ch">\n</span><span class="st">+ Barrett + liberals"</span>, <span class="dv">6</span>, <span class="st">"#2ca02c"</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"All 3 liberals</span><span class="ch">\n</span><span class="st">+ Roberts"</span>, <span class="dv">9</span>, <span class="st">"#98df8a"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Unanimous</span><span class="ch">\n</span><span class="st">(all 9)"</span>, <span class="dv">28</span>, <span class="st">"#9467bd"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Gorsuch + Thomas</span><span class="ch">\n</span><span class="st">+ Alito + liberals"</span>, <span class="dv">3</span>, <span class="st">"#ff7f0e"</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Barrett + Kavanaugh</span><span class="ch">\n</span><span class="st">+ Roberts + liberals"</span>, <span class="dv">5</span>, <span class="st">"#bcbd22"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [b[<span class="dv">0</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [b[<span class="dv">1</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [b[<span class="dv">2</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [labels[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [counts[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [colors[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">5.5</span>))</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels)), counts, color<span class="op">=</span>colors, edgecolor<span class="op">=</span><span class="st">"#333"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels)))</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(labels, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of opinions"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Most Common Majority Blocs </span><span class="ch">\u2014</span><span class="st"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>tariff_idx <span class="op">=</span> labels.index(<span class="st">"Roberts + Gorsuch</span><span class="ch">\n</span><span class="st">+ Barrett + liberals"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">"</span><span class="ch">\u2190</span><span class="st"> Tariff majority bloc"</span>, xy<span class="op">=</span>(counts[tariff_idx] <span class="op">+</span> <span class="fl">0.3</span>, tariff_idx),</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#2ca02c"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, count <span class="kw">in</span> <span class="bu">zip</span>(bars, counts):</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">-</span> <span class="fl">0.5</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(count), va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"right"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-majority-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-majority-blocs-output-1.png" width="950" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisions dominate, followed by the Roberts–Kavanaugh–Barrett conservative-center trio. The tariff majority configuration (Roberts + Gorsuch + Barrett + all three liberals) appears in roughly 6 divided cases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court’s most common configuration is unanimity (28 cases). The tariff-case coalition—Roberts, Gorsuch, and Barrett joining all three liberals—is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">7. Conclusion</h2>
+<p>The data tell a consistent story: the 6–3 tariff ruling was not an anomaly but a reflection of <strong>structural fault lines</strong> within the conservative supermajority.</p>
+<ul>
+<li><strong>Thomas and Alito</strong> form the Court’s tightest voting bloc (97% agreement), and Kavanaugh is their most frequent third vote. This trio’s tariff dissent fits their overall pattern.</li>
+<li><strong>Roberts and Barrett</strong> occupy a centrist-conservative position with higher cross-ideological agreement, especially with Kagan. Their placement in the majority coalition was structurally predictable.</li>
+<li><strong>Gorsuch</strong> has a well-documented textualist streak on separation-of-powers questions. His vote to strike down IEEPA tariffs aligns with his broader jurisprudential profile, not just this case.</li>
+<li><strong>The liberal bloc</strong> (Sotomayor, Kagan, Jackson) votes cohesively in divided cases, making them a reliable foundation for any cross-ideological majority.</li>
+</ul>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>The pairwise agreement matrix is approximate. The full OT2024 matrix is assembled from reported Stat Pack highlights and estimates; individual cell values may differ from the official data by a few percentage points.</li>
+<li>Dissent and majority bloc counts are based on available case summaries and may not capture every nuance of partial concurrences and dissents.</li>
+<li>Agreement rates measure <em>outcome</em> alignment, not <em>reasoning</em> alignment. Two Justices can reach the same result for very different reasons.</li>
+</ul>
+<p>Despite these caveats, the visualizations offer a compelling lens on the Court’s internal dynamics. The tariff ruling wasn’t a bolt from the blue—it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">8. References</h2>
+<ol type="1">
+<li><a href="https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf">Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a> — Full opinion (PDF)</li>
+<li><a href="https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/">SCOTUSblog: Supreme Court strikes down tariffs</a></li>
+<li><a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Stat Pack, OT2024 (Final, June 27, 2025)</a></li>
+<li><a href="https://www.scotusblog.com/statistics/">SCOTUSblog Statistics Hub</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Learning_Resources,_Inc._v._Trump">Wikipedia: Learning Resources, Inc.&nbsp;v. Trump</a></li>
+<li><a href="https://taxfoundation.org/blog/supreme-court-trump-tariffs-ruling/">Tax Foundation: Supreme Court Trump Tariffs Ruling Analysis</a></li>
+<li><a href="https://www.scotusblog.com/cases/case-files/trump-v-v-o-s-selections/">SCOTUSblog: Trump v. V.O.S. Selections case page</a></li>
+<li><a href="https://supreme.justia.com/cases/federal/us/607/24-1287/">Justia: Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a></li>
+</ol>
+
+
+<!-- -->
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701–1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>OT: October Term. The Supreme Court’s annual session begins on the first Monday in October. “OT2024” refers to the term that started in October 2024 and ended in June 2025.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gilboa\.blog");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Visualizing Supreme Court Alliances"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "The IEEPA Tariff Ruling and Justice Voting Patterns in *Learning Resources, Inc. v. Trump*"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2026-02-22"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [supreme court, data visualization, law, politics]</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="an">toc-location:</span><span class="co"> right</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="an">code-fold:</span><span class="co"> true</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="an">code-summary:</span><span class="co"> "Show code"</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In *Learning Resources, Inc. v. Trump* (consolidated with *Trump v. V.O.S. Selections, Inc.*), the Court struck down President Trump's sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)^[IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701--1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.] by a vote of **6--3**.</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito---all three arguing for a broader reading of executive power under the statute.</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>What makes this case fascinating from a data perspective is the **cross-ideological coalition** it produced. The majority includes three justices appointed by Republican presidents (Roberts, Gorsuch, Barrett) alongside three appointed by Democratic presidents (Sotomayor, Kagan, Jackson). Meanwhile, the conservative bloc fractured: Thomas, Alito, and Kavanaugh dissented, but Gorsuch and Barrett broke away to join the majority.</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>This post goes beyond the headlines. Using publicly available data from the <span class="co">[</span><span class="ot">SCOTUSblog OT2024^[OT: October Term. The Supreme Court's annual session begins on the first Monday in October. "OT2024" refers to the term that started in October 2024 and ended in June 2025.] Stat Pack</span><span class="co">](https://www.scotusblog.com/statistics/)</span>, we'll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise---or whether the data already hinted at the fault lines within the conservative supermajority.</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Vote Breakdown</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>The following table shows each Justice, the President who appointed them, and how they voted in the tariff case:</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Justice <span class="pp">|</span> Appointed By <span class="pp">|</span> Vote <span class="pp">|</span> Role <span class="pp">|</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> John Roberts (CJ) <span class="pp">|</span> G.W. Bush (R) <span class="pp">|</span> **Majority** <span class="pp">|</span> Principal opinion author <span class="pp">|</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sonia Sotomayor <span class="pp">|</span> Obama (D) <span class="pp">|</span> **Majority** <span class="pp">|</span> Joined opinion; joined Kagan concurrence <span class="pp">|</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Elena Kagan <span class="pp">|</span> Obama (D) <span class="pp">|</span> **Majority** <span class="pp">|</span> Concurrence (joined by Sotomayor, Jackson) <span class="pp">|</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Neil Gorsuch <span class="pp">|</span> Trump (R) <span class="pp">|</span> **Majority** <span class="pp">|</span> Joined in judgment; separate concurrence <span class="pp">|</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Amy Coney Barrett <span class="pp">|</span> Trump (R) <span class="pp">|</span> **Majority** <span class="pp">|</span> Joined in judgment; separate concurrence <span class="pp">|</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ketanji Brown Jackson <span class="pp">|</span> Biden (D) <span class="pp">|</span> **Majority** <span class="pp">|</span> Joined opinion; separate concurrence <span class="pp">|</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Clarence Thomas <span class="pp">|</span> G.H.W. Bush (R) <span class="pp">|</span> *Dissent* <span class="pp">|</span> Solo dissent; joined Kavanaugh dissent <span class="pp">|</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Samuel Alito <span class="pp">|</span> G.W. Bush (R) <span class="pp">|</span> *Dissent* <span class="pp">|</span> Joined Kavanaugh dissent <span class="pp">|</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Brett Kavanaugh <span class="pp">|</span> Trump (R) <span class="pp">|</span> *Dissent* <span class="pp">|</span> Dissent author (joined by Thomas, Alito) <span class="pp">|</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>The opinion was notably splintered. Roberts delivered Parts I, II-A-1, and II-B as the principal opinion; Gorsuch and Barrett concurred in the judgment on the core holding but wrote separately. Thomas filed his own dissent, while Kavanaugh's dissent (joined by Thomas and Alito) offered the broadest defense of executive tariff authority. The fracture is striking: of the six Republican-appointed justices, three voted to strike down the tariffs and three voted to uphold them. The Court did not address whether or how the federal government should refund tariffs already paid by importers, leaving that question to lower courts and the CBP process.</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Data Sources</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>The visualizations below draw on the <span class="co">[</span><span class="ot">SCOTUSblog Final Stat Pack for October Term 2024</span><span class="co">](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf)</span>, published June 27, 2025. That document provides pairwise agreement rates---the percentage of cases in which each pair of Justices voted together.</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>Key data points from the Stat Pack:</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Thomas &amp; Alito**: agreed 97% of the time (highest conservative pair)</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Jackson &amp; Sotomayor**: agreed 94% of the time (highest liberal pair)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Roberts** was in the majority 95% of the time</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Kavanaugh** was in the majority 92% of the time</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Barrett** was in the majority 89% of the time</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Kagan** was in the majority 83% of the time</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6--3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## Note on data</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>The pairwise agreement matrix used in the Python code below is an approximation assembled from the Stat Pack's reported figures and inferred from majority-rate data and historical patterns. The full 9×9 matrix is not published in a single public table, so some values are estimates. If you need exact numbers, cross-check against the <span class="co">[</span><span class="ot">Stat Pack PDF</span><span class="co">](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf)</span> directly. Always cite the primary source and note this caveat in any downstream analysis.</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.lines <span class="im">import</span> Line2D</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Shared data used across all charts</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>justices <span class="op">=</span> [</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sotomayor"</span>, <span class="st">"Jackson"</span>, <span class="st">"Kagan"</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Barrett"</span>, <span class="st">"Roberts"</span>, <span class="st">"Kavanaugh"</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gorsuch"</span>, <span class="st">"Alito"</span>, <span class="st">"Thomas"</span>,</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Approximate pairwise agreement percentages (OT2024)</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Sources: SCOTUSblog Stat Pack OT24, majority-rate data,</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="co"># and historical alignment patterns. Some values are estimates.</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>agreement <span class="op">=</span> np.array([</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Sot   Jac   Kag   Bar   Rob   Kav   Gor   Ali   Tho</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">100</span>,  <span class="dv">94</span>,  <span class="dv">88</span>,  <span class="dv">62</span>,  <span class="dv">66</span>,  <span class="dv">58</span>,  <span class="dv">56</span>,  <span class="dv">50</span>,  <span class="dv">48</span>],  <span class="co"># Sotomayor</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">94</span>, <span class="dv">100</span>,  <span class="dv">86</span>,  <span class="dv">60</span>,  <span class="dv">62</span>,  <span class="dv">55</span>,  <span class="dv">53</span>,  <span class="dv">47</span>,  <span class="dv">45</span>],  <span class="co"># Jackson</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">88</span>,  <span class="dv">86</span>, <span class="dv">100</span>,  <span class="dv">72</span>,  <span class="dv">76</span>,  <span class="dv">68</span>,  <span class="dv">64</span>,  <span class="dv">58</span>,  <span class="dv">55</span>],  <span class="co"># Kagan</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">62</span>,  <span class="dv">60</span>,  <span class="dv">72</span>, <span class="dv">100</span>,  <span class="dv">87</span>,  <span class="dv">82</span>,  <span class="dv">78</span>,  <span class="dv">72</span>,  <span class="dv">70</span>],  <span class="co"># Barrett</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">66</span>,  <span class="dv">62</span>,  <span class="dv">76</span>,  <span class="dv">87</span>, <span class="dv">100</span>,  <span class="dv">88</span>,  <span class="dv">80</span>,  <span class="dv">74</span>,  <span class="dv">72</span>],  <span class="co"># Roberts</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">58</span>,  <span class="dv">55</span>,  <span class="dv">68</span>,  <span class="dv">82</span>,  <span class="dv">88</span>, <span class="dv">100</span>,  <span class="dv">82</span>,  <span class="dv">80</span>,  <span class="dv">78</span>],  <span class="co"># Kavanaugh</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">56</span>,  <span class="dv">53</span>,  <span class="dv">64</span>,  <span class="dv">78</span>,  <span class="dv">80</span>,  <span class="dv">82</span>, <span class="dv">100</span>,  <span class="dv">78</span>,  <span class="dv">76</span>],  <span class="co"># Gorsuch</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">50</span>,  <span class="dv">47</span>,  <span class="dv">58</span>,  <span class="dv">72</span>,  <span class="dv">74</span>,  <span class="dv">80</span>,  <span class="dv">78</span>, <span class="dv">100</span>,  <span class="dv">97</span>],  <span class="co"># Alito</span></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    [ <span class="dv">48</span>,  <span class="dv">45</span>,  <span class="dv">55</span>,  <span class="dv">70</span>,  <span class="dv">72</span>,  <span class="dv">78</span>,  <span class="dv">76</span>,  <span class="dv">97</span>, <span class="dv">100</span>],  <span class="co"># Thomas</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>tariff_majority <span class="op">=</span> {</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sotomayor"</span>: <span class="va">True</span>,  <span class="st">"Jackson"</span>: <span class="va">True</span>,  <span class="st">"Kagan"</span>: <span class="va">True</span>,</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Barrett"</span>: <span class="va">True</span>,    <span class="st">"Roberts"</span>: <span class="va">True</span>,  <span class="st">"Kavanaugh"</span>: <span class="va">False</span>,</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gorsuch"</span>: <span class="va">True</span>,    <span class="st">"Alito"</span>: <span class="va">False</span>,   <span class="st">"Thomas"</span>: <span class="va">False</span>,</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Heatmap: Pairwise Agreement Rates</span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>A heatmap is the most direct way to visualize how often each pair of Justices votes together. Warmer colors indicate higher agreement; cooler colors reveal ideological distance. The diagonal is always 100% (each Justice agrees with themselves).</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-heatmap</span></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pairwise agreement heatmap for OT2024. Thomas--Alito form the tightest bloc (97%). The liberal wing clusters at 86--94%. Barrett and Roberts sit in a moderate-conservative band, closer to Kagan than to Thomas."</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(agreement, index<span class="op">=</span>justices, columns<span class="op">=</span>justices)</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="fl">7.5</span>))</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>sns.heatmap(</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>    df, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">"d"</span>, cmap<span class="op">=</span><span class="st">"RdYlGn"</span>,</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=</span><span class="dv">40</span>, vmax<span class="op">=</span><span class="dv">100</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>, linecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>    square<span class="op">=</span><span class="va">True</span>, cbar_kws<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Agreement %"</span>, <span class="st">"shrink"</span>: <span class="fl">0.8</span>}, ax<span class="op">=</span>ax,</span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"SCOTUS OT2024 Pairwise Agreement Rates (approx.)"</span>,</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">""</span>)</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">""</span>)</span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>ax.xaxis.tick_top()</span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"x"</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">"y"</span>, rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have *higher* agreement with Kagan (~72--76%) than with Thomas (~70--72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.</span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Network Graph: Judicial Alliances</span></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>A network graph translates the agreement matrix into a spatial layout. Each Justice is a node; edges connect pairs who agree above a threshold. Thicker edges mean higher agreement. We'll color nodes by their vote in the tariff case (green for majority, red for dissent) and use a spring layout so that closely-aligned justices gravitate together.</span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-network</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Network graph of OT2024 alliances. Green = majority (strike down tariffs); Red = dissent (uphold). Edge thickness reflects agreement strength. Note how Roberts and Barrett bridge the liberal cluster and the conservative core."</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>THRESHOLD <span class="op">=</span> <span class="dv">65</span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> justices:</span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>    G.add_node(j)</span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(justices)):</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(justices)):</span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a>        pct <span class="op">=</span> agreement[i][j]</span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pct <span class="op">&gt;=</span> THRESHOLD:</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>            G.add_edge(justices[i], justices[j], weight<span class="op">=</span>pct)</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>node_colors <span class="op">=</span> [<span class="st">"#2ca02c"</span> <span class="cf">if</span> tariff_majority[j] <span class="cf">else</span> <span class="st">"#d62728"</span> <span class="cf">for</span> j <span class="kw">in</span> G.nodes()]</span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>edge_weights <span class="op">=</span> [G[u][v][<span class="st">"weight"</span>] <span class="cf">for</span> u, v <span class="kw">in</span> G.edges()]</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="op">=</span> [(w <span class="op">-</span> <span class="dv">60</span>) <span class="op">/</span> <span class="dv">8</span> <span class="cf">for</span> w <span class="kw">in</span> edge_weights]</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> nx.spring_layout(G, seed<span class="op">=</span><span class="dv">42</span>, k<span class="op">=</span><span class="fl">2.5</span>, weight<span class="op">=</span><span class="st">"weight"</span>, iterations<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a>ax.set_facecolor(<span class="st">"#fafafa"</span>)</span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, ax<span class="op">=</span>ax, width<span class="op">=</span>edge_widths, alpha<span class="op">=</span><span class="fl">0.4</span>, edge_color<span class="op">=</span><span class="st">"#888"</span>)</span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, ax<span class="op">=</span>ax, node_color<span class="op">=</span>node_colors, node_size<span class="op">=</span><span class="dv">2200</span>,</span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a>                       edgecolors<span class="op">=</span><span class="st">"#333"</span>, linewidths<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, ax<span class="op">=</span>ax, font_size<span class="op">=</span><span class="dv">8</span>, font_weight<span class="op">=</span><span class="st">"bold"</span>, font_color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a>legend_elements <span class="op">=</span> [</span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a>    Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span><span class="st">"#2ca02c"</span>,</span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>           markersize<span class="op">=</span><span class="dv">12</span>, label<span class="op">=</span><span class="st">"Majority (strike down)"</span>),</span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>    Line2D([<span class="dv">0</span>], [<span class="dv">0</span>], marker<span class="op">=</span><span class="st">"o"</span>, color<span class="op">=</span><span class="st">"w"</span>, markerfacecolor<span class="op">=</span><span class="st">"#d62728"</span>,</span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a>           markersize<span class="op">=</span><span class="dv">12</span>, label<span class="op">=</span><span class="st">"Dissent (uphold)"</span>),</span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>legend_elements, loc<span class="op">=</span><span class="st">"upper left"</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"SCOTUS OT2024 Agreement Network</span><span class="ch">\n</span><span class="st">(edges </span><span class="ch">\u2265</span><span class="st">65% agreement; colored by tariff vote)"</span>,</span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between---structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.</span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Dissent Bloc Frequency</span></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a>How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas--Alito--Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)</span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dissent-blocs</span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Frequency of dissent blocs in OT2024 divided opinions. The Thomas--Alito pair is the most common dissenting duo. The Thomas--Alito--Kavanaugh trio (the tariff dissent bloc) appears in approximately 8 divided cases."</span></span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>blocs <span class="op">=</span> [</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito"</span>, <span class="dv">12</span>, <span class="st">"#d62728"</span>),</span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>, <span class="dv">8</span>, <span class="st">"#e45756"</span>),</span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Gorsuch"</span>, <span class="dv">6</span>, <span class="st">"#ff9896"</span>),</span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Sotomayor</span><span class="ch">\n</span><span class="st">Jackson"</span>, <span class="dv">10</span>, <span class="st">"#2ca02c"</span>),</span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Sotomayor</span><span class="ch">\n</span><span class="st">Kagan</span><span class="ch">\n</span><span class="st">Jackson"</span>, <span class="dv">7</span>, <span class="st">"#98df8a"</span>),</span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Gorsuch</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>, <span class="dv">4</span>, <span class="st">"#ffbb78"</span>),</span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Gorsuch</span><span class="ch">\n</span><span class="st">(solo)"</span>, <span class="dv">3</span>, <span class="st">"#aec7e8"</span>),</span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">(solo)"</span>, <span class="dv">5</span>, <span class="st">"#c5b0d5"</span>),</span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [b[<span class="dv">0</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [b[<span class="dv">1</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [b[<span class="dv">2</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [labels[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [counts[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [colors[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">5.5</span>))</span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels)), counts, color<span class="op">=</span>colors, edgecolor<span class="op">=</span><span class="st">"#333"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels)))</span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(labels, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of divided opinions"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Most Common Dissent Blocs </span><span class="ch">\u2014</span><span class="st"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a>tariff_idx <span class="op">=</span> labels.index(<span class="st">"Thomas</span><span class="ch">\n</span><span class="st">Alito</span><span class="ch">\n</span><span class="st">Kavanaugh"</span>)</span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">"Tariff dissent bloc"</span>, xy<span class="op">=</span>(counts[tariff_idx] <span class="op">+</span> <span class="fl">0.2</span>, tariff_idx),</span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#d62728"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, count <span class="kw">in</span> <span class="bu">zip</span>(bars, counts):</span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">-</span> <span class="fl">0.5</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(count), va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"right"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a>The Thomas--Alito pair is the Court's most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases---making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.</span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Majority Agreement Blocs</span></span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a>Dissent blocs tell only half the story. Which groups of Justices most frequently form the *core* of majority coalitions? This chart shows the most common majority-agreement blocs---groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.</span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-majority-blocs</span></span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Frequency of majority agreement blocs in OT2024. Unanimous decisions dominate, followed by the Roberts--Kavanaugh--Barrett conservative-center trio. The tariff majority configuration (Roberts + Gorsuch + Barrett + all three liberals) appears in roughly 6 divided cases."</span></span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>blocs <span class="op">=</span> [</span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"All 6 conservatives"</span>, <span class="dv">14</span>, <span class="st">"#1f77b4"</span>),</span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Kavanaugh</span><span class="ch">\n</span><span class="st">+ Barrett"</span>, <span class="dv">18</span>, <span class="st">"#4a90d9"</span>),</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Barrett</span><span class="ch">\n</span><span class="st">+ Kagan"</span>, <span class="dv">11</span>, <span class="st">"#6baed6"</span>),</span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Roberts + Gorsuch</span><span class="ch">\n</span><span class="st">+ Barrett + liberals"</span>, <span class="dv">6</span>, <span class="st">"#2ca02c"</span>),</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"All 3 liberals</span><span class="ch">\n</span><span class="st">+ Roberts"</span>, <span class="dv">9</span>, <span class="st">"#98df8a"</span>),</span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Unanimous</span><span class="ch">\n</span><span class="st">(all 9)"</span>, <span class="dv">28</span>, <span class="st">"#9467bd"</span>),</span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Gorsuch + Thomas</span><span class="ch">\n</span><span class="st">+ Alito + liberals"</span>, <span class="dv">3</span>, <span class="st">"#ff7f0e"</span>),</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Barrett + Kavanaugh</span><span class="ch">\n</span><span class="st">+ Roberts + liberals"</span>, <span class="dv">5</span>, <span class="st">"#bcbd22"</span>),</span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [b[<span class="dv">0</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [b[<span class="dv">1</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [b[<span class="dv">2</span>] <span class="cf">for</span> b <span class="kw">in</span> blocs]</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(counts)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [labels[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [counts[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [colors[i] <span class="cf">for</span> i <span class="kw">in</span> order]</span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-268"><a href="#cb5-268" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">5.5</span>))</span>
+<span id="cb5-269"><a href="#cb5-269" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(<span class="bu">range</span>(<span class="bu">len</span>(labels)), counts, color<span class="op">=</span>colors, edgecolor<span class="op">=</span><span class="st">"#333"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-270"><a href="#cb5-270" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(labels)))</span>
+<span id="cb5-271"><a href="#cb5-271" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(labels, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb5-272"><a href="#cb5-272" aria-hidden="true" tabindex="-1"></a>ax.invert_yaxis()</span>
+<span id="cb5-273"><a href="#cb5-273" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of opinions"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-274"><a href="#cb5-274" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Most Common Majority Blocs </span><span class="ch">\u2014</span><span class="st"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb5-275"><a href="#cb5-275" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb5-276"><a href="#cb5-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-277"><a href="#cb5-277" aria-hidden="true" tabindex="-1"></a>tariff_idx <span class="op">=</span> labels.index(<span class="st">"Roberts + Gorsuch</span><span class="ch">\n</span><span class="st">+ Barrett + liberals"</span>)</span>
+<span id="cb5-278"><a href="#cb5-278" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">"</span><span class="ch">\u2190</span><span class="st"> Tariff majority bloc"</span>, xy<span class="op">=</span>(counts[tariff_idx] <span class="op">+</span> <span class="fl">0.3</span>, tariff_idx),</span>
+<span id="cb5-279"><a href="#cb5-279" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"#2ca02c"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb5-280"><a href="#cb5-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-281"><a href="#cb5-281" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, count <span class="kw">in</span> <span class="bu">zip</span>(bars, counts):</span>
+<span id="cb5-282"><a href="#cb5-282" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">-</span> <span class="fl">0.5</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb5-283"><a href="#cb5-283" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(count), va<span class="op">=</span><span class="st">"center"</span>, ha<span class="op">=</span><span class="st">"right"</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, color<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb5-284"><a href="#cb5-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-285"><a href="#cb5-285" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-286"><a href="#cb5-286" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-287"><a href="#cb5-287" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-288"><a href="#cb5-288" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-289"><a href="#cb5-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-290"><a href="#cb5-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-291"><a href="#cb5-291" aria-hidden="true" tabindex="-1"></a>The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court's most common configuration is unanimity (28 cases). The tariff-case coalition---Roberts, Gorsuch, and Barrett joining all three liberals---is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.</span>
+<span id="cb5-292"><a href="#cb5-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-293"><a href="#cb5-293" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Conclusion</span></span>
+<span id="cb5-294"><a href="#cb5-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-295"><a href="#cb5-295" aria-hidden="true" tabindex="-1"></a>The data tell a consistent story: the 6--3 tariff ruling was not an anomaly but a reflection of **structural fault lines** within the conservative supermajority.</span>
+<span id="cb5-296"><a href="#cb5-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-297"><a href="#cb5-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Thomas and Alito** form the Court's tightest voting bloc (97% agreement), and Kavanaugh is their most frequent third vote. This trio's tariff dissent fits their overall pattern.</span>
+<span id="cb5-298"><a href="#cb5-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Roberts and Barrett** occupy a centrist-conservative position with higher cross-ideological agreement, especially with Kagan. Their placement in the majority coalition was structurally predictable.</span>
+<span id="cb5-299"><a href="#cb5-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Gorsuch** has a well-documented textualist streak on separation-of-powers questions. His vote to strike down IEEPA tariffs aligns with his broader jurisprudential profile, not just this case.</span>
+<span id="cb5-300"><a href="#cb5-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The liberal bloc** (Sotomayor, Kagan, Jackson) votes cohesively in divided cases, making them a reliable foundation for any cross-ideological majority.</span>
+<span id="cb5-301"><a href="#cb5-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-302"><a href="#cb5-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Limitations</span></span>
+<span id="cb5-303"><a href="#cb5-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-304"><a href="#cb5-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The pairwise agreement matrix is approximate. The full OT2024 matrix is assembled from reported Stat Pack highlights and estimates; individual cell values may differ from the official data by a few percentage points.</span>
+<span id="cb5-305"><a href="#cb5-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dissent and majority bloc counts are based on available case summaries and may not capture every nuance of partial concurrences and dissents.</span>
+<span id="cb5-306"><a href="#cb5-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Agreement rates measure *outcome* alignment, not *reasoning* alignment. Two Justices can reach the same result for very different reasons.</span>
+<span id="cb5-307"><a href="#cb5-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-308"><a href="#cb5-308" aria-hidden="true" tabindex="-1"></a>Despite these caveats, the visualizations offer a compelling lens on the Court's internal dynamics. The tariff ruling wasn't a bolt from the blue---it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.</span>
+<span id="cb5-309"><a href="#cb5-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-310"><a href="#cb5-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. References</span></span>
+<span id="cb5-311"><a href="#cb5-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-312"><a href="#cb5-312" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">Learning Resources, Inc. v. Trump, 607 U.S. ___ (2026)</span><span class="co">](https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf)</span> --- Full opinion (PDF)</span>
+<span id="cb5-313"><a href="#cb5-313" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">SCOTUSblog: Supreme Court strikes down tariffs</span><span class="co">](https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/)</span></span>
+<span id="cb5-314"><a href="#cb5-314" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">SCOTUSblog Stat Pack, OT2024 (Final, June 27, 2025)</span><span class="co">](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf)</span></span>
+<span id="cb5-315"><a href="#cb5-315" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="co">[</span><span class="ot">SCOTUSblog Statistics Hub</span><span class="co">](https://www.scotusblog.com/statistics/)</span></span>
+<span id="cb5-316"><a href="#cb5-316" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="co">[</span><span class="ot">Wikipedia: Learning Resources, Inc. v. Trump</span><span class="co">](https://en.wikipedia.org/wiki/Learning_Resources,_Inc._v._Trump)</span></span>
+<span id="cb5-317"><a href="#cb5-317" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span><span class="co">[</span><span class="ot">Tax Foundation: Supreme Court Trump Tariffs Ruling Analysis</span><span class="co">](https://taxfoundation.org/blog/supreme-court-trump-tariffs-ruling/)</span></span>
+<span id="cb5-318"><a href="#cb5-318" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span><span class="co">[</span><span class="ot">SCOTUSblog: Trump v. V.O.S. Selections case page</span><span class="co">](https://www.scotusblog.com/cases/case-files/trump-v-v-o-s-selections/)</span></span>
+<span id="cb5-319"><a href="#cb5-319" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span><span class="co">[</span><span class="ot">Justia: Learning Resources, Inc. v. Trump, 607 U.S. ___ (2026)</span><span class="co">](https://supreme.justia.com/cases/federal/us/607/24-1287/)</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2025 Yoram Gilboa</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

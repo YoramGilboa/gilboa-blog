@@ -10,7 +10,1318 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Mon, 16 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 22 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Visualizing Supreme Court Alliances</title>
+  <link>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In <em>Learning Resources, Inc.&nbsp;v. Trump</em> (consolidated with <em>Trump v. V.O.S. Selections, Inc.</em>), the Court struck down President Trump’s sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)<sup>1</sup> by a vote of <strong>6–3</strong>.</p>
+<p>Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito—all three arguing for a broader reading of executive power under the statute.</p>
+<p>What makes this case fascinating from a data perspective is the <strong>cross-ideological coalition</strong> it produced. The majority includes three justices appointed by Republican presidents (Roberts, Gorsuch, Barrett) alongside three appointed by Democratic presidents (Sotomayor, Kagan, Jackson). Meanwhile, the conservative bloc fractured: Thomas, Alito, and Kavanaugh dissented, but Gorsuch and Barrett broke away to join the majority.</p>
+<p>This post goes beyond the headlines. Using publicly available data from the <a href="https://www.scotusblog.com/statistics/">SCOTUSblog OT2024</a><sup>2</sup> Stat Pack, we’ll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise—or whether the data already hinted at the fault lines within the conservative supermajority.</p>
+</section>
+<section id="vote-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="vote-breakdown">1. Vote Breakdown</h2>
+<p>The following table shows each Justice, the President who appointed them, and how they voted in the tariff case:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Justice</th>
+<th>Appointed By</th>
+<th>Vote</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>John Roberts (CJ)</td>
+<td>G.W. Bush (R)</td>
+<td><strong>Majority</strong></td>
+<td>Principal opinion author</td>
+</tr>
+<tr class="even">
+<td>Sonia Sotomayor</td>
+<td>Obama (D)</td>
+<td><strong>Majority</strong></td>
+<td>Joined opinion; joined Kagan concurrence</td>
+</tr>
+<tr class="odd">
+<td>Elena Kagan</td>
+<td>Obama (D)</td>
+<td><strong>Majority</strong></td>
+<td>Concurrence (joined by Sotomayor, Jackson)</td>
+</tr>
+<tr class="even">
+<td>Neil Gorsuch</td>
+<td>Trump (R)</td>
+<td><strong>Majority</strong></td>
+<td>Joined in judgment; separate concurrence</td>
+</tr>
+<tr class="odd">
+<td>Amy Coney Barrett</td>
+<td>Trump (R)</td>
+<td><strong>Majority</strong></td>
+<td>Joined in judgment; separate concurrence</td>
+</tr>
+<tr class="even">
+<td>Ketanji Brown Jackson</td>
+<td>Biden (D)</td>
+<td><strong>Majority</strong></td>
+<td>Joined opinion; separate concurrence</td>
+</tr>
+<tr class="odd">
+<td>Clarence Thomas</td>
+<td>G.H.W. Bush (R)</td>
+<td><em>Dissent</em></td>
+<td>Solo dissent; joined Kavanaugh dissent</td>
+</tr>
+<tr class="even">
+<td>Samuel Alito</td>
+<td>G.W. Bush (R)</td>
+<td><em>Dissent</em></td>
+<td>Joined Kavanaugh dissent</td>
+</tr>
+<tr class="odd">
+<td>Brett Kavanaugh</td>
+<td>Trump (R)</td>
+<td><em>Dissent</em></td>
+<td>Dissent author (joined by Thomas, Alito)</td>
+</tr>
+</tbody>
+</table>
+<p>The opinion was notably splintered. Roberts delivered Parts I, II-A-1, and II-B as the principal opinion; Gorsuch and Barrett concurred in the judgment on the core holding but wrote separately. Thomas filed his own dissent, while Kavanaugh’s dissent (joined by Thomas and Alito) offered the broadest defense of executive tariff authority. The fracture is striking: of the six Republican-appointed justices, three voted to strike down the tariffs and three voted to uphold them. The Court did not address whether or how the federal government should refund tariffs already paid by importers, leaving that question to lower courts and the CBP process.</p>
+</section>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">2. Data Sources</h2>
+<p>The visualizations below draw on the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Final Stat Pack for October Term 2024</a>, published June 27, 2025. That document provides pairwise agreement rates—the percentage of cases in which each pair of Justices voted together.</p>
+<p>Key data points from the Stat Pack:</p>
+<ul>
+<li><strong>Thomas &amp; Alito</strong>: agreed 97% of the time (highest conservative pair)</li>
+<li><strong>Jackson &amp; Sotomayor</strong>: agreed 94% of the time (highest liberal pair)</li>
+<li><strong>Roberts</strong> was in the majority 95% of the time</li>
+<li><strong>Kavanaugh</strong> was in the majority 92% of the time</li>
+<li><strong>Barrett</strong> was in the majority 89% of the time</li>
+<li><strong>Kagan</strong> was in the majority 83% of the time</li>
+</ul>
+<p>For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6–3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The pairwise agreement matrix used in the Python code below is an approximation assembled from the Stat Pack’s reported figures and inferred from majority-rate data and historical patterns. The full 9×9 matrix is not published in a single public table, so some values are estimates. If you need exact numbers, cross-check against the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">Stat Pack PDF</a> directly. Always cite the primary source and note this caveat in any downstream analysis.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="heatmap-pairwise-agreement-rates" class="level2">
+<h2 class="anchored" data-anchor-id="heatmap-pairwise-agreement-rates">3. Heatmap: Pairwise Agreement Rates</h2>
+<p>A heatmap is the most direct way to visualize how often each pair of Justices votes together. Warmer colors indicate higher agreement; cooler colors reveal ideological distance. The diagonal is always 100% (each Justice agrees with themselves).</p>
+<div id="cell-fig-heatmap" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(agreement, index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>justices, columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>justices)</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.5</span>))</span>
+<span id="cb1-4">sns.heatmap(</span>
+<span id="cb1-5">    df, annot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, fmt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"d"</span>, cmap<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"RdYlGn"</span>,</span>
+<span id="cb1-6">    vmin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, vmax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, linecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb1-7">    square<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, cbar_kws<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Agreement %"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shrink"</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>}, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ax,</span>
+<span id="cb1-8">)</span>
+<span id="cb1-9">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SCOTUS OT2024 Pairwise Agreement Rates (approx.)"</span>,</span>
+<span id="cb1-10">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>)</span>
+<span id="cb1-11">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb1-12">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb1-13">ax.xaxis.tick_top()</span>
+<span id="cb1-14">ax.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, rotation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span>)</span>
+<span id="cb1-15">ax.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>, rotation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-16">plt.tight_layout()</span>
+<span id="cb1-17">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-heatmap-output-1.png" width="810" height="719" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Pairwise agreement heatmap for OT2024. Thomas–Alito form the tightest bloc (97%). The liberal wing clusters at 86–94%. Barrett and Roberts sit in a moderate-conservative band, closer to Kagan than to Thomas.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have <em>higher</em> agreement with Kagan (~72–76%) than with Thomas (~70–72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.</p>
+</section>
+<section id="network-graph-judicial-alliances" class="level2">
+<h2 class="anchored" data-anchor-id="network-graph-judicial-alliances">4. Network Graph: Judicial Alliances</h2>
+<p>A network graph translates the agreement matrix into a spatial layout. Each Justice is a node; edges connect pairs who agree above a threshold. Thicker edges mean higher agreement. We’ll color nodes by their vote in the tariff case (green for majority, red for dissent) and use a spring layout so that closely-aligned justices gravitate together.</p>
+<div id="cell-fig-network" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">THRESHOLD <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">65</span></span>
+<span id="cb2-2">G <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nx.Graph()</span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> justices:</span>
+<span id="cb2-4">    G.add_node(j)</span>
+<span id="cb2-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(justices)):</span>
+<span id="cb2-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(justices)):</span>
+<span id="cb2-7">        pct <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> agreement[i][j]</span>
+<span id="cb2-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> pct <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> THRESHOLD:</span>
+<span id="cb2-9">            G.add_edge(justices[i], justices[j], weight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pct)</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">node_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#2ca02c"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> tariff_majority[j] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d62728"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> G.nodes()]</span>
+<span id="cb2-12">edge_weights <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [G[u][v][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"weight"</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> u, v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> G.edges()]</span>
+<span id="cb2-13">edge_widths <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [(w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> w <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> edge_weights]</span>
+<span id="cb2-14">pos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nx.spring_layout(G, seed<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>, k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, weight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"weight"</span>, iterations<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb2-15"></span>
+<span id="cb2-16">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>))</span>
+<span id="cb2-17">ax.set_facecolor(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>)</span>
+<span id="cb2-18">nx.draw_networkx_edges(G, pos, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ax, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>edge_widths, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, edge_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#888"</span>)</span>
+<span id="cb2-19">nx.draw_networkx_nodes(G, pos, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ax, node_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>node_colors, node_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2200</span>,</span>
+<span id="cb2-20">                       edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#333"</span>, linewidths<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>)</span>
+<span id="cb2-21">nx.draw_networkx_labels(G, pos, ax<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ax, font_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, font_weight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, font_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb2-22"></span>
+<span id="cb2-23">legend_elements <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-24">    Line2D([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"w"</span>, markerfacecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#2ca02c"</span>,</span>
+<span id="cb2-25">           markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Majority (strike down)"</span>),</span>
+<span id="cb2-26">    Line2D([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"w"</span>, markerfacecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d62728"</span>,</span>
+<span id="cb2-27">           markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Dissent (uphold)"</span>),</span>
+<span id="cb2-28">]</span>
+<span id="cb2-29">ax.legend(handles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>legend_elements, loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper left"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb2-30">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SCOTUS OT2024 Agreement Network</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">(edges </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\u2265</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">65% agreement; colored by tariff vote)"</span>,</span>
+<span id="cb2-31">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb2-32">ax.axis(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"off"</span>)</span>
+<span id="cb2-33">plt.tight_layout()</span>
+<span id="cb2-34">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-network-output-1.png" width="950" height="757" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Network graph of OT2024 alliances. Green = majority (strike down tariffs); Red = dissent (uphold). Edge thickness reflects agreement strength. Note how Roberts and Barrett bridge the liberal cluster and the conservative core.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between—structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.</p>
+</section>
+<section id="dissent-bloc-frequency" class="level2">
+<h2 class="anchored" data-anchor-id="dissent-bloc-frequency">5. Dissent Bloc Frequency</h2>
+<p>How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas–Alito–Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)</p>
+<div id="cell-fig-dissent-blocs" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">blocs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb3-2">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Alito"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d62728"</span>),</span>
+<span id="cb3-3">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Kavanaugh"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#e45756"</span>),</span>
+<span id="cb3-4">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Gorsuch"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ff9896"</span>),</span>
+<span id="cb3-5">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sotomayor</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Jackson"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#2ca02c"</span>),</span>
+<span id="cb3-6">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sotomayor</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Kagan</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Jackson"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#98df8a"</span>),</span>
+<span id="cb3-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Gorsuch</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Kavanaugh"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffbb78"</span>),</span>
+<span id="cb3-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Gorsuch</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">(solo)"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#aec7e8"</span>),</span>
+<span id="cb3-9">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">(solo)"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#c5b0d5"</span>),</span>
+<span id="cb3-10">]</span>
+<span id="cb3-11"></span>
+<span id="cb3-12">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb3-13">counts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb3-14">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb3-15"></span>
+<span id="cb3-16">order <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argsort(counts)[::<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb3-17">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [labels[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb3-18">counts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [counts[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb3-19">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [colors[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb3-20"></span>
+<span id="cb3-21">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.5</span>))</span>
+<span id="cb3-22">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(labels)), counts, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#333"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>)</span>
+<span id="cb3-23">ax.set_yticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(labels)))</span>
+<span id="cb3-24">ax.set_yticklabels(labels, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb3-25">ax.invert_yaxis()</span>
+<span id="cb3-26">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of divided opinions"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>)</span>
+<span id="cb3-27">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Most Common Dissent Blocs </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\u2014</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb3-28">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb3-29"></span>
+<span id="cb3-30">tariff_idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> labels.index(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Kavanaugh"</span>)</span>
+<span id="cb3-31">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Tariff dissent bloc"</span>, xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(counts[tariff_idx] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, tariff_idx),</span>
+<span id="cb3-32">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#d62728"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb3-33"></span>
+<span id="cb3-34"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bar, count <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(bars, counts):</span>
+<span id="cb3-35">    ax.text(bar.get_width() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, bar.get_y() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb3-36">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(count), va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb3-37"></span>
+<span id="cb3-38">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb3-39">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb3-40">plt.tight_layout()</span>
+<span id="cb3-41">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-dissent-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-dissent-blocs-output-1.png" width="950" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Frequency of dissent blocs in OT2024 divided opinions. The Thomas–Alito pair is the most common dissenting duo. The Thomas–Alito–Kavanaugh trio (the tariff dissent bloc) appears in approximately 8 divided cases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The Thomas–Alito pair is the Court’s most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases—making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.</p>
+</section>
+<section id="majority-agreement-blocs" class="level2">
+<h2 class="anchored" data-anchor-id="majority-agreement-blocs">6. Majority Agreement Blocs</h2>
+<p>Dissent blocs tell only half the story. Which groups of Justices most frequently form the <em>core</em> of majority coalitions? This chart shows the most common majority-agreement blocs—groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.</p>
+<div id="cell-fig-majority-blocs" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">blocs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb4-2">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All 6 conservatives"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#1f77b4"</span>),</span>
+<span id="cb4-3">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Roberts + Kavanaugh</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Barrett"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#4a90d9"</span>),</span>
+<span id="cb4-4">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Roberts + Barrett</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Kagan"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#6baed6"</span>),</span>
+<span id="cb4-5">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Roberts + Gorsuch</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Barrett + liberals"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#2ca02c"</span>),</span>
+<span id="cb4-6">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All 3 liberals</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Roberts"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#98df8a"</span>),</span>
+<span id="cb4-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Unanimous</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">(all 9)"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#9467bd"</span>),</span>
+<span id="cb4-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Gorsuch + Thomas</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Alito + liberals"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ff7f0e"</span>),</span>
+<span id="cb4-9">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Barrett + Kavanaugh</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Roberts + liberals"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#bcbd22"</span>),</span>
+<span id="cb4-10">]</span>
+<span id="cb4-11"></span>
+<span id="cb4-12">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb4-13">counts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb4-14">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> blocs]</span>
+<span id="cb4-15"></span>
+<span id="cb4-16">order <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.argsort(counts)[::<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-17">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [labels[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb4-18">counts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [counts[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb4-19">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [colors[i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order]</span>
+<span id="cb4-20"></span>
+<span id="cb4-21">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.5</span>))</span>
+<span id="cb4-22">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(labels)), counts, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#333"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>)</span>
+<span id="cb4-23">ax.set_yticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(labels)))</span>
+<span id="cb4-24">ax.set_yticklabels(labels, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb4-25">ax.invert_yaxis()</span>
+<span id="cb4-26">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of opinions"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>)</span>
+<span id="cb4-27">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Most Common Majority Blocs </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\u2014</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> SCOTUS OT2024 (approx.)"</span>,</span>
+<span id="cb4-28">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb4-29"></span>
+<span id="cb4-30">tariff_idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> labels.index(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Roberts + Gorsuch</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+ Barrett + liberals"</span>)</span>
+<span id="cb4-31">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\u2190</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> Tariff majority bloc"</span>, xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(counts[tariff_idx] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, tariff_idx),</span>
+<span id="cb4-32">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#2ca02c"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb4-33"></span>
+<span id="cb4-34"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bar, count <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(bars, counts):</span>
+<span id="cb4-35">    ax.text(bar.get_width() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, bar.get_y() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-36">            <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(count), va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb4-37"></span>
+<span id="cb4-38">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-39">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-40">plt.tight_layout()</span>
+<span id="cb4-41">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-majority-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-majority-blocs-output-1.png" width="950" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisions dominate, followed by the Roberts–Kavanaugh–Barrett conservative-center trio. The tariff majority configuration (Roberts + Gorsuch + Barrett + all three liberals) appears in roughly 6 divided cases.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court’s most common configuration is unanimity (28 cases). The tariff-case coalition—Roberts, Gorsuch, and Barrett joining all three liberals—is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">7. Conclusion</h2>
+<p>The data tell a consistent story: the 6–3 tariff ruling was not an anomaly but a reflection of <strong>structural fault lines</strong> within the conservative supermajority.</p>
+<ul>
+<li><strong>Thomas and Alito</strong> form the Court’s tightest voting bloc (97% agreement), and Kavanaugh is their most frequent third vote. This trio’s tariff dissent fits their overall pattern.</li>
+<li><strong>Roberts and Barrett</strong> occupy a centrist-conservative position with higher cross-ideological agreement, especially with Kagan. Their placement in the majority coalition was structurally predictable.</li>
+<li><strong>Gorsuch</strong> has a well-documented textualist streak on separation-of-powers questions. His vote to strike down IEEPA tariffs aligns with his broader jurisprudential profile, not just this case.</li>
+<li><strong>The liberal bloc</strong> (Sotomayor, Kagan, Jackson) votes cohesively in divided cases, making them a reliable foundation for any cross-ideological majority.</li>
+</ul>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>The pairwise agreement matrix is approximate. The full OT2024 matrix is assembled from reported Stat Pack highlights and estimates; individual cell values may differ from the official data by a few percentage points.</li>
+<li>Dissent and majority bloc counts are based on available case summaries and may not capture every nuance of partial concurrences and dissents.</li>
+<li>Agreement rates measure <em>outcome</em> alignment, not <em>reasoning</em> alignment. Two Justices can reach the same result for very different reasons.</li>
+</ul>
+<p>Despite these caveats, the visualizations offer a compelling lens on the Court’s internal dynamics. The tariff ruling wasn’t a bolt from the blue—it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">8. References</h2>
+<ol type="1">
+<li><a href="https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf">Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a> — Full opinion (PDF)</li>
+<li><a href="https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/">SCOTUSblog: Supreme Court strikes down tariffs</a></li>
+<li><a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Stat Pack, OT2024 (Final, June 27, 2025)</a></li>
+<li><a href="https://www.scotusblog.com/statistics/">SCOTUSblog Statistics Hub</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Learning_Resources,_Inc._v._Trump">Wikipedia: Learning Resources, Inc.&nbsp;v. Trump</a></li>
+<li><a href="https://taxfoundation.org/blog/supreme-court-trump-tariffs-ruling/">Tax Foundation: Supreme Court Trump Tariffs Ruling Analysis</a></li>
+<li><a href="https://www.scotusblog.com/cases/case-files/trump-v-v-o-s-selections/">SCOTUSblog: Trump v. V.O.S. Selections case page</a></li>
+<li><a href="https://supreme.justia.com/cases/federal/us/607/24-1287/">Justia: Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a></li>
+</ol>
+
+
+<!-- -->
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701–1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.↩︎</p></li>
+<li id="fn2"><p>OT: October Term. The Supreme Court’s annual session begins on the first Monday in October. “OT2024” refers to the term that started in October 2024 and ended in June 2025.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>supreme court</category>
+  <category>data visualization</category>
+  <category>law</category>
+  <category>politics</category>
+  <guid>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/</guid>
+  <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>US Inflation Is Cooling Off — Here’s What the Numbers Really Say</title>
   <link>https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/</link>
