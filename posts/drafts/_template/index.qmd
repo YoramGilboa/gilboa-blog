@@ -1,0 +1,36 @@
+---
+title: "Post Title"
+date: "YYYY-MM-DD"
+categories: []
+draft: true
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+## Introduction
+
+<!-- Opening paragraph: what is the question and why does it matter? -->
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+<!-- Describe data sources and any pipeline scripts here -->
+:::
+
+```{python}
+#| echo: false
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+```
+
+## Section
+
+<!-- Body of the post -->
+
+## Conclusion
+
+<!-- Key takeaways -->
