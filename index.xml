@@ -10,7 +10,1534 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Sun, 22 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 01 Mar 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Great Inflation Divergence: Why Core PPI Exploded While CPI Stayed Cool</title>
+  <link>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>On February 13, 2026, the Consumer Price Index for January landed soft: headline +0.2% month-over-month<sup>1</sup> (below the +0.3% consensus), core +0.3% (in line), headline year-over-year at <strong>+2.4%</strong>. Rate-cut dreams stayed intact. Two weeks later, on February 27, 2026, the Producer Price Index detonated that calm. Headline PPI came in at +0.5% m/m versus +0.3% expected — but the real shock was buried one layer deeper: <strong>final demand services less food, energy, and trade services surged +0.8% month-over-month</strong>, the sharpest monthly services gain since July 2025. Dow futures dropped roughly 700 points intraday. The bond market flinched. “Higher for longer” was back.</p>
+<p>How do two flagship inflation measures, released two weeks apart and covering the same month, tell such different stories?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All figures in this post are drawn from official BLS releases: the <a href="https://www.bls.gov/news.release/cpi.nr0.htm">CPI Summary</a> (February 13, 2026) and the <a href="https://www.bls.gov/news.release/ppi.nr0.htm">PPI Detailed Report</a> (February 27, 2026). Time-series charts use CPI and PPI index data from <a href="https://fred.stlouisfed.org/">FRED</a>. CPI and PPI use different methodologies, coverage, and weighting schemes — the BLS itself notes that “there are many reasons why the PPI and CPI may diverge.” Component-level PPI breakdowns (trade services margins, equipment wholesaling) are from the BLS detailed tables and are not available as FRED series.</p>
+</div>
+</div>
+</div>
+<div id="acc7becf" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">+0.3%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">CPI Core (m/m)</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">+0.8%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">PPI Services (m/m)</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">+2.5%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Trade Margins (m/m)</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">+3.6%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">PPI Core (y/y)</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">Data as of January 2026 | Source: Bureau of Labor Statistics</p>
+</div>
+</div>
+<section id="core-ppi-vs.-core-cpi-a-side-by-side" class="level2">
+<h2 class="anchored" data-anchor-id="core-ppi-vs.-core-cpi-a-side-by-side">1. Core PPI vs.&nbsp;Core CPI: A Side-by-Side</h2>
+<p>These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level — upstream margins and business-to-business transactions that haven’t reached consumer shelves yet.</p>
+<div id="31e25ec6" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header" style="border-bottom: 2px solid #333;">
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.75rem 0.5rem; vertical-align: middle;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.75rem 0.5rem; vertical-align: middle;"><strong>Core CPI</strong> (ex food &amp; energy)</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.75rem 0.5rem; vertical-align: middle;"><strong>Core PPI</strong> (ex food, energy &amp; trade)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 0.5rem; font-weight: 600">Measures</td>
+<td style="padding: 0.5rem">Retail prices paid by consumers</td>
+<td style="padding: 0.5rem">Wholesale prices received by producers</td>
+</tr>
+<tr class="even" style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+<td style="padding: 0.5rem; font-weight: 600">Perspective</td>
+<td style="padding: 0.5rem">End consumer</td>
+<td style="padding: 0.5rem">B2B / early pipeline</td>
+</tr>
+<tr class="odd" style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 0.5rem; font-weight: 600">Includes imports?</td>
+<td style="padding: 0.5rem">Yes</td>
+<td style="padding: 0.5rem">No</td>
+</tr>
+<tr class="even" style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+<td style="padding: 0.5rem; font-weight: 600">Third-party payments?</td>
+<td style="padding: 0.5rem">No (household spending only)</td>
+<td style="padding: 0.5rem">Yes (e.g. employer health plans)</td>
+</tr>
+<tr class="odd" style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 0.5rem; font-weight: 600">Services scope</td>
+<td style="padding: 0.5rem">Broad (rent, medical, education)</td>
+<td style="padding: 0.5rem">Partial (excludes most govt services)</td>
+</tr>
+<tr class="even" style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
+<td style="padding: 0.5rem; font-weight: 600">Lead / lag</td>
+<td style="padding: 0.5rem">Lagging indicator</td>
+<td style="padding: 0.5rem">Often leads CPI by 3–9 months</td>
+</tr>
+<tr class="odd" style="border-bottom: 1px solid #e2e8f0;">
+<td style="padding: 0.5rem; font-weight: 600">Jan 2026 m/m</td>
+<td style="padding: 0.5rem">+0.3% (as expected)</td>
+<td style="padding: 0.5rem">Services: <strong>+0.8%</strong> (big surprise)</td>
+</tr>
+<tr class="even" style="border-bottom: 2px solid #333;">
+<td style="padding: 0.5rem; font-weight: 600">Jan 2026 y/y</td>
+<td style="padding: 0.5rem">+2.5%</td>
+<td style="padding: 0.5rem">~+3.6% (highest in ~10 months)</td>
+</tr>
+</tbody>
+</table>
+
+<p style="font-size: 0.8rem; color: #64748b; margin-top: -0.5rem;">CPI measures downstream consumer prices; PPI measures upstream producer prices. The January divergence was unusually wide.</p>
+</div>
+</div>
+<p>That lead-lag relationship is the key detail. PPI often signals where CPI is headed three to nine months from now. When they diverge this sharply, it isn’t noise — it’s a warning.</p>
+<div id="cell-fig-ppi-cpi-history" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Exhibit 1b: Historical PPI vs CPI Year-over-Year (long view)</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5">df_hist <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_monthly[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>]].dropna()</span>
+<span id="cb1-6">df_hist <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_hist.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2020-01'</span>:]</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'fed_target'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-11">ax.text(df_hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.15</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Fed 2% target'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'fed_target'</span>],</span>
+<span id="cb1-12">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bottom'</span>)</span>
+<span id="cb1-13"></span>
+<span id="cb1-14">ax.plot(df_hist.index, df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb1-15">        label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Core CPI (y/y)'</span>)</span>
+<span id="cb1-16">ax.plot(df_hist.index, df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-17">        linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Core PPI (y/y)'</span>)</span>
+<span id="cb1-18"></span>
+<span id="cb1-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Shade periods where PPI &gt; CPI (pipeline pressure building)</span></span>
+<span id="cb1-20">ax.fill_between(df_hist.index, df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>], df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>],</span>
+<span id="cb1-21">                where<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> df_hist[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>]),</span>
+<span id="cb1-22">                alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'PPI &gt; CPI (upstream pressure)'</span>)</span>
+<span id="cb1-23"></span>
+<span id="cb1-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Direct end labels</span></span>
+<span id="cb1-25"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> col, color, label <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [</span>
+<span id="cb1-26">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Core CPI: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_yoy'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>),</span>
+<span id="cb1-27">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Core PPI: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_core_yoy'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>),</span>
+<span id="cb1-28">]:</span>
+<span id="cb1-29">    last_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_hist[col].iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb1-30">    ax.text(df_hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], last_val, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>,</span>
+<span id="cb1-31">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb1-32"></span>
+<span id="cb1-33">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Year-over-Year Change (%)'</span>)</span>
+<span id="cb1-34">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb1-35">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb1-36">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df_hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>))</span>
+<span id="cb1-37">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-38">plt.tight_layout()</span>
+<span id="cb1-39">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-ppi-cpi-history" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ppi-cpi-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-ppi-cpi-history-output-1.png" width="951" height="472" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ppi-cpi-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Core CPI and core PPI year-over-year since 2020. PPI (red dashed) has historically led CPI (blue) at turning points by 3–9 months. The shaded region highlights periods when PPI ran above CPI — pipeline pressure that historically resolves by CPI moving toward PPI, not the other way around.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="why-0.8-rattled-markets" class="level2">
+<h2 class="anchored" data-anchor-id="why-0.8-rattled-markets">2. Why +0.8% Rattled Markets</h2>
+<p>Consensus forecasts had core PPI services<sup>2</sup> landing between +0.3% and +0.6%. The actual <strong>+0.8%</strong> wasn’t just an upside miss — it was nearly double the high end of expectations. And it drove virtually the entire headline PPI beat.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Market impact
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The PPI release flipped rate-cut expectations overnight. Markets had been pricing ~60-70% odds of a June 2026 Fed cut after the dovish CPI print. Post-PPI, June cut probability dropped sharply. Two-year Treasury yields spiked roughly 10 basis points intraday. September became the new base case for most desks.</p>
+</div>
+</div>
+<p>The sequencing mattered. A soft CPI lulled markets into complacency. Then PPI showed that upstream price pressures were accelerating, not cooling. The whiplash was sharp.</p>
+<div id="cell-fig-cpi-ppi-monthly" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CPI vs PPI Services: Month-over-Month Comparison</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Use CPI core and PPI core m/m columns from FRED data</span></span>
+<span id="cb2-6">df_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_monthly[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_mom'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_final_demand_mom'</span>]].dropna()</span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Filter to recent months for clarity</span></span>
+<span id="cb2-9">df_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2025-01'</span>:]</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb2-12"></span>
+<span id="cb2-13">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_plot))</span>
+<span id="cb2-14">width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span></span>
+<span id="cb2-15"></span>
+<span id="cb2-16">bars_cpi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.bar(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_mom'</span>], width,</span>
+<span id="cb2-17">                  color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Core CPI (m/m)'</span>)</span>
+<span id="cb2-18">bars_ppi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.bar(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_final_demand_mom'</span>], width,</span>
+<span id="cb2-19">                  color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'PPI Services (m/m)'</span>)</span>
+<span id="cb2-20"></span>
+<span id="cb2-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Labels</span></span>
+<span id="cb2-22">month_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [d.strftime(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_plot.index]</span>
+<span id="cb2-23">ax.set_xticks(x)</span>
+<span id="cb2-24">ax.set_xticklabels(month_labels, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb2-25">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Month-over-Month Change (%)'</span>)</span>
+<span id="cb2-26"></span>
+<span id="cb2-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Annotate the January 2026 PPI bar if present</span></span>
+<span id="cb2-28"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_plot) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-29">    last_ppi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi_final_demand_mom'</span>].iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-30">    last_cpi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_core_mom'</span>].iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-31">    ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_ppi<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%'</span>, xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, last_ppi),</span>
+<span id="cb2-32">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb2-33">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>],</span>
+<span id="cb2-34">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>))</span>
+<span id="cb2-35">    ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_cpi<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%'</span>, xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, last_cpi),</span>
+<span id="cb2-36">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb2-37">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>],</span>
+<span id="cb2-38">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>))</span>
+<span id="cb2-39"></span>
+<span id="cb2-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reference line at zero</span></span>
+<span id="cb2-41">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-42"></span>
+<span id="cb2-43">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper left'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb2-44">plt.tight_layout()</span>
+<span id="cb2-45">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-cpi-ppi-monthly" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cpi-ppi-monthly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-cpi-ppi-monthly-output-1.png" width="944" height="467" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cpi-ppi-monthly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Core CPI and PPI final demand services, month-over-month. The January 2026 divergence is stark — PPI services jumped while CPI held steady. Note: the BLS’s narrower ‘services less food, energy, and trade’ measure surged even more (+0.8%).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-smoking-gun-wholesale-margin-expansion" class="level2">
+<h2 class="anchored" data-anchor-id="the-smoking-gun-wholesale-margin-expansion">3. The Smoking Gun: Wholesale Margin Expansion</h2>
+<p>The BLS component breakdown tells the story clearly:</p>
+<ul>
+<li><strong>Final demand services overall:</strong> +0.8% m/m</li>
+<li><strong>Final demand trade services margins:</strong> +2.5% m/m — the single biggest contributor</li>
+<li>Within that, <strong>professional &amp; commercial equipment wholesaling margins</strong> surged <strong>+14.4% m/m</strong>, accounting for more than 20% of the total services increase</li>
+<li>Other notable margin widenings: apparel/footwear retailing, chemicals &amp; plastics wholesaling, health &amp; beauty aids retailing, food &amp; alcohol wholesaling/retailing</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The +14.4% margin surge
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>+14.4% monthly increase</strong> in equipment wholesaling margins is extraordinary by any historical standard. This isn’t cost pass-through — it’s pricing power. Wholesalers actively expanding profit margins, not merely relaying higher input costs downstream.</p>
+</div>
+</div>
+<div id="cell-fig-ppi-components" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># PPI Component Breakdown: What Drove the +0.8%</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-4"></span>
+<span id="cb3-5">df_comp <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_components.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mom_change'</span>, ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb3-8"></span>
+<span id="cb3-9">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_comp[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mom_change'</span>]]</span>
+<span id="cb3-10"></span>
+<span id="cb3-11">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_comp)), df_comp[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mom_change'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>)</span>
+<span id="cb3-12"></span>
+<span id="cb3-13">ax.set_yticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_comp)))</span>
+<span id="cb3-14">ax.set_yticklabels(df_comp[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'component'</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb3-15">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Month-over-Month Change (%)'</span>)</span>
+<span id="cb3-16"></span>
+<span id="cb3-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Value labels at end of each bar</span></span>
+<span id="cb3-18"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (val, bar) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(df_comp[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mom_change'</span>], bars)):</span>
+<span id="cb3-19">    ax.text(val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, i, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb3-20">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'normal'</span>,</span>
+<span id="cb3-21">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>])</span>
+<span id="cb3-22"></span>
+<span id="cb3-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reference line at zero</span></span>
+<span id="cb3-24">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb3-25"></span>
+<span id="cb3-26">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'January 2026 PPI Services Components (m/m %)'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>,</span>
+<span id="cb3-27">             fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb3-28"></span>
+<span id="cb3-29">plt.tight_layout()</span>
+<span id="cb3-30">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-ppi-components" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ppi-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-ppi-components-output-1.png" width="956" height="568" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ppi-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: PPI component contributions to January 2026 services jump. Equipment wholesaling margins surged +14.4%, dwarfing all other components and accounting for over 20% of the total increase.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the pattern that keeps Fed officials awake. When businesses can widen margins without losing volume, it signals demand strong enough to absorb price hikes. That is the textbook definition of persistent, demand-driven services inflation.</p>
+<p>CPI, by contrast, looked tame for compositional reasons:</p>
+<ul>
+<li>Gasoline fell <strong>-3.2% m/m</strong>, pulling headline CPI down hard</li>
+<li>Shelter inflation continued its slow-motion deceleration as lagging 12-month rents kept unwinding</li>
+<li>Margin expansion and early tariff effects had not yet reached consumer shelves</li>
+</ul>
+<p>PPI caught the pressure upstream. CPI is still catching up.</p>
+</section>
+<section id="where-this-is-heading-the-2026-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-is-heading-the-2026-pipeline">4. Where This Is Heading: The 2026 Pipeline</h2>
+<p>The January data sets up five distinct pressure points for the rest of the year — each with its own timeline and implications.</p>
+<section id="the-pass-through-pipeline-is-loaded" class="level3">
+<h3 class="anchored" data-anchor-id="the-pass-through-pipeline-is-loaded">The pass-through pipeline is loaded</h3>
+<p>Wider wholesale margins frequently translate into higher retail prices three to nine months later. If services margins stay elevated through Q1, core CPI could re-accelerate mid-to-late 2026 — precisely when the Fed wants to be cutting, not worrying about a second inflation wave.</p>
+<div id="cell-fig-passthrough-timeline" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># PPI-to-CPI Pass-Through Timeline</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-4"></span>
+<span id="cb4-5">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb4-6"></span>
+<span id="cb4-7">months <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.date_range(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2025-10-01'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-12-01'</span>, freq<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'MS'</span>)</span>
+<span id="cb4-8">ax.set_xlim(months[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], months[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb4-9">ax.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb4-10"></span>
+<span id="cb4-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Remove y-axis (this is a schematic, not a data chart)</span></span>
+<span id="cb4-12">ax.set_yticks([])</span>
+<span id="cb4-13">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-14">ax.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bottom'</span>].set_position((<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data'</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>))</span>
+<span id="cb4-15"></span>
+<span id="cb4-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Pass-through window shading</span></span>
+<span id="cb4-17">passthrough_start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-04-01'</span>)</span>
+<span id="cb4-18">passthrough_end <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-10-01'</span>)</span>
+<span id="cb4-19">ax.axvspan(passthrough_start, passthrough_end, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>],</span>
+<span id="cb4-20">           zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-21">ax.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-07-01'</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.75</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Expected CPI</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">pass-through window'</span>,</span>
+<span id="cb4-22">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>],</span>
+<span id="cb4-23">        fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, fontstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'italic'</span>)</span>
+<span id="cb4-24">ax.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-07-01'</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'(3–9 months after PPI signal)'</span>,</span>
+<span id="cb4-25">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>])</span>
+<span id="cb4-26"></span>
+<span id="cb4-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># PPI event marker</span></span>
+<span id="cb4-28">ppi_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-01-01'</span>)</span>
+<span id="cb4-29">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ppi_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb4-30">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Jan 2026 PPI</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Services +0.8%'</span>, xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(ppi_date, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>),</span>
+<span id="cb4-31">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb4-32">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb4-33">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ppi'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb4-34"></span>
+<span id="cb4-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CPI event marker</span></span>
+<span id="cb4-36">cpi_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-01-01'</span>)</span>
+<span id="cb4-37">ax.plot(cpi_date, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb4-38">ax.text(cpi_date, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CPI +0.3%'</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb4-39">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb4-40"></span>
+<span id="cb4-41"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Next release markers</span></span>
+<span id="cb4-42">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-03-11'</span>), color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb4-43">           linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb4-44">ax.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-03-11'</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.95</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Feb CPI  Mar 11'</span>,</span>
+<span id="cb4-45">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], rotation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-46"></span>
+<span id="cb4-47">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-03-18'</span>), color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb4-48">           linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb4-49">ax.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'2026-03-18'</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Feb PPI  Mar 18'</span>,</span>
+<span id="cb4-50">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], rotation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-51"></span>
+<span id="cb4-52"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Format x-axis</span></span>
+<span id="cb4-53">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb4-54">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb4-55"></span>
+<span id="cb4-56">plt.tight_layout()</span>
+<span id="cb4-57">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-passthrough-timeline" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-passthrough-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-passthrough-timeline-output-1.png" width="950" height="278" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-passthrough-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: PPI typically leads CPI by 3 to 9 months. If the January PPI surge passes through to consumers, the effect would appear in CPI between April and October 2026.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-feds-2-framework-is-under-strain" class="level3">
+<h3 class="anchored" data-anchor-id="the-feds-2-framework-is-under-strain">The Fed’s 2% framework is under strain</h3>
+<p>Chair Powell has staked credibility on engineering a smooth return to the 2% target. The January PPI complicates that narrative. Annualize a +0.8% monthly services print and you’re looking at nearly 10.0% — obviously unsustainable if it persists. June 2026 rate-cut odds cratered post-release. Some desks are now penciling in no cuts at all this year. The FOMC tension is real: doves want to ease before labor markets crack, hawks point to exactly this kind of print as proof the job isn’t done.</p>
+</section>
+<section id="bond-and-equity-implications" class="level3">
+<h3 class="anchored" data-anchor-id="bond-and-equity-implications">Bond and equity implications</h3>
+<p><strong>For fixed income:</strong> If services inflation re-accelerates and PPI leads CPI by the historical three-to-nine-month window, the late-2025 bond rally was built on shaky ground. Long-duration Treasuries priced for a cutting cycle could reprice sharply. The 10-year yield, which had drifted toward the low 4s, may have further to climb.</p>
+<p><strong>For equities:</strong> The picture is split. Companies exposed to services input costs — healthcare, professional services, logistics — may see margin compression if they can’t pass costs downstream. Conversely, the wholesalers <em>generating</em> those margin expansions are thriving for now. Pricing power is the most valuable asset in an inflationary environment. Goods-heavy sectors still benefit from ongoing goods disinflation.</p>
+<p><strong>For real assets:</strong> Persistent services inflation combined with tariff uncertainty is constructive for gold and select commodities. If “higher for longer” reasserts as the dominant narrative, inflation hedges tend to outperform.</p>
+</section>
+<section id="the-tariff-wild-card" class="level3">
+<h3 class="anchored" data-anchor-id="the-tariff-wild-card">The tariff wild card</h3>
+<p>Early 2026 tariff signaling appears to be manifesting first as margin expansion rather than raw goods inflation. Wholesalers may be front-running expected cost increases by raising prices preemptively. If true, this PPI print reflects not just current demand but <em>anticipated</em> supply-side disruptions — a pattern that could keep core services sticky even as goods prices remain soft.</p>
+</section>
+<section id="real-wages-and-consumer-behavior" class="level3">
+<h3 class="anchored" data-anchor-id="real-wages-and-consumer-behavior">Real wages and consumer behavior</h3>
+<p>Nominal wage growth has been running around 3.5-4% year-over-year. With headline CPI near 2.4%, real wages remain positive and consumers keep spending. But if PPI-to-CPI pass-through materializes and core CPI drifts back above 3% by late 2026, that cushion evaporates. Discretionary spending absorbs the hit first — restaurants, travel, electronics. The two-speed inflation dynamic (cheap goods, expensive services) continues to squeeze households that spend disproportionately on services like healthcare, childcare, and housing.</p>
+</section>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
+<p><strong>For the Fed:</strong> The smooth glide path back to 2% just got a lot bumpier. The January PPI print is not sufficient to change the rate trajectory on its own, but two or three more readings like this would force a material hawkish repricing.</p>
+<p><strong>For investors:</strong> Watch the margin data. If wholesale trade services margins stay elevated in the February PPI (March 18, 2026), the pass-through risk to consumer prices — and to the rate-cut calendar — becomes much harder to dismiss.</p>
+<p><strong>For consumers:</strong> The headline CPI looks fine today. But the upstream pipeline is pressurized. If you’ve noticed prices at the register creeping up in categories like electronics, apparel, or health and beauty, the PPI data suggests that trend has legs.</p>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>PPI-to-CPI pass-through is not mechanical; timing and magnitude vary by category and competitive dynamics</li>
+<li>One month of elevated margins does not constitute a trend; February data will be critical</li>
+<li>The +14.4% equipment wholesaling margin surge may reflect seasonal or one-off factors that partially reverse</li>
+</ul>
+<p><strong>Next key prints:</strong></p>
+<ul>
+<li><strong>March 11, 2026</strong> — February CPI</li>
+<li><strong>March 18, 2026</strong> — February PPI</li>
+</ul>
+<p>If the margin expansion story continues into February’s data, “higher for longer” could easily become “higher for <em>even</em> longer” — and the 2026 rate-cut calendar may need to be rewritten entirely.</p>
+</section>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<p>All time-series data sourced from <a href="https://fred.stlouisfed.org/">FRED</a> (Federal Reserve Economic Data). Component-level PPI breakdowns from BLS detailed release tables.</p>
+<table class="caption-top table">
+<caption>Data series used in this analysis. FRED series provide historical time-series data; BLS detailed tables provide component-level breakdowns not available through FRED.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPIAUCSL</td>
+<td>CPI-U All Items, Seasonally Adjusted</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="even">
+<td>CPILFESL</td>
+<td>CPI-U Less Food &amp; Energy, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="odd">
+<td>PPIFIS</td>
+<td>PPI Final Demand Services, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="even">
+<td>WPSFD4111</td>
+<td>PPI Final Demand less Food, Energy &amp; Trade, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="odd">
+<td>PPI Detailed Report</td>
+<td>Component-level PPI (trade margins, equipment wholesaling)</td>
+<td><a href="https://www.bls.gov/news.release/ppi.nr0.htm">BLS</a></td>
+</tr>
+<tr class="even">
+<td>CPI Summary</td>
+<td>January 2026 CPI release</td>
+<td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Data current as of February 27, 2026 (January 2026 PPI release).</em></p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><strong>Month-over-month (m/m)</strong> measures the percentage change in a price index from one month to the next. It captures short-term momentum but can be noisy. To gauge what a single month’s reading <em>would</em> imply over a full year, analysts sometimes annualize it — compounding the monthly rate twelve times: (1 + m/m)<sup>12</sup> − 1. A +0.3% monthly print annualizes to roughly 3.7%; a +0.8% print annualizes to nearly 10%. Annualization is useful for context but misleading if treated as a forecast, since no single month sustains its pace indefinitely. <strong>Year-over-year (y/y)</strong> is the more stable measure: it compares the index level to the same month twelve months earlier, smoothing out monthly volatility.↩︎</p></li>
+<li id="fn2"><p>Core PPI services here refers to the BLS measure “final demand services less food, energy, and trade services” — the narrowest and most policy-relevant cut of producer services inflation.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>economics</category>
+  <category>inflation</category>
+  <category>data analysis</category>
+  <guid>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/</guid>
+  <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Visualizing Supreme Court Alliances</title>
   <link>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/</link>
