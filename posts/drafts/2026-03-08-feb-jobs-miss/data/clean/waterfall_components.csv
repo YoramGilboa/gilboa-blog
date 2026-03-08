@@ -1,0 +1,15 @@
+label,value,factor,bar_type
+Expected,50000,baseline,start
+"Healthcare
+strikes",-37000,strikes,step
+"Transport
+strikes",-17000,strikes,step
+"Severe
+weather",-20000,weather,step
+"Geopolitical
+uncertainty",-18000,uncertainty,step
+"Sector
+slowdowns",-21000,slowdown,step
+"Other
+factors",-29000,other,step
+Actual,-92000,net,net

@@ -1,0 +1,9 @@
+sector,change,factor
+Healthcare,-28000,strikes
+Transportation & warehousing,-17000,strikes
+Information,-11000,slowdown
+Federal government,-10000,slowdown
+Construction,-8000,weather
+Manufacturing,-4000,weather
+Professional & business svcs,5000,other
+Leisure & hospitality,12000,other

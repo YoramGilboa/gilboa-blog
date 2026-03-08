@@ -11,13 +11,13 @@ code-summary: "Show code"
 
 ## Introduction
 
-On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In *Learning Resources, Inc. v. Trump* (consolidated with *Trump v. V.O.S. Selections, Inc.*), the Court struck down President Trump's sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)^[IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701--1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.] by a vote of **6--3**.
+On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In *Learning Resources, Inc. v. Trump* (consolidated with *Trump v. V.O.S. Selections, Inc.*), the Court struck down President Trump's sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)^[IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701-1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.] by a vote of **6-3**.
 
-Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito---all three arguing for a broader reading of executive power under the statute.
+Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito, all three arguing for a broader reading of executive power under the statute.
 
 What makes this case fascinating from a data perspective is the **cross-ideological coalition** it produced. The majority includes three justices appointed by Republican presidents (Roberts, Gorsuch, Barrett) alongside three appointed by Democratic presidents (Sotomayor, Kagan, Jackson). Meanwhile, the conservative bloc fractured: Thomas, Alito, and Kavanaugh dissented, but Gorsuch and Barrett broke away to join the majority.
 
-This post goes beyond the headlines. Using publicly available data from the [SCOTUSblog OT2024^[OT: October Term. The Supreme Court's annual session begins on the first Monday in October. "OT2024" refers to the term that started in October 2024 and ended in June 2025.] Stat Pack](https://www.scotusblog.com/statistics/), we'll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise---or whether the data already hinted at the fault lines within the conservative supermajority.
+This post goes beyond the headlines. Using publicly available data from the [SCOTUSblog OT2024^[OT: October Term. The Supreme Court's annual session begins on the first Monday in October. "OT2024" refers to the term that started in October 2024 and ended in June 2025.] Stat Pack](https://www.scotusblog.com/statistics/), we'll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise, or whether the data already hinted at the fault lines within the conservative supermajority.
 
 ## 1. Vote Breakdown
 
@@ -39,7 +39,7 @@ The opinion was notably splintered. Roberts delivered Parts I, II-A-1, and II-B 
 
 ## 2. Data Sources
 
-The visualizations below draw on the [SCOTUSblog Final Stat Pack for October Term 2024](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf), published June 27, 2025. That document provides pairwise agreement rates---the percentage of cases in which each pair of Justices voted together.
+The visualizations below draw on the [SCOTUSblog Final Stat Pack for October Term 2024](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf), published June 27, 2025. That document provides pairwise agreement rates: the percentage of cases in which each pair of Justices voted together.
 
 Key data points from the Stat Pack:
 
@@ -50,7 +50,7 @@ Key data points from the Stat Pack:
 - **Barrett** was in the majority 89% of the time
 - **Kagan** was in the majority 83% of the time
 
-For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6--3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.
+For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6-3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.
 
 ::: {.callout-note collapse="true"}
 ## Note on data
@@ -126,7 +126,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have *higher* agreement with Kagan (~72--76%) than with Thomas (~70--72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.
+The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have *higher* agreement with Kagan (~72-76%) than with Thomas (~70-72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.
 
 ## 4. Network Graph: Judicial Alliances
 
@@ -172,11 +172,11 @@ plt.tight_layout()
 plt.show()
 ```
 
-The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between---structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.
+The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between, structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.
 
 ## 5. Dissent Bloc Frequency
 
-How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas--Alito--Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)
+How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas-Alito-Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)
 
 ```{python}
 #| label: fig-dissent-blocs
@@ -225,11 +225,11 @@ plt.tight_layout()
 plt.show()
 ```
 
-The Thomas--Alito pair is the Court's most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases---making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.
+The Thomas-Alito pair is the Court's most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases, making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.
 
 ## 6. Majority Agreement Blocs
 
-Dissent blocs tell only half the story. Which groups of Justices most frequently form the *core* of majority coalitions? This chart shows the most common majority-agreement blocs---groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.
+Dissent blocs tell only half the story. Which groups of Justices most frequently form the *core* of majority coalitions? This chart shows the most common majority-agreement blocs: groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.
 
 ```{python}
 #| label: fig-majority-blocs
@@ -278,11 +278,11 @@ plt.tight_layout()
 plt.show()
 ```
 
-The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court's most common configuration is unanimity (28 cases). The tariff-case coalition---Roberts, Gorsuch, and Barrett joining all three liberals---is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.
+The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court's most common configuration is unanimity (28 cases). The tariff-case coalition (Roberts, Gorsuch, and Barrett joining all three liberals) is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.
 
 ## 7. Conclusion
 
-The data tell a consistent story: the 6--3 tariff ruling was not an anomaly but a reflection of **structural fault lines** within the conservative supermajority.
+The data tell a consistent story: the 6-3 tariff ruling was not an anomaly but a reflection of **structural fault lines** within the conservative supermajority.
 
 - **Thomas and Alito** form the Court's tightest voting bloc (97% agreement), and Kavanaugh is their most frequent third vote. This trio's tariff dissent fits their overall pattern.
 - **Roberts and Barrett** occupy a centrist-conservative position with higher cross-ideological agreement, especially with Kagan. Their placement in the majority coalition was structurally predictable.
@@ -295,11 +295,11 @@ The data tell a consistent story: the 6--3 tariff ruling was not an anomaly but 
 - Dissent and majority bloc counts are based on available case summaries and may not capture every nuance of partial concurrences and dissents.
 - Agreement rates measure *outcome* alignment, not *reasoning* alignment. Two Justices can reach the same result for very different reasons.
 
-Despite these caveats, the visualizations offer a compelling lens on the Court's internal dynamics. The tariff ruling wasn't a bolt from the blue---it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.
+Despite these caveats, the visualizations offer a compelling lens on the Court's internal dynamics. The tariff ruling wasn't a bolt from the blue; it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.
 
 ## 8. References
 
-1. [Learning Resources, Inc. v. Trump, 607 U.S. ___ (2026)](https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf) --- Full opinion (PDF)
+1. [Learning Resources, Inc. v. Trump, 607 U.S. ___ (2026)](https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf) - Full opinion (PDF)
 2. [SCOTUSblog: Supreme Court strikes down tariffs](https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/)
 3. [SCOTUSblog Stat Pack, OT2024 (Final, June 27, 2025)](https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf)
 4. [SCOTUSblog Statistics Hub](https://www.scotusblog.com/statistics/)

@@ -1,5 +1,5 @@
 ---
-title: "US Inflation Is Cooling Off — Here's What the Numbers Really Say"
+title: "US Inflation Is Cooling Off: Here's What the Numbers Really Say"
 date: "2026-02-16"
 categories: [economics, data analysis, inflation]
 toc: true
@@ -8,17 +8,17 @@ code-fold: true
 code-summary: "Show code"
 ---
 
-US consumer prices rose 2.8% year-over-year in January 2026 — down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story isn't in the headline number. It's in the momentum, the decomposition, and the structural dynamics underneath.
+US consumer prices rose 2.8% year-over-year in January 2026, down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story isn't in the headline number. It's in the momentum, the decomposition, and the structural dynamics underneath.
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this analysis
 
 The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:
 
-- `01_fetch_data.py` — Fetches data from FRED (requires free API key)
-- `02_clean_data.py` — Cleans and computes derived series
-- `03_visualizations.py` — Generates all charts
-- `04_compute_stats.py` — Computes summary statistics
+- `01_fetch_data.py` - Fetches data from FRED (requires free API key)
+- `02_clean_data.py` - Cleans and computes derived series
+- `03_visualizations.py` - Generates all charts
+- `04_compute_stats.py` - Computes summary statistics
 
 All data sourced from [FRED](https://fred.stlouisfed.org/) (Federal Reserve Economic Data).
 :::
@@ -159,7 +159,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The trend is clear: inflation has been on a slow, grinding path lower since the post-pandemic peak. But the headline number can be misleading — it's a trailing 12-month average that smooths over what's actually happening right now.
+The trend is clear: inflation has been on a slow, grinding path lower since the post-pandemic peak. But the headline number can be misleading: it's a trailing 12-month average that smooths over what's actually happening right now.
 
 ## Beyond the Headline
 
@@ -168,7 +168,7 @@ Two measures matter more than headline CPI for understanding where inflation is 
 ```{python}
 #| echo: true
 #| label: fig-three-measures
-#| fig-cap: "Headline, core, and supercore inflation. Supercore — services excluding energy — is the Fed's preferred gauge of underlying price pressure."
+#| fig-cap: "Headline, core, and supercore inflation. Supercore (services excluding energy) is the Fed's preferred gauge of underlying price pressure."
 
 # =============================================================================
 # Exhibit 2: Headline vs Core vs Supercore
@@ -209,12 +209,12 @@ Core CPI at **`{python} fmt(stats['core_yoy'])`%** is still above the Fed's targ
 
 ### Momentum: What's Happening Right Now
 
-The most important chart most people never see: **inflation momentum**. Instead of looking at trailing 12-month averages, we can annualize shorter windows — 1-month, 3-month, 6-month — to see whether inflation is accelerating or decelerating *right now*.
+The most important chart most people never see: **inflation momentum**. Instead of looking at trailing 12-month averages, we can annualize shorter windows (1-month, 3-month, 6-month) to see whether inflation is accelerating or decelerating *right now*.
 
 ```{python}
 #| echo: true
 #| label: fig-momentum
-#| fig-cap: "Inflation momentum — short-run annualized rates vs the trailing 12-month average. When the 3-month rate falls below the 12-month rate, it signals genuine cooling."
+#| fig-cap: "Inflation momentum: short-run annualized rates vs the trailing 12-month average. When the 3-month rate falls below the 12-month rate, it signals genuine cooling."
 
 # =============================================================================
 # Exhibit 3: Inflation Momentum
@@ -254,16 +254,16 @@ plt.tight_layout()
 plt.show()
 ```
 
-The 3-month annualized rate is **`{python} fmt(stats['headline_3m_ann'])`%**, which is **`{python} fmt(stats['momentum_diff_headline'])`pp** `{python} "below" if stats['momentum_diff_headline'] < 0 else "above"` the 12-month rate. `{python} "This confirms genuine disinflation momentum — prices are rising more slowly in the recent months than the trailing average suggests." if stats['momentum_diff_headline'] < 0 else "This suggests near-term price pressures are running hotter than the trailing average."`
+The 3-month annualized rate is **`{python} fmt(stats['headline_3m_ann'])`%**, which is **`{python} fmt(stats['momentum_diff_headline'])`pp** `{python} "below" if stats['momentum_diff_headline'] < 0 else "above"` the 12-month rate. `{python} "This confirms genuine disinflation momentum: prices are rising more slowly in the recent months than the trailing average suggests." if stats['momentum_diff_headline'] < 0 else "This suggests near-term price pressures are running hotter than the trailing average."`
 
 ## What's Driving the Drop
 
-Not all prices move together. Breaking down inflation into its major components reveals where the cooling is coming from — and where stickiness remains.
+Not all prices move together. Breaking down inflation into its major components reveals where the cooling is coming from, and where stickiness remains.
 
 ```{python}
 #| echo: true
 #| label: fig-components
-#| fig-cap: "Radar chart showing year-over-year inflation by component across four time periods. The web shrinks toward the center as inflation cools — except shelter, which remains elevated. Energy (highlighted) has collapsed from its 2022 peak."
+#| fig-cap: "Radar chart showing year-over-year inflation by component across four time periods. The web shrinks toward the center as inflation cools, except shelter, which remains elevated. Energy (highlighted) has collapsed from its 2022 peak."
 
 # =============================================================================
 # Exhibit 4: Component Radar Chart
@@ -320,21 +320,21 @@ plt.tight_layout()
 plt.show()
 ```
 
-The radar chart shows how the inflation "footprint" has shrunk over the past three years. **Energy** (highlighted axis) has collapsed from double-digit increases to near zero. **Shelter** remains the stubborn outlier — still elevated while other categories have normalized. **Transportation** has turned negative, reflecting falling used car prices.
+The radar chart shows how the inflation "footprint" has shrunk over the past three years. **Energy** (highlighted axis) has collapsed from double-digit increases to near zero. **Shelter** remains the stubborn outlier, still elevated while other categories have normalized. **Transportation** has turned negative, reflecting falling used car prices.
 
 The story is clear: **shelter** remains the single largest contributor to above-target inflation. At `{python} fmt(stats['shelter_yoy'])`% YoY, it accounts for roughly `{python} fmt(stats['contributions']['shelter']['contribution'])`pp of the headline number.
 
 ## The Shelter Question
 
-Shelter is the key to the "last mile" of disinflation — and there's reason to believe it will keep falling.
+Shelter is the key to the "last mile" of disinflation, and there's reason to believe it will keep falling.
 
 ```{python}
 #| echo: true
 #| label: fig-shelter
-#| fig-cap: "Shelter CPI vs headline CPI (year-over-year). Note how shelter peaks and troughs lag headline by roughly 12-18 months — the 'last mile' of disinflation is already baked in."
+#| fig-cap: "Shelter CPI vs headline CPI (year-over-year). Note how shelter peaks and troughs lag headline by roughly 12-18 months. The 'last mile' of disinflation is already baked in."
 
 # =============================================================================
-# Exhibit 5a: Shelter vs Headline — Showing the Lag
+# Exhibit 5a: Shelter vs Headline - Showing the Lag
 # =============================================================================
 
 df_sh = pd.read_csv("data/clean/shelter_detail.csv", index_col=0, parse_dates=True)
@@ -378,7 +378,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The chart above makes the lag crystal clear: headline CPI peaked months before shelter CPI did. The BLS shelter measure reflects the average rent across *all existing leases*, not just new ones — so it takes 12-18 months for market-rate changes to fully flow through.
+The chart above makes the lag crystal clear: headline CPI peaked months before shelter CPI did. The BLS shelter measure reflects the average rent across *all existing leases*, not just new ones, so it takes 12-18 months for market-rate changes to fully flow through.
 
 ```{python}
 #| echo: true
@@ -418,7 +418,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-Shelter peaked at `{python} fmt(stats['shelter_peak'])`% in `{python} stats['shelter_peak_date']` and has been falling steadily since. At `{python} fmt(stats['shelter_yoy'])`% now, both OER and primary rent are on a clear downward trajectory. Private-sector data on new tenant rents (from Zillow, Apartment List, and others) has been running near or below the pre-pandemic trend for months — meaning further shelter disinflation is **already baked into the pipeline**.
+Shelter peaked at `{python} fmt(stats['shelter_peak'])`% in `{python} stats['shelter_peak_date']` and has been falling steadily since. At `{python} fmt(stats['shelter_yoy'])`% now, both OER and primary rent are on a clear downward trajectory. Private-sector data on new tenant rents (from Zillow, Apartment List, and others) has been running near or below the pre-pandemic trend for months, meaning further shelter disinflation is **already baked into the pipeline**.
 
 ## Broad-Based or Narrow?
 
@@ -431,7 +431,7 @@ The Atlanta Fed splits the CPI basket into **sticky** items (things that change 
 ```{python}
 #| echo: true
 #| label: fig-sticky-flexible
-#| fig-cap: "Atlanta Fed Sticky vs Flexible CPI. Flexible prices normalized quickly after the pandemic shock. Sticky prices — the holdout — are now declining too."
+#| fig-cap: "Atlanta Fed Sticky vs Flexible CPI. Flexible prices normalized quickly after the pandemic shock. Sticky prices, the holdout, are now declining too."
 
 # =============================================================================
 # Exhibit 6: Sticky vs Flexible CPI
@@ -464,7 +464,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-Flexible CPI at **`{python} fmt(stats['flexible_cpi'])`%** has essentially normalized. The remaining inflation is concentrated in sticky prices at **`{python} fmt(stats['sticky_cpi'])`%** — but these too are on a clear downtrend.
+Flexible CPI at **`{python} fmt(stats['flexible_cpi'])`%** has essentially normalized. The remaining inflation is concentrated in sticky prices at **`{python} fmt(stats['sticky_cpi'])`%**, but these too are on a clear downtrend.
 
 ### Median & Trimmed-Mean CPI
 
@@ -519,7 +519,7 @@ Finally, where does `{python} fmt(stats['headline_yoy'])`% sit in the long arc o
 ```{python}
 #| echo: true
 #| label: fig-long-view
-#| fig-cap: "CPI year-over-year from 1960 to present. Gray bars indicate NBER recessions. The current reading is unremarkable by historical standards — well within the 'normal' range of the post-Volcker era."
+#| fig-cap: "CPI year-over-year from 1960 to present. Gray bars indicate NBER recessions. The current reading is unremarkable by historical standards, well within the 'normal' range of the post-Volcker era."
 
 # =============================================================================
 # Exhibit 8: The Long View
@@ -577,7 +577,7 @@ In historical context, `{python} fmt(stats['headline_yoy'])`% is utterly unremar
 
 **For the Fed:** The data gives the Federal Open Market Committee (FOMC) more room to cut rates, but the sticky-price holdouts (shelter, insurance) mean they won't rush. Markets are pricing in further easing, but the pace will depend on whether the 3-month momentum continues to run below the 12-month average.
 
-**For consumers:** The relief is real but gradual. Prices aren't falling — they're rising more slowly. Shelter costs are still elevated, and services inflation remains above the Fed's target. The squeeze on household budgets is easing, not ending.
+**For consumers:** The relief is real but gradual. Prices aren't falling; they're rising more slowly. Shelter costs are still elevated, and services inflation remains above the Fed's target. The squeeze on household budgets is easing, not ending.
 
 **For markets:** The disinflation trend supports risk assets and argues against a second inflation wave. The breadth of the cooling (confirmed by median and trimmed-mean measures) makes this more durable than if it were driven by a single volatile category.
 

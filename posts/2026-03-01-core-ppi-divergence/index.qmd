@@ -59,14 +59,14 @@ def fmt(n):
     return f"{n:,}"
 ```
 
-On `{python} stats['cpi_release_date']`, the Consumer Price Index for January landed soft: headline +`{python} fmt(stats['cpi_headline_mom'])`% month-over-month^[**Month-over-month (m/m)** measures the percentage change in a price index from one month to the next. It captures short-term momentum but can be noisy. To gauge what a single month's reading *would* imply over a full year, analysts sometimes annualize it --- compounding the monthly rate twelve times: (1 + m/m)^12^ − 1. A +0.3% monthly print annualizes to roughly 3.7%; a +0.8% print annualizes to nearly 10%. Annualization is useful for context but misleading if treated as a forecast, since no single month sustains its pace indefinitely. **Year-over-year (y/y)** is the more stable measure: it compares the index level to the same month twelve months earlier, smoothing out monthly volatility.] (below the +`{python} fmt(stats['cpi_headline_mom_expected'])`% consensus), core +`{python} fmt(stats['cpi_core_mom'])`% (in line), headline year-over-year at **+`{python} fmt(stats['cpi_headline_yoy'])`%**. Rate-cut dreams stayed intact. Two weeks later, on `{python} stats['ppi_release_date']`, the Producer Price Index detonated that calm. Headline PPI came in at +`{python} fmt(stats['ppi_headline_mom'])`% m/m versus +`{python} fmt(stats['ppi_headline_mom_expected'])`% expected --- but the real shock was buried one layer deeper: **final demand services less food, energy, and trade services surged +`{python} fmt(stats['ppi_core_services_mom'])`% month-over-month**, the sharpest monthly services gain since July 2025. Dow futures dropped roughly `{python} stats['dow_drop_pts']` points intraday. The bond market flinched. "Higher for longer" was back.
+On `{python} stats['cpi_release_date']`, the Consumer Price Index for January landed soft: headline +`{python} fmt(stats['cpi_headline_mom'])`% month-over-month^[**Month-over-month (m/m)** measures the percentage change in a price index from one month to the next. It captures short-term momentum but can be noisy. To gauge what a single month's reading *would* imply over a full year, analysts sometimes annualize it, compounding the monthly rate twelve times: (1 + m/m)^12^ − 1. A +0.3% monthly print annualizes to roughly 3.7%; a +0.8% print annualizes to nearly 10%. Annualization is useful for context but misleading if treated as a forecast, since no single month sustains its pace indefinitely. **Year-over-year (y/y)** is the more stable measure: it compares the index level to the same month twelve months earlier, smoothing out monthly volatility.] (below the +`{python} fmt(stats['cpi_headline_mom_expected'])`% consensus), core +`{python} fmt(stats['cpi_core_mom'])`% (in line), headline year-over-year at **+`{python} fmt(stats['cpi_headline_yoy'])`%**. Rate-cut dreams stayed intact. Two weeks later, on `{python} stats['ppi_release_date']`, the Producer Price Index detonated that calm. Headline PPI came in at +`{python} fmt(stats['ppi_headline_mom'])`% m/m versus +`{python} fmt(stats['ppi_headline_mom_expected'])`% expected, but the real shock was buried one layer deeper: **final demand services less food, energy, and trade services surged +`{python} fmt(stats['ppi_core_services_mom'])`% month-over-month**, the sharpest monthly services gain since July 2025. Dow futures dropped roughly `{python} stats['dow_drop_pts']` points intraday. The bond market flinched. "Higher for longer" was back.
 
 How do two flagship inflation measures, released two weeks apart and covering the same month, tell such different stories?
 
 ::: {.callout-note collapse="true"}
 ## Note on data
 
-All figures in this post are drawn from official BLS releases: the [CPI Summary](https://www.bls.gov/news.release/cpi.nr0.htm) (`{python} stats['cpi_release_date']`) and the [PPI Detailed Report](https://www.bls.gov/news.release/ppi.nr0.htm) (`{python} stats['ppi_release_date']`). Time-series charts use CPI and PPI index data from [FRED](https://fred.stlouisfed.org/). CPI and PPI use different methodologies, coverage, and weighting schemes --- the BLS itself notes that "there are many reasons why the PPI and CPI may diverge." Component-level PPI breakdowns (trade services margins, equipment wholesaling) are from the BLS detailed tables and are not available as FRED series.
+All figures in this post are drawn from official BLS releases: the [CPI Summary](https://www.bls.gov/news.release/cpi.nr0.htm) (`{python} stats['cpi_release_date']`) and the [PPI Detailed Report](https://www.bls.gov/news.release/ppi.nr0.htm) (`{python} stats['ppi_release_date']`). Time-series charts use CPI and PPI index data from [FRED](https://fred.stlouisfed.org/). CPI and PPI use different methodologies, coverage, and weighting schemes; the BLS itself notes that "there are many reasons why the PPI and CPI may diverge." Component-level PPI breakdowns (trade services margins, equipment wholesaling) are from the BLS detailed tables and are not available as FRED series.
 :::
 
 ```{python}
@@ -98,7 +98,7 @@ HTML(html)
 
 ## 1. Core PPI vs. Core CPI: A Side-by-Side
 
-These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level --- upstream margins and business-to-business transactions that haven't reached consumer shelves yet.
+These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level: upstream margins and business-to-business transactions that haven't reached consumer shelves yet.
 
 ```{python}
 #| echo: false
@@ -141,7 +141,7 @@ table_html = f"""
     <tr style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
       <td style="padding: 0.5rem; font-weight: 600;">Lead / lag</td>
       <td style="padding: 0.5rem;">Lagging indicator</td>
-      <td style="padding: 0.5rem;">Often leads CPI by 3–9 months</td>
+      <td style="padding: 0.5rem;">Often leads CPI by 3-9 months</td>
     </tr>
     <tr style="border-bottom: 1px solid #e2e8f0;">
       <td style="padding: 0.5rem; font-weight: 600;">Jan 2026 m/m</td>
@@ -160,12 +160,12 @@ table_html = f"""
 HTML(table_html)
 ```
 
-That lead-lag relationship is the key detail. PPI often signals where CPI is headed three to nine months from now. When they diverge this sharply, it isn't noise --- it's a warning.
+That lead-lag relationship is the key detail. PPI often signals where CPI is headed three to nine months from now. When they diverge this sharply, it isn't noise - it's a warning.
 
 ```{python}
 #| echo: true
 #| label: fig-ppi-cpi-history
-#| fig-cap: "Core CPI and core PPI year-over-year since 2020. PPI (red dashed) has historically led CPI (blue) at turning points by 3–9 months. The shaded region highlights periods when PPI ran above CPI — pipeline pressure that historically resolves by CPI moving toward PPI, not the other way around."
+#| fig-cap: "Core CPI and core PPI year-over-year since 2020. PPI (red dashed) has historically led CPI (blue) at turning points by 3-9 months. The shaded region highlights periods when PPI ran above CPI, pipeline pressure that historically resolves by CPI moving toward PPI, not the other way around."
 
 # =============================================================================
 # Exhibit 1b: Historical PPI vs CPI Year-over-Year (long view)
@@ -210,7 +210,7 @@ plt.show()
 
 ## 2. Why +`{python} fmt(stats['ppi_core_services_mom'])`% Rattled Markets
 
-Consensus forecasts had core PPI services^[Core PPI services here refers to the BLS measure "final demand services less food, energy, and trade services" --- the narrowest and most policy-relevant cut of producer services inflation.] landing between +0.3% and +0.6%. The actual **+`{python} fmt(stats['ppi_core_services_mom'])`%** wasn't just an upside miss --- it was nearly double the high end of expectations. And it drove virtually the entire headline PPI beat.
+Consensus forecasts had core PPI services^[Core PPI services here refers to the BLS measure "final demand services less food, energy, and trade services," the narrowest and most policy-relevant cut of producer services inflation.] landing between +0.3% and +0.6%. The actual **+`{python} fmt(stats['ppi_core_services_mom'])`%** wasn't just an upside miss; it was nearly double the high end of expectations. And it drove virtually the entire headline PPI beat.
 
 ::: {.callout-warning}
 ## Market impact
@@ -223,7 +223,7 @@ The sequencing mattered. A soft CPI lulled markets into complacency. Then PPI sh
 ```{python}
 #| echo: true
 #| label: fig-cpi-ppi-monthly
-#| fig-cap: "Core CPI and PPI final demand services, month-over-month. The January 2026 divergence is stark — PPI services jumped while CPI held steady. Note: the BLS's narrower 'services less food, energy, and trade' measure surged even more (+0.8%)."
+#| fig-cap: "Core CPI and PPI final demand services, month-over-month. The January 2026 divergence is stark: PPI services jumped while CPI held steady. Note: the BLS's narrower 'services less food, energy, and trade' measure surged even more (+0.8%)."
 
 # =============================================================================
 # CPI vs PPI Services: Month-over-Month Comparison
@@ -277,14 +277,14 @@ plt.show()
 The BLS component breakdown tells the story clearly:
 
 - **Final demand services overall:** +`{python} fmt(stats['ppi_core_services_mom'])`% m/m
-- **Final demand trade services margins:** +`{python} fmt(stats['ppi_trade_services_mom'])`% m/m --- the single biggest contributor
+- **Final demand trade services margins:** +`{python} fmt(stats['ppi_trade_services_mom'])`% m/m, the single biggest contributor
 - Within that, **professional & commercial equipment wholesaling margins** surged **+`{python} fmt(stats['ppi_equip_wholesale_mom'])`% m/m**, accounting for more than `{python} stats['ppi_equip_contribution_pct']`% of the total services increase
 - Other notable margin widenings: apparel/footwear retailing, chemicals & plastics wholesaling, health & beauty aids retailing, food & alcohol wholesaling/retailing
 
 ::: {.callout-warning}
 ## The +`{python} fmt(stats['ppi_equip_wholesale_mom'])`% margin surge
 
-A **+`{python} fmt(stats['ppi_equip_wholesale_mom'])`% monthly increase** in equipment wholesaling margins is extraordinary by any historical standard. This isn't cost pass-through --- it's pricing power. Wholesalers actively expanding profit margins, not merely relaying higher input costs downstream.
+A **+`{python} fmt(stats['ppi_equip_wholesale_mom'])`% monthly increase** in equipment wholesaling margins is extraordinary by any historical standard. This isn't cost pass-through - it's pricing power. Wholesalers actively expanding profit margins, not merely relaying higher input costs downstream.
 :::
 
 ```{python}
@@ -336,11 +336,11 @@ PPI caught the pressure upstream. CPI is still catching up.
 
 ## 4. Where This Is Heading: The 2026 Pipeline
 
-The January data sets up five distinct pressure points for the rest of the year — each with its own timeline and implications.
+The January data sets up five distinct pressure points for the rest of the year, each with its own timeline and implications.
 
 ### The pass-through pipeline is loaded
 
-Wider wholesale margins frequently translate into higher retail prices three to nine months later. If services margins stay elevated through Q1, core CPI could re-accelerate mid-to-late 2026 --- precisely when the Fed wants to be cutting, not worrying about a second inflation wave.
+Wider wholesale margins frequently translate into higher retail prices three to nine months later. If services margins stay elevated through Q1, core CPI could re-accelerate mid-to-late 2026, precisely when the Fed wants to be cutting, not worrying about a second inflation wave.
 
 ```{python}
 #| echo: true
@@ -370,7 +370,7 @@ ax.axvspan(passthrough_start, passthrough_end, alpha=0.12, color=COLORS['ppi'],
 ax.text(pd.Timestamp('2026-07-01'), 0.75, 'Expected CPI\npass-through window',
         ha='center', va='center', fontsize=10, color=COLORS['ppi'],
         fontweight='bold', fontstyle='italic')
-ax.text(pd.Timestamp('2026-07-01'), 0.6, '(3–9 months after PPI signal)',
+ax.text(pd.Timestamp('2026-07-01'), 0.6, '(3-9 months after PPI signal)',
         ha='center', va='center', fontsize=8, color=COLORS['neutral'])
 
 # PPI event marker
@@ -408,29 +408,29 @@ plt.show()
 
 ### The Fed's 2% framework is under strain
 
-Chair Powell has staked credibility on engineering a smooth return to the 2% target. The January PPI complicates that narrative. Annualize a +`{python} fmt(stats['ppi_core_services_mom'])`% monthly services print and you're looking at nearly `{python} fmt(stats['ppi_core_services_annualized'])`% --- obviously unsustainable if it persists. June 2026 rate-cut odds cratered post-release. Some desks are now penciling in no cuts at all this year. The FOMC tension is real: doves want to ease before labor markets crack, hawks point to exactly this kind of print as proof the job isn't done.
+Chair Powell has staked credibility on engineering a smooth return to the 2% target. The January PPI complicates that narrative. Annualize a +`{python} fmt(stats['ppi_core_services_mom'])`% monthly services print and you're looking at nearly `{python} fmt(stats['ppi_core_services_annualized'])`%, obviously unsustainable if it persists. June 2026 rate-cut odds cratered post-release. Some desks are now penciling in no cuts at all this year. The FOMC tension is real: doves want to ease before labor markets crack, hawks point to exactly this kind of print as proof the job isn't done.
 
 ### Bond and equity implications
 
 **For fixed income:** If services inflation re-accelerates and PPI leads CPI by the historical three-to-nine-month window, the late-2025 bond rally was built on shaky ground. Long-duration Treasuries priced for a cutting cycle could reprice sharply. The 10-year yield, which had drifted toward the low 4s, may have further to climb.
 
-**For equities:** The picture is split. Companies exposed to services input costs --- healthcare, professional services, logistics --- may see margin compression if they can't pass costs downstream. Conversely, the wholesalers *generating* those margin expansions are thriving for now. Pricing power is the most valuable asset in an inflationary environment. Goods-heavy sectors still benefit from ongoing goods disinflation.
+**For equities:** The picture is split. Companies exposed to services input costs (healthcare, professional services, logistics) may see margin compression if they can't pass costs downstream. Conversely, the wholesalers *generating* those margin expansions are thriving for now. Pricing power is the most valuable asset in an inflationary environment. Goods-heavy sectors still benefit from ongoing goods disinflation.
 
 **For real assets:** Persistent services inflation combined with tariff uncertainty is constructive for gold and select commodities. If "higher for longer" reasserts as the dominant narrative, inflation hedges tend to outperform.
 
 ### The tariff wild card
 
-Early 2026 tariff signaling appears to be manifesting first as margin expansion rather than raw goods inflation. Wholesalers may be front-running expected cost increases by raising prices preemptively. If true, this PPI print reflects not just current demand but *anticipated* supply-side disruptions --- a pattern that could keep core services sticky even as goods prices remain soft.
+Early 2026 tariff signaling appears to be manifesting first as margin expansion rather than raw goods inflation. Wholesalers may be front-running expected cost increases by raising prices preemptively. If true, this PPI print reflects not just current demand but *anticipated* supply-side disruptions, a pattern that could keep core services sticky even as goods prices remain soft.
 
 ### Real wages and consumer behavior
 
-Nominal wage growth has been running around `{python} stats['nominal_wage_growth_yoy']`% year-over-year. With headline CPI near `{python} fmt(stats['cpi_headline_yoy'])`%, real wages remain positive and consumers keep spending. But if PPI-to-CPI pass-through materializes and core CPI drifts back above 3% by late 2026, that cushion evaporates. Discretionary spending absorbs the hit first --- restaurants, travel, electronics. The two-speed inflation dynamic (cheap goods, expensive services) continues to squeeze households that spend disproportionately on services like healthcare, childcare, and housing.
+Nominal wage growth has been running around `{python} stats['nominal_wage_growth_yoy']`% year-over-year. With headline CPI near `{python} fmt(stats['cpi_headline_yoy'])`%, real wages remain positive and consumers keep spending. But if PPI-to-CPI pass-through materializes and core CPI drifts back above 3% by late 2026, that cushion evaporates. Discretionary spending absorbs the hit first: restaurants, travel, electronics. The two-speed inflation dynamic (cheap goods, expensive services) continues to squeeze households that spend disproportionately on services like healthcare, childcare, and housing.
 
 ## What It Means
 
 **For the Fed:** The smooth glide path back to 2% just got a lot bumpier. The January PPI print is not sufficient to change the rate trajectory on its own, but two or three more readings like this would force a material hawkish repricing.
 
-**For investors:** Watch the margin data. If wholesale trade services margins stay elevated in the February PPI (`{python} stats['next_ppi_date']`), the pass-through risk to consumer prices --- and to the rate-cut calendar --- becomes much harder to dismiss.
+**For investors:** Watch the margin data. If wholesale trade services margins stay elevated in the February PPI (`{python} stats['next_ppi_date']`), the pass-through risk to consumer prices, and to the rate-cut calendar, becomes much harder to dismiss.
 
 **For consumers:** The headline CPI looks fine today. But the upstream pipeline is pressurized. If you've noticed prices at the register creeping up in categories like electronics, apparel, or health and beauty, the PPI data suggests that trend has legs.
 
@@ -442,10 +442,10 @@ Nominal wage growth has been running around `{python} stats['nominal_wage_growth
 
 **Next key prints:**
 
-- **`{python} stats['next_cpi_date']`** --- February CPI
-- **`{python} stats['next_ppi_date']`** --- February PPI
+- **`{python} stats['next_cpi_date']`** - February CPI
+- **`{python} stats['next_ppi_date']`** - February PPI
 
-If the margin expansion story continues into February's data, "higher for longer" could easily become "higher for *even* longer" --- and the 2026 rate-cut calendar may need to be rewritten entirely.
+If the margin expansion story continues into February's data, "higher for longer" could easily become "higher for *even* longer," and the 2026 rate-cut calendar may need to be rewritten entirely.
 
 ## Methodology & Data
 
