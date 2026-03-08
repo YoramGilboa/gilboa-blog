@@ -10,7 +10,1743 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Sun, 01 Mar 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 08 Mar 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Behind the February 2026 Jobs Miss: Visualizing Strikes, Storms, and Global Shocks</title>
+  <link>https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The US labor market delivered its worst monthly reading since October 2025: <strong>-92,000</strong> nonfarm payroll jobs in February 2026, against a consensus expectation of <strong>+50,000</strong>. The unemployment rate ticked up to <strong>4.4%</strong> from 4.3%. Prior months were revised sharply: January to +126,000 and December to -17,000. A miss of -142,000 jobs from consensus doesn’t happen without compounding forces. Three hit simultaneously: labor strikes gutted healthcare and transportation, severe winter storms suppressed construction and manufacturing, and geopolitical uncertainty from the US-Iran conflict froze hiring plans across sectors exposed to energy costs and global supply chains. Still, the underlying picture showed resilience: wages climbed <strong>+0.4%</strong> to <strong>$37.32/hour</strong>, keeping real wage growth positive, and the broader U-6 underemployment rate fell to <strong>7.9%</strong>, extending a three-month decline from its 8.7% peak in November 2025.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This analysis combines data from two sources. Monthly payroll time-series and oil prices are fetched from <a href="https://fred.stlouisfed.org/">FRED</a> (Federal Reserve Economic Data). Sector-level employment changes, revisions, and the waterfall decomposition are drawn from the <a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation Summary</a> released March 7, 2026. The waterfall chart represents an analytical decomposition; individual factor contributions are approximations based on sector data and cannot be mechanically separated due to overlapping effects.</p>
+</div>
+</div>
+</div>
+<div id="c4b6c56a" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<h3 style="font-size: 1.1rem; font-weight: 600; color: #334155; margin-bottom: 0.25rem; text-align: center;" class="anchored">5 Key Metrics</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 0.5rem 0 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center; cursor: help;" title="The broadest measure of job creation. Negative readings signal an economy that is contracting rather than growing.">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">-92,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Nonfarm Payrolls</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center; cursor: help;" title="The share of the labor force actively seeking work but unable to find it. Rising rates often precede recessions.">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">4.4%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Unemployment Rate</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center; cursor: help;" title="Tracks wage growth. Strong earnings support consumer spending but can signal inflationary pressure.">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">$37.32</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Avg Hourly Earnings</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center; cursor: help;" title="A broader measure of unemployment that includes discouraged workers and those working part-time for economic reasons.">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">7.9%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">U-6 Rate</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center; cursor: help;" title="The share of working-age adults either employed or actively job-seeking. Low rates may mask true unemployment.">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">62.0%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Labor Force Participation</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">Data as of February 2026 | Source: Bureau of Labor Statistics</p>
+</div>
+</div>
+<section id="anatomy-of-a-miss" class="level2">
+<h2 class="anchored" data-anchor-id="anatomy-of-a-miss">1. Anatomy of a Miss</h2>
+<p>The gap between expectation and reality was <strong>-142,000</strong> jobs. That kind of miss doesn’t come from one bad sector. It takes a convergence of shocks, and February delivered exactly that.</p>
+<p>The waterfall below decomposes the distance from the +50,000 consensus forecast down to the actual -92,000 print. Strikes in healthcare and transportation account for the single largest drag, followed by weather-related suppression and a broader pullback tied to geopolitical uncertainty.</p>
+<div id="cell-fig-waterfall-breakdown" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Waterfall Chart: Decomposing the Jobs Miss</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5">wf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_waterfall.copy()</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Replace literal \n in labels with actual newlines</span></span>
+<span id="cb1-8">wf[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'label'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> wf[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'label'</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>.replace(<span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">r'</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\\</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">n'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, regex<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute floating bar positions</span></span>
+<span id="cb1-11">running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-12">bottoms <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb1-13">heights <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb1-14"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> wf.iterrows():</span>
+<span id="cb1-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'start'</span>:</span>
+<span id="cb1-16">        bottoms.append(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-17">        heights.append(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>])</span>
+<span id="cb1-18">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]</span>
+<span id="cb1-19">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'net'</span>:</span>
+<span id="cb1-20">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Net bar goes from 0 down to the net value</span></span>
+<span id="cb1-21">        bottoms.append(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]))</span>
+<span id="cb1-22">        heights.append(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]))</span>
+<span id="cb1-23">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-24">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step: negative values hang down from the running total</span></span>
+<span id="cb1-25">        new_running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]</span>
+<span id="cb1-26">        bottoms.append(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(running, new_running))</span>
+<span id="cb1-27">        heights.append(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]))</span>
+<span id="cb1-28">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> new_running</span>
+<span id="cb1-29"></span>
+<span id="cb1-30"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Color mapping</span></span>
+<span id="cb1-31">factor_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb1-32">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'baseline'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>],</span>
+<span id="cb1-33">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'strikes'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'strikes'</span>],</span>
+<span id="cb1-34">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weather'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weather'</span>],</span>
+<span id="cb1-35">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'uncertainty'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'uncertainty'</span>],</span>
+<span id="cb1-36">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'slowdown'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'slowdown'</span>],</span>
+<span id="cb1-37">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'other'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>],</span>
+<span id="cb1-38">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'net'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>],</span>
+<span id="cb1-39">}</span>
+<span id="cb1-40">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [factor_colors[f] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> wf[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'factor'</span>]]</span>
+<span id="cb1-41"></span>
+<span id="cb1-42">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb1-43"></span>
+<span id="cb1-44">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.bar(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(wf)), heights, bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bottoms, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>,</span>
+<span id="cb1-45">              edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'white'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb1-46"></span>
+<span id="cb1-47"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Connector lines between bars</span></span>
+<span id="cb1-48">running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-49"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(wf) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb1-50">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> wf.iloc[i][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'start'</span>:</span>
+<span id="cb1-51">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> wf.iloc[i][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]</span>
+<span id="cb1-52">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> running</span>
+<span id="cb1-53">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> wf.iloc[i][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'step'</span>:</span>
+<span id="cb1-54">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> wf.iloc[i][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]</span>
+<span id="cb1-55">        y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> running</span>
+<span id="cb1-56">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-57">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">continue</span></span>
+<span id="cb1-58"></span>
+<span id="cb1-59">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> wf.iloc[i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'net'</span>:</span>
+<span id="cb1-60">        ax.plot([i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>, i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>], [y, y], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>],</span>
+<span id="cb1-61">                linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-62"></span>
+<span id="cb1-63"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Value labels</span></span>
+<span id="cb1-64"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (_, row) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(wf.iterrows()):</span>
+<span id="cb1-65">    val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'value'</span>]</span>
+<span id="cb1-66">    label <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bar_type'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'start'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span></span>
+<span id="cb1-67">    y_pos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> bottoms[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> heights[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-68">    ax.text(i, y_pos, label, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb1-69">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'white'</span>)</span>
+<span id="cb1-70"></span>
+<span id="cb1-71"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Zero reference line</span></span>
+<span id="cb1-72">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-73"></span>
+<span id="cb1-74">ax.set_xticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(wf)))</span>
+<span id="cb1-75">ax.set_xticklabels(wf[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'label'</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb1-76">ax.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>))</span>
+<span id="cb1-77">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Jobs (thousands)'</span>)</span>
+<span id="cb1-78"></span>
+<span id="cb1-79">plt.tight_layout()</span>
+<span id="cb1-80">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-waterfall-breakdown" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-waterfall-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/index_files/figure-html/fig-waterfall-breakdown-output-1.png" width="951" height="563" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-waterfall-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Breaking down the February 2026 jobs miss from the +50,000 consensus expectation to the actual -92,000. Healthcare and transportation strikes account for the largest share of the gap.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The decomposition is approximate; these forces don’t operate in clean isolation. Strike-affected sectors may also have been hit by weather, and uncertainty compounds every category. But the directional story is clear: without strikes, February likely would have been modestly negative rather than catastrophic.</p>
+</section>
+<section id="the-trend-behind-the-shock" class="level2">
+<h2 class="anchored" data-anchor-id="the-trend-behind-the-shock">2. The Trend Behind the Shock</h2>
+<p>February’s print didn’t materialize out of nowhere. The payroll trend has been volatile for months, with sharp swings driven by seasonal quirks, revision noise, and episodic disruptions. The chart below places the February miss in the context of the past fourteen months.</p>
+<div id="cell-fig-payroll-trend" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Payroll Trend with Oil Price Overlay</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">df_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_payrolls[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change_previous'</span>]].dropna(</span>
+<span id="cb2-6">    subset<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change'</span>]</span>
+<span id="cb2-7">).copy()</span>
+<span id="cb2-8"></span>
+<span id="cb2-9">fig, ax1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">label_bbox <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'white'</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'none'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>)</span>
+<span id="cb2-12">BASE_OFFSET <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># min gap from bar top to label bottom (~1.5x font height)</span></span>
+<span id="cb2-13"></span>
+<span id="cb2-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Draw bars ────────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-15"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> date, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_plot.iterrows():</span>
+<span id="cb2-16">    val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change'</span>]</span>
+<span id="cb2-17">    prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row.get(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change_previous'</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'nan'</span>))</span>
+<span id="cb2-18">    has_prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.notna(prev)</span>
+<span id="cb2-19"></span>
+<span id="cb2-20">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> has_prev:</span>
+<span id="cb2-21">        prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(prev)</span>
+<span id="cb2-22">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dashed outline at previous estimate level (wider, hollow)</span></span>
+<span id="cb2-23">        prev_color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>]</span>
+<span id="cb2-24">        ax1.bar(date, prev, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'none'</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>prev_color,</span>
+<span id="cb2-25">                linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>)</span>
+<span id="cb2-26">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Solid bar at current/revised estimate</span></span>
+<span id="cb2-27">        cur_color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>]</span>
+<span id="cb2-28">        ax1.bar(date, val, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cur_color, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>,</span>
+<span id="cb2-29">                edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>cur_color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-30">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb2-31">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Non-revised months: single solid bar</span></span>
+<span id="cb2-32">        color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>]</span>
+<span id="cb2-33">        ax1.bar(date, val, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>,</span>
+<span id="cb2-34">                edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-35"></span>
+<span id="cb2-36"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Value labels ─────────────────────────────────────────────────────────────</span></span>
+<span id="cb2-37"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> date, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_plot.iterrows():</span>
+<span id="cb2-38">    val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change'</span>]</span>
+<span id="cb2-39">    prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row.get(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_change_previous'</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'nan'</span>))</span>
+<span id="cb2-40">    has_prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.notna(prev)</span>
+<span id="cb2-41"></span>
+<span id="cb2-42">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Current estimate label (shown for every month)</span></span>
+<span id="cb2-43">    offset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> BASE_OFFSET <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>BASE_OFFSET</span>
+<span id="cb2-44">    va <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bottom'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span></span>
+<span id="cb2-45">    ax1.text(date, val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> offset, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>va,</span>
+<span id="cb2-46">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(val) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'normal'</span>,</span>
+<span id="cb2-47">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>],</span>
+<span id="cb2-48">             bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label_bbox)</span>
+<span id="cb2-49"></span>
+<span id="cb2-50">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Previous estimate: side annotation with leader line (revised months only)</span></span>
+<span id="cb2-51">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> has_prev:</span>
+<span id="cb2-52">        prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(prev)</span>
+<span id="cb2-53">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># December: place above the dashed outline to avoid confusion with Nov</span></span>
+<span id="cb2-54">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> prev <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">and</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-55">            ax1.annotate(</span>
+<span id="cb2-56">                <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>prev<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>,</span>
+<span id="cb2-57">                xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(date, prev),</span>
+<span id="cb2-58">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb2-59">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.5</span>, fontstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'italic'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>],</span>
+<span id="cb2-60">                ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bottom'</span>,</span>
+<span id="cb2-61">                bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label_bbox,</span>
+<span id="cb2-62">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>],</span>
+<span id="cb2-63">                                lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, shrinkA<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, shrinkB<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb2-64">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb2-65">            ax1.annotate(</span>
+<span id="cb2-66">                <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>prev<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>,</span>
+<span id="cb2-67">                xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>), prev),</span>
+<span id="cb2-68">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb2-69">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.5</span>, fontstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'italic'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>],</span>
+<span id="cb2-70">                ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb2-71">                bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label_bbox,</span>
+<span id="cb2-72">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>],</span>
+<span id="cb2-73">                                lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, shrinkA<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, shrinkB<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb2-74"></span>
+<span id="cb2-75">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Payroll Change (thousands)'</span>)</span>
+<span id="cb2-76">ax1.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-77"></span>
+<span id="cb2-78"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Oil price on secondary axis ──────────────────────────────────────────────</span></span>
+<span id="cb2-79"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_oil) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb2-80">    ax2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.twinx()</span>
+<span id="cb2-81">    oil_aligned <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_oil.reindex(df_plot.index, method<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'nearest'</span>)</span>
+<span id="cb2-82">    oil_color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#E69F00'</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Colorblind-friendly orange</span></span>
+<span id="cb2-83">    ax2.plot(oil_aligned.index, oil_aligned[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wti_price'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>oil_color,</span>
+<span id="cb2-84">             linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-85">    ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'West Texas Intermediate crude oil price ($/barrel)'</span>,</span>
+<span id="cb2-86">                   color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>oil_color, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-87">    ax2.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>oil_color)</span>
+<span id="cb2-88">    ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-89">    ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>].set_color(oil_color)</span>
+<span id="cb2-90">    ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>].set_linewidth(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-91"></span>
+<span id="cb2-92">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># End label for oil</span></span>
+<span id="cb2-93">    last_oil <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> oil_aligned[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wti_price'</span>].dropna().iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-94">    last_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> oil_aligned[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wti_price'</span>].dropna().index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-95">    ax2.text(last_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), last_oil,</span>
+<span id="cb2-96">             <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'$</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_oil<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/bbl'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>oil_color,</span>
+<span id="cb2-97">             ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>)</span>
+<span id="cb2-98"></span>
+<span id="cb2-99"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Format x-axis</span></span>
+<span id="cb2-100">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb2-101">ax1.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb2-102"></span>
+<span id="cb2-103"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Adjust y-axis to give room for labels below the lowest bar ───────────────</span></span>
+<span id="cb2-104">ax1.set_ylim(bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>, top<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># fixed scale to -200 to +150k for better label display</span></span>
+<span id="cb2-105"></span>
+<span id="cb2-106">plt.tight_layout()</span>
+<span id="cb2-107">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-payroll-trend" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-payroll-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/index_files/figure-html/fig-payroll-trend-output-1.png" width="758" height="472" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-payroll-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Monthly nonfarm payroll changes from January 2025 through February 2026, with West Texas Intermediate crude oil prices (right axis). Dashed outlines show the previous BLS estimate for December 2025 and January 2026 (italic labels); solid bars show the revised figures from the March 7 report. February’s -92,000 is the worst reading in the window.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="revisions" class="level3">
+<h3 class="anchored" data-anchor-id="revisions">Revisions</h3>
+<p>The revisions complicate the narrative. January was revised up sharply to <strong>+126,000</strong>, while December was revised down to <strong>-17,000</strong>. The net effect of revisions over recent months has been modest, but the volatility (swinging from -17,000 to +126,000 to -92,000 in three consecutive months) makes it difficult to distinguish signal from noise. February’s headline is subject to the same revision risk: initial BLS readings have historically been revised by 25,000 to 75,000 jobs.</p>
+</section>
+</section>
+<section id="sector-by-sector" class="level2">
+<h2 class="anchored" data-anchor-id="sector-by-sector">3. Sector by Sector</h2>
+<p>The February miss wasn’t evenly distributed. A handful of sectors absorbed outsized losses while others continued hiring. The chart below shows job changes by sector, color-coded by the primary driving factor.</p>
+<div id="cell-fig-sector-impact" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Sector Impact: Horizontal Bar Chart</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-4"></span>
+<span id="cb3-5">df_sec <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_sectors.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>, ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>).copy()</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">factor_color_map <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb3-8">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'strikes'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'strikes'</span>],</span>
+<span id="cb3-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weather'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weather'</span>],</span>
+<span id="cb3-10">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'slowdown'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'slowdown'</span>],</span>
+<span id="cb3-11">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'other'</span>: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>],</span>
+<span id="cb3-12">}</span>
+<span id="cb3-13">bar_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [factor_color_map[f] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'factor'</span>]]</span>
+<span id="cb3-14"></span>
+<span id="cb3-15">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb3-16"></span>
+<span id="cb3-17">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_sec)), df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>)</span>
+<span id="cb3-18"></span>
+<span id="cb3-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Value labels</span></span>
+<span id="cb3-20"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (val, bar) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>], bars)):</span>
+<span id="cb3-21">    label <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span></span>
+<span id="cb3-22">    offset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span></span>
+<span id="cb3-23">    ha <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span></span>
+<span id="cb3-24">    ax.text(val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> offset, i, label, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ha, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb3-25">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>])</span>
+<span id="cb3-26"></span>
+<span id="cb3-27">ax.set_yticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_sec)))</span>
+<span id="cb3-28">ax.set_yticklabels(df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sector'</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb3-29">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Job Change (thousands)'</span>)</span>
+<span id="cb3-30">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb3-31"></span>
+<span id="cb3-32"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Legend</span></span>
+<span id="cb3-33">legend_elements <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb3-34">    Patch(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'strikes'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Strikes'</span>),</span>
+<span id="cb3-35">    Patch(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'weather'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Weather'</span>),</span>
+<span id="cb3-36">    Patch(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'slowdown'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Slowdown'</span>),</span>
+<span id="cb3-37">    Patch(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Growth'</span>),</span>
+<span id="cb3-38">]</span>
+<span id="cb3-39">ax.legend(handles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>legend_elements, loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'lower right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb3-40"></span>
+<span id="cb3-41">plt.tight_layout()</span>
+<span id="cb3-42">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-sector-impact" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sector-impact-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/index_files/figure-html/fig-sector-impact-output-1.png" width="761" height="472" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sector-impact-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Job changes by sector in February 2026, color-coded by driving factor. Strike-affected sectors (red) account for the bulk of the losses, while weather-impacted sectors (blue) and broader slowdowns (gray) contributed secondary drag.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="strikes-healthcare-and-transportation" class="level3">
+<h3 class="anchored" data-anchor-id="strikes-healthcare-and-transportation">Strikes: healthcare and transportation</h3>
+<p>Healthcare, typically among the most reliable job-growth sectors, lost <strong>-28,000</strong> jobs in February. The damage was concentrated in California and New York. Kaiser Permanente’s open-ended strike, which began January 26, pulled roughly 31,000 nurses and healthcare professionals off the job across dozens of hospitals and hundreds of clinics in California and Hawaii.<sup>1</sup> In New York City, approximately 15,000 nurses were on strike through mid-February, with one hospital’s 4,200-nurse walkout not ending until February 21. Physicians’ offices alone shed <strong>-37,000</strong> positions. Smaller actions hit facilities in Nevada and Southern California.</p>
+<p>Transportation and warehousing lost <strong>-17,000</strong>. Domestic courier and delivery services bore the brunt, compounded by mounting logistics disruptions from Middle East shipping route closures following the US-Iran escalation in late February. Carriers suspended routes through the Red Sea and the Strait of Hormuz, rippling through US-bound supply chains.</p>
+<p>These are temporary distortions by nature. When strikes resolve, affected workers return and the sector typically snaps back. But the timing amplified the headline shock: both sectors struck in the same month, compounding the drag.</p>
+</section>
+<section id="weather-construction-and-manufacturing" class="level3">
+<h3 class="anchored" data-anchor-id="weather-construction-and-manufacturing">Weather: construction and manufacturing</h3>
+<p>The Northeast blizzard of February 22-24, dubbed Winter Storm Hernando,<sup>2</sup> paralyzed the I-95 corridor from Virginia to Massachusetts. New Jersey recorded 30.7 inches, Connecticut 30.8 inches, and parts of New York over 31 inches. More than 600,000 people lost power. Construction sites shut down across the region, and outdoor manufacturing operations ground to a halt. An earlier storm on February 18 disrupted activity in Minnesota and Wisconsin.</p>
+<p>Construction lost an estimated <strong>-8,000</strong> and manufacturing shed <strong>-4,000</strong>. Together, weather-related factors account for roughly <strong>-20,000</strong> of the total miss. Like strikes, weather effects tend to reverse in subsequent months as delayed projects resume and deferred hiring materializes.</p>
+</section>
+<section id="broader-slowdowns" class="level3">
+<h3 class="anchored" data-anchor-id="broader-slowdowns">Broader slowdowns</h3>
+<p>The information sector contracted by <strong>-11,000</strong>, continuing a multi-month pattern of restructuring. Amazon cut 16,000 positions, Cisco shed 4,200 in February (with another 6,000 announced shortly after), and Meta eliminated roughly 1,500 roles from its Reality Labs division.<sup>3</sup> AI was cited as a factor in approximately 4,680 February job cuts across the tech sector.</p>
+<p>The federal government shed <strong>-10,000</strong> as a congressional pause on federal layoffs expired at the end of February. The D.C. metro area absorbed the bulk of these losses, with legal challenges pending in San Francisco federal court over the scope of workforce reductions. These losses are structural rather than episodic; they won’t automatically reverse when the weather improves or a strike ends.</p>
+<p>A parallel undercurrent: surveys indicate that <strong>40%</strong> of workers express concern about AI-related job displacement in 2026, a sentiment that may be feeding into weaker job-seeking behavior and contributing to the low <strong>62.0%</strong> labor force participation rate.</p>
+</section>
+</section>
+<section id="the-bright-spots" class="level2">
+<h2 class="anchored" data-anchor-id="the-bright-spots">4. The Bright Spots</h2>
+<p>The headline number was ugly, but several indicators beneath the surface tell a more encouraging story.</p>
+<p>Wages continued to climb: <strong>+0.4%</strong> month-over-month to <strong>$37.32/hour</strong>, putting year-over-year growth at <strong>+3.8%</strong>. With headline inflation running below 3%, real wage growth remains positive. Workers who kept their jobs saw purchasing power improve.</p>
+<p>The broader underemployment measure (U-6) dropped to <strong>7.9%</strong> from 8.1% in January, extending a three-month decline from its <strong>8.7%</strong> peak in November 2025. That steady improvement means fewer people are stuck in involuntary part-time work and fewer have given up looking, even as the payroll headline deteriorated. It is one of the clearest signs that the labor market’s underlying health is better than the top-line number suggests.</p>
+<p>Leisure and hospitality continued adding jobs, and professional and business services posted modest gains. Employers are still bidding up labor costs even as headline payrolls contract, which suggests the underlying labor market is tighter than the payroll number alone implies.</p>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
+<p><strong>For the Fed:</strong> The combination of weak payrolls and solid wage growth creates a policy dilemma. If February’s miss is largely transitory (strikes plus weather), the labor market may snap back in March and April, making a rate cut unnecessary. If geopolitical uncertainty persists and sector slowdowns deepen, the Fed faces pressure to ease, but elevated wage growth limits how aggressively it can move without reigniting inflation concerns.</p>
+<p><strong>For investors:</strong> Watch the March report closely. A strong rebound would confirm February as a transitory blip and reinforce the “soft landing” thesis. A second consecutive miss would force a fundamental reassessment of labor market health and shift expectations toward earlier and deeper rate cuts. Oil prices remain the wildcard: if the Iran conflict escalates further, the stagflationary combination of weak growth and rising energy costs could pressure both equities and bonds.</p>
+<p><strong>For workers:</strong> The headline is alarming, but the details matter. Strike-affected workers will return. Weather-delayed projects will resume. The structural risks (AI displacement anxiety, federal hiring freezes, information sector restructuring) are real but affect specific segments, not the broad labor market. Wage growth remains the most encouraging signal: for most workers, paychecks are still growing faster than prices.</p>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data series used in this analysis. FRED series provide historical time-series data; BLS detailed tables provide sector-level breakdowns not available through FRED.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PAYEMS</td>
+<td>Total Nonfarm Payrolls, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="even">
+<td>UNRATE</td>
+<td>Unemployment Rate, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="odd">
+<td>U6RATE</td>
+<td>U-6 Underemployment Rate, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="even">
+<td>CES0500000003</td>
+<td>Average Hourly Earnings, All Employees, SA</td>
+<td>BLS via FRED</td>
+</tr>
+<tr class="odd">
+<td>DCOILWTICO</td>
+<td>West Texas Intermediate Crude Oil Spot Price, Daily</td>
+<td>EIA via FRED</td>
+</tr>
+<tr class="even">
+<td>Employment Situation</td>
+<td>February 2026 sector-level data, revisions</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS</a></td>
+</tr>
+</tbody>
+</table>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>The waterfall decomposition is approximate; factor contributions overlap (e.g., healthcare losses may reflect both strikes and broader sector trends simultaneously)</li>
+<li>February data is preliminary and subject to revision; initial BLS readings have historically been revised by 25,000 to 75,000 jobs</li>
+<li>Weather effects are estimated from construction and manufacturing patterns and cannot be precisely isolated in the BLS data</li>
+<li>Oil price correlation with hiring pauses is associative, not causal; the geopolitical uncertainty channel operates through multiple indirect mechanisms</li>
+<li>Sector-level BLS data used for the bar chart does not sum to the total payroll change due to omitted sectors</li>
+</ul>
+<hr>
+<p><em>Data current as of March 7, 2026 (February 2026 Employment Situation).</em></p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The Kaiser Permanente strike, the largest open-ended healthcare strike in US history, ended after roughly one month with a 21.5% raise for 31,000 workers. See <a href="https://nurse.org/news/kaiser-strike-california-hawaii/">Nurse.org</a>. The NYC nurses strike, involving nearly 15,000 NYSNA nurses, ended after 41 days. See <a href="https://www.nysna.org/press/after-41-days-historic-nurse-strike-ends">NYSNA</a>.↩︎</p></li>
+<li id="fn2"><p>Winter Storm Hernando, classified as a bomb cyclone, struck February 22-23 with record snowfall across the Northeast and nearly 600,000 power outages. See <a href="https://en.wikipedia.org/wiki/February_2026_nor'easter">Wikipedia</a>.↩︎</p></li>
+<li id="fn3"><p>Amazon announced 16,000 cuts in a restructuring push toward AI. See <a href="https://www.cnbc.com/2026/01/28/amazon-layoffs-anti-bureaucracy-ai.html">CNBC</a>. The congressional moratorium on federal layoffs expired in late February. See <a href="https://www.govexec.com/workforce/2026/02/congress-paused-all-federal-layoffs-three-months-s-set-change-week/411305/">Government Executive</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>economics</category>
+  <category>data analysis</category>
+  <category>data visualization</category>
+  <guid>https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/</guid>
+  <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>The Great Inflation Divergence: Why Core PPI Exploded While CPI Stayed Cool</title>
   <link>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/</link>
@@ -20,7 +1756,7 @@
 
 
 
-<p>On February 13, 2026, the Consumer Price Index for January landed soft: headline +0.2% month-over-month<sup>1</sup> (below the +0.3% consensus), core +0.3% (in line), headline year-over-year at <strong>+2.4%</strong>. Rate-cut dreams stayed intact. Two weeks later, on February 27, 2026, the Producer Price Index detonated that calm. Headline PPI came in at +0.5% m/m versus +0.3% expected — but the real shock was buried one layer deeper: <strong>final demand services less food, energy, and trade services surged +0.8% month-over-month</strong>, the sharpest monthly services gain since July 2025. Dow futures dropped roughly 700 points intraday. The bond market flinched. “Higher for longer” was back.</p>
+<p>On February 13, 2026, the Consumer Price Index for January landed soft: headline +0.2% month-over-month<sup>1</sup> (below the +0.3% consensus), core +0.3% (in line), headline year-over-year at <strong>+2.4%</strong>. Rate-cut dreams stayed intact. Two weeks later, on February 27, 2026, the Producer Price Index detonated that calm. Headline PPI came in at +0.5% m/m versus +0.3% expected, but the real shock was buried one layer deeper: <strong>final demand services less food, energy, and trade services surged +0.8% month-over-month</strong>, the sharpest monthly services gain since July 2025. Dow futures dropped roughly 700 points intraday. The bond market flinched. “Higher for longer” was back.</p>
 <p>How do two flagship inflation measures, released two weeks apart and covering the same month, tell such different stories?</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -34,11 +1770,11 @@
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>All figures in this post are drawn from official BLS releases: the <a href="https://www.bls.gov/news.release/cpi.nr0.htm">CPI Summary</a> (February 13, 2026) and the <a href="https://www.bls.gov/news.release/ppi.nr0.htm">PPI Detailed Report</a> (February 27, 2026). Time-series charts use CPI and PPI index data from <a href="https://fred.stlouisfed.org/">FRED</a>. CPI and PPI use different methodologies, coverage, and weighting schemes — the BLS itself notes that “there are many reasons why the PPI and CPI may diverge.” Component-level PPI breakdowns (trade services margins, equipment wholesaling) are from the BLS detailed tables and are not available as FRED series.</p>
+<p>All figures in this post are drawn from official BLS releases: the <a href="https://www.bls.gov/news.release/cpi.nr0.htm">CPI Summary</a> (February 13, 2026) and the <a href="https://www.bls.gov/news.release/ppi.nr0.htm">PPI Detailed Report</a> (February 27, 2026). Time-series charts use CPI and PPI index data from <a href="https://fred.stlouisfed.org/">FRED</a>. CPI and PPI use different methodologies, coverage, and weighting schemes; the BLS itself notes that “there are many reasons why the PPI and CPI may diverge.” Component-level PPI breakdowns (trade services margins, equipment wholesaling) are from the BLS detailed tables and are not available as FRED series.</p>
 </div>
 </div>
 </div>
-<div id="acc7becf" class="cell" data-execution_count="2">
+<div id="afdc5a96" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
@@ -64,8 +1800,8 @@
 </div>
 <section id="core-ppi-vs.-core-cpi-a-side-by-side" class="level2">
 <h2 class="anchored" data-anchor-id="core-ppi-vs.-core-cpi-a-side-by-side">1. Core PPI vs.&nbsp;Core CPI: A Side-by-Side</h2>
-<p>These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level — upstream margins and business-to-business transactions that haven’t reached consumer shelves yet.</p>
-<div id="31e25ec6" class="cell" data-execution_count="3">
+<p>These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level: upstream margins and business-to-business transactions that haven’t reached consumer shelves yet.</p>
+<div id="dd6208ae" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -104,7 +1840,7 @@
 <tr class="even" style="border-bottom: 1px solid #e2e8f0; background: #fafafa;">
 <td style="padding: 0.5rem; font-weight: 600">Lead / lag</td>
 <td style="padding: 0.5rem">Lagging indicator</td>
-<td style="padding: 0.5rem">Often leads CPI by 3–9 months</td>
+<td style="padding: 0.5rem">Often leads CPI by 3-9 months</td>
 </tr>
 <tr class="odd" style="border-bottom: 1px solid #e2e8f0;">
 <td style="padding: 0.5rem; font-weight: 600">Jan 2026 m/m</td>
@@ -122,7 +1858,7 @@
 <p style="font-size: 0.8rem; color: #64748b; margin-top: -0.5rem;">CPI measures downstream consumer prices; PPI measures upstream producer prices. The January divergence was unusually wide.</p>
 </div>
 </div>
-<p>That lead-lag relationship is the key detail. PPI often signals where CPI is headed three to nine months from now. When they diverge this sharply, it isn’t noise — it’s a warning.</p>
+<p>That lead-lag relationship is the key detail. PPI often signals where CPI is headed three to nine months from now. When they diverge this sharply, it isn’t noise - it’s a warning.</p>
 <div id="cell-fig-ppi-cpi-history" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -399,7 +2135,7 @@ font-style: inherit;">8</span>)</span>
 <img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-ppi-cpi-history-output-1.png" width="951" height="472" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ppi-cpi-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Core CPI and core PPI year-over-year since 2020. PPI (red dashed) has historically led CPI (blue) at turning points by 3–9 months. The shaded region highlights periods when PPI ran above CPI — pipeline pressure that historically resolves by CPI moving toward PPI, not the other way around.
+Figure&nbsp;1: Core CPI and core PPI year-over-year since 2020. PPI (red dashed) has historically led CPI (blue) at turning points by 3-9 months. The shaded region highlights periods when PPI ran above CPI, pipeline pressure that historically resolves by CPI moving toward PPI, not the other way around.
 </figcaption>
 </figure>
 </div>
@@ -408,7 +2144,7 @@ Figure&nbsp;1: Core CPI and core PPI year-over-year since 2020. PPI (red dashed)
 </section>
 <section id="why-0.8-rattled-markets" class="level2">
 <h2 class="anchored" data-anchor-id="why-0.8-rattled-markets">2. Why +0.8% Rattled Markets</h2>
-<p>Consensus forecasts had core PPI services<sup>2</sup> landing between +0.3% and +0.6%. The actual <strong>+0.8%</strong> wasn’t just an upside miss — it was nearly double the high end of expectations. And it drove virtually the entire headline PPI beat.</p>
+<p>Consensus forecasts had core PPI services<sup>2</sup> landing between +0.3% and +0.6%. The actual <strong>+0.8%</strong> wasn’t just an upside miss; it was nearly double the high end of expectations. And it drove virtually the entire headline PPI beat.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -752,7 +2488,7 @@ font-style: inherit;">0.9</span>)</span>
 <img src="https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-cpi-ppi-monthly-output-1.png" width="944" height="467" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cpi-ppi-monthly-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Core CPI and PPI final demand services, month-over-month. The January 2026 divergence is stark — PPI services jumped while CPI held steady. Note: the BLS’s narrower ‘services less food, energy, and trade’ measure surged even more (+0.8%).
+Figure&nbsp;2: Core CPI and PPI final demand services, month-over-month. The January 2026 divergence is stark: PPI services jumped while CPI held steady. Note: the BLS’s narrower ‘services less food, energy, and trade’ measure surged even more (+0.8%).
 </figcaption>
 </figure>
 </div>
@@ -764,7 +2500,7 @@ Figure&nbsp;2: Core CPI and PPI final demand services, month-over-month. The Jan
 <p>The BLS component breakdown tells the story clearly:</p>
 <ul>
 <li><strong>Final demand services overall:</strong> +0.8% m/m</li>
-<li><strong>Final demand trade services margins:</strong> +2.5% m/m — the single biggest contributor</li>
+<li><strong>Final demand trade services margins:</strong> +2.5% m/m, the single biggest contributor</li>
 <li>Within that, <strong>professional &amp; commercial equipment wholesaling margins</strong> surged <strong>+14.4% m/m</strong>, accounting for more than 20% of the total services increase</li>
 <li>Other notable margin widenings: apparel/footwear retailing, chemicals &amp; plastics wholesaling, health &amp; beauty aids retailing, food &amp; alcohol wholesaling/retailing</li>
 </ul>
@@ -778,7 +2514,7 @@ Figure&nbsp;2: Core CPI and PPI final demand services, month-over-month. The Jan
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <strong>+14.4% monthly increase</strong> in equipment wholesaling margins is extraordinary by any historical standard. This isn’t cost pass-through — it’s pricing power. Wholesalers actively expanding profit margins, not merely relaying higher input costs downstream.</p>
+<p>A <strong>+14.4% monthly increase</strong> in equipment wholesaling margins is extraordinary by any historical standard. This isn’t cost pass-through - it’s pricing power. Wholesalers actively expanding profit margins, not merely relaying higher input costs downstream.</p>
 </div>
 </div>
 <div id="cell-fig-ppi-components" class="cell" data-execution_count="6">
@@ -1005,10 +2741,10 @@ Figure&nbsp;3: PPI component contributions to January 2026 services jump. Equipm
 </section>
 <section id="where-this-is-heading-the-2026-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="where-this-is-heading-the-2026-pipeline">4. Where This Is Heading: The 2026 Pipeline</h2>
-<p>The January data sets up five distinct pressure points for the rest of the year — each with its own timeline and implications.</p>
+<p>The January data sets up five distinct pressure points for the rest of the year, each with its own timeline and implications.</p>
 <section id="the-pass-through-pipeline-is-loaded" class="level3">
 <h3 class="anchored" data-anchor-id="the-pass-through-pipeline-is-loaded">The pass-through pipeline is loaded</h3>
-<p>Wider wholesale margins frequently translate into higher retail prices three to nine months later. If services margins stay elevated through Q1, core CPI could re-accelerate mid-to-late 2026 — precisely when the Fed wants to be cutting, not worrying about a second inflation wave.</p>
+<p>Wider wholesale margins frequently translate into higher retail prices three to nine months later. If services margins stay elevated through Q1, core CPI could re-accelerate mid-to-late 2026, precisely when the Fed wants to be cutting, not worrying about a second inflation wave.</p>
 <div id="cell-fig-passthrough-timeline" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -1143,7 +2879,7 @@ font-style: inherit;">'2026-07-01'</span>), <span class="fl" style="color: #AD00
 background-color: null;
 font-style: inherit;">0.6</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'(3–9 months after PPI signal)'</span>,</span>
+font-style: inherit;">'(3-9 months after PPI signal)'</span>,</span>
 <span id="cb4-25">        ha<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
@@ -1436,27 +3172,27 @@ Figure&nbsp;4: PPI typically leads CPI by 3 to 9 months. If the January PPI surg
 </section>
 <section id="the-feds-2-framework-is-under-strain" class="level3">
 <h3 class="anchored" data-anchor-id="the-feds-2-framework-is-under-strain">The Fed’s 2% framework is under strain</h3>
-<p>Chair Powell has staked credibility on engineering a smooth return to the 2% target. The January PPI complicates that narrative. Annualize a +0.8% monthly services print and you’re looking at nearly 10.0% — obviously unsustainable if it persists. June 2026 rate-cut odds cratered post-release. Some desks are now penciling in no cuts at all this year. The FOMC tension is real: doves want to ease before labor markets crack, hawks point to exactly this kind of print as proof the job isn’t done.</p>
+<p>Chair Powell has staked credibility on engineering a smooth return to the 2% target. The January PPI complicates that narrative. Annualize a +0.8% monthly services print and you’re looking at nearly 10.0%, obviously unsustainable if it persists. June 2026 rate-cut odds cratered post-release. Some desks are now penciling in no cuts at all this year. The FOMC tension is real: doves want to ease before labor markets crack, hawks point to exactly this kind of print as proof the job isn’t done.</p>
 </section>
 <section id="bond-and-equity-implications" class="level3">
 <h3 class="anchored" data-anchor-id="bond-and-equity-implications">Bond and equity implications</h3>
 <p><strong>For fixed income:</strong> If services inflation re-accelerates and PPI leads CPI by the historical three-to-nine-month window, the late-2025 bond rally was built on shaky ground. Long-duration Treasuries priced for a cutting cycle could reprice sharply. The 10-year yield, which had drifted toward the low 4s, may have further to climb.</p>
-<p><strong>For equities:</strong> The picture is split. Companies exposed to services input costs — healthcare, professional services, logistics — may see margin compression if they can’t pass costs downstream. Conversely, the wholesalers <em>generating</em> those margin expansions are thriving for now. Pricing power is the most valuable asset in an inflationary environment. Goods-heavy sectors still benefit from ongoing goods disinflation.</p>
+<p><strong>For equities:</strong> The picture is split. Companies exposed to services input costs (healthcare, professional services, logistics) may see margin compression if they can’t pass costs downstream. Conversely, the wholesalers <em>generating</em> those margin expansions are thriving for now. Pricing power is the most valuable asset in an inflationary environment. Goods-heavy sectors still benefit from ongoing goods disinflation.</p>
 <p><strong>For real assets:</strong> Persistent services inflation combined with tariff uncertainty is constructive for gold and select commodities. If “higher for longer” reasserts as the dominant narrative, inflation hedges tend to outperform.</p>
 </section>
 <section id="the-tariff-wild-card" class="level3">
 <h3 class="anchored" data-anchor-id="the-tariff-wild-card">The tariff wild card</h3>
-<p>Early 2026 tariff signaling appears to be manifesting first as margin expansion rather than raw goods inflation. Wholesalers may be front-running expected cost increases by raising prices preemptively. If true, this PPI print reflects not just current demand but <em>anticipated</em> supply-side disruptions — a pattern that could keep core services sticky even as goods prices remain soft.</p>
+<p>Early 2026 tariff signaling appears to be manifesting first as margin expansion rather than raw goods inflation. Wholesalers may be front-running expected cost increases by raising prices preemptively. If true, this PPI print reflects not just current demand but <em>anticipated</em> supply-side disruptions, a pattern that could keep core services sticky even as goods prices remain soft.</p>
 </section>
 <section id="real-wages-and-consumer-behavior" class="level3">
 <h3 class="anchored" data-anchor-id="real-wages-and-consumer-behavior">Real wages and consumer behavior</h3>
-<p>Nominal wage growth has been running around 3.5-4% year-over-year. With headline CPI near 2.4%, real wages remain positive and consumers keep spending. But if PPI-to-CPI pass-through materializes and core CPI drifts back above 3% by late 2026, that cushion evaporates. Discretionary spending absorbs the hit first — restaurants, travel, electronics. The two-speed inflation dynamic (cheap goods, expensive services) continues to squeeze households that spend disproportionately on services like healthcare, childcare, and housing.</p>
+<p>Nominal wage growth has been running around 3.5-4% year-over-year. With headline CPI near 2.4%, real wages remain positive and consumers keep spending. But if PPI-to-CPI pass-through materializes and core CPI drifts back above 3% by late 2026, that cushion evaporates. Discretionary spending absorbs the hit first: restaurants, travel, electronics. The two-speed inflation dynamic (cheap goods, expensive services) continues to squeeze households that spend disproportionately on services like healthcare, childcare, and housing.</p>
 </section>
 </section>
 <section id="what-it-means" class="level2">
 <h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
 <p><strong>For the Fed:</strong> The smooth glide path back to 2% just got a lot bumpier. The January PPI print is not sufficient to change the rate trajectory on its own, but two or three more readings like this would force a material hawkish repricing.</p>
-<p><strong>For investors:</strong> Watch the margin data. If wholesale trade services margins stay elevated in the February PPI (March 18, 2026), the pass-through risk to consumer prices — and to the rate-cut calendar — becomes much harder to dismiss.</p>
+<p><strong>For investors:</strong> Watch the margin data. If wholesale trade services margins stay elevated in the February PPI (March 18, 2026), the pass-through risk to consumer prices, and to the rate-cut calendar, becomes much harder to dismiss.</p>
 <p><strong>For consumers:</strong> The headline CPI looks fine today. But the upstream pipeline is pressurized. If you’ve noticed prices at the register creeping up in categories like electronics, apparel, or health and beauty, the PPI data suggests that trend has legs.</p>
 <section id="limitations" class="level3">
 <h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
@@ -1467,10 +3203,10 @@ Figure&nbsp;4: PPI typically leads CPI by 3 to 9 months. If the January PPI surg
 </ul>
 <p><strong>Next key prints:</strong></p>
 <ul>
-<li><strong>March 11, 2026</strong> — February CPI</li>
-<li><strong>March 18, 2026</strong> — February PPI</li>
+<li><strong>March 11, 2026</strong> - February CPI</li>
+<li><strong>March 18, 2026</strong> - February PPI</li>
 </ul>
-<p>If the margin expansion story continues into February’s data, “higher for longer” could easily become “higher for <em>even</em> longer” — and the 2026 rate-cut calendar may need to be rewritten entirely.</p>
+<p>If the margin expansion story continues into February’s data, “higher for longer” could easily become “higher for <em>even</em> longer,” and the 2026 rate-cut calendar may need to be rewritten entirely.</p>
 </section>
 </section>
 <section id="methodology-data" class="level2">
@@ -1528,8 +3264,8 @@ Figure&nbsp;4: PPI typically leads CPI by 3 to 9 months. If the January PPI surg
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p><strong>Month-over-month (m/m)</strong> measures the percentage change in a price index from one month to the next. It captures short-term momentum but can be noisy. To gauge what a single month’s reading <em>would</em> imply over a full year, analysts sometimes annualize it — compounding the monthly rate twelve times: (1 + m/m)<sup>12</sup> − 1. A +0.3% monthly print annualizes to roughly 3.7%; a +0.8% print annualizes to nearly 10%. Annualization is useful for context but misleading if treated as a forecast, since no single month sustains its pace indefinitely. <strong>Year-over-year (y/y)</strong> is the more stable measure: it compares the index level to the same month twelve months earlier, smoothing out monthly volatility.↩︎</p></li>
-<li id="fn2"><p>Core PPI services here refers to the BLS measure “final demand services less food, energy, and trade services” — the narrowest and most policy-relevant cut of producer services inflation.↩︎</p></li>
+<li id="fn1"><p><strong>Month-over-month (m/m)</strong> measures the percentage change in a price index from one month to the next. It captures short-term momentum but can be noisy. To gauge what a single month’s reading <em>would</em> imply over a full year, analysts sometimes annualize it, compounding the monthly rate twelve times: (1 + m/m)<sup>12</sup> − 1. A +0.3% monthly print annualizes to roughly 3.7%; a +0.8% print annualizes to nearly 10%. Annualization is useful for context but misleading if treated as a forecast, since no single month sustains its pace indefinitely. <strong>Year-over-year (y/y)</strong> is the more stable measure: it compares the index level to the same month twelve months earlier, smoothing out monthly volatility.↩︎</p></li>
+<li id="fn2"><p>Core PPI services here refers to the BLS measure “final demand services less food, energy, and trade services,” the narrowest and most policy-relevant cut of producer services inflation.↩︎</p></li>
 </ol>
 </section></div> ]]></description>
   <category>economics</category>
@@ -2850,7 +4586,7 @@ Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisi
   <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>US Inflation Is Cooling Off — Here’s What the Numbers Really Say</title>
+  <title>US Inflation Is Cooling Off: Here’s What the Numbers Really Say</title>
   <link>https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/</link>
   <description><![CDATA[ 
 
@@ -2858,7 +4594,7 @@ Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisi
 
 
 
-<p>US consumer prices rose 2.8% year-over-year in January 2026 — down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story isn’t in the headline number. It’s in the momentum, the decomposition, and the structural dynamics underneath.</p>
+<p>US consumer prices rose 2.8% year-over-year in January 2026, down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story isn’t in the headline number. It’s in the momentum, the decomposition, and the structural dynamics underneath.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2873,10 +4609,10 @@ Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisi
 <div class="callout-body-container callout-body">
 <p>The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:</p>
 <ul>
-<li><code>01_fetch_data.py</code> — Fetches data from FRED (requires free API key)</li>
-<li><code>02_clean_data.py</code> — Cleans and computes derived series</li>
-<li><code>03_visualizations.py</code> — Generates all charts</li>
-<li><code>04_compute_stats.py</code> — Computes summary statistics</li>
+<li><code>01_fetch_data.py</code> - Fetches data from FRED (requires free API key)</li>
+<li><code>02_clean_data.py</code> - Cleans and computes derived series</li>
+<li><code>03_visualizations.py</code> - Generates all charts</li>
+<li><code>04_compute_stats.py</code> - Computes summary statistics</li>
 </ul>
 <p>All data sourced from <a href="https://fred.stlouisfed.org/">FRED</a> (Federal Reserve Economic Data).</p>
 </div>
@@ -2884,7 +4620,7 @@ Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisi
 </div>
 <section id="key-metrics" class="level2">
 <h2 class="anchored" data-anchor-id="key-metrics">Key Metrics</h2>
-<div id="fe53c6aa" class="cell" data-execution_count="2">
+<div id="7988a3c3" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
@@ -3234,7 +4970,7 @@ Figure&nbsp;1: CPI year-over-year change since 2019, with the Fed’s 2% target 
 </div>
 </div>
 </div>
-<p>The trend is clear: inflation has been on a slow, grinding path lower since the post-pandemic peak. But the headline number can be misleading — it’s a trailing 12-month average that smooths over what’s actually happening right now.</p>
+<p>The trend is clear: inflation has been on a slow, grinding path lower since the post-pandemic peak. But the headline number can be misleading: it’s a trailing 12-month average that smooths over what’s actually happening right now.</p>
 </section>
 <section id="beyond-the-headline" class="level2">
 <h2 class="anchored" data-anchor-id="beyond-the-headline">Beyond the Headline</h2>
@@ -3457,7 +5193,7 @@ font-style: inherit;">180</span>))</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-three-measures-output-1.png" width="947" height="471" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-three-measures-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Headline, core, and supercore inflation. Supercore — services excluding energy — is the Fed’s preferred gauge of underlying price pressure.
+Figure&nbsp;2: Headline, core, and supercore inflation. Supercore (services excluding energy) is the Fed’s preferred gauge of underlying price pressure.
 </figcaption>
 </figure>
 </div>
@@ -3466,7 +5202,7 @@ Figure&nbsp;2: Headline, core, and supercore inflation. Supercore — services e
 <p>Core CPI at <strong>2.9%</strong> is still above the Fed’s target. This matters because core strips out the noise of gas prices and grocery bills, revealing the underlying inflation trend.</p>
 <section id="momentum-whats-happening-right-now" class="level3">
 <h3 class="anchored" data-anchor-id="momentum-whats-happening-right-now">Momentum: What’s Happening Right Now</h3>
-<p>The most important chart most people never see: <strong>inflation momentum</strong>. Instead of looking at trailing 12-month averages, we can annualize shorter windows — 1-month, 3-month, 6-month — to see whether inflation is accelerating or decelerating <em>right now</em>.</p>
+<p>The most important chart most people never see: <strong>inflation momentum</strong>. Instead of looking at trailing 12-month averages, we can annualize shorter windows (1-month, 3-month, 6-month) to see whether inflation is accelerating or decelerating <em>right now</em>.</p>
 <div id="cell-fig-momentum" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -3728,7 +5464,7 @@ font-style: inherit;">90</span>))</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-momentum-output-1.png" width="946" height="472" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-momentum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Inflation momentum — short-run annualized rates vs the trailing 12-month average. When the 3-month rate falls below the 12-month rate, it signals genuine cooling.
+Figure&nbsp;3: Inflation momentum: short-run annualized rates vs the trailing 12-month average. When the 3-month rate falls below the 12-month rate, it signals genuine cooling.
 </figcaption>
 </figure>
 </div>
@@ -3739,7 +5475,7 @@ Figure&nbsp;3: Inflation momentum — short-run annualized rates vs the trailing
 </section>
 <section id="whats-driving-the-drop" class="level2">
 <h2 class="anchored" data-anchor-id="whats-driving-the-drop">What’s Driving the Drop</h2>
-<p>Not all prices move together. Breaking down inflation into its major components reveals where the cooling is coming from — and where stickiness remains.</p>
+<p>Not all prices move together. Breaking down inflation into its major components reveals where the cooling is coming from, and where stickiness remains.</p>
 <div id="cell-fig-components" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -4124,18 +5860,18 @@ font-style: inherit;">9</span>)</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-components-output-1.png" width="743" height="592" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Radar chart showing year-over-year inflation by component across four time periods. The web shrinks toward the center as inflation cools — except shelter, which remains elevated. Energy (highlighted) has collapsed from its 2022 peak.
+Figure&nbsp;4: Radar chart showing year-over-year inflation by component across four time periods. The web shrinks toward the center as inflation cools, except shelter, which remains elevated. Energy (highlighted) has collapsed from its 2022 peak.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The radar chart shows how the inflation “footprint” has shrunk over the past three years. <strong>Energy</strong> (highlighted axis) has collapsed from double-digit increases to near zero. <strong>Shelter</strong> remains the stubborn outlier — still elevated while other categories have normalized. <strong>Transportation</strong> has turned negative, reflecting falling used car prices.</p>
+<p>The radar chart shows how the inflation “footprint” has shrunk over the past three years. <strong>Energy</strong> (highlighted axis) has collapsed from double-digit increases to near zero. <strong>Shelter</strong> remains the stubborn outlier, still elevated while other categories have normalized. <strong>Transportation</strong> has turned negative, reflecting falling used car prices.</p>
 <p>The story is clear: <strong>shelter</strong> remains the single largest contributor to above-target inflation. At 3.4% YoY, it accounts for roughly 1.2pp of the headline number.</p>
 </section>
 <section id="the-shelter-question" class="level2">
 <h2 class="anchored" data-anchor-id="the-shelter-question">The Shelter Question</h2>
-<p>Shelter is the key to the “last mile” of disinflation — and there’s reason to believe it will keep falling.</p>
+<p>Shelter is the key to the “last mile” of disinflation, and there’s reason to believe it will keep falling.</p>
 <div id="cell-fig-shelter" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -4144,7 +5880,7 @@ background-color: null;
 font-style: inherit;"># =============================================================================</span></span>
 <span id="cb5-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Exhibit 5a: Shelter vs Headline — Showing the Lag</span></span>
+font-style: inherit;"># Exhibit 5a: Shelter vs Headline - Showing the Lag</span></span>
 <span id="cb5-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># =============================================================================</span></span>
@@ -4450,13 +6186,13 @@ font-style: inherit;">120</span>))</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-shelter-output-1.png" width="948" height="471" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shelter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Shelter CPI vs headline CPI (year-over-year). Note how shelter peaks and troughs lag headline by roughly 12-18 months — the ‘last mile’ of disinflation is already baked in.
+Figure&nbsp;5: Shelter CPI vs headline CPI (year-over-year). Note how shelter peaks and troughs lag headline by roughly 12-18 months. The ‘last mile’ of disinflation is already baked in.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>The chart above makes the lag crystal clear: headline CPI peaked months before shelter CPI did. The BLS shelter measure reflects the average rent across <em>all existing leases</em>, not just new ones — so it takes 12-18 months for market-rate changes to fully flow through.</p>
+<p>The chart above makes the lag crystal clear: headline CPI peaked months before shelter CPI did. The BLS shelter measure reflects the average rent across <em>all existing leases</em>, not just new ones, so it takes 12-18 months for market-rate changes to fully flow through.</p>
 <div id="cell-fig-shelter-detail" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -4673,7 +6409,7 @@ Figure&nbsp;6: Shelter decomposed into its two main components: Owners’ Equiva
 </div>
 </div>
 </div>
-<p>Shelter peaked at 8.2% in March 2023 and has been falling steadily since. At 3.4% now, both OER and primary rent are on a clear downward trajectory. Private-sector data on new tenant rents (from Zillow, Apartment List, and others) has been running near or below the pre-pandemic trend for months — meaning further shelter disinflation is <strong>already baked into the pipeline</strong>.</p>
+<p>Shelter peaked at 8.2% in March 2023 and has been falling steadily since. At 3.4% now, both OER and primary rent are on a clear downward trajectory. Private-sector data on new tenant rents (from Zillow, Apartment List, and others) has been running near or below the pre-pandemic trend for months, meaning further shelter disinflation is <strong>already baked into the pipeline</strong>.</p>
 </section>
 <section id="broad-based-or-narrow" class="level2">
 <h2 class="anchored" data-anchor-id="broad-based-or-narrow">Broad-Based or Narrow?</h2>
@@ -4871,13 +6607,13 @@ font-style: inherit;">180</span>))</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-sticky-flexible-output-1.png" width="946" height="470" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sticky-flexible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Atlanta Fed Sticky vs Flexible CPI. Flexible prices normalized quickly after the pandemic shock. Sticky prices — the holdout — are now declining too.
+Figure&nbsp;7: Atlanta Fed Sticky vs Flexible CPI. Flexible prices normalized quickly after the pandemic shock. Sticky prices, the holdout, are now declining too.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Flexible CPI at <strong>0.7%</strong> has essentially normalized. The remaining inflation is concentrated in sticky prices at <strong>3.0%</strong> — but these too are on a clear downtrend.</p>
+<p>Flexible CPI at <strong>0.7%</strong> has essentially normalized. The remaining inflation is concentrated in sticky prices at <strong>3.0%</strong>, but these too are on a clear downtrend.</p>
 </section>
 <section id="median-trimmed-mean-cpi" class="level3">
 <h3 class="anchored" data-anchor-id="median-trimmed-mean-cpi">Median &amp; Trimmed-Mean CPI</h3>
@@ -5429,7 +7165,7 @@ font-style: inherit;">10</span>))</span>
 <img src="https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-long-view-output-1.png" width="951" height="468" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-long-view-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER recessions. The current reading is unremarkable by historical standards — well within the ‘normal’ range of the post-Volcker era.
+Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER recessions. The current reading is unremarkable by historical standards, well within the ‘normal’ range of the post-Volcker era.
 </figcaption>
 </figure>
 </div>
@@ -5440,7 +7176,7 @@ Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER 
 <section id="what-it-means" class="level2">
 <h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
 <p><strong>For the Fed:</strong> The data gives the Federal Open Market Committee (FOMC) more room to cut rates, but the sticky-price holdouts (shelter, insurance) mean they won’t rush. Markets are pricing in further easing, but the pace will depend on whether the 3-month momentum continues to run below the 12-month average.</p>
-<p><strong>For consumers:</strong> The relief is real but gradual. Prices aren’t falling — they’re rising more slowly. Shelter costs are still elevated, and services inflation remains above the Fed’s target. The squeeze on household budgets is easing, not ending.</p>
+<p><strong>For consumers:</strong> The relief is real but gradual. Prices aren’t falling; they’re rising more slowly. Shelter costs are still elevated, and services inflation remains above the Fed’s target. The squeeze on household budgets is easing, not ending.</p>
 <p><strong>For markets:</strong> The disinflation trend supports risk assets and argues against a second inflation wave. The breadth of the cooling (confirmed by median and trimmed-mean measures) makes this more durable than if it were driven by a single volatile category.</p>
 </section>
 <section id="methodology-data" class="level2">
