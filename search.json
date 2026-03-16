@@ -119,6 +119,55 @@
     "text": "Learn More\nThe full methodology, data pipeline, and source code are available on GitHub: P&C Severity CPI Repository\nThe index updates monthly via GitHub Actions, pulling fresh data from the Bureau of Labor Statistics API."
   },
   {
+    "objectID": "posts/2026-03-15-divergence/index.html",
+    "href": "posts/2026-03-15-divergence/index.html",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "",
+    "text": "Last week delivered three economic releases that, at the headline level, seemed to contradict each other. Nonfarm payrolls fell by -92,000 in February 2026. Initial jobless claims held at 213,000, near historically low levels. And core CPI came in at 2.5% year-over-year, still above the Fed’s 2% target. Weak hiring, no layoffs, sticky prices. The data look contradictory only at the headline level. Taken together, the releases suggest a labor market that is cooling through slower hiring rather than rising layoffs, while inflation remains stubbornly elevated. The cleaner interpretation is not collapse. It is uneven cooling.\n-92,000\n    Nonfarm Payrolls\n  \n  \n    4.4%\n    Unemployment Rate\n  \n  \n    213,000\n    Initial Claims\n  \n  \n    2.5%\n    Core CPI (y/y)\n  \n\nData as of February 2026 | Source: Bureau of Labor Statistics, Department of Labor"
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#the-payroll-miss-decomposed",
+    "href": "posts/2026-03-15-divergence/index.html#the-payroll-miss-decomposed",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "1. The Payroll Miss, Decomposed",
+    "text": "1. The Payroll Miss, Decomposed\nA -92,000 payroll print is weak by any standard. But the composition matters more than the headline.\nThe sector-level breakdown reveals that the weakness was concentrated, not broad. Health care, typically the most reliable source of job growth, declined by 28,000, with strike activity contributing to the drop. The information sector lost 11,000, extending a multi-month pattern of restructuring. Federal government employment fell by 10,000 as workforce reductions continued.\n\n\nShow code\n# =============================================================================\n# Sector-Level Payroll Changes: Horizontal Bar Chart\n# =============================================================================\n\ndf_sec = df_payrolls.sort_values('change', ascending=True).copy()\n\nfig, ax = plt.subplots(figsize=(10, 5.5))\n\nbar_colors = [COLORS['positive'] if v &gt;= 0 else COLORS['negative'] for v in df_sec['change']]\nbars = ax.barh(range(len(df_sec)), df_sec['change'] / 1000, color=bar_colors, alpha=0.85)\n\n# Direct value labels\nfor i, (val, bar) in enumerate(zip(df_sec['change'], bars)):\n    label = f\"{val / 1000:+.0f}k\"\n    offset = 0.8 if val &gt;= 0 else -0.8\n    ha = 'left' if val &gt;= 0 else 'right'\n    ax.text(val / 1000 + offset, i, label, va='center', ha=ha, fontsize=9,\n            fontweight='bold', color=COLORS['neutral'])\n\nax.set_yticks(range(len(df_sec)))\nax.set_yticklabels(df_sec['sector'], fontsize=9)\nax.set_xlabel('Job Change (thousands)')\nax.axvline(x=0, color=COLORS['neutral'], linewidth=0.8, alpha=0.5)\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: Sector-level payroll changes for February 2026. The miss was concentrated in health care (strikes), federal government (workforce reductions), and information (restructuring), not distributed broadly across the economy.\n\n\n\n\n\nThe sectors still adding jobs (leisure and hospitality, education, professional services) are doing so modestly. A payroll miss driven by concentrated sector weakness tells a fundamentally different story than one driven by synchronized contraction across the economy."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#claims-tell-a-different-story",
+    "href": "posts/2026-03-15-divergence/index.html#claims-tell-a-different-story",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "2. Claims Tell a Different Story",
+    "text": "2. Claims Tell a Different Story\nIf the labor market were truly breaking, jobless claims would be rising. They are not.\nInitial claims for the week ending March 7 came in at 213,000, with the four-week moving average at 212,000. Both figures remain near historically low levels. The claims data has been remarkably stable for months, showing no sign of the kind of layoff acceleration that typically accompanies a deteriorating labor market.\n\n\nShow code\n# =============================================================================\n# Weekly Initial Claims with 4-Week Moving Average\n# =============================================================================\n\nfig, ax = plt.subplots(figsize=(10, 5))\n\nax.plot(df_claims['week_ending'], df_claims['initial_claims'] / 1000,\n        color=COLORS['claims'], linewidth=1.5, marker='o', markersize=4,\n        alpha=0.7, label='Weekly Initial Claims')\n\nax.plot(df_claims['week_ending'], df_claims['four_week_avg'] / 1000,\n        color=COLORS['avg'], linewidth=2.5, label='4-Week Average')\n\n# Direct end labels\nlast_row = df_claims.iloc[-1]\nax.text(last_row['week_ending'] + pd.Timedelta(days=3),\n        last_row['initial_claims'] / 1000,\n        f\"  {last_row['initial_claims'] / 1000:.0f}k\",\n        fontsize=9, color=COLORS['claims'], va='center', fontweight='bold')\nax.text(last_row['week_ending'] + pd.Timedelta(days=3),\n        last_row['four_week_avg'] / 1000,\n        f\"  {last_row['four_week_avg'] / 1000:.0f}k avg\",\n        fontsize=9, color=COLORS['avg'], va='center', fontweight='bold')\n\nax.set_ylabel('Initial Claims (thousands)')\nax.xaxis.set_major_formatter(mdates.DateFormatter('%b %d\\n%Y'))\nax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))\nax.set_xlim(right=last_row['week_ending'] + pd.Timedelta(days=14))\n\nax.legend(loc='upper right', fontsize=8, framealpha=0.9)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nFigure 2: Weekly initial jobless claims and 4-week moving average, December 2025 through early March 2026. Claims have remained in a tight band near 210,000-220,000, well below levels that would signal labor market stress.\n\n\n\n\n\nThis is the more interesting signal. The labor market can weaken through two distinct channels: rising layoffs or slowing hiring. The current data strongly suggests the second. Employers are pulling back on new positions without cutting existing workers. The result is a labor market that loses momentum gradually rather than breaking suddenly.\nThe phrase that fits is “slowing without breaking.” Claims data is the closest thing to a real-time layoff indicator, and it is telling a story of stability, not stress."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#inflation-isnt-helping",
+    "href": "posts/2026-03-15-divergence/index.html#inflation-isnt-helping",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "3. Inflation Isn’t Helping",
+    "text": "3. Inflation Isn’t Helping\nThe third release complicates the picture further. Headline CPI for February 2026 came in at 2.4% year-over-year. Core CPI, stripping out food and energy, landed at 2.5%. Both are lower than last year’s readings, but neither is at the Fed’s 2% target.\nShelter costs remain elevated at 3.0% year-over-year, continuing to be a major driver of core inflation’s stickiness. Month-over-month, headline CPI rose 0.3%, a pace that, if sustained, would annualize well above 2%.\n\n\nShow code\n# =============================================================================\n# CPI vs Core CPI Year-over-Year Trend\n# =============================================================================\n\nfig, ax = plt.subplots(figsize=(10, 5))\n\nax.plot(df_cpi['date'], df_cpi['cpi_yoy'], color=COLORS['cpi'], linewidth=2.5,\n        marker='o', markersize=4, label='Headline CPI (y/y)')\n\nax.plot(df_cpi['date'], df_cpi['core_cpi_yoy'], color=COLORS['core_cpi'], linewidth=2.5,\n        linestyle='--', marker='s', markersize=4, label='Core CPI (y/y)')\n\n# Fed target reference line\nax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)\nax.text(df_cpi['date'].iloc[-1], 2.08, 'Fed 2% target', fontsize=8,\n        color=COLORS['fed_target'], ha='right', va='bottom')\n\n# Direct end labels\nlast_cpi = df_cpi.iloc[-1]\nax.text(last_cpi['date'] + pd.Timedelta(days=12), last_cpi['cpi_yoy'],\n        f\"  {last_cpi['cpi_yoy']:.1f}%\", fontsize=10, color=COLORS['cpi'],\n        va='center', fontweight='bold')\nax.text(last_cpi['date'] + pd.Timedelta(days=12), last_cpi['core_cpi_yoy'],\n        f\"  {last_cpi['core_cpi_yoy']:.1f}%\", fontsize=10, color=COLORS['core_cpi'],\n        va='center', fontweight='bold')\n\nax.set_ylabel('Year-over-Year Change (%)')\nax.xaxis.set_major_formatter(mdates.DateFormatter('%b\\n%Y'))\nax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))\nax.set_xlim(right=last_cpi['date'] + pd.Timedelta(days=30))\n\nax.legend(loc='upper right', fontsize=8, framealpha=0.9)\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\nFigure 3: Headline CPI and Core CPI year-over-year, March 2025 through February 2026. Both measures have declined from mid-2025 peaks but remain above the Fed’s 2% target. Core CPI has been particularly sticky, held up by persistent shelter inflation.\n\n\n\n\n\nInflation is not reaccelerating, but it is not solved either. The disinflation trend that encouraged rate-cut speculation through late 2025 has stalled. Core CPI at 2.5% is meaningfully above the Fed’s target, and shelter’s contribution shows no sign of rapid unwinding.\nThis matters because it constrains the policy response to labor market weakness. If inflation were falling cleanly toward 2%, the Fed would have room to ease. With core CPI stuck above target, any rate cut carries the risk of reigniting price pressures. The labor market is cooling, but inflation is not giving the Fed the clearance it needs to respond aggressively."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#the-real-signal-is-divergence",
+    "href": "posts/2026-03-15-divergence/index.html#the-real-signal-is-divergence",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "4. The Real Signal Is Divergence",
+    "text": "4. The Real Signal Is Divergence\nPayrolls show weaker demand for new workers. Claims show that existing workers are not being let go. Inflation shows that price pressures remain embedded in the services economy, particularly in shelter. The releases are not contradictory. They are describing different parts of the same adjustment.\nThis pattern is characteristic of a late-cycle economy that has not yet tipped into contraction. The labor market is no longer generating the broad-based job growth that characterized the post-pandemic recovery. Hiring has become selective, concentrated in services and education, while goods-producing sectors and the federal government pull back.\nThe more interesting question is how long this divergence can persist. A labor market that slows through reduced hiring can stay in this mode for quarters without triggering acute distress. But a labor market that slows while inflation remains sticky is one where policy options narrow with each passing month."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#what-it-means",
+    "href": "posts/2026-03-15-divergence/index.html#what-it-means",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "What It Means",
+    "text": "What It Means\nFor the Fed: The combination of weak payrolls and sticky core inflation is a difficult configuration for a central bank that wants to ease. The labor market argues for a cut. Inflation argues for patience. Until one side of this tension resolves, the Fed is likely to hold.\nFor workers: The claims data is the most reassuring signal. Layoffs are not rising, and the sectors experiencing the sharpest payroll declines are driven by specific factors, not synchronized weakness. The risk for most workers is not job loss but a hiring environment that becomes progressively harder to enter.\nFor markets: The ambiguity is likely to persist until either claims begin rising (confirming deterioration) or inflation breaks decisively toward 2% (confirming disinflation). Neither has happened yet, and that leaves the economy in an in-between state that resists clean narratives."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/index.html#methodology-data",
+    "href": "posts/2026-03-15-divergence/index.html#methodology-data",
+    "title": "When the Labor Market Slows Without Breaking",
+    "section": "Methodology & Data",
+    "text": "Methodology & Data\n\nData series used in this analysis.\n\n\nSeries\nDescription\nSource\n\n\n\n\nEmployment Situation\nFebruary 2026 payrolls, sector-level data\nBLS\n\n\nCPI Summary\nFebruary 2026 CPI and Core CPI\nBLS\n\n\nWeekly Claims\nInitial claims, seasonally adjusted\nDOL\n\n\n\n\nLimitations\n\nSector-level payroll changes are from the initial BLS release and are subject to revision; initial readings have historically been revised by 25,000 to 75,000 jobs\nWeekly claims data is seasonally adjusted and can be noisy on a week-to-week basis; the four-week average is a more reliable indicator\nCPI year-over-year figures reflect a twelve-month comparison window and can be influenced by base effects from the prior year\nThe payroll sector decomposition does not sum precisely to the total payroll change due to omitted smaller sectors\n\n\nData current as of March 12, 2026."
+  },
+  {
     "objectID": "posts/drafts/2026-03-08-feb-jobs-miss/index.html",
     "href": "posts/drafts/2026-03-08-feb-jobs-miss/index.html",
     "title": "Behind the February 2026 Jobs Miss: Visualizing Strikes, Storms, and Global Shocks",
@@ -207,7 +256,7 @@
     "href": "index.html",
     "title": "gilboa-blog",
     "section": "",
-    "text": "Behind the February 2026 Jobs Miss: Visualizing Strikes, Storms, and Global Shocks\n\n\nThe US economy lost 92,000 jobs in February, the worst monthly reading since late 2025. What happened?\n\n\n\neconomics\n\ndata analysis\n\ndata visualization\n\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nThe Great Inflation Divergence: Why Core PPI Exploded While CPI Stayed Cool\n\n\nPPI and CPI told two very different stories in January 2026. One calmed the markets. The other blindsided them.\n\n\n\neconomics\n\ninflation\n\ndata analysis\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Supreme Court Alliances\n\n\nThe IEEPA Tariff Ruling and Justice Voting Patterns in Learning Resources, Inc. v. Trump\n\n\n\nsupreme court\n\ndata visualization\n\nlaw\n\npolitics\n\n\n\n\n\n\n\n\n\nFeb 22, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nUS Inflation Is Cooling Off: Here’s What the Numbers Really Say\n\n\n\n\n\n\neconomics\n\ndata analysis\n\ninflation\n\n\n\n\n\n\n\n\n\nFeb 16, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nSetting Up My Data Science Blog\n\n\n\n\n\n\nmeta\n\nvisualization\n\npython\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nP&C Severity CPI: A Claims-Weighted Inflation Index\n\n\n\n\n\n\nactuarial\n\ninflation\n\nvisualization\n\ninsurance\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\nNo matching items"
+    "text": "Task: Write a gilboa.blog post from last week’s economic data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhen the Labor Market Slows Without Breaking\n\n\nWeak payrolls, low claims, and sticky inflation paint a picture of uneven cooling, not collapse.\n\n\n\neconomics\n\ndata analysis\n\ninflation\n\n\n\n\n\n\n\n\n\nMar 15, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nBehind the February 2026 Jobs Miss: Visualizing Strikes, Storms, and Global Shocks\n\n\nThe US economy lost 92,000 jobs in February, the worst monthly reading since late 2025. What happened?\n\n\n\neconomics\n\ndata analysis\n\ndata visualization\n\n\n\n\n\n\n\n\n\nMar 8, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nThe Great Inflation Divergence: Why Core PPI Exploded While CPI Stayed Cool\n\n\nPPI and CPI told two very different stories in January 2026. One calmed the markets. The other blindsided them.\n\n\n\neconomics\n\ninflation\n\ndata analysis\n\n\n\n\n\n\n\n\n\nMar 1, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing Supreme Court Alliances\n\n\nThe IEEPA Tariff Ruling and Justice Voting Patterns in Learning Resources, Inc. v. Trump\n\n\n\nsupreme court\n\ndata visualization\n\nlaw\n\npolitics\n\n\n\n\n\n\n\n\n\nFeb 22, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nUS Inflation Is Cooling Off: Here’s What the Numbers Really Say\n\n\n\n\n\n\neconomics\n\ndata analysis\n\ninflation\n\n\n\n\n\n\n\n\n\nFeb 16, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nSetting Up My Data Science Blog\n\n\n\n\n\n\nmeta\n\nvisualization\n\npython\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nP&C Severity CPI: A Claims-Weighted Inflation Index\n\n\n\n\n\n\nactuarial\n\ninflation\n\nvisualization\n\ninsurance\n\n\n\n\n\n\n\n\n\nFeb 1, 2025\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/2026-03-01-core-ppi-divergence/index.html",
@@ -411,6 +460,62 @@
     "title": "US Inflation Is Cooling Off: Here’s What the Numbers Really Say",
     "section": "Methodology & Data",
     "text": "Methodology & Data\nAll data sourced from FRED (Federal Reserve Economic Data):\n\nKey data series used in this analysis\n\n\nSeries\nDescription\nSource\n\n\n\n\nCPIAUCSL\nCPI-U All Items\nBLS\n\n\nCPILFESL\nCPI-U Less Food & Energy\nBLS\n\n\nCUSR0000SAH1\nShelter\nBLS\n\n\nCUUR0000SASLE\nServices Less Energy\nBLS\n\n\nSTICKCPIM157SFRBATL\nSticky CPI\nAtlanta Fed\n\n\nFLEXCPIM157SFRBATL\nFlexible CPI\nAtlanta Fed\n\n\nMEDCPIM158SFRBCLE\nMedian CPI\nCleveland Fed\n\n\nTRMMEANCPIM158SFRBCLE\n16% Trimmed Mean CPI\nCleveland Fed\n\n\n\nComponent weights are approximate CPI-U weights as of December 2025. Momentum rates are computed by annualizing the N-month price change: \\(\\left(\\frac{P_t}{P_{t-N}}\\right)^{12/N} - 1\\).\n\nData current as of February 16, 2026."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html",
+    "href": "posts/2026-03-15-divergence/blog_idea.html",
+    "title": "",
+    "section": "",
+    "text": "Code"
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#core-thesis",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#core-thesis",
+    "title": "",
+    "section": "Core thesis",
+    "text": "Core thesis\nLast week’s economic reports showed a divergence:\n\nPayrolls were weak\nJobless claims stayed low\nInflation remained sticky\n\nThis combination suggests a labor market that is slowing without breaking, not collapsing.\nThe post should explain why the headline interpretation was too simplistic.\nThe goal is not to predict recession or declare a soft landing, but to extract the signal from conflicting data."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#tone-and-style-very-important",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#tone-and-style-very-important",
+    "title": "",
+    "section": "Tone and style (very important)",
+    "text": "Tone and style (very important)\nWrite in the style of gilboa.blog:\n\nanalytical\ncalm\ndata-focused\nskeptical of headlines\nno sensationalism\nno CNBC-style language\nno dramatic macro predictions\nno policy speculation unless needed\nemphasize decomposition and signal extraction\n\nUse phrasing like:\n\n“the composition matters”\n“headline weakness”\n“the cleaner interpretation”\n“the more cautious reading”\n“the data are less contradictory than they appear”\n“the more interesting signal”\n“taken together, the releases suggest”\n\nAvoid:\n\n“the Fed will pivot”\n“markets panicked”\n“the economy is collapsing”\n“this guarantees recession”\n\nUse short paragraphs.\nTarget length: 900–1300 words."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#title-options-choose-one-or-similar",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#title-options-choose-one-or-similar",
+    "title": "",
+    "section": "Title options (choose one or similar)",
+    "text": "Title options (choose one or similar)\n\nWeak Payrolls, Low Claims, Sticky Inflation\nWhen the Labor Market Slows Without Breaking\nWhy Last Week’s Data Looked Contradictory\nBeneath the Headlines: Payroll Weakness Without Labor Market Stress\nA Soft Payroll Print Is Not the Same Thing as a Broken Labor Market\n\nAdd a subtitle if appropriate."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#data-to-use-do-not-invent-numbers",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#data-to-use-do-not-invent-numbers",
+    "title": "",
+    "section": "Data to use (do not invent numbers)",
+    "text": "Data to use (do not invent numbers)\nUse the following official releases.\n\nEmployment Situation (March 6, 2026, for February 2026)\n\nNonfarm payrolls: −92,000\nUnemployment rate: 4.4%\nHealth care employment decreased due to strike activity\nInformation employment trending down\nFederal government employment trending down\nPayroll employment changed little on net in 2025\n\nSource: BLS Employment Situation\n\n\nCPI (March 11, 2026, for February 2026)\n\nCPI YoY: 2.4%\nCore CPI YoY: 2.5%\nShelter up 3.0% YoY\nCPI rose 0.3% month over month\n\nSource: BLS CPI\n\n\nWeekly jobless claims (March 12, 2026)\n\nInitial claims: 213,000\n4-week average: 212,000\nClaims remain historically low\n\nSource: Department of Labor\nDo not add other numbers unless clearly labeled as estimates."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#structure-to-follow",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#structure-to-follow",
+    "title": "",
+    "section": "Structure to follow",
+    "text": "Structure to follow\n\nOpening\nStart with the apparent contradiction:\n\nweak payrolls\nlow claims\nsticky inflation\n\nExplain that the data only look contradictory at the headline level.\nState the thesis:\nThe labor market is cooling but not breaking.\n\n\n\nSection 1 — Payroll miss, but composition matters\nExplain:\n\n−92k payrolls is weak\nbut sector details matter\nstrikes affected health care\ngovernment and information declining\nnot broad collapse\n\nKey idea:\nWeak hiring does not automatically mean labor stress.\n\n\n\nSection 2 — Claims contradict the collapse narrative\nExplain:\n\nclaims stayed near 213k\nlayoffs not rising\nlabor market can weaken through slower hiring\n\nKey idea:\nHiring can slow before layoffs rise.\nUse phrase:\n“slowing without breaking”\n\n\n\nSection 3 — Inflation still sticky\nExplain:\n\nCPI stable, not falling fast\nshelter still elevated\ninflation not solved\n\nKey idea:\nInflation limits how easy the slowdown can be.\n\n\n\nSection 4 — The real story is divergence\nExplain:\n\npayrolls → weaker demand\nclaims → limited layoffs\nCPI → still sticky\n\nKey idea:\nThe economy is cooling unevenly.\nUse language like:\n“the releases describe different parts of the same adjustment”\n\n\n\nClosing\nEnd with a restrained conclusion.\nPossible direction:\nThe better interpretation is not collapse, but a gradual loss of momentum with inflation still complicating the path.\nDo not end with predictions.\nEnd with a clean analytical sentence."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#charts-to-suggest",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#charts-to-suggest",
+    "title": "",
+    "section": "Charts to suggest",
+    "text": "Charts to suggest\nAt the end of the post, recommend charts (do not draw them, only describe):\n\nMonthly payroll change\nWeekly claims with 4-week average\nCPI vs Core CPI\nOptional: sector payroll changes\n\nLabel them clearly as suggested charts."
+  },
+  {
+    "objectID": "posts/2026-03-15-divergence/blog_idea.html#writing-constraints",
+    "href": "posts/2026-03-15-divergence/blog_idea.html#writing-constraints",
+    "title": "",
+    "section": "Writing constraints",
+    "text": "Writing constraints\n\n900–1300 words\nshort paragraphs\nno bullet-heavy output\nprecise numbers only\nno hallucinated data\nno dramatic tone\n\nWrite the full blog post."
   },
   {
     "objectID": "about.html",

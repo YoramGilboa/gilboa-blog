@@ -10,7 +10,887 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Sun, 08 Mar 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 15 Mar 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>When the Labor Market Slows Without Breaking</title>
+  <link>https://gilboa.blog/posts/2026-03-15-divergence/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Last week delivered three economic releases that, at the headline level, seemed to contradict each other. Nonfarm payrolls fell by <strong>-92,000</strong> in February 2026. Initial jobless claims held at <strong>213,000</strong>, near historically low levels. And core CPI came in at <strong>2.5%</strong> year-over-year, still above the Fed’s 2% target. Weak hiring, no layoffs, sticky prices. The data look contradictory only at the headline level. Taken together, the releases suggest a labor market that is cooling through slower hiring rather than rising layoffs, while inflation remains stubbornly elevated. The cleaner interpretation is not collapse. It is uneven cooling.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All figures in this post are drawn from official releases: the <a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation</a> (March 6, 2026), the <a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS CPI Summary</a> (March 11, 2026), and the <a href="https://www.dol.gov/ui/data.pdf">Department of Labor Weekly Claims Report</a> (March 12, 2026). Sector-level payroll changes are from the BLS detailed tables. Weekly claims data reflects seasonally adjusted figures.</p>
+</div>
+</div>
+</div>
+<div id="0e008508" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">-92,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Nonfarm Payrolls</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">4.4%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Unemployment Rate</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">213,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Initial Claims</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">2.5%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI (y/y)</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">Data as of February 2026 | Source: Bureau of Labor Statistics, Department of Labor</p>
+</div>
+</div>
+<section id="the-payroll-miss-decomposed" class="level2">
+<h2 class="anchored" data-anchor-id="the-payroll-miss-decomposed">1. The Payroll Miss, Decomposed</h2>
+<p>A <strong>-92,000</strong> payroll print is weak by any standard. But the composition matters more than the headline.</p>
+<p>The sector-level breakdown reveals that the weakness was concentrated, not broad. Health care, typically the most reliable source of job growth, declined by 28,000, with strike activity contributing to the drop. The information sector lost 11,000, extending a multi-month pattern of restructuring. Federal government employment fell by 10,000 as workforce reductions continued.</p>
+<div id="cell-fig-sector-payrolls" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Sector-Level Payroll Changes: Horizontal Bar Chart</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5">df_sec <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_payrolls.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>, ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>).copy()</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.5</span>))</span>
+<span id="cb1-8"></span>
+<span id="cb1-9">bar_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>]]</span>
+<span id="cb1-10">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_sec)), df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>)</span>
+<span id="cb1-11"></span>
+<span id="cb1-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Direct value labels</span></span>
+<span id="cb1-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (val, bar) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'change'</span>], bars)):</span>
+<span id="cb1-14">    label <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span></span>
+<span id="cb1-15">    offset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span></span>
+<span id="cb1-16">    ha <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span></span>
+<span id="cb1-17">    ax.text(val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> offset, i, label, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ha, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb1-18">            fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>])</span>
+<span id="cb1-19"></span>
+<span id="cb1-20">ax.set_yticks(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(df_sec)))</span>
+<span id="cb1-21">ax.set_yticklabels(df_sec[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sector'</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb1-22">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Job Change (thousands)'</span>)</span>
+<span id="cb1-23">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-24"></span>
+<span id="cb1-25">plt.tight_layout()</span>
+<span id="cb1-26">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-sector-payrolls" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sector-payrolls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-15-divergence/index_files/figure-html/fig-sector-payrolls-output-1.png" width="952" height="520" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sector-payrolls-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Sector-level payroll changes for February 2026. The miss was concentrated in health care (strikes), federal government (workforce reductions), and information (restructuring), not distributed broadly across the economy.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The sectors still adding jobs (leisure and hospitality, education, professional services) are doing so modestly. A payroll miss driven by concentrated sector weakness tells a fundamentally different story than one driven by synchronized contraction across the economy.</p>
+</section>
+<section id="claims-tell-a-different-story" class="level2">
+<h2 class="anchored" data-anchor-id="claims-tell-a-different-story">2. Claims Tell a Different Story</h2>
+<p>If the labor market were truly breaking, jobless claims would be rising. They are not.</p>
+<p>Initial claims for the week ending March 7 came in at <strong>213,000</strong>, with the four-week moving average at <strong>212,000</strong>. Both figures remain near historically low levels. The claims data has been remarkably stable for months, showing no sign of the kind of layoff acceleration that typically accompanies a deteriorating labor market.</p>
+<div id="cell-fig-weekly-claims" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Weekly Initial Claims with 4-Week Moving Average</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb2-6"></span>
+<span id="cb2-7">ax.plot(df_claims[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'week_ending'</span>], df_claims[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'initial_claims'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb2-8">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'claims'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>,</span>
+<span id="cb2-9">        alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Weekly Initial Claims'</span>)</span>
+<span id="cb2-10"></span>
+<span id="cb2-11">ax.plot(df_claims[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'week_ending'</span>], df_claims[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'four_week_avg'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb2-12">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'avg'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'4-Week Average'</span>)</span>
+<span id="cb2-13"></span>
+<span id="cb2-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Direct end labels</span></span>
+<span id="cb2-15">last_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_claims.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-16">ax.text(last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'week_ending'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>),</span>
+<span id="cb2-17">        last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'initial_claims'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb2-18">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'initial_claims'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>,</span>
+<span id="cb2-19">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'claims'</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb2-20">ax.text(last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'week_ending'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>),</span>
+<span id="cb2-21">        last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'four_week_avg'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb2-22">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'four_week_avg'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k avg"</span>,</span>
+<span id="cb2-23">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'avg'</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb2-24"></span>
+<span id="cb2-25">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Initial Claims (thousands)'</span>)</span>
+<span id="cb2-26">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%d</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb2-27">ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb2-28">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>last_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'week_ending'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>))</span>
+<span id="cb2-29"></span>
+<span id="cb2-30">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb2-31">plt.tight_layout()</span>
+<span id="cb2-32">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-weekly-claims" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weekly-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-15-divergence/index_files/figure-html/fig-weekly-claims-output-1.png" width="951" height="471" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weekly-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Weekly initial jobless claims and 4-week moving average, December 2025 through early March 2026. Claims have remained in a tight band near 210,000-220,000, well below levels that would signal labor market stress.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the more interesting signal. The labor market can weaken through two distinct channels: rising layoffs or slowing hiring. The current data strongly suggests the second. Employers are pulling back on new positions without cutting existing workers. The result is a labor market that loses momentum gradually rather than breaking suddenly.</p>
+<p>The phrase that fits is “slowing without breaking.” Claims data is the closest thing to a real-time layoff indicator, and it is telling a story of stability, not stress.</p>
+</section>
+<section id="inflation-isnt-helping" class="level2">
+<h2 class="anchored" data-anchor-id="inflation-isnt-helping">3. Inflation Isn’t Helping</h2>
+<p>The third release complicates the picture further. Headline CPI for February 2026 came in at <strong>2.4%</strong> year-over-year. Core CPI, stripping out food and energy, landed at <strong>2.5%</strong>. Both are lower than last year’s readings, but neither is at the Fed’s 2% target.</p>
+<p>Shelter costs remain elevated at <strong>3.0%</strong> year-over-year, continuing to be a major driver of core inflation’s stickiness. Month-over-month, headline CPI rose <strong>0.3%</strong>, a pace that, if sustained, would annualize well above 2%.</p>
+<div id="cell-fig-cpi-trend" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># CPI vs Core CPI Year-over-Year Trend</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-4"></span>
+<span id="cb3-5">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">ax.plot(df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>], df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_yoy'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb3-8">        marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Headline CPI (y/y)'</span>)</span>
+<span id="cb3-9"></span>
+<span id="cb3-10">ax.plot(df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>], df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'core_cpi_yoy'</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'core_cpi'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb3-11">        linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'s'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Core CPI (y/y)'</span>)</span>
+<span id="cb3-12"></span>
+<span id="cb3-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Fed target reference line</span></span>
+<span id="cb3-14">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'fed_target'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb3-15">ax.text(df_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>].iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.08</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Fed 2% target'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb3-16">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'fed_target'</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bottom'</span>)</span>
+<span id="cb3-17"></span>
+<span id="cb3-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Direct end labels</span></span>
+<span id="cb3-19">last_cpi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_cpi.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb3-20">ax.text(last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>), last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_yoy'</span>],</span>
+<span id="cb3-21">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi_yoy'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cpi'</span>],</span>
+<span id="cb3-22">        va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb3-23">ax.text(last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>), last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'core_cpi_yoy'</span>],</span>
+<span id="cb3-24">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'core_cpi_yoy'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'core_cpi'</span>],</span>
+<span id="cb3-25">        va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>)</span>
+<span id="cb3-26"></span>
+<span id="cb3-27">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Year-over-Year Change (%)'</span>)</span>
+<span id="cb3-28">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb3-29">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb3-30">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>last_cpi[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'date'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>))</span>
+<span id="cb3-31"></span>
+<span id="cb3-32">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb3-33">plt.tight_layout()</span>
+<span id="cb3-34">plt.show()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-cpi-trend" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cpi-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-15-divergence/index_files/figure-html/fig-cpi-trend-output-1.png" width="950" height="472" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cpi-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Headline CPI and Core CPI year-over-year, March 2025 through February 2026. Both measures have declined from mid-2025 peaks but remain above the Fed’s 2% target. Core CPI has been particularly sticky, held up by persistent shelter inflation.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Inflation is not reaccelerating, but it is not solved either. The disinflation trend that encouraged rate-cut speculation through late 2025 has stalled. Core CPI at 2.5% is meaningfully above the Fed’s target, and shelter’s contribution shows no sign of rapid unwinding.</p>
+<p>This matters because it constrains the policy response to labor market weakness. If inflation were falling cleanly toward 2%, the Fed would have room to ease. With core CPI stuck above target, any rate cut carries the risk of reigniting price pressures. The labor market is cooling, but inflation is not giving the Fed the clearance it needs to respond aggressively.</p>
+</section>
+<section id="the-real-signal-is-divergence" class="level2">
+<h2 class="anchored" data-anchor-id="the-real-signal-is-divergence">4. The Real Signal Is Divergence</h2>
+<p>Payrolls show weaker demand for new workers. Claims show that existing workers are not being let go. Inflation shows that price pressures remain embedded in the services economy, particularly in shelter. The releases are not contradictory. They are describing different parts of the same adjustment.</p>
+<p>This pattern is characteristic of a late-cycle economy that has not yet tipped into contraction. The labor market is no longer generating the broad-based job growth that characterized the post-pandemic recovery. Hiring has become selective, concentrated in services and education, while goods-producing sectors and the federal government pull back.</p>
+<p>The more interesting question is how long this divergence can persist. A labor market that slows through reduced hiring can stay in this mode for quarters without triggering acute distress. But a labor market that slows while inflation remains sticky is one where policy options narrow with each passing month.</p>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
+<p><strong>For the Fed:</strong> The combination of weak payrolls and sticky core inflation is a difficult configuration for a central bank that wants to ease. The labor market argues for a cut. Inflation argues for patience. Until one side of this tension resolves, the Fed is likely to hold.</p>
+<p><strong>For workers:</strong> The claims data is the most reassuring signal. Layoffs are not rising, and the sectors experiencing the sharpest payroll declines are driven by specific factors, not synchronized weakness. The risk for most workers is not job loss but a hiring environment that becomes progressively harder to enter.</p>
+<p><strong>For markets:</strong> The ambiguity is likely to persist until either claims begin rising (confirming deterioration) or inflation breaks decisively toward 2% (confirming disinflation). Neither has happened yet, and that leaves the economy in an in-between state that resists clean narratives.</p>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data series used in this analysis.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Employment Situation</td>
+<td>February 2026 payrolls, sector-level data</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS</a></td>
+</tr>
+<tr class="even">
+<td>CPI Summary</td>
+<td>February 2026 CPI and Core CPI</td>
+<td><a href="https://www.bls.gov/news.release/cpi.nr0.htm">BLS</a></td>
+</tr>
+<tr class="odd">
+<td>Weekly Claims</td>
+<td>Initial claims, seasonally adjusted</td>
+<td><a href="https://www.dol.gov/ui/data.pdf">DOL</a></td>
+</tr>
+</tbody>
+</table>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Sector-level payroll changes are from the initial BLS release and are subject to revision; initial readings have historically been revised by 25,000 to 75,000 jobs</li>
+<li>Weekly claims data is seasonally adjusted and can be noisy on a week-to-week basis; the four-week average is a more reliable indicator</li>
+<li>CPI year-over-year figures reflect a twelve-month comparison window and can be influenced by base effects from the prior year</li>
+<li>The payroll sector decomposition does not sum precisely to the total payroll change due to omitted smaller sectors</li>
+</ul>
+<hr>
+<p><em>Data current as of March 12, 2026.</em></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>economics</category>
+  <category>data analysis</category>
+  <category>inflation</category>
+  <guid>https://gilboa.blog/posts/2026-03-15-divergence/</guid>
+  <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Behind the February 2026 Jobs Miss: Visualizing Strikes, Storms, and Global Shocks</title>
   <link>https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/</link>
@@ -1774,7 +2654,7 @@ Figure&nbsp;3: Job changes by sector in February 2026, color-coded by driving fa
 </div>
 </div>
 </div>
-<div id="afdc5a96" class="cell" data-execution_count="2">
+<div id="7b29aacc" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
@@ -1801,7 +2681,7 @@ Figure&nbsp;3: Job changes by sector in February 2026, color-coded by driving fa
 <section id="core-ppi-vs.-core-cpi-a-side-by-side" class="level2">
 <h2 class="anchored" data-anchor-id="core-ppi-vs.-core-cpi-a-side-by-side">1. Core PPI vs.&nbsp;Core CPI: A Side-by-Side</h2>
 <p>These indices measure the same economy through fundamentally different windows. CPI captures what consumers pay at the register, including imports and sales taxes. PPI captures what producers receive at the wholesale level: upstream margins and business-to-business transactions that haven’t reached consumer shelves yet.</p>
-<div id="dd6208ae" class="cell" data-execution_count="3">
+<div id="1d897d44" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -7939,6 +8819,230 @@ font-style: inherit;">'y'</span>)</span>
   <category>insurance</category>
   <guid>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</guid>
   <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title></title>
+  <link>https://gilboa.blog/posts/2026-03-15-divergence/blog_idea.html</link>
+  <description><![CDATA[ <div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+
+
+
+<section id="task-write-a-gilboa.blog-post-from-last-weeks-economic-data" class="level1">
+<h1>Task: Write a gilboa.blog post from last week’s economic data</h1>
+<p>You are writing a post for <strong>gilboa.blog</strong>.</p>
+<p>The blog style is analytical, data-driven, skeptical of headline interpretations, and focused on decomposing economic releases rather than repeating media narratives.</p>
+<p>Your goal is to write a full blog post based on last week’s economic data releases using the thesis below.</p>
+<hr>
+<section id="core-thesis" class="level2">
+<h2 class="anchored" data-anchor-id="core-thesis">Core thesis</h2>
+<p>Last week’s economic reports showed a divergence:</p>
+<ul>
+<li>Payrolls were weak</li>
+<li>Jobless claims stayed low</li>
+<li>Inflation remained sticky</li>
+</ul>
+<p>This combination suggests a labor market that is <strong>slowing without breaking</strong>, not collapsing.</p>
+<p>The post should explain why the headline interpretation was too simplistic.</p>
+<p>The goal is not to predict recession or declare a soft landing, but to extract the signal from conflicting data.</p>
+<hr>
+</section>
+<section id="tone-and-style-very-important" class="level2">
+<h2 class="anchored" data-anchor-id="tone-and-style-very-important">Tone and style (very important)</h2>
+<p>Write in the style of gilboa.blog:</p>
+<ul>
+<li>analytical</li>
+<li>calm</li>
+<li>data-focused</li>
+<li>skeptical of headlines</li>
+<li>no sensationalism</li>
+<li>no CNBC-style language</li>
+<li>no dramatic macro predictions</li>
+<li>no policy speculation unless needed</li>
+<li>emphasize decomposition and signal extraction</li>
+</ul>
+<p>Use phrasing like:</p>
+<ul>
+<li>“the composition matters”</li>
+<li>“headline weakness”</li>
+<li>“the cleaner interpretation”</li>
+<li>“the more cautious reading”</li>
+<li>“the data are less contradictory than they appear”</li>
+<li>“the more interesting signal”</li>
+<li>“taken together, the releases suggest”</li>
+</ul>
+<p>Avoid:</p>
+<ul>
+<li>“the Fed will pivot”</li>
+<li>“markets panicked”</li>
+<li>“the economy is collapsing”</li>
+<li>“this guarantees recession”</li>
+</ul>
+<p>Use short paragraphs.</p>
+<p>Target length: 900–1300 words.</p>
+<hr>
+</section>
+<section id="title-options-choose-one-or-similar" class="level2">
+<h2 class="anchored" data-anchor-id="title-options-choose-one-or-similar">Title options (choose one or similar)</h2>
+<ul>
+<li>Weak Payrolls, Low Claims, Sticky Inflation</li>
+<li>When the Labor Market Slows Without Breaking</li>
+<li>Why Last Week’s Data Looked Contradictory</li>
+<li>Beneath the Headlines: Payroll Weakness Without Labor Market Stress</li>
+<li>A Soft Payroll Print Is Not the Same Thing as a Broken Labor Market</li>
+</ul>
+<p>Add a subtitle if appropriate.</p>
+<hr>
+</section>
+<section id="data-to-use-do-not-invent-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="data-to-use-do-not-invent-numbers">Data to use (do not invent numbers)</h2>
+<p>Use the following official releases.</p>
+<section id="employment-situation-march-6-2026-for-february-2026" class="level3">
+<h3 class="anchored" data-anchor-id="employment-situation-march-6-2026-for-february-2026">Employment Situation (March 6, 2026, for February 2026)</h3>
+<ul>
+<li>Nonfarm payrolls: −92,000</li>
+<li>Unemployment rate: 4.4%</li>
+<li>Health care employment decreased due to strike activity</li>
+<li>Information employment trending down</li>
+<li>Federal government employment trending down</li>
+<li>Payroll employment changed little on net in 2025</li>
+</ul>
+<p>Source: BLS Employment Situation</p>
+</section>
+<section id="cpi-march-11-2026-for-february-2026" class="level3">
+<h3 class="anchored" data-anchor-id="cpi-march-11-2026-for-february-2026">CPI (March 11, 2026, for February 2026)</h3>
+<ul>
+<li>CPI YoY: 2.4%</li>
+<li>Core CPI YoY: 2.5%</li>
+<li>Shelter up 3.0% YoY</li>
+<li>CPI rose 0.3% month over month</li>
+</ul>
+<p>Source: BLS CPI</p>
+</section>
+<section id="weekly-jobless-claims-march-12-2026" class="level3">
+<h3 class="anchored" data-anchor-id="weekly-jobless-claims-march-12-2026">Weekly jobless claims (March 12, 2026)</h3>
+<ul>
+<li>Initial claims: 213,000</li>
+<li>4-week average: 212,000</li>
+<li>Claims remain historically low</li>
+</ul>
+<p>Source: Department of Labor</p>
+<p>Do not add other numbers unless clearly labeled as estimates.</p>
+<hr>
+</section>
+</section>
+<section id="structure-to-follow" class="level2">
+<h2 class="anchored" data-anchor-id="structure-to-follow">Structure to follow</h2>
+<section id="opening" class="level3">
+<h3 class="anchored" data-anchor-id="opening">Opening</h3>
+<p>Start with the apparent contradiction:</p>
+<ul>
+<li>weak payrolls</li>
+<li>low claims</li>
+<li>sticky inflation</li>
+</ul>
+<p>Explain that the data only look contradictory at the headline level.</p>
+<p>State the thesis:</p>
+<p>The labor market is cooling but not breaking.</p>
+<hr>
+</section>
+<section id="section-1-payroll-miss-but-composition-matters" class="level3">
+<h3 class="anchored" data-anchor-id="section-1-payroll-miss-but-composition-matters">Section 1 — Payroll miss, but composition matters</h3>
+<p>Explain:</p>
+<ul>
+<li>−92k payrolls is weak</li>
+<li>but sector details matter</li>
+<li>strikes affected health care</li>
+<li>government and information declining</li>
+<li>not broad collapse</li>
+</ul>
+<p>Key idea:</p>
+<p>Weak hiring does not automatically mean labor stress.</p>
+<hr>
+</section>
+<section id="section-2-claims-contradict-the-collapse-narrative" class="level3">
+<h3 class="anchored" data-anchor-id="section-2-claims-contradict-the-collapse-narrative">Section 2 — Claims contradict the collapse narrative</h3>
+<p>Explain:</p>
+<ul>
+<li>claims stayed near 213k</li>
+<li>layoffs not rising</li>
+<li>labor market can weaken through slower hiring</li>
+</ul>
+<p>Key idea:</p>
+<p>Hiring can slow before layoffs rise.</p>
+<p>Use phrase:</p>
+<p>“slowing without breaking”</p>
+<hr>
+</section>
+<section id="section-3-inflation-still-sticky" class="level3">
+<h3 class="anchored" data-anchor-id="section-3-inflation-still-sticky">Section 3 — Inflation still sticky</h3>
+<p>Explain:</p>
+<ul>
+<li>CPI stable, not falling fast</li>
+<li>shelter still elevated</li>
+<li>inflation not solved</li>
+</ul>
+<p>Key idea:</p>
+<p>Inflation limits how easy the slowdown can be.</p>
+<hr>
+</section>
+<section id="section-4-the-real-story-is-divergence" class="level3">
+<h3 class="anchored" data-anchor-id="section-4-the-real-story-is-divergence">Section 4 — The real story is divergence</h3>
+<p>Explain:</p>
+<ul>
+<li>payrolls → weaker demand</li>
+<li>claims → limited layoffs</li>
+<li>CPI → still sticky</li>
+</ul>
+<p>Key idea:</p>
+<p>The economy is cooling unevenly.</p>
+<p>Use language like:</p>
+<p>“the releases describe different parts of the same adjustment”</p>
+<hr>
+</section>
+<section id="closing" class="level3">
+<h3 class="anchored" data-anchor-id="closing">Closing</h3>
+<p>End with a restrained conclusion.</p>
+<p>Possible direction:</p>
+<p>The better interpretation is not collapse, but a gradual loss of momentum with inflation still complicating the path.</p>
+<p>Do not end with predictions.</p>
+<p>End with a clean analytical sentence.</p>
+<hr>
+</section>
+</section>
+<section id="charts-to-suggest" class="level2">
+<h2 class="anchored" data-anchor-id="charts-to-suggest">Charts to suggest</h2>
+<p>At the end of the post, recommend charts (do not draw them, only describe):</p>
+<ol type="1">
+<li>Monthly payroll change</li>
+<li>Weekly claims with 4-week average</li>
+<li>CPI vs Core CPI</li>
+<li>Optional: sector payroll changes</li>
+</ol>
+<p>Label them clearly as suggested charts.</p>
+<hr>
+</section>
+<section id="writing-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="writing-constraints">Writing constraints</h2>
+<ul>
+<li>900–1300 words</li>
+<li>short paragraphs</li>
+<li>no bullet-heavy output</li>
+<li>precise numbers only</li>
+<li>no hallucinated data</li>
+<li>no dramatic tone</li>
+</ul>
+<p>Write the full blog post.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://gilboa.blog/posts/2026-03-15-divergence/blog_idea.html</guid>
+  <pubDate>Mon, 16 Mar 2026 01:00:40 GMT</pubDate>
 </item>
 </channel>
 </rss>
