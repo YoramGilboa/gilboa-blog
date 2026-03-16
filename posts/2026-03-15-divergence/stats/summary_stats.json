@@ -1,0 +1,15 @@
+{
+    "payroll_change": -92000,
+    "unemployment_rate": 4.4,
+    "initial_claims": 213000,
+    "four_week_avg_claims": 212000,
+    "cpi_yoy": 2.4,
+    "core_cpi_yoy": 2.5,
+    "cpi_mom": 0.3,
+    "shelter_yoy": 3.0,
+    "latest_month": "February 2026",
+    "employment_release_date": "March 6, 2026",
+    "cpi_release_date": "March 11, 2026",
+    "claims_release_date": "March 12, 2026",
+    "data_current_as_of": "March 12, 2026"
+}

@@ -1,0 +1,278 @@
+---
+title: "When the Labor Market Slows Without Breaking"
+subtitle: "Weak payrolls, low claims, and sticky inflation paint a picture of uneven cooling, not collapse."
+date: "2026-03-15"
+categories: [economics, data analysis, inflation]
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+code-tools: false
+---
+
+```{python}
+#| echo: false
+
+import json
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import matplotlib.dates as mdates
+from IPython.display import HTML
+
+# Load pre-computed statistics
+with open("stats/summary_stats.json") as f:
+    stats = json.load(f)
+
+# Load cleaned data
+df_payrolls = pd.read_csv("data/clean/payrolls.csv")
+df_claims = pd.read_csv("data/clean/claims.csv", parse_dates=["week_ending"])
+df_cpi = pd.read_csv("data/clean/cpi.csv", parse_dates=["date"])
+
+# Tufte-inspired color palette
+COLORS = {
+    'primary':    '#2e5984',
+    'accent':     '#8b0000',
+    'secondary':  '#6b8e6b',
+    'neutral':    '#4a4a4a',
+    'light':      '#b0b0b0',
+    'fed_target': '#cc0000',
+    'cpi':        '#2e5984',
+    'core_cpi':   '#8b0000',
+    'claims':     '#2e5984',
+    'avg':        '#8b0000',
+    'positive':   '#6b8e6b',
+    'negative':   '#8b0000',
+}
+
+plt.rcParams.update({
+    'font.family':      'serif',
+    'font.size':        10,
+    'axes.spines.top':  False,
+    'axes.spines.right':False,
+    'axes.grid':        False,
+    'figure.facecolor': 'white',
+    'axes.facecolor':   '#fafafa',
+    'axes.linewidth':   0.5,
+})
+
+def fmt(n):
+    """Format numbers for inline display."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+```
+
+Last week delivered three economic releases that, at the headline level, seemed to contradict each other. Nonfarm payrolls fell by **`{python} fmt(stats['payroll_change'])`** in `{python} stats['latest_month']`. Initial jobless claims held at **`{python} fmt(stats['initial_claims'])`**, near historically low levels. And core CPI came in at **`{python} fmt(stats['core_cpi_yoy'])`%** year-over-year, still above the Fed's 2% target. Weak hiring, no layoffs, sticky prices. The data look contradictory only at the headline level. Taken together, the releases suggest a labor market that is cooling through slower hiring rather than rising layoffs, while inflation remains stubbornly elevated. The cleaner interpretation is not collapse. It is uneven cooling.
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+All figures in this post are drawn from official releases: the [BLS Employment Situation](https://www.bls.gov/news.release/empsit.nr0.htm) (`{python} stats['employment_release_date']`), the [BLS CPI Summary](https://www.bls.gov/news.release/cpi.nr0.htm) (`{python} stats['cpi_release_date']`), and the [Department of Labor Weekly Claims Report](https://www.dol.gov/ui/data.pdf) (`{python} stats['claims_release_date']`). Sector-level payroll changes are from the BLS detailed tables. Weekly claims data reflects seasonally adjusted figures.
+:::
+
+```{python}
+#| echo: false
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['accent']};">{stats['payroll_change']:,}</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Nonfarm Payrolls</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['accent']};">{stats['unemployment_rate']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Unemployment Rate</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['positive']};">{stats['initial_claims']:,}</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Initial Claims</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['neutral']};">{stats['core_cpi_yoy']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI (y/y)</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">Data as of {stats['latest_month']} | Source: Bureau of Labor Statistics, Department of Labor</p>
+"""
+HTML(html)
+```
+
+## 1. The Payroll Miss, Decomposed
+
+A **`{python} fmt(stats['payroll_change'])`** payroll print is weak by any standard. But the composition matters more than the headline.
+
+The sector-level breakdown reveals that the weakness was concentrated, not broad. Health care, typically the most reliable source of job growth, declined by 28,000, with strike activity contributing to the drop. The information sector lost 11,000, extending a multi-month pattern of restructuring. Federal government employment fell by 10,000 as workforce reductions continued.
+
+```{python}
+#| echo: true
+#| label: fig-sector-payrolls
+#| fig-cap: "Sector-level payroll changes for February 2026. The miss was concentrated in health care (strikes), federal government (workforce reductions), and information (restructuring), not distributed broadly across the economy."
+
+# =============================================================================
+# Sector-Level Payroll Changes: Horizontal Bar Chart
+# =============================================================================
+
+df_sec = df_payrolls.sort_values('change', ascending=True).copy()
+
+fig, ax = plt.subplots(figsize=(10, 5.5))
+
+bar_colors = [COLORS['positive'] if v >= 0 else COLORS['negative'] for v in df_sec['change']]
+bars = ax.barh(range(len(df_sec)), df_sec['change'] / 1000, color=bar_colors, alpha=0.85)
+
+# Direct value labels
+for i, (val, bar) in enumerate(zip(df_sec['change'], bars)):
+    label = f"{val / 1000:+.0f}k"
+    offset = 0.8 if val >= 0 else -0.8
+    ha = 'left' if val >= 0 else 'right'
+    ax.text(val / 1000 + offset, i, label, va='center', ha=ha, fontsize=9,
+            fontweight='bold', color=COLORS['neutral'])
+
+ax.set_yticks(range(len(df_sec)))
+ax.set_yticklabels(df_sec['sector'], fontsize=9)
+ax.set_xlabel('Job Change (thousands)')
+ax.axvline(x=0, color=COLORS['neutral'], linewidth=0.8, alpha=0.5)
+
+plt.tight_layout()
+plt.show()
+```
+
+The sectors still adding jobs (leisure and hospitality, education, professional services) are doing so modestly. A payroll miss driven by concentrated sector weakness tells a fundamentally different story than one driven by synchronized contraction across the economy.
+
+## 2. Claims Tell a Different Story
+
+If the labor market were truly breaking, jobless claims would be rising. They are not.
+
+Initial claims for the week ending March 7 came in at **`{python} fmt(stats['initial_claims'])`**, with the four-week moving average at **`{python} fmt(stats['four_week_avg_claims'])`**. Both figures remain near historically low levels. The claims data has been remarkably stable for months, showing no sign of the kind of layoff acceleration that typically accompanies a deteriorating labor market.
+
+```{python}
+#| echo: true
+#| label: fig-weekly-claims
+#| fig-cap: "Weekly initial jobless claims and 4-week moving average, December 2025 through early March 2026. Claims have remained in a tight band near 210,000-220,000, well below levels that would signal labor market stress."
+
+# =============================================================================
+# Weekly Initial Claims with 4-Week Moving Average
+# =============================================================================
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.plot(df_claims['week_ending'], df_claims['initial_claims'] / 1000,
+        color=COLORS['claims'], linewidth=1.5, marker='o', markersize=4,
+        alpha=0.7, label='Weekly Initial Claims')
+
+ax.plot(df_claims['week_ending'], df_claims['four_week_avg'] / 1000,
+        color=COLORS['avg'], linewidth=2.5, label='4-Week Average')
+
+# Direct end labels
+last_row = df_claims.iloc[-1]
+ax.text(last_row['week_ending'] + pd.Timedelta(days=3),
+        last_row['initial_claims'] / 1000,
+        f"  {last_row['initial_claims'] / 1000:.0f}k",
+        fontsize=9, color=COLORS['claims'], va='center', fontweight='bold')
+ax.text(last_row['week_ending'] + pd.Timedelta(days=3),
+        last_row['four_week_avg'] / 1000,
+        f"  {last_row['four_week_avg'] / 1000:.0f}k avg",
+        fontsize=9, color=COLORS['avg'], va='center', fontweight='bold')
+
+ax.set_ylabel('Initial Claims (thousands)')
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %d\n%Y'))
+ax.xaxis.set_major_locator(mdates.WeekdayLocator(interval=2))
+ax.set_xlim(right=last_row['week_ending'] + pd.Timedelta(days=14))
+
+ax.legend(loc='upper right', fontsize=8, framealpha=0.9)
+plt.tight_layout()
+plt.show()
+```
+
+This is the more interesting signal. The labor market can weaken through two distinct channels: rising layoffs or slowing hiring. The current data strongly suggests the second. Employers are pulling back on new positions without cutting existing workers. The result is a labor market that loses momentum gradually rather than breaking suddenly.
+
+The phrase that fits is "slowing without breaking." Claims data is the closest thing to a real-time layoff indicator, and it is telling a story of stability, not stress.
+
+## 3. Inflation Isn't Helping
+
+The third release complicates the picture further. Headline CPI for `{python} stats['latest_month']` came in at **`{python} fmt(stats['cpi_yoy'])`%** year-over-year. Core CPI, stripping out food and energy, landed at **`{python} fmt(stats['core_cpi_yoy'])`%**. Both are lower than last year's readings, but neither is at the Fed's 2% target.
+
+Shelter costs remain elevated at **`{python} fmt(stats['shelter_yoy'])`%** year-over-year, continuing to be a major driver of core inflation's stickiness. Month-over-month, headline CPI rose **`{python} fmt(stats['cpi_mom'])`%**, a pace that, if sustained, would annualize well above 2%.
+
+```{python}
+#| echo: true
+#| label: fig-cpi-trend
+#| fig-cap: "Headline CPI and Core CPI year-over-year, March 2025 through February 2026. Both measures have declined from mid-2025 peaks but remain above the Fed's 2% target. Core CPI has been particularly sticky, held up by persistent shelter inflation."
+
+# =============================================================================
+# CPI vs Core CPI Year-over-Year Trend
+# =============================================================================
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.plot(df_cpi['date'], df_cpi['cpi_yoy'], color=COLORS['cpi'], linewidth=2.5,
+        marker='o', markersize=4, label='Headline CPI (y/y)')
+
+ax.plot(df_cpi['date'], df_cpi['core_cpi_yoy'], color=COLORS['core_cpi'], linewidth=2.5,
+        linestyle='--', marker='s', markersize=4, label='Core CPI (y/y)')
+
+# Fed target reference line
+ax.axhline(y=2.0, color=COLORS['fed_target'], linestyle='--', linewidth=1, alpha=0.5)
+ax.text(df_cpi['date'].iloc[-1], 2.08, 'Fed 2% target', fontsize=8,
+        color=COLORS['fed_target'], ha='right', va='bottom')
+
+# Direct end labels
+last_cpi = df_cpi.iloc[-1]
+ax.text(last_cpi['date'] + pd.Timedelta(days=12), last_cpi['cpi_yoy'],
+        f"  {last_cpi['cpi_yoy']:.1f}%", fontsize=10, color=COLORS['cpi'],
+        va='center', fontweight='bold')
+ax.text(last_cpi['date'] + pd.Timedelta(days=12), last_cpi['core_cpi_yoy'],
+        f"  {last_cpi['core_cpi_yoy']:.1f}%", fontsize=10, color=COLORS['core_cpi'],
+        va='center', fontweight='bold')
+
+ax.set_ylabel('Year-over-Year Change (%)')
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=2))
+ax.set_xlim(right=last_cpi['date'] + pd.Timedelta(days=30))
+
+ax.legend(loc='upper right', fontsize=8, framealpha=0.9)
+plt.tight_layout()
+plt.show()
+```
+
+Inflation is not reaccelerating, but it is not solved either. The disinflation trend that encouraged rate-cut speculation through late 2025 has stalled. Core CPI at 2.5% is meaningfully above the Fed's target, and shelter's contribution shows no sign of rapid unwinding.
+
+This matters because it constrains the policy response to labor market weakness. If inflation were falling cleanly toward 2%, the Fed would have room to ease. With core CPI stuck above target, any rate cut carries the risk of reigniting price pressures. The labor market is cooling, but inflation is not giving the Fed the clearance it needs to respond aggressively.
+
+## 4. The Real Signal Is Divergence
+
+Payrolls show weaker demand for new workers. Claims show that existing workers are not being let go. Inflation shows that price pressures remain embedded in the services economy, particularly in shelter. The releases are not contradictory. They are describing different parts of the same adjustment.
+
+This pattern is characteristic of a late-cycle economy that has not yet tipped into contraction. The labor market is no longer generating the broad-based job growth that characterized the post-pandemic recovery. Hiring has become selective, concentrated in services and education, while goods-producing sectors and the federal government pull back.
+
+The more interesting question is how long this divergence can persist. A labor market that slows through reduced hiring can stay in this mode for quarters without triggering acute distress. But a labor market that slows while inflation remains sticky is one where policy options narrow with each passing month.
+
+## What It Means
+
+**For the Fed:** The combination of weak payrolls and sticky core inflation is a difficult configuration for a central bank that wants to ease. The labor market argues for a cut. Inflation argues for patience. Until one side of this tension resolves, the Fed is likely to hold.
+
+**For workers:** The claims data is the most reassuring signal. Layoffs are not rising, and the sectors experiencing the sharpest payroll declines are driven by specific factors, not synchronized weakness. The risk for most workers is not job loss but a hiring environment that becomes progressively harder to enter.
+
+**For markets:** The ambiguity is likely to persist until either claims begin rising (confirming deterioration) or inflation breaks decisively toward 2% (confirming disinflation). Neither has happened yet, and that leaves the economy in an in-between state that resists clean narratives.
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| Employment Situation | February 2026 payrolls, sector-level data | [BLS](https://www.bls.gov/news.release/empsit.nr0.htm) |
+| CPI Summary | February 2026 CPI and Core CPI | [BLS](https://www.bls.gov/news.release/cpi.nr0.htm) |
+| Weekly Claims | Initial claims, seasonally adjusted | [DOL](https://www.dol.gov/ui/data.pdf) |
+
+: Data series used in this analysis.
+
+### Limitations
+
+- Sector-level payroll changes are from the initial BLS release and are subject to revision; initial readings have historically been revised by 25,000 to 75,000 jobs
+- Weekly claims data is seasonally adjusted and can be noisy on a week-to-week basis; the four-week average is a more reliable indicator
+- CPI year-over-year figures reflect a twelve-month comparison window and can be influenced by base effects from the prior year
+- The payroll sector decomposition does not sum precisely to the total payroll change due to omitted smaller sectors
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*
