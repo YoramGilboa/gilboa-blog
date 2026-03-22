@@ -79,6 +79,18 @@ GitHub Actions deploys to gilboa.blog within ~2 minutes.
 
 ---
 
+## Writing style rules
+
+These rules apply to all prose in every post:
+
+- **No em dashes or en dashes.** Do not use `---` (Quarto em dash) or `--` (en dash). Use spaced hyphens ` - `, commas, colons, periods, or restructured sentences instead.
+- **No wildcard imports.** Never use `from pandas import *` or similar.
+- **No `plt.show()` in Quarto.** Quarto handles figure display automatically.
+- **Full URLs for all links.** Never use "click here" as link text.
+- **Never hard-code numbers in text.** Use inline `{python} fmt(stats['key'])` expressions. Wrap key numbers in `**bold**` on first mention.
+
+---
+
 ## Post formatting
 
 ### YAML frontmatter
@@ -100,13 +112,13 @@ code-summary: "Show code"
 
 `categories` should use lowercase, consistent labels. Existing categories:
 `economics`, `data analysis`, `inflation`, `supreme court`, `data visualization`,
-`law`, `politics`
+`law`, `politics`, `meta`, `python`, `visualization`, `insurance`, `actuarial`
 
 ---
 
 ### Opening paragraph
 
-Begin immediately after the frontmatter — no `## Introduction` heading at the top.
+Begin immediately after the frontmatter, no `## Introduction` heading at the top.
 Lead with the key finding or framing question. One tight paragraph, no preamble.
 
 ---
@@ -122,10 +134,10 @@ Include this immediately after the opening paragraph when the post uses a data p
 The Python code used to generate each chart is included in this post. Click on any
 code block to see the full implementation. The complete data pipeline includes:
 
-- `01_fetch_data.py` — Fetches data from [source]
-- `02_clean_data.py` — Cleans and computes derived series
-- `03_visualizations.py` — Generates all charts
-- `04_compute_stats.py` — Computes summary statistics
+- `01_fetch_data.py` - Fetches data from [source]
+- `02_clean_data.py` - Cleans and computes derived series
+- `03_visualizations.py` - Generates all charts
+- `04_compute_stats.py` - Computes summary statistics
 
 All data sourced from [Source Name](url).
 :::
@@ -201,7 +213,7 @@ one-off colors mid-post.
 
 ### Key metrics cards
 
-Use an HTML grid immediately after the setup block when there are 3–5 headline
+Use an HTML grid immediately after the setup block when there are 3-5 headline
 numbers to surface. Always pull values from `stats/summary_stats.json`:
 
 ```python
@@ -248,7 +260,7 @@ These rules apply to every chart:
 
 **Axes:**
 - Remove top and right spines (handled by `rcParams`, but verify per chart)
-- Use `plt.tight_layout()` before `plt.show()`
+- Use `plt.tight_layout()` at the end of every chart block
 - Format date axes with `mdates.DateFormatter('%Y')` for multi-year series,
   `mdates.DateFormatter('%b\n%Y')` for shorter windows
 
@@ -298,7 +310,7 @@ Use Quarto footnotes for technical terms, acronyms, or legal citations:
 
 ```markdown
 IEEPA^[IEEPA: the International Emergency Economic Powers Act, a 1977 federal law
-(50 U.S.C. §§ 1701–1708) that grants the President broad authority to regulate
+(50 U.S.C. §§ 1701-1708) that grants the President broad authority to regulate
 commerce during national emergencies.]
 ```
 
@@ -332,7 +344,7 @@ Standard section order for data posts:
 1. Opening paragraph (no heading)
 2. Reproducing this analysis (callout)
 3. Key Metrics (cards)
-4. Analytical sections (2–5 charts with prose)
+4. Analytical sections (2-5 charts with prose)
 5. Conclusion / What It Means
 6. Methodology & Data (table)
 7. References (if applicable)
@@ -352,9 +364,9 @@ End with a horizontal rule and an italicized data-currency note:
 Structure the conclusion with **bold lead-in labels** for each stakeholder or implication:
 
 ```markdown
-**For [audience]:** [implication in 2–3 sentences]
+**For [audience]:** [implication in 2-3 sentences]
 
-**For [audience]:** [implication in 2–3 sentences]
+**For [audience]:** [implication in 2-3 sentences]
 ```
 
 ---
