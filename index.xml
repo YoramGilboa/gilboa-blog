@@ -1686,8 +1686,6 @@ Figure&nbsp;4: Comparison of current and future (six-month outlook) BTOS diffusi
 <p><em>Data current as of March 12, 2026 (BTOS cycle 202605). The next BTOS release is scheduled for March 26, 2026.</em></p>
 
 
-<!-- -->
-
 </section>
 </section>
 
@@ -7139,8 +7137,6 @@ Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisi
 </ol>
 
 
-<!-- -->
-
 </section>
 
 
@@ -9812,8 +9808,6 @@ Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER 
 <p><em>Data current as of February 16, 2026.</em></p>
 
 
-<!-- -->
-
 </section>
 
  ]]></description>
@@ -9941,8 +9935,6 @@ font-style: inherit;">0.3</span>)</span>
 </ul>
 <p>Stay tuned for more technical content!</p>
 
-
-<!-- -->
 
 </section>
 
@@ -10500,8 +10492,6 @@ font-style: inherit;">'y'</span>)</span>
 <p>The full methodology, data pipeline, and source code are available on GitHub: <a href="https://github.com/YoramGilboa/p-c-cpi-blog">P&amp;C Severity CPI Repository</a></p>
 <p>The index updates monthly via GitHub Actions, pulling fresh data from the Bureau of Labor Statistics API.</p>
 
-
-<!-- -->
 
 </section>
 
