@@ -29,7 +29,7 @@ format:
     toc: true
     toc-depth: 3
     code-fold: false
-    code-tools: true
+    code-tools: false
     code-copy: true
 
 execute:
