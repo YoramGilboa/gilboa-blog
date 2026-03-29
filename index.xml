@@ -10,7 +10,1697 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.9.36</generator>
-<lastBuildDate>Sun, 22 Mar 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 29 Mar 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>What Claims Data Tells Us Before the April Jobs Report</title>
+  <link>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The March employment situation report drops on April 3, 2026, and the question on everyone’s mind is whether February’s payroll miss was a blip or the start of something worse. Weekly unemployment claims, the closest thing to a real-time pulse on the labor market, offer the clearest preview we have. Initial claims for the week ending March 21 came in at <strong>210,000</strong>, with continuing claims falling to <strong>1,819,000</strong>, the lowest level since May 25, 2024. The 4-week moving average for initial claims sits at <strong>210,500</strong>, comfortably below the 223,149 average since 2023. The signal heading into Friday is unambiguous: whatever is happening in the labor market, it is not layoffs.</p>
+<p>For context on the employer sentiment side of this story, the <a href="../../posts/2026-03-22-btos-march/">March 22 BTOS analysis</a> showed businesses pulling back on hiring while holding steady on overall performance. That framing still holds. This post focuses on what the claims data adds to that picture.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:</p>
+<ul>
+<li><code>01_clean_data.py</code> - Processes FRED initial and continuing claims CSVs</li>
+<li><code>02_compute_stats.py</code> - Computes summary statistics for inline values</li>
+</ul>
+<p>Initial claims (ICSA) and continuing claims (CCSA) sourced from <a href="https://fred.stlouisfed.org/">FRED</a>. DOL weekly release dated March 26, 2026.</p>
+</div>
+</div>
+</div>
+<div id="df9a5b25" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">210,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Initial Claims</div>
+    <div style="font-size: 0.7rem; color: #8b0000;">+5,000 from prior week</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">210,500</div>
+    <div style="font-size: 0.8rem; color: #64748b;">4-Week Moving Avg</div>
+    <div style="font-size: 0.7rem; color: #64748b;">Below 223,149 avg since 2023</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">1,819,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Continuing Claims</div>
+    <div style="font-size: 0.7rem; color: #64748b;">Lowest since May 2024</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">1.2%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Insured Unemp. Rate</div>
+    <div style="font-size: 0.7rem; color: #64748b;">Unchanged from prior week</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  DOL Weekly Claims Report | Week ending March 21 | Source: U.S. Department of Labor via FRED
+</p>
+</div>
+</div>
+<section id="initial-claims-the-trend-that-matters" class="level2">
+<h2 class="anchored" data-anchor-id="initial-claims-the-trend-that-matters">1. Initial Claims: The Trend That Matters</h2>
+<p>A single week’s claims number is noisy. The 4-week moving average strips out that volatility and reveals the underlying trend. After a brief spike to 230,000 in late January and early February, the moving average has declined steadily and now sits at 210,500. The two panels below tell the story at different scales: the full post-pandemic normalization on the left, and a six-month close-up on the right that makes the recent movements readable.</p>
+<div id="cell-fig-initial-claims-trend" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Initial Claims: Side-by-Side View (Full History + Recent Zoom)</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/initial_claims.csv (FRED series ICSA)</span></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6">fig, (ax_left, ax_right) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>),</span>
+<span id="cb1-7">                                        gridspec_kw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'width_ratios'</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]})</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Left panel: Full history ─────────────────────────────────────────────────</span></span>
+<span id="cb1-10"></span>
+<span id="cb1-11">ax_left.plot(df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-12">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Weekly'</span>)</span>
+<span id="cb1-13">ax_left.plot(df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims_4wma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-14">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'4-Week MA'</span>)</span>
+<span id="cb1-15"></span>
+<span id="cb1-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Shade the since-2023 range</span></span>
+<span id="cb1-17">ax_left.axhspan(stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_min_since_2023'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-18">                stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_max_since_2023'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-19">                alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.06</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>],</span>
+<span id="cb1-20">                label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"2023-26 range (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_min_since_2023'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K-</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_max_since_2023'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K)"</span>)</span>
+<span id="cb1-21"></span>
+<span id="cb1-22">ax_left.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Initial Claims (thousands)"</span>)</span>
+<span id="cb1-23">ax_left.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb1-24">ax_left.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>))</span>
+<span id="cb1-25">ax_left.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb1-26">ax_left.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb1-27">ax_left.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Post-Pandemic Trend"</span>,</span>
+<span id="cb1-28">                  fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb1-29"></span>
+<span id="cb1-30"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ── Right panel: Recent 6 months ────────────────────────────────────────────</span></span>
+<span id="cb1-31"></span>
+<span id="cb1-32">three_months_ago <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-12-20"</span>)</span>
+<span id="cb1-33">recent_panel <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_icsa[df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> three_months_ago].copy()</span>
+<span id="cb1-34"></span>
+<span id="cb1-35">ax_right.bar(recent_panel[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], recent_panel[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-36">             width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb1-37">ax_right.plot(recent_panel[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], recent_panel[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims_4wma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-38">              color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb1-39"></span>
+<span id="cb1-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reference line at since-2023 mean</span></span>
+<span id="cb1-41">mean_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_mean_since_2023'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb1-42">ax_right.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mean_val, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb1-43">ax_right.text(recent_panel[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>].iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], mean_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>,</span>
+<span id="cb1-44">              <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'Avg since 2023: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>mean_val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb1-45"></span>
+<span id="cb1-46"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Annotate latest</span></span>
+<span id="cb1-47">latest_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> recent_panel.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb1-48">ax_right.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>latest_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'initial_claims'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>,</span>
+<span id="cb1-49">                  xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(latest_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], latest_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>),</span>
+<span id="cb1-50">                  xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb1-51">                  fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>],</span>
+<span id="cb1-52">                  arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb1-53"></span>
+<span id="cb1-54">ax_right.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb1-55">ax_right.set_ylim(top<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>)</span>
+<span id="cb1-56">ax_right.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%d</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>))</span>
+<span id="cb1-57">ax_right.xaxis.set_major_locator(mdates.MonthLocator())</span>
+<span id="cb1-58">ax_right.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb1-59">ax_right.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Last Three Months"</span>,</span>
+<span id="cb1-60">                   fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb1-61"></span>
+<span id="cb1-62">fig.suptitle(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Initial Unemployment Claims"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.02</span>)</span>
+<span id="cb1-63">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-initial-claims-trend" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-initial-claims-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-initial-claims-trend-output-1.png" width="951" height="448" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-initial-claims-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Left: full post-pandemic history of initial claims, showing the normalization from 600K+ levels to the narrow band observed since 2023. Right: three-month close-up showing the late-January spike and its reversal, with the 4-week MA declining steadily through March.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Two features stand out. First, the left panel shows that the normalization from pandemic-era levels was essentially complete by mid-2023, and claims have traded in a remarkably narrow band since then. The 195,000-to-259,000 range over the past three years is tight by historical standards. Second, the right panel makes the recent dynamics visible: the late-January spike to 230,000 has fully reversed, and the 4-week MA is trending down through March.</p>
+</section>
+<section id="continuing-claims-the-re-employment-signal" class="level2">
+<h2 class="anchored" data-anchor-id="continuing-claims-the-re-employment-signal">2. Continuing Claims: The Re-employment Signal</h2>
+<p>If initial claims tell you how many people are losing jobs, continuing claims tell you how quickly they are finding new ones. A rising continuing claims number means displaced workers are staying on benefits longer, a sign of a labor market where re-employment is getting harder. The opposite is happening now.</p>
+<div id="cell-fig-continuing-claims" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Continuing Claims: Full History with 4-Week Moving Average</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/continuing_claims.csv (FRED series CCSA)</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot weekly continuing claims</span></span>
+<span id="cb2-9">ax.plot(df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e6</span>,</span>
+<span id="cb2-10">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'light'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Weekly'</span>)</span>
+<span id="cb2-11"></span>
+<span id="cb2-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot 4-week moving average</span></span>
+<span id="cb2-13">ax.plot(df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims_4wma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e6</span>,</span>
+<span id="cb2-14">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'4-Week MA'</span>)</span>
+<span id="cb2-15"></span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Latest value annotation</span></span>
+<span id="cb2-17">latest_c_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_ccsa.dropna(subset<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims_4wma"</span>]).iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-18">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>latest_c_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'continuing_claims'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e6</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">M"</span>,</span>
+<span id="cb2-19">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(latest_c_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], latest_c_row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e6</span>),</span>
+<span id="cb2-20">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb2-21">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>],</span>
+<span id="cb2-22">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb2-23"></span>
+<span id="cb2-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reference: since-2023 mean</span></span>
+<span id="cb2-25">mean_ccsa <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ccsa_mean_since_2023'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e6</span></span>
+<span id="cb2-26">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mean_ccsa, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb2-27">ax.text(df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>].iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>], mean_ccsa <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.015</span>,</span>
+<span id="cb2-28">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'Avg since 2023: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>mean_ccsa<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">M'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb2-29"></span>
+<span id="cb2-30">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Continuing Claims (millions)"</span>)</span>
+<span id="cb2-31">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb2-32">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb2-33">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb2-34">ax.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">M"</span>))</span>
+<span id="cb2-35">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb2-36">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Continuing Claims: Workers Are Finding Jobs"</span>,</span>
+<span id="cb2-37">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb2-38"></span>
+<span id="cb2-39">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-continuing-claims" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-continuing-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-continuing-claims-output-1.png" width="756" height="474" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continuing-claims-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Continuing unemployment claims (seasonally adjusted) and 4-week moving average since mid-2021. The latest reading of 1.819 million is the lowest since May 2024, suggesting that workers who lose jobs are finding new positions relatively quickly.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Continuing claims dropped 32,000 to 1,819,000, the lowest reading since May 25, 2024. Year-over-year, continuing claims are down 57,000 from 1,876,000. The 4-week moving average at 1,847,000 has been drifting lower since the start of the year. This is the most underappreciated signal in the data: even as businesses report hiring caution in surveys, workers who do lose their jobs are cycling back into employment at a healthy pace.</p>
+</section>
+<section id="the-february-spike-in-context" class="level2">
+<h2 class="anchored" data-anchor-id="the-february-spike-in-context">3. The February Spike in Context</h2>
+<p>The late-January/early-February spike in initial claims deserves closer examination because it overlapped with the survey reference period for the February employment report, the one that produced the payroll miss. Did the claims spike signal real weakness, or was it noise?</p>
+<div id="cell-fig-feb-spike" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The February Spike: Claims During the Payroll Survey Window</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/initial_claims.csv (FRED series ICSA)</span></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6">six_months_ago <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-09-20"</span>)</span>
+<span id="cb3-7">recent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_icsa[df_icsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> six_months_ago].copy()</span>
+<span id="cb3-8"></span>
+<span id="cb3-9">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb3-10"></span>
+<span id="cb3-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Weekly bars</span></span>
+<span id="cb3-12">ax.bar(recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb3-13">       width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb3-14"></span>
+<span id="cb3-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 4-week MA line</span></span>
+<span id="cb3-16">ax.plot(recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims_4wma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb3-17">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb3-18"></span>
+<span id="cb3-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Highlight the Feb survey reference period (approx Jan 5 - Feb 1, 2026)</span></span>
+<span id="cb3-20">ax.axvspan(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-01-05"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>),</span>
+<span id="cb3-21">           alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>],</span>
+<span id="cb3-22">           label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Feb payroll survey window'</span>)</span>
+<span id="cb3-23"></span>
+<span id="cb3-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Highlight the March survey reference period</span></span>
+<span id="cb3-25">ax.axvspan(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-08"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-14"</span>),</span>
+<span id="cb3-26">           alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.06</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>],</span>
+<span id="cb3-27">           label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Mar payroll survey window'</span>)</span>
+<span id="cb3-28"></span>
+<span id="cb3-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Annotate the spike</span></span>
+<span id="cb3-30">spike_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-01-31"</span>)</span>
+<span id="cb3-31">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"230K</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Feb spike"</span>,</span>
+<span id="cb3-32">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(spike_date, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">230</span>),</span>
+<span id="cb3-33">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb3-34">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>,</span>
+<span id="cb3-35">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb3-36"></span>
+<span id="cb3-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Annotate the March reference week</span></span>
+<span id="cb3-38">mar_ref_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-14"</span>)</span>
+<span id="cb3-39">mar_ref_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> recent.loc[recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> mar_ref_date, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims"</span>]</span>
+<span id="cb3-40"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(mar_ref_val) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb3-41">    ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(mar_ref_val.values[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Mar ref week"</span>,</span>
+<span id="cb3-42">                xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(mar_ref_date, mar_ref_val.values[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>),</span>
+<span id="cb3-43">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb3-44">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>,</span>
+<span id="cb3-45">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb3-46"></span>
+<span id="cb3-47"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Reference line at since-2023 mean</span></span>
+<span id="cb3-48">mean_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_mean_since_2023'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb3-49">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mean_val, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb3-50">ax.text(recent[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>].iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], mean_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb3-51">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'Avg since 2023: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>mean_val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb3-52"></span>
+<span id="cb3-53">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Initial Claims (thousands)"</span>)</span>
+<span id="cb3-54">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb3-55">ax.set_ylim(top<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>)</span>
+<span id="cb3-56">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%d</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>))</span>
+<span id="cb3-57">ax.xaxis.set_major_locator(mdates.MonthLocator())</span>
+<span id="cb3-58">ax.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb3-59">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper right'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb3-60">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Claims During Payroll Survey Windows"</span>,</span>
+<span id="cb3-61">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb3-62"></span>
+<span id="cb3-63">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-feb-spike" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feb-spike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-feb-spike-output-1.png" width="753" height="472" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feb-spike-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Initial claims (weekly bars and 4-week MA) for the past six months. The shaded region marks the approximate February payroll survey window. The late-January spike to 230K coincided with this window but has since fully reversed. Claims during the March survey reference period were among the lowest of the year.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The answer is noise. The spike to 230,000 lasted exactly two weeks before claims resumed their downward drift. The March survey reference period (the week including March 12) saw initial claims at 205,000, one of the lowest readings of the year. If the February payroll miss was partly driven by the claims spike during its survey window, the March report should benefit from the opposite dynamic: claims falling during its reference period.</p>
+</section>
+<section id="initial-vs.-continuing-what-the-spread-tells-us" class="level2">
+<h2 class="anchored" data-anchor-id="initial-vs.-continuing-what-the-spread-tells-us">4. Initial vs.&nbsp;Continuing: What the Spread Tells Us</h2>
+<p>The relationship between initial and continuing claims reveals the <em>flow</em> of the labor market. When initial claims are stable but continuing claims are falling, it means the inflow of new layoffs is steady while the outflow (people finding new jobs) is accelerating. That is exactly what the data shows.</p>
+<div id="cell-fig-claims-spread" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Claims Ratio: Continuing / Initial (4-Week MAs)</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/initial_claims.csv, continuing_claims.csv</span></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-5"></span>
+<span id="cb4-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Merge on date (CCSA is lagged one week behind ICSA)</span></span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Align by shifting CCSA dates forward one week for comparison</span></span>
+<span id="cb4-8">df_merged <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.merge(</span>
+<span id="cb4-9">    df_icsa[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims_4wma"</span>]].rename(columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>}),</span>
+<span id="cb4-10">    df_ccsa[[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims_4wma"</span>]].assign(</span>
+<span id="cb4-11">        date<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>df_ccsa[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>)</span>
+<span id="cb4-12">    ),</span>
+<span id="cb4-13">    on<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>, how<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"inner"</span></span>
+<span id="cb4-14">).dropna()</span>
+<span id="cb4-15"></span>
+<span id="cb4-16">df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"continuing_claims_4wma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"initial_claims_4wma"</span>]</span>
+<span id="cb4-17"></span>
+<span id="cb4-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Filter to since 2023</span></span>
+<span id="cb4-19">df_ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_merged[df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-01-01"</span>].copy()</span>
+<span id="cb4-20"></span>
+<span id="cb4-21">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>))</span>
+<span id="cb4-22"></span>
+<span id="cb4-23">ax.plot(df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>],</span>
+<span id="cb4-24">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>)</span>
+<span id="cb4-25">ax.fill_between(df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>],</span>
+<span id="cb4-26">                df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(), alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>])</span>
+<span id="cb4-27"></span>
+<span id="cb4-28"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Latest annotation</span></span>
+<span id="cb4-29">last <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_ratio.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-30">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'ratio'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">x"</span>,</span>
+<span id="cb4-31">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(last[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], last[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>]),</span>
+<span id="cb4-32">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb4-33">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>],</span>
+<span id="cb4-34">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb4-35"></span>
+<span id="cb4-36"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mean line</span></span>
+<span id="cb4-37">mean_ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ratio"</span>].mean()</span>
+<span id="cb4-38">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mean_ratio, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb4-39">ax.text(df_ratio[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>].iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], mean_ratio <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.05</span>,</span>
+<span id="cb4-40">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'Avg: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>mean_ratio<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">x'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb4-41"></span>
+<span id="cb4-42">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Continuing / Initial Claims Ratio"</span>)</span>
+<span id="cb4-43">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb4-44">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb4-45">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb4-46">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Claims Duration Ratio: Re-employment Is Accelerating"</span>,</span>
+<span id="cb4-47">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb4-48"></span>
+<span id="cb4-49">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-claims-spread" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-claims-spread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-claims-spread-output-1.png" width="755" height="474" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-claims-spread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Ratio of continuing claims to initial claims (4-week MAs) since 2023. A falling ratio means workers are cycling off unemployment faster relative to new filings. The ratio has declined through early 2026, suggesting improving re-employment dynamics even as new filings remain flat.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The declining ratio is good news for the April 3 report. Even if net job creation was modest in March, the flow data suggests that the pool of unemployed workers is shrinking. People who lose jobs are not staying unemployed for long. This is inconsistent with the kind of labor market deterioration that would produce a second consecutive payroll miss.</p>
+</section>
+<section id="what-it-means-for-april-3" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means-for-april-3">What It Means for April 3</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key takeaway
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The claims data heading into the April 3 jobs report is about as clean as it gets. Initial claims are low and stable, continuing claims are at a nearly two-year low, and the February spike that may have contaminated the payroll survey has fully reversed. The base case is a rebound in March payrolls.</p>
+</div>
+</div>
+<p><strong>For the Fed:</strong> Claims at 210,000 and an insured unemployment rate of 1.2% leave no room to argue that the labor market is deteriorating. The February payroll miss increasingly looks like an anomaly, not a trend break. If March payrolls rebound, the Fed’s case for holding rates steady strengthens further. Any rate action will be driven by the inflation side, not the labor side.</p>
+<p><strong>For workers:</strong> The continuing claims data is the most encouraging signal. At 1,819,000, displaced workers are finding re-employment faster than at any point since mid-2024. The risk is not layoffs but the hiring freeze documented in the <a href="../../posts/2026-03-22-btos-march/">BTOS data</a>: fewer new openings even as existing jobs remain secure.</p>
+<p><strong>For markets:</strong> A strong March payroll number, supported by the claims trend, would reinforce the soft-landing narrative and likely push rate-cut expectations further out. A second miss, given the claims backdrop, would raise questions about structural shifts in the labor market that weekly data cannot capture.</p>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data series used in this analysis. Claims data through week ending March 21, 2026.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ICSA</td>
+<td>Initial Claims, Seasonally Adjusted (weekly)</td>
+<td><a href="https://fred.stlouisfed.org/series/ICSA">FRED Series ICSA</a></td>
+</tr>
+<tr class="even">
+<td>CCSA</td>
+<td>Continued Claims, Seasonally Adjusted (weekly)</td>
+<td><a href="https://fred.stlouisfed.org/series/CCSA">FRED Series CCSA</a></td>
+</tr>
+<tr class="odd">
+<td>DOL Weekly Report</td>
+<td>Unemployment Insurance Weekly Claims</td>
+<td><a href="https://www.dol.gov/ui/data.pdf">DOL News Release</a> (March 26, 2026)</td>
+</tr>
+</tbody>
+</table>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Initial claims measure new filings for unemployment insurance, not total layoffs. Not all separated workers file claims, particularly in states with lower benefit levels or among workers ineligible for UI.</li>
+<li>Continuing claims reflect only those actively receiving benefits under regular state programs. Workers who exhaust benefits or transition to other programs drop out of the count.</li>
+<li>Seasonal adjustment factors can introduce distortions around holidays and year-end, which may partially explain the late-January spike.</li>
+<li>The insured unemployment rate covers only the fraction of the labor force eligible for and receiving UI benefits, making it structurally lower than the headline unemployment rate (U-3).</li>
+<li>Weekly claims data can be revised in subsequent weeks. The figures used here are advance estimates from the March 26 release.</li>
+<li>This post references the Census Bureau’s Business Trends and Outlook Survey (BTOS) via the <a href="../../posts/2026-03-22-btos-march/">March 22 analysis</a>. BTOS is an experimental data product with a unit response rate of approximately 10-15%, which introduces potential nonresponse bias. Larger, more established businesses tend to respond at higher rates, meaning the survey may underrepresent smaller firms, startups, and businesses in sectors with less administrative capacity. The Census Bureau publishes unit response rates (URR) with each release and applies weighting adjustments to mitigate known biases, but readers should interpret BTOS diffusion indexes as directional signals from a particular slice of the business population rather than precise measurements of economy-wide conditions.</li>
+</ul>
+<hr>
+<p><em>Data current as of March 26, 2026. Claims data through week ending March 21, 2026. The April employment situation report is scheduled for April 3, 2026.</em></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>economics</category>
+  <category>data analysis</category>
+  <category>data visualization</category>
+  <category>labor market</category>
+  <guid>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/</guid>
+  <pubDate>Sun, 29 Mar 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Visualizing the March 2026 BTOS: Stable Revenues, Cautious Hiring</title>
   <link>https://gilboa.blog/posts/2026-03-22-btos-march/</link>
@@ -9818,134 +11508,6 @@ Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER 
   <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Setting Up My Data Science Blog</title>
-  <link>https://gilboa.blog/posts/2025-02-01-first-visualization/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="welcome" class="level2">
-<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<p>This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.</p>
-</section>
-<section id="testing-the-setup" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
-<p>Let me verify that Python code execution and visualization rendering work correctly.</p>
-<div id="9713fbc9" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Generate sample data</span></span>
-<span id="cb1-5">x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> np.pi, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>)</span>
-<span id="cb1-6">y_sin <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.sin(x)</span>
-<span id="cb1-7">y_cos <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.cos(x)</span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Create visualization</span></span>
-<span id="cb1-10">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>))</span>
-<span id="cb1-11">ax.plot(x, y_sin, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sin(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span>
-<span id="cb1-12">ax.plot(x, y_cos, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'cos(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span>
-<span id="cb1-13">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'x'</span>)</span>
-<span id="cb1-14">ax.set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'y'</span>)</span>
-<span id="cb1-15">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Trigonometric Functions'</span>)</span>
-<span id="cb1-16">ax.legend()</span>
-<span id="cb1-17">ax.grid(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>)</span>
-<span id="cb1-18">plt.tight_layout()</span>
-<span id="cb1-19">plt.show()</span></code></pre></div></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://gilboa.blog/posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png" width="950" height="566" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
-<p>I plan to explore:</p>
-<ul>
-<li>Financial data visualization (particularly nuclear energy stocks)</li>
-<li>Time series analysis</li>
-<li>Predictive modeling techniques</li>
-<li>Interactive visualizations</li>
-</ul>
-<p>Stay tuned for more technical content!</p>
-
-
-</section>
-
- ]]></description>
-  <category>meta</category>
-  <category>visualization</category>
-  <category>python</category>
-  <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
-  <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
-</item>
-<item>
   <title>P&amp;C Severity CPI: A Claims-Weighted Inflation Index</title>
   <link>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</link>
   <description><![CDATA[ 
@@ -10501,6 +12063,134 @@ font-style: inherit;">'y'</span>)</span>
   <category>visualization</category>
   <category>insurance</category>
   <guid>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</guid>
+  <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Setting Up My Data Science Blog</title>
+  <link>https://gilboa.blog/posts/2025-02-01-first-visualization/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="welcome" class="level2">
+<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
+<p>This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.</p>
+</section>
+<section id="testing-the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
+<p>Let me verify that Python code execution and visualization rendering work correctly.</p>
+<div id="9713fbc9" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generate sample data</span></span>
+<span id="cb1-5">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.pi, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb1-6">y_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.sin(x)</span>
+<span id="cb1-7">y_cos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.cos(x)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create visualization</span></span>
+<span id="cb1-10">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb1-11">ax.plot(x, y_sin, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sin(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-12">ax.plot(x, y_cos, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cos(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-13">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'x'</span>)</span>
+<span id="cb1-14">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>)</span>
+<span id="cb1-15">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Trigonometric Functions'</span>)</span>
+<span id="cb1-16">ax.legend()</span>
+<span id="cb1-17">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb1-18">plt.tight_layout()</span>
+<span id="cb1-19">plt.show()</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://gilboa.blog/posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>I plan to explore:</p>
+<ul>
+<li>Financial data visualization (particularly nuclear energy stocks)</li>
+<li>Time series analysis</li>
+<li>Predictive modeling techniques</li>
+<li>Interactive visualizations</li>
+</ul>
+<p>Stay tuned for more technical content!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>meta</category>
+  <category>visualization</category>
+  <category>python</category>
+  <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
   <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
 </item>
 </channel>
