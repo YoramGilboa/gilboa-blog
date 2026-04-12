@@ -9,8 +9,1934 @@
 <link>https://gilboa.blog/</link>
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
-<generator>quarto-1.9.36</generator>
-<lastBuildDate>Sun, 29 Mar 2026 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Mon, 06 Apr 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Visualizing the March 2026 Jobs Rebound: What the Claims Data Already Told Us</title>
+  <link>https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>, low initial jobless claims and the <a href="../../posts/2026-03-22-btos-march/">BTOS</a> pointed to a labor market slowing without breaking: hiring caution after temporary drags from weather and strikes, but no broad layoffs. The March 2026 Employment Situation report confirms that cleaner interpretation.</p>
+<p>Nonfarm payroll employment rose by <strong>178,000</strong> in March, well above the consensus expectation of roughly +59,000, following a revised -133,000 in February. The unemployment rate edged down to <strong>4.3%</strong> from 4.4%, though the decline largely reflected a reduction in the labor force rather than a surge in hiring. As the claims data previewed, layoffs were never the story - hiring had simply paused amid temporary factors. March shows that pause easing.</p>
+<p>This post closes the loop on the series: from the February miss and <a href="../../posts/2026-03-15-divergence/">divergence signals</a>, through the <a href="../../posts/2026-03-29-btos-and-unemployment/">pre-report claims and BTOS read</a>, to today’s rebound numbers. As always, we break it down with clear visuals, sector details, and full Python code for reproducibility.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:</p>
+<ul>
+<li><code>01_fetch_data.py</code> - Fetches nonfarm payroll and household survey series from the BLS API</li>
+<li><code>02_clean_data.py</code> - Cleans, computes derived series, and enters sector contributions from Table B-1</li>
+<li><code>04_compute_stats.py</code> - Computes summary statistics for inline values</li>
+</ul>
+<p>All data sourced from the <a href="https://www.bls.gov/news.release/empsit.nr0.htm">U.S. Bureau of Labor Statistics Employment Situation</a> (released April 3, 2026).</p>
+</div>
+</div>
+</div>
+<div id="ba02d881" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #6b8e6b;">+178,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">March Payrolls</div>
+    <div style="font-size: 0.7rem; color: #64748b;">vs. +59,000 consensus</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">-133,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Feb (Revised)</div>
+    <div style="font-size: 0.7rem; color: #64748b;">revised further down</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">~68,000</div>
+    <div style="font-size: 0.8rem; color: #64748b;">3-Month Average</div>
+    <div style="font-size: 0.7rem; color: #64748b;">Jan-Feb-Mar 2026</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">4.3%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Unemployment Rate</div>
+    <div style="font-size: 0.7rem; color: #6b8e6b;">-0.1 pp from Feb</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">61.9%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Labor Force Part. Rate</div>
+    <div style="font-size: 0.7rem; color: #64748b;">little changed</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  BLS Employment Situation | March 2026 | Source: U.S. Bureau of Labor Statistics
+</p>
+</div>
+</div>
+<section id="headline-numbers-revisions" class="level2">
+<h2 class="anchored" data-anchor-id="headline-numbers-revisions">1. Headline Numbers &amp; Revisions</h2>
+<p>The March print of <strong>+178,000</strong> net new nonfarm payroll jobs is the clearest possible validation of the pre-report read. The <a href="../../posts/2026-03-29-btos-and-unemployment/">claims data from March 29</a> showed initial jobless claims at 215,000 and continuing claims at a near two-year low of 1,819,000. The 4-week moving average for initial claims stood at a steady 219,000, comfortably below the post-2023 average. Nothing in that data was consistent with a second consecutive payroll miss - and none materialized.</p>
+<p>The revision picture is more nuanced. February was revised further down to -133,000, while January was revised up to +160,000. The net effect is a 3-month average of roughly <strong>+68,000</strong> - an honest number that reflects how much the February anomaly depressed the trend. The underlying pace of job creation in a healthy month, as March illustrates, sits considerably higher.</p>
+<div id="cell-fig-payroll-history" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Nonfarm Payroll Changes: 18-Month History with 3-Month MA</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/payrolls.csv (BLS CES0000000001, April 3 release)</span></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6">cutoff <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-10-01"</span>)</span>
+<span id="cb1-7">df_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_pay[df_pay[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> cutoff].copy()</span>
+<span id="cb1-8">df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">apply</span>(</span>
+<span id="cb1-9">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x: COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>]</span>
+<span id="cb1-10">)</span>
+<span id="cb1-11"></span>
+<span id="cb1-12">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>))</span>
+<span id="cb1-13"></span>
+<span id="cb1-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Monthly bars</span></span>
+<span id="cb1-15"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_plot.iterrows():</span>
+<span id="cb1-16">    ax.bar(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-17">           width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>)</span>
+<span id="cb1-18"></span>
+<span id="cb1-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 3-month moving average</span></span>
+<span id="cb1-20">ma_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot.dropna(subset<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change_3mma"</span>])</span>
+<span id="cb1-21">ax.plot(ma_data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], ma_data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change_3mma"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb1-22">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'3-Month MA'</span>)</span>
+<span id="cb1-23"></span>
+<span id="cb1-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Consensus band for March (±25K around consensus median)</span></span>
+<span id="cb1-25">mar_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>)</span>
+<span id="cb1-26">consensus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_consensus'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb1-27">ax.fill_between([mar_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>), mar_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)],</span>
+<span id="cb1-28">                (consensus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>), (consensus <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>),</span>
+<span id="cb1-29">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.15</span>,</span>
+<span id="cb1-30">                label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"March consensus range (~+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_consensus'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K ± 25K)"</span>)</span>
+<span id="cb1-31"></span>
+<span id="cb1-32"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># February annotation - to the left of the bar at bar-tip height</span></span>
+<span id="cb1-33">feb_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot[df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>)]</span>
+<span id="cb1-34"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> feb_row.empty:</span>
+<span id="cb1-35">    val_feb <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> feb_row.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb1-36">    ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Feb</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_feb_revised'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>,</span>
+<span id="cb1-37">                xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>), val_feb),</span>
+<span id="cb1-38">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb1-39">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>,</span>
+<span id="cb1-40">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb1-41">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>]))</span>
+<span id="cb1-42"></span>
+<span id="cb1-43"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># March annotation - above the bar</span></span>
+<span id="cb1-44">mar_row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_plot[df_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>)]</span>
+<span id="cb1-45"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> mar_row.empty:</span>
+<span id="cb1-46">    val_mar <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mar_row.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb1-47">    ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Mar</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'payroll_march'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>,</span>
+<span id="cb1-48">                xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>), val_mar),</span>
+<span id="cb1-49">                xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb1-50">                fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>,</span>
+<span id="cb1-51">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb1-52">                arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>]))</span>
+<span id="cb1-53"></span>
+<span id="cb1-54"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Zero line</span></span>
+<span id="cb1-55">ax.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-56"></span>
+<span id="cb1-57">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Change in Nonfarm Payrolls (thousands)"</span>)</span>
+<span id="cb1-58">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb1-59">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>))</span>
+<span id="cb1-60">ax.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb1-61">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper left'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb1-62">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Nonfarm Payroll Changes: February Miss and March Rebound"</span>,</span>
+<span id="cb1-63">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb1-64"></span>
+<span id="cb1-65">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-payroll-history" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-payroll-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-payroll-history-output-1.png" width="758" height="425" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-payroll-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Monthly nonfarm payroll changes over the past 18 months, with 3-month moving average. February’s revised -133,000 stands out as a clear outlier driven by weather, the ambulatory services strike, and a claims spike during the survey window; March’s +178,000 rebound pushes back toward the pre-2026 trend. The shaded band shows the range of consensus estimates for March. Source: BLS Employment Situation (CES0000000001), April 3, 2026 release.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The chart tells the complete story of what this series has looked like over the past year and a half. Payroll growth was running above +180,000 per month for much of 2025. The late-2025 slowdown visible in the 3-month MA was a deceleration, not a break. February’s -133,000 was the break - and it was temporary. As the <a href="../../posts/2026-03-15-divergence/">March 15 divergence analysis</a> and <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 claims post</a> both documented, three identifiable factors converged: weather-related disruptions that suppressed construction and outdoor work during the survey reference week, the ambulatory services strike that mechanically removed health care workers from the payroll count, and a late-January claims spike that coincided exactly with the February survey window and then reversed within two weeks. None of those three factors were durable. March’s rebound restores the narrative of a labor market that is normalizing at a moderate pace - not collapsing.</p>
+</section>
+<section id="sector-breakdown-where-the-jobs-came-from" class="level2">
+<h2 class="anchored" data-anchor-id="sector-breakdown-where-the-jobs-came-from">2. Sector Breakdown: Where the Jobs Came From</h2>
+<p>The breadth of March gains matters as much as the headline. Health care led with <strong>+89,900</strong>, notably driven by ambulatory services returning from strike action - a mechanical rebound that was predictable from the claims data, which showed no genuine deterioration in health sector employment. Construction added +26,000, transportation and warehousing contributed +21,000 (including couriers), and social assistance added +14,000. Federal government employment continued to decline, a trend that reflects ongoing headcount reductions separate from private-sector dynamics.</p>
+<div id="cell-fig-sector-contributions" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Sector Contributions: Horizontal Bar Chart</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/sector_contributions.csv (BLS Table B-1, April 3, 2026)</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6">df_sec_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_sec.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"change"</span>, ascending<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>).copy()</span>
+<span id="cb2-7">bar_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"positive"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>]</span>
+<span id="cb2-8">              <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> c <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_sec_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"category"</span>]]</span>
+<span id="cb2-9"></span>
+<span id="cb2-10">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb2-11"></span>
+<span id="cb2-12">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(df_sec_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sector"</span>], df_sec_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb2-13">               color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.75</span>)</span>
+<span id="cb2-14"></span>
+<span id="cb2-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Zero reference line</span></span>
+<span id="cb2-16">ax.axvline(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Value labels</span></span>
+<span id="cb2-19"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bar, val <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(bars, df_sec_plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"change"</span>]):</span>
+<span id="cb2-20">    label_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-21">    ha <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'left'</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span></span>
+<span id="cb2-22">    ax.text(label_x, bar.get_y() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb2-23">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>val<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ha,</span>
+<span id="cb2-24">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>,</span>
+<span id="cb2-25">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>])</span>
+<span id="cb2-26"></span>
+<span id="cb2-27">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Payroll Change (thousands)"</span>)</span>
+<span id="cb2-28">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"March 2026 Payrolls: Sector Contributions"</span>,</span>
+<span id="cb2-29">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb2-30">ax.xaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb2-31"></span>
+<span id="cb2-32">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-sector-contributions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sector-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-sector-contributions-output-1.png" width="758" height="569" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sector-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: March 2026 nonfarm payroll change by sector, sorted by contribution size. Health care’s +89,900 reflects both organic growth and ambulatory services returning from strike. Federal government’s decline is the most notable drag, consistent with ongoing reductions. Source: BLS Table B-1.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The composition of March gains is an important detail. Health care’s contribution is partly mechanical - a rebound from the February ambulatory services strike rather than new hiring. The same dynamic appeared in the claims data: the late-January/February spike to 230,000 reversed cleanly once those workers were re-employed. Strip out the strike rebound, and the underlying private-sector pace sits closer to the 3-month average of roughly +68,000. That is a softer number, but it is consistent with a labor market that is decelerating gradually from its 2024 pace, not one heading into contraction.</p>
+</section>
+<section id="household-survey-unemployment-and-participation" class="level2">
+<h2 class="anchored" data-anchor-id="household-survey-unemployment-and-participation">3. Household Survey: Unemployment and Participation</h2>
+<p>The unemployment rate decline to <strong>4.3%</strong> from 4.4% requires some care in interpretation. The headline drop of -0.1 percentage point reflected a reduction in the labor force as much as an increase in employment. The labor force participation rate edged down to <strong>61.9%</strong>, and the employment-population ratio ticked up only modestly to 59.2%. Total unemployed persons remained near 7.0 million. The insured unemployment rate - tracked weekly through the claims data - had already told this story: displaced workers were cycling back into jobs, but the broader labor force was not expanding.</p>
+<p>To see the arithmetic behind this, consider how the three household survey ratios connect. The U.S. civilian noninstitutional population - the total pool of adults eligible to work - is approximately 267 million. Multiplying by the LFPR gives the measured labor force; subtracting employed persons gives the unemployed count; dividing unemployed by the labor force gives the rate.</p>
+<p>In February: LFPR at 62.0% implied a labor force of roughly 267M × 0.620 ≈ <strong>165.5 million</strong>. With an unemployment rate of 4.4%, that translates to approximately 165.5M × 0.044 ≈ <strong>7.3 million unemployed persons</strong>.</p>
+<p>In March: LFPR fell to 61.9%, shrinking the measured labor force to roughly 267M × 0.619 ≈ <strong>165.2 million</strong> - a decline of about 300,000 people. With unemployed persons holding near 7.0 million, the rate becomes 7.2M ÷ 165.2M ≈ <strong>4.36%</strong>, which rounds to 4.3%.</p>
+<p>The key insight: a meaningful portion of the 0.1 pp decline came from the labor force shrinking rather than from a large increase in employment. Each 0.1 percentage point change in the LFPR moves roughly 267,000 people into or out of the labor force. When those people exit without finding work - classified as “not in labor force” rather than “unemployed” - both the numerator and denominator fall, but the rate can still decline if the denominator contracts proportionally more.</p>
+<div id="cell-fig-unemployment-lfpr" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Unemployment Rate + LFPR: Dual-Axis Line Chart</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/unemployment.csv (BLS LNS14000000, LNS11300000)</span></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-5"></span>
+<span id="cb3-6">cutoff <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-10-01"</span>)</span>
+<span id="cb3-7">df_u <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_unem[df_unem[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> cutoff].copy()</span>
+<span id="cb3-8"></span>
+<span id="cb3-9">fig, ax1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>))</span>
+<span id="cb3-10">ax2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.twinx()</span>
+<span id="cb3-11"></span>
+<span id="cb3-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Remove right spine that twin axis re-enables</span></span>
+<span id="cb3-13">ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb3-14">ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb3-15"></span>
+<span id="cb3-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Unemployment rate (left axis)</span></span>
+<span id="cb3-17">l1, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.plot(df_u[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_u[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unemployment_rate"</span>],</span>
+<span id="cb3-18">               color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb3-19">               marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Unemployment Rate (left)'</span>)</span>
+<span id="cb3-20">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Unemployment Rate (%)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>])</span>
+<span id="cb3-21">ax1.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>])</span>
+<span id="cb3-22">ax1.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>))</span>
+<span id="cb3-23">ax1.set_ylim(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.0</span>)</span>
+<span id="cb3-24"></span>
+<span id="cb3-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Highlight Feb and Mar on unemployment</span></span>
+<span id="cb3-26"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> date_str, label, offset_y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [</span>
+<span id="cb3-27">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Feb</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'unemployment_rate_feb'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>),</span>
+<span id="cb3-28">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Mar</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'unemployment_rate_mar'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>),</span>
+<span id="cb3-29">]:</span>
+<span id="cb3-30">    row <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_u[df_u[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> date_str]</span>
+<span id="cb3-31">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> row.empty:</span>
+<span id="cb3-32">        val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"unemployment_rate"</span>]</span>
+<span id="cb3-33">        ax1.annotate(label,</span>
+<span id="cb3-34">                     xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(date_str), val),</span>
+<span id="cb3-35">                     xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb3-36">                     fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>],</span>
+<span id="cb3-37">                     ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb3-38">                     arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.2</span>))</span>
+<span id="cb3-39"></span>
+<span id="cb3-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># LFPR (right axis)</span></span>
+<span id="cb3-41">l2, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax2.plot(df_u[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_u[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lfpr"</span>],</span>
+<span id="cb3-42">               color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>,</span>
+<span id="cb3-43">               marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'s'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'--'</span>,</span>
+<span id="cb3-44">               label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Labor Force Participation Rate (right)'</span>)</span>
+<span id="cb3-45">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"LFPR (%)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>])</span>
+<span id="cb3-46">ax2.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>])</span>
+<span id="cb3-47">ax2.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>))</span>
+<span id="cb3-48">ax2.set_ylim(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">61.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">63.5</span>)</span>
+<span id="cb3-49"></span>
+<span id="cb3-50">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb3-51">ax1.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb3-52"></span>
+<span id="cb3-53">ax1.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Unemployment Rate and Labor Force Participation"</span>,</span>
+<span id="cb3-54">              fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb3-55"></span>
+<span id="cb3-56">lines <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [l1, l2]</span>
+<span id="cb3-57">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [l.get_label() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> l <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> lines]</span>
+<span id="cb3-58">ax1.legend(lines, labels, loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'upper left'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb3-59"></span>
+<span id="cb3-60">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-unemployment-lfpr" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unemployment-lfpr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-unemployment-lfpr-output-1.png" width="664" height="425" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unemployment-lfpr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Unemployment rate (left axis) and labor force participation rate (right axis) from October 2024 through March 2026. February’s unemployment spike to 4.4% partially reverses in March, though the participation rate continues its gradual decline. Both series point to a labor market that is cooling through reduced engagement rather than accelerating layoffs.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The dual-axis view makes the divergence visible. The unemployment rate has bounced in a narrow band between 4.0% and 4.4% since early 2025, with no clear deteriorating trend. The LFPR, meanwhile, has drifted lower: from a recent peak around 62.6% in late 2024 to 61.9% in March. The two series together describe a labor market where fewer people are being laid off, but also where fewer are actively entering or re-entering the workforce. That is a different kind of softening than the headline unemployment rate alone captures - and it is a more consequential one over the longer run.</p>
+<p>The unemployment rate answers the question “what share of the active labor force cannot find work?” It cannot tell you why the labor force itself is shrinking. Workers who stop searching - whether discouraged by limited openings, retiring earlier than planned, or managing caregiving responsibilities - exit the unemployment count and the labor force simultaneously. Their situation does not show up as rising unemployment; it shows up as a falling participation rate. The LFPR’s steady drift from roughly 62.6% in late 2024 to 61.9% in March represents an estimated exit of over 1.5 million potential workers from the measured labor force across that period. For each of those individuals, the labor market did not improve - the measurement simply stopped counting them. That is the signal the dual-axis chart is designed to surface.</p>
+</section>
+<section id="what-the-claims-data-already-told-us" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-claims-data-already-told-us">4. What the Claims Data Already Told Us</h2>
+<div id="cell-fig-claims-payroll-overlay" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Claims vs. Payrolls: Leading Indicator Overlay</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Source: data/clean/payrolls.csv, cross-reference with March 29 post claims data</span></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Note: claims series is constructed from the same FRED ICSA data used in the</span></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#       March 29 post (scripts/01_clean_data.py in that post folder).</span></span>
+<span id="cb4-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#       Here we use a representative monthly average for alignment.</span></span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-8"></span>
+<span id="cb4-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Representative monthly initial claims averages (4-week MA approximation)</span></span>
+<span id="cb4-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Sourced from DOL weekly releases; monthly average of weekly 4-week MAs</span></span>
+<span id="cb4-11">claims_monthly <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({</span>
+<span id="cb4-12">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>: pd.to_datetime([</span>
+<span id="cb4-13">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-01-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-02-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-03-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-04-01"</span>,</span>
+<span id="cb4-14">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-05-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-06-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-07-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-08-01"</span>,</span>
+<span id="cb4-15">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-09-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-10-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-11-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-12-01"</span>,</span>
+<span id="cb4-16">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-01-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>,</span>
+<span id="cb4-17">    ]),</span>
+<span id="cb4-18">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"icsa_4wma_monthly"</span>: [</span>
+<span id="cb4-19">        <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">220000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">222000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">218000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">215000</span>,</span>
+<span id="cb4-20">        <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">213000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">216000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">221000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">219000</span>,</span>
+<span id="cb4-21">        <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">217000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">214000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">216000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">219000</span>,</span>
+<span id="cb4-22">        <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">222000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">230000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">219000</span>,</span>
+<span id="cb4-23">    ],</span>
+<span id="cb4-24">})</span>
+<span id="cb4-25"></span>
+<span id="cb4-26">cutoff <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-01-01"</span>)</span>
+<span id="cb4-27">df_pay_sub <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df_pay[df_pay[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> cutoff].copy()</span>
+<span id="cb4-28">df_merged <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.merge(df_pay_sub, claims_monthly, on<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>, how<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"inner"</span>)</span>
+<span id="cb4-29"></span>
+<span id="cb4-30">fig, ax1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>))</span>
+<span id="cb4-31">ax2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.twinx()</span>
+<span id="cb4-32">ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb4-33">ax2.spines[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'top'</span>].set_visible(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-34"></span>
+<span id="cb4-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Claims MA (left axis, inverted so higher claims = lower line = weaker payrolls)</span></span>
+<span id="cb4-36">l1, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.plot(df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"icsa_4wma_monthly"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb4-37">               color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-38">               marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'o'</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Initial Claims 4-Week MA (left)'</span>)</span>
+<span id="cb4-39">ax1.invert_yaxis()</span>
+<span id="cb4-40">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Initial Claims 4-Week MA (thousands, inverted)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>])</span>
+<span id="cb4-41">ax1.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>])</span>
+<span id="cb4-42">ax1.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb4-43"></span>
+<span id="cb4-44"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Payroll changes (right axis, bars)</span></span>
+<span id="cb4-45">bar_colors_sub <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'positive'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'negative'</span>]</span>
+<span id="cb4-46">                  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> v <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_merged[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>]]</span>
+<span id="cb4-47"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, row <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> df_merged.iterrows():</span>
+<span id="cb4-48">    ax2.bar(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date"</span>], row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb4-49">            width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'accent'</span>],</span>
+<span id="cb4-50">            alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>)</span>
+<span id="cb4-51"></span>
+<span id="cb4-52">l2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.Rectangle((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, fc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>)</span>
+<span id="cb4-53">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Monthly Payroll Change (thousands)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>])</span>
+<span id="cb4-54">ax2.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'primary'</span>])</span>
+<span id="cb4-55">ax2.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, _: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>))</span>
+<span id="cb4-56">ax2.axhline(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'neutral'</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb4-57"></span>
+<span id="cb4-58"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Annotate Feb claims spike and March reversal</span></span>
+<span id="cb4-59">ax1.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Feb spike</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_feb_spike_peak'</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">K"</span>,</span>
+<span id="cb4-60">             xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-02-01"</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">230</span>),</span>
+<span id="cb4-61">             xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb4-62">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>],</span>
+<span id="cb4-63">             ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb4-64">             arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'warning'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb4-65"></span>
+<span id="cb4-66">ax1.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Mar claims</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_4wma'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:,}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb4-67">             xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>), stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'icsa_4wma'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>),</span>
+<span id="cb4-68">             xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'offset points'</span>,</span>
+<span id="cb4-69">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'secondary'</span>],</span>
+<span id="cb4-70">             ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'right'</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'center'</span>,</span>
+<span id="cb4-71">             arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'-&gt;'</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'secondary'</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb4-72"></span>
+<span id="cb4-73">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y'</span>))</span>
+<span id="cb4-74">ax1.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb4-75"></span>
+<span id="cb4-76">ax1.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Initial Claims vs. Payrolls: The Leading Indicator Relationship"</span>,</span>
+<span id="cb4-77">              fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'bold'</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>)</span>
+<span id="cb4-78"></span>
+<span id="cb4-79">lines <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [l1, l2]</span>
+<span id="cb4-80">labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Initial Claims 4-Week MA (left, inverted)'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Monthly Payroll Change (right)'</span>]</span>
+<span id="cb4-81">ax1.legend(lines, labels, loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'lower left'</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, framealpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb4-82"></span>
+<span id="cb4-83">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-claims-payroll-overlay" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-claims-payroll-overlay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-claims-payroll-overlay-output-1.png" width="760" height="425" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-claims-payroll-overlay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongside monthly nonfarm payroll change (right axis), 2025 through March 2026. The February spike in claims coincided with the payroll miss; March’s low claims environment anticipated the payroll rebound. Claims and payrolls move in opposite directions: a rising claims MA signals weaker payrolls ahead.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The overlay makes the leading indicator relationship explicit. Initial claims lag payrolls by roughly four to six weeks, meaning the claims picture at the time of the March 29 post was already telling us what March payrolls would show. The February claims spike to 230,000 aligned with the February payroll miss. March’s claims moving average at 219,000 - well below the post-2023 average - anticipated the payroll rebound. The relationship held exactly as expected.</p>
+</section>
+<section id="connecting-the-dots" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-the-dots">5. Connecting the Dots</h2>
+<p>The cleaner interpretation that the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a> offered has held up in full. Three points deserve emphasis.</p>
+<p><strong>Breadth with a soft average.</strong> March’s gain of +178,000 nonfarm payroll jobs looks strong in isolation, but the 3-month average of roughly +68,000 jobs per month tells a more complete story. That average is dragged down by February’s -133,000 - but it also reflects genuine moderation in the underlying trend. The pace of hiring seen through much of 2024, which regularly exceeded 200,000 jobs added per month, is not what March 2026 looks like once you strip out the strike rebound. The labor market is growing, but at a more modest pace.</p>
+<p><strong>Temporary factors vs.&nbsp;underlying dynamics.</strong> The February miss had three identifiable temporary components: weather-related disruptions in construction and outdoor work, the ambulatory services strike that depressed health care, and a late-January claims spike that coincided with the survey reference period. All three have reversed in March. None of them signaled a structural deterioration, which is what the <a href="../../posts/2026-03-22-btos-march/">BTOS data from March 22</a> reinforced: businesses reported hiring caution, not hiring collapse. The BTOS employees index below 50 was telling us that fewer firms were adding headcount, not that firms were cutting.</p>
+<p><strong>No evidence of accelerating layoffs.</strong> This is the most important signal and the one the claims data communicated most clearly. Continuing claims at 1,819,000 represented a near two-year low. Workers who lose their jobs are finding new ones at a pace inconsistent with deteriorating labor market conditions. The normalization after the February anomaly is exactly what the claims trajectory suggested.</p>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What It Means</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key takeaway
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The March report validates the framework offered in the pre-report analysis. The labor market is slowing through reduced hiring pace, not through layoffs. The 3-month average tells a moderate story; the claims data tells a stable one. There is no recession signal here.</p>
+</div>
+</div>
+<p><strong>For the Fed:</strong> A March gain of +178,000 nonfarm payroll jobs combined with an unemployment rate of 4.3% and claims at 219,000 leaves the Fed with no labor-market rationale for emergency easing. The labor side of the dual mandate looks stable. Rate decisions will be driven by the inflation side of the ledger - where the <a href="../../posts/2026-03-22-btos-march/">BTOS’s elevated input price expectations</a> remain the more relevant data point. A patient approach is supported; urgency is not.</p>
+<p><strong>For workers:</strong> Re-employment momentum is returning. The continuing claims trajectory confirms that displaced workers are cycling back into jobs at a healthy pace. The risk remains what it has been throughout this series: a hiring freeze that limits new openings even as existing jobs stay secure. In short, existing jobs feel secure; new opportunities remain the constraint. The BTOS future employees index above 50 suggests businesses expect to open those hiring pipelines again - but the timing depends on demand clarity that the broader economic picture has not yet delivered.</p>
+<p><strong>For markets:</strong> The soft-landing case is reinforced. February’s miss was the noise; March is the signal. The 3-month average of roughly +68,000 jobs per month is not exciting, but it is consistent with an economy that is normalizing rather than contracting. Rate-cut expectations anchored further out are consistent with this read. A second miss would have raised harder questions about structural shifts that weekly data cannot resolve; instead, we return to the slower-moving story of gradual deceleration.</p>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data series used in this analysis. All Employment Situation data from the April 3, 2026 release.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CES0000000001</td>
+<td>Total nonfarm payroll employment, seasonally adjusted (monthly)</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation</a></td>
+</tr>
+<tr class="even">
+<td>LNS14000000</td>
+<td>Unemployment rate, seasonally adjusted (monthly)</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation</a></td>
+</tr>
+<tr class="odd">
+<td>LNS11300000</td>
+<td>Civilian labor force participation rate, seasonally adjusted (monthly)</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation</a></td>
+</tr>
+<tr class="even">
+<td>LNS12300000</td>
+<td>Employment-population ratio, seasonally adjusted (monthly)</td>
+<td><a href="https://www.bls.gov/news.release/empsit.nr0.htm">BLS Employment Situation</a></td>
+</tr>
+<tr class="odd">
+<td>Table B-1</td>
+<td>Nonfarm payroll by sector (monthly change)</td>
+<td><a href="https://www.bls.gov/news.release/pdf/empsit.pdf">BLS Employment Situation PDF</a></td>
+</tr>
+<tr class="even">
+<td>ICSA / CCSA</td>
+<td>Initial and continuing claims (FRED, weekly)</td>
+<td><a href="https://fred.stlouisfed.org/">Federal Reserve Bank of St.&nbsp;Louis FRED</a></td>
+</tr>
+</tbody>
+</table>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Nonfarm payroll figures are subject to revision in subsequent months. The January and February figures used here reflect the revisions published in the April 3 release; further revisions are possible.</li>
+<li>The March health care gain (+89,900) includes a mechanical rebound from the ambulatory services strike that concluded in late February. The underlying organic health care hiring pace is lower than the headline contribution suggests.</li>
+<li>The unemployment rate decline to 4.3% reflects both genuine re-employment and a reduction in the measured labor force. The two effects cannot be fully disaggregated from the household survey headline alone.</li>
+<li>The initial claims series used in the overlay chart (Section 4) uses monthly averages of the weekly 4-week moving average, an approximation for alignment with monthly payroll data. The underlying weekly series is available in the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>.</li>
+<li>Seasonal adjustment factors in both the payroll and claims series can introduce distortions around year-end and federal holiday periods, which may partially explain the late-January/February volatility.</li>
+<li>The consensus estimate of roughly +59,000 represents a composite of forecasts published before the April 3 release and may not reflect the exact median of all surveyed economists.</li>
+</ul>
+<hr>
+<p><em>Data current as of April 3, 2026. BLS Employment Situation release dated April 3, 2026. See also: <a href="../../posts/2026-03-29-btos-and-unemployment/">What Claims Data Tells Us Before the April Jobs Report</a> (March 29, 2026) and <a href="../../posts/2026-03-22-btos-march/">Visualizing the March 2026 BTOS</a> (March 22, 2026).</em></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>economics</category>
+  <category>labor market</category>
+  <category>data analysis</category>
+  <category>data visualization</category>
+  <guid>https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/</guid>
+  <pubDate>Mon, 06 Apr 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>What Claims Data Tells Us Before the April Jobs Report</title>
   <link>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/</link>
