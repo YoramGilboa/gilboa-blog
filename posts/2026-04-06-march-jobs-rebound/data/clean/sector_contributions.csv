@@ -1,0 +1,12 @@
+sector,change,category
+Health care,89900,positive
+Construction,26000,positive
+Transportation & warehousing,21000,positive
+Social assistance,14000,positive
+Retail trade,8000,positive
+Professional & business services,6000,positive
+Financial activities,4000,positive
+Leisure & hospitality,-2000,negative
+Information,-3000,negative
+Manufacturing,-7000,negative
+Federal government,-11000,negative

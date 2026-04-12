@@ -1,0 +1,36 @@
+{
+  "latest_month": "March 2026",
+  "report_release_date": "April 3, 2026",
+  "data_current_as_of": "April 3, 2026",
+
+  "payroll_march": 178000,
+  "payroll_feb_revised": -133000,
+  "payroll_jan_revised": 160000,
+  "payroll_3mo_avg": 68000,
+  "payroll_consensus": 59000,
+
+  "unemployment_rate_mar": 4.3,
+  "unemployment_rate_feb": 4.4,
+  "unemployment_rate_chg": -0.1,
+  "unemployed_persons": 7200000,
+  "lfpr_mar": 61.9,
+  "lfpr_feb": 62.0,
+  "emp_pop_ratio": 59.2,
+
+  "hc_contrib": 89900,
+  "hc_note": "notably ambulatory services returning from strike",
+  "construction_contrib": 26000,
+  "transp_contrib": 21000,
+  "transp_note": "including couriers",
+  "social_assist_contrib": 14000,
+  "federal_govt_note": "continued to decline",
+
+  "icsa_latest": 215000,
+  "icsa_4wma": 219000,
+  "icsa_mar_ref_week": 212000,
+  "icsa_feb_spike_peak": 230000,
+  "ccsa_latest": 1819000,
+
+  "claims_post_url": "/posts/2026-03-29-btos-and-unemployment/",
+  "btos_post_url": "/posts/2026-03-22-btos-march/"
+}
