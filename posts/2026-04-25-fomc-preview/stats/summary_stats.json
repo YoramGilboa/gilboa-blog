@@ -1,0 +1,39 @@
+{
+  "meeting_date": "April 28-29, 2026",
+  "prior_meeting_date": "March 18-19, 2026",
+  "next_meeting_date": "June 17-18, 2026",
+  "next_cpi_release": "May 12, 2026",
+  "data_current_as_of": "April 24, 2026",
+
+  "current_rate_range": "3.50-3.75",
+  "current_effr": 3.64,
+
+  "dot_median_eoy2026": 3.375,
+  "dot_median_eoy2027": 3.125,
+  "dot_median_eoy2028": 3.125,
+  "dot_iqr_lo_2026": 3.125,
+  "dot_iqr_hi_2026": 3.625,
+  "longer_run_neutral": 3.125,
+
+  "dot_implied_cuts_2026": 1,
+  "market_implied_cuts_2026": 0.5,
+  "market_implied_eoy2026": 3.50,
+  "wedge_bps": 13,
+
+  "march_cpi_mom": 0.9,
+  "march_cpi_yoy": 3.3,
+  "march_core_cpi_mom": 0.2,
+  "march_core_cpi_yoy": 2.6,
+  "march_payrolls": 178000,
+  "march_unemployment": 4.3,
+
+  "error_std_recent": 0.28,
+  "error_mean_recent": 0.11,
+
+  "dgs2_current": 3.68,
+  "dgs10_current": 3.78,
+  "spread_current_bps": 10,
+
+  "polymarket_hold_pct": 99.7,
+  "polymarket_hold_volume_m": 0.42
+}
