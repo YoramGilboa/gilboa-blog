@@ -1,6 +1,5 @@
 ﻿---
 title: "April 2026 Federal Open Market Committee (FOMC) Preview: Dot Plot and Market Rate Paths Reshuffled by CPI"
-author: "Yoram Gilboa"
 date: "2026-04-25"
 slug: "april-2026-fomc-preview-dot-plot-market-paths"
 categories: [fed-policy, interest-rates, fomc, interest-rate-outlook]
