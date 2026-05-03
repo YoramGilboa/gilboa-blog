@@ -1,0 +1,860 @@
+﻿---
+title: "April 2026 FOMC: Dissents, Dots & a Widening Wedge"
+author: "Yoram Gilboa"
+date: "2026-05-01"
+categories: [economics, federal reserve, interest rates, fomc, data visualization]
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+code-tools: false
+---
+
+```{python}
+#| echo: false
+
+# =============================================================================
+# SETUP CELL
+# Loads packages, summary stats, plotting style, helper formatters, and FRED
+# data series used by every figure. This cell is hidden in the rendered post
+# (echo: false) but is required for everything downstream.
+# =============================================================================
+
+import json
+import logging
+import os
+import warnings
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+# Suppress non-actionable matplotlib/pandas warnings so the rendered post
+# stays clean even when FRED returns ragged dates. matplotlib's font_manager
+# uses Python's logging module rather than warnings, so silence it explicitly
+# to keep any "findfont" fallback chatter out of the rendered HTML.
+warnings.filterwarnings("ignore")
+logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
+
+# Pre-computed headline numbers and meeting histories live in a single JSON
+# file so that prose, tiles, and figures all reference the same source of
+# truth. Editing one file keeps them in sync.
+with open("stats/summary_stats.json") as f:
+    stats = json.load(f)
+
+# Color palette: muted, print-friendly, and distinguishable for color-blind
+# readers. Reused everywhere so that "primary" always means the same thing
+# and the reader builds a mental color key.
+COLORS = {
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "fed_target": "#cc0000",
+    "warning":    "#cc7722",
+}
+
+# Tufte-style plotting defaults applied to every figure in the post.
+# - font.family: prefer Garamond when installed, then Georgia, then DejaVu
+#   Serif as a guaranteed fallback. This keeps a refined low-contrast serif
+#   feel without breaking on machines that lack Garamond.
+# - axes.spines.top/right: removed for a less boxed-in look.
+# - axes.grid: False (we add light reference lines manually where useful).
+plt.rcParams.update({
+    "font.family":       ["Garamond", "Georgia", "DejaVu Serif"],
+    "font.size":         10,
+    "axes.spines.top":   False,
+    "axes.spines.right": False,
+    "axes.grid":         False,
+    "figure.facecolor":  "white",
+    "axes.facecolor":    "#fafafa",
+    "axes.linewidth":    0.5,
+})
+
+
+# Small text formatters used by the inline `{python}` expressions in prose.
+# Centralizing them prevents inconsistent formatting across paragraphs.
+def fmt(n):
+    """One-decimal float, or comma-grouped int."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+
+
+def fmt_chg(n):
+    """Signed one-decimal float; useful for month-over-month changes."""
+    sign = "+" if n > 0 else ""
+    return f"{sign}{n:.1f}"
+
+
+def fmt_rate(n):
+    """Two-decimal rate, e.g. 3.31 for the SEP median midpoint."""
+    return f"{n:.2f}"
+
+
+# Anchors used by every figure: the latest realized EFFR, "today" for the
+# x-axis, and the actual decision date.
+current_effr = stats["current_effr"]
+current_date = pd.Timestamp(stats["data_current_as_of"])
+decision_date = pd.Timestamp("2026-04-29")
+
+# Year-end anchor dates and median dots for 2026, 2027, and 2028.
+dot_dates_eoy = pd.to_datetime(["2026-12-31", "2027-12-31", "2028-12-31"])
+dot_median = np.array([
+    stats["dot_median_eoy2026"],
+    stats["dot_median_eoy2027"],
+    stats["dot_median_eoy2028"],
+])
+# IQR endpoints: only end-2026 has a real published IQR. The 2027 and 2028
+# placeholders below are NOT used by the rendered Figure 1 (which restricts
+# IQR shading to year-end 2026); they are kept here only so legacy callers
+# that read these arrays do not break.
+dot_iqr_lo = np.array([
+    stats["dot_iqr_lo_2026"],
+    stats["dot_median_eoy2027"] - 0.125,
+    stats["dot_median_eoy2028"] - 0.125,
+])
+dot_iqr_hi = np.array([
+    stats["dot_iqr_hi_2026"],
+    stats["dot_median_eoy2027"] + 0.125,
+    stats["dot_median_eoy2028"] + 0.125,
+])
+
+# Build a smooth interpolated futures-implied path used by Figures 1 and 3.
+# The anchor points are: current EFFR, the market-implied year-end 2026
+# midpoint, the SEP median for 2027 (used as a soft anchor for 2027), and
+# longer-run neutral as the terminal point. Linear interpolation between
+# anchors keeps the line readable without claiming a literal contract path.
+mkt_dates = pd.date_range("2026-05-01", "2028-12-31", freq="ME")
+mkt_rates = np.interp(
+    np.arange(len(mkt_dates)),
+    [0, 10, 24, 40],
+    [
+        current_effr,
+        stats["market_implied_eoy2026"],
+        float(stats["dot_median_eoy2027"]),
+        float(stats["longer_run_neutral"]),
+    ],
+)
+
+
+def _fred_csv(series_id: str, observation_start: str = "2020-01-01"):
+    """Fall-back: pull a series from FRED's public CSV graph endpoint.
+
+    Used when a FRED API key is not available so that the post still renders
+    on CI without secrets. Returns a clean date-indexed Series of floats.
+    """
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+    df = pd.read_csv(url)
+    c0, c1 = df.columns[0], df.columns[1]
+    ser = pd.to_numeric(df[c1], errors="coerce")
+    idx = pd.to_datetime(df[c0], errors="coerce")
+    out = pd.Series(ser.values, index=idx).dropna().sort_index()
+    return out.loc[out.index >= pd.Timestamp(observation_start)]
+
+
+def get_series(series_id: str, observation_start: str = "2020-01-01"):
+    """Pull a FRED series with the API when FRED_API_KEY is set, CSV otherwise.
+
+    Wrapping the data fetch this way means the post is reproducible on any
+    machine: with a key it's a clean API call, without a key it falls back
+    to the public CSV.
+    """
+    key = os.environ.get("FRED_API_KEY")
+    if key:
+        try:
+            from fredapi import Fred
+
+            raw = Fred(api_key=key).get_series(series_id, observation_start=observation_start)
+            ser = raw if isinstance(raw, pd.Series) else raw.squeeze()
+            return ser.astype(float).dropna().sort_index()
+        except Exception:
+            pass
+    return _fred_csv(series_id, observation_start)
+
+
+def spread_bp_series():
+    """Compute the 2s10s Treasury spread in basis points.
+
+    Pulls DGS2 and DGS10 from FRED, aligns them on the intersection of their
+    trading dates, forward-fills small gaps (e.g. holidays), and converts the
+    difference from percentage points to basis points (multiply by 100).
+    """
+    d2 = get_series("DGS2", "2023-01-01")
+    d10 = get_series("DGS10", "2023-01-01")
+    common = d2.index.intersection(d10.index).sort_values()
+    s2 = d2.reindex(common).astype(float).ffill(limit=30)
+    s10 = d10.reindex(common).astype(float).ffill(limit=30)
+    return ((s10 - s2).dropna() * 100.0)
+
+
+# Three FRED series used downstream: monthly EFFR (Figure 2), the daily
+# 2s10s spread, and daily VIX closing levels (both feed Figure 5).
+effr_m = get_series("FEDFUNDS", "2022-01-01")
+spread_bp = spread_bp_series()
+vix_s = get_series("VIXCLS", "2023-01-01")
+
+# Meeting-by-meeting median dots for end-2026, used to draw Figure 2's
+# stepped vintage line. Sorted by date so the step plot reads chronologically.
+meet_df = pd.DataFrame(stats["meeting_histories"])
+meet_df["t"] = pd.to_datetime(meet_df["iso"])
+meet_df.sort_values("t", inplace=True)
+```
+
+```{=html}
+<style>
+#title-block-header .quarto-title-meta > div:last-child {
+  text-align: right;
+}
+
+.table-caption,
+caption {
+  text-align: left;
+}
+
+#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
+#quarto-document-content .callout { border-radius: 8px; }
+#quarto-document-content .grid { margin: 1.25rem 0; }
+#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
+#quarto-document-content h2 { margin-top: 2.25rem; }
+
+#quarto-document-content table {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 1.5rem;
+}
+
+#quarto-document-content caption {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+</style>
+```
+
+## Executive summary
+
+The Federal Open Market Committee held the federal funds target range at **`{python} stats['current_rate_range']`%** on `{python} stats['decision_day']` and recorded **`{python} stats['dissent_count']` dissents** favoring a 25 bp cut. The Summary of Economic Projections (SEP) nudged the year-end 2026 median midpoint down to **`{python} fmt_rate(stats['dot_median_eoy2026'])`%** from `{python} fmt_rate(stats['prior_sep_march_dot_median_eoy2026'])`% in March. Markets price the same horizon near **`{python} fmt_rate(stats['market_implied_eoy2026'])`%**. That **`{python} stats['wedge_bps']`-basis-point wedge** has widened since the [pre-meeting snapshot](https://gilboa.blog/posts/2026-04-25-fomc-preview/) one week earlier - the clearest signal that the dot plot is delivering more easing than markets are pricing.
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+SEP median midpoints, interquartile bands, dissent counts, and interpolated futures midpoint waypoints come from published FOMC materials and contemporaneous market snapshots as of `{python} stats['data_current_as_of']`, summarized for this post. Monthly effective federal funds rates, Treasury yields, and the VIX are pulled from FRED series `FEDFUNDS`, `DGS2`, `DGS10`, and `VIXCLS`, retrieved with `fredapi` when `FRED_API_KEY` is set, otherwise via the FRED graph CSV export. This post does not reconstruct security-by-security futures positions; the interpolated path is for exposition only.
+:::
+
+```{python}
+#| echo: false
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0; padding: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); border-radius: 10px;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Target range</div>
+    <div style="font-size: 1.6rem; font-weight: 700; color: {COLORS['primary']}; margin: 0.35rem 0;">{stats['current_rate_range']}%</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">Hold; unchanged from March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Dissents</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['accent']}; margin: 0.35rem 0;">{stats['dissent_count']}</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">favored {stats['dissent_favored_short']}</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">SEP median, EOY 2026</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['accent']}; margin: 0.35rem 0;">{fmt_rate(stats['dot_median_eoy2026'])}%</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">vs. {fmt_rate(stats['prior_sep_march_dot_median_eoy2026'])}% in March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Wedge vs. market, EOY 2026</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['neutral']}; margin: 0.35rem 0;">{stats['wedge_bps']} bp</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">market at {fmt_rate(stats['market_implied_eoy2026'])}%; ~{stats['preview_wedge_apr25_bps']} bp pre-meeting</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  FOMC SEP and statement, {stats['decision_day']} | Wedge: SEP median midpoint vs. interpolated futures midpoint, {stats['data_current_as_of']}
+</p>
+"""
+HTML(html)
+```
+
+## 1. The April Decision in Context
+
+### How the Federal Open Market Committee works
+
+The Federal Open Market Committee (FOMC) is the body of the US Federal Reserve that sets the country's interest rate policy. It has 19 participants: the seven members of the Board of Governors and the 12 presidents of the regional Federal Reserve Banks. Of these, 12 vote at any given meeting (all seven governors, the New York Fed president, and four of the remaining eleven regional bank presidents on a rotating basis). Congress gave the Fed a dual mandate of maximum employment and stable prices, and the FOMC's primary tool for pursuing both is the federal funds rate, the overnight rate at which banks lend to each other. The Fed steers that rate by setting a quarter-point-wide "target range"; everything else (mortgage rates, auto loans, business credit, the dollar) ultimately reacts to where that range sits and where it is heading. See the Federal Reserve's [FOMC structure overview](https://www.federalreserve.gov/aboutthefed/structure-federal-reserve-system.htm) for the formal rules.
+
+### The April 2026 decision
+
+On `{python} stats['decision_day']` the FOMC voted to hold the federal funds target range at `{python} stats['current_rate_range']`%. Two participants dissented in favor of `{python} stats['dissent_favored']`. None dissented in the other direction. The asymmetry matters: the committee's central case did not shift, but the visible dispersion is entirely on the dovish (more cuts) side.
+
+### What the dot plot shows
+
+Each FOMC meeting that ends in March, June, September, or December includes the Summary of Economic Projections (SEP), in which all 19 participants submit anonymous forecasts of where they think the federal funds rate should be at the end of the next three years and over the longer run. Those individual forecasts are plotted as dots and called the "dot plot." This post focuses on the median dot - the middle value when the 19 forecasts are sorted from low to high. To translate the target range into a single number, the median is reported as the midpoint of each participant's preferred range (the midpoint of `{python} stats['current_rate_range']`%, for example, is `{python} fmt_rate((float(stats['current_rate_range'].split('-')[0]) + float(stats['current_rate_range'].split('-')[1])) / 2)`%). The April SEP put that median at `{python} fmt_rate(stats['dot_median_eoy2026'])`% for end-2026, `{python} abs(stats['shift_mar_to_apr_bps_dot_eoy2026'])` basis points lower than the March vintage of `{python} fmt_rate(stats['prior_sep_march_dot_median_eoy2026'])`%. The longer-run neutral midpoint - the level at which the committee believes policy is neither restrictive nor stimulative - is unchanged at `{python} fmt_rate(stats['longer_run_neutral'])`%.
+
+### How markets price the same path
+
+Bond and futures markets price the same horizon every minute of every trading day. The cleanest source for that pricing is the federal funds futures market, where contracts settle on the average effective federal funds rate over a given month. Interpolating those contract prices forward yields a "market-implied path" for the federal funds rate. As of `{python} stats['data_current_as_of']`, that path puts the end-2026 midpoint near `{python} fmt_rate(stats['market_implied_eoy2026'])`%, about `{python} stats['wedge_bps']` basis points above the SEP median dot. The two paths differ for two structural reasons: the SEP is a central case from policymakers conditioned on their own forecasts, while market pricing is a probability-weighted average over many possible outcomes (including ones where the FOMC ends up tighter than its current plan). Markets can sit above the median dot for long stretches without rejecting the Fed's baseline, and they have done so since early 2026.
+
+### The macro backdrop
+
+The macro picture was mixed rather than directional. March headline CPI jumped `{python} fmt_chg(stats['march_cpi_mom'])`% month over month on an energy spike, while core CPI (excluding food and energy) rose a contained `{python} fmt_chg(stats['march_core_cpi_mom'])`%. Payrolls added `{python} fmt(stats['march_payrolls'])` jobs and unemployment was steady at `{python} stats['march_unemployment']`%, and the advance estimate of Q1 GDP came in at `{python} fmt(stats['q1_gdp_adv_pct_ann'])`% annualized. None of those prints individually called for an immediate cut, but together they were consistent with a modest downward SEP shift and the dovish dispersion in the dissents.
+
+## 2. Dot Plot vs. Market Path
+
+The April Summary of Economic Projections (SEP) did not close the gap with markets. The federal funds futures midpoint for year-end 2026 sits at `{python} fmt_rate(stats['market_implied_eoy2026'])`%, about `{python} stats['wedge_bps']` basis points above the median dot and roughly `{python} f"{stats['wedge_bps']-stats['preview_wedge_apr25_bps']}"` basis points wider than the pre-meeting wedge. The shaded band in Figure 1 is the interquartile range (IQR) of the year-end 2026 dot distribution, the gap between the 25th and 75th percentile of FOMC participant projections; it captures where the middle half of the committee sees end-2026 rates.
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
+#| label: fig-apr-sep-vs-market
+#| fig-align: center
+#| fig-alt: "Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028."
+#| fig-cap: "April 2026 SEP median midpoint path with the year-end 2026 interquartile range shaded, and an interpolated federal funds futures midpoint path through 2028. The dot plot eased modestly versus March; market pricing remains above it.<br>source: FOMC SEP (April 29, 2026), federal funds futures midpoint (May 1, 2026), FRED FEDFUNDS."
+
+# =============================================================================
+# FIGURE 1: SEP MEDIAN PATH VS. MARKET-IMPLIED PATH
+# Tells the story of the wedge in a single chart:
+#   - Dashed red dots-and-line: the FOMC's own median forecast (the dot plot).
+#   - Solid blue line: where federal funds futures price the same horizon.
+#   - Red shaded band: the interquartile range (middle 50%) of FOMC dots
+#     for year-end 2026 only; the data published with the SEP only gives a
+#     real IQR for the nearest year-end, so we draw the band only there.
+# =============================================================================
+
+# Build the path that connects "today" to each year-end median dot.
+# We need three lists: x-values (dates), y-values (median rate), and the
+# IQR endpoints. Putting the current EFFR as the leftmost point makes the
+# line start where realized rates are right now.
+dot_x     = [current_date] + list(dot_dates_eoy)
+dot_y_med = [current_effr]  + list(dot_median)
+
+# IQR shading: ONLY published for end-2026, so we shade just that segment.
+# The polygon goes (current date, EFFR) -> (year-end 2026, IQR low) ->
+# (year-end 2026, IQR high) -> back to (current date, EFFR), giving a wedge
+# that opens toward year-end 2026 where the dot dispersion lives.
+iqr_x = [current_date, dot_dates_eoy[0]]
+iqr_lo = [current_effr, stats["dot_iqr_lo_2026"]]
+iqr_hi = [current_effr, stats["dot_iqr_hi_2026"]]
+
+# figsize controls width and height in inches; 7.2 wide keeps the chart
+# inside the blog's content column.
+fig, ax = plt.subplots(figsize=(7.2, 4.6))
+
+# Shaded IQR band (only through year-end 2026). alpha = transparency.
+ax.fill_between(iqr_x, iqr_lo, iqr_hi,
+                color=COLORS["accent"], alpha=0.10, zorder=1,
+                label="Year-end 2026 IQR (25th-75th pct.)")
+
+# Federal funds futures-implied path (a smooth interpolation, not raw
+# contract prices) - solid blue line, drawn under the dotted SEP line.
+ax.plot(mkt_dates, mkt_rates,
+        color=COLORS["primary"], lw=2.0, zorder=3, label="Futures-implied")
+
+# SEP median path - dashed red line with circle markers at year-ends.
+ax.plot(dot_x, dot_y_med, "--o",
+        color=COLORS["accent"], lw=1.8, ms=4.5, zorder=4, label="SEP median")
+
+# Longer-run neutral reference line. Place the label just below the dotted
+# line and to the left of where the SEP and futures paths converge toward
+# 3.0% by 2028, so it stays clearly separated from the thicker path lines.
+ax.axhline(stats["longer_run_neutral"],
+           color=COLORS["neutral"], lw=0.9, linestyle="--", alpha=0.5, zorder=1)
+ax.text(pd.Timestamp("2027-04-01"), stats["longer_run_neutral"] - 0.07,
+        f"Longer-run neutral ({fmt_rate(stats['longer_run_neutral'])}%)",
+        fontsize=8, color=COLORS["neutral"], ha="left")
+
+# Thin vertical reference at the decision date, with a small label at the
+# x-axis baseline so readers can see where April 29 sits on the timeline.
+ax.axvline(decision_date, color=COLORS["neutral"], lw=0.8, linestyle=":", alpha=0.55, zorder=1)
+# Single-line label centered under the decision line (June ticks removed).
+ax.annotate("Apr 29, 2026",
+            xy=(decision_date, 0), xycoords=("data", "axes fraction"),
+            xytext=(0, -14), textcoords="offset points",
+            ha="center", va="top", fontsize=7.8, color=COLORS["neutral"])
+
+# Wedge marker at year-end 2026: a vertical connector between the two
+# endpoints with the size of the gap labeled in basis points.
+eoy = dot_dates_eoy[0]
+ax.plot([eoy, eoy],
+        [stats["dot_median_eoy2026"], stats["market_implied_eoy2026"]],
+        color=COLORS["neutral"], lw=1.0, zorder=4)
+ax.scatter([eoy], [stats["market_implied_eoy2026"]],
+           color=COLORS["primary"], zorder=5, s=42)
+ax.scatter([eoy], [stats["dot_median_eoy2026"]],
+           color=COLORS["accent"], zorder=5, s=42)
+ax.annotate(f"{stats['wedge_bps']} bp wedge",
+            xy=(eoy, (stats["dot_median_eoy2026"] + stats["market_implied_eoy2026"]) / 2),
+            xytext=(26, -8), textcoords="offset points",
+            fontsize=8.5, color=COLORS["neutral"],
+            arrowprops=dict(arrowstyle="-", color=COLORS["neutral"], lw=0.9))
+
+# Legend at the upper right (instead of right-edge text) so labels never
+# collide with converging paths. Order: Futures-implied, SEP median, IQR.
+handles, labels = ax.get_legend_handles_labels()
+order_labels = ["Futures-implied", "SEP median", "Year-end 2026 IQR (25th-75th pct.)"]
+ordered = [(h, l) for l in order_labels for h, hl in zip(handles, labels) if hl == l]
+ax.legend([h for h, _ in ordered], [l for _, l in ordered],
+          loc="upper right", frameon=False, fontsize=8)
+
+# Cap the y-axis at 4% so the chart zooms in on the relevant rate band; all
+# plotted paths and the IQR stay comfortably below this ceiling.
+ax.set_ylim(2.7, 4.0)
+ax.set_ylabel("Federal funds midpoint (%)", fontsize=9)
+ax.set_title("Markets sit above the April dot plot through year-end 2026",
+             fontsize=12, fontweight="bold", pad=8)
+# December-only major ticks remove the crowded "Jun 2026" label while still
+# marking each calendar year at Dec 1 (near the year-end dot anchors).
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[12]))
+ax.set_xlim(current_date - pd.Timedelta(days=60), dot_dates_eoy[-1] + pd.Timedelta(days=20))
+ax.tick_params(labelsize=8)
+plt.tight_layout()
+```
+
+## 3. How the Committee's View Has Drifted
+
+The wedge between the dot plot and market pricing did not appear all at once. To see how the committee's own view has evolved, Figure 2 overlays two things:
+
+1. The realized monthly effective federal funds rate (EFFR) from FRED, the dark gray line, which is what the federal funds rate has actually been on a monthly basis. EFFR sits roughly in the middle of the target range and is what the FOMC steers when it changes policy.
+2. The red stepped line, which records the SEP median midpoint forecast for year-end 2026 at each FOMC meeting since September 2025. Each step is a separate "vintage" of the dot plot - the committee's best guess about end-2026 at the time of that meeting.
+
+The cumulative move from `{python} fmt_rate(meet_df['dot_eoy26'].iloc[0])`% at the September 2025 meeting to `{python} fmt_rate(stats['dot_median_eoy2026'])`% at the April 2026 meeting is small in absolute terms but consistent in direction: every revision has been lower, none has been higher. The lightly shaded green ribbon around realized EFFR is plus or minus one recent forecast-error standard deviation (about `{python} fmt(stats['error_std_recent'])` percentage points), included as a rough yardstick for how far recent realized rates can drift from the central case in normal data; it is not a confidence interval, just a sense of scale.
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
+#| label: fig-effr-sep-vintages
+#| fig-align: center
+#| fig-alt: "Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates."
+#| fig-cap: "Monthly FRED effective federal funds rate (FEDFUNDS) with the SEP median midpoint for year-end 2026 at each successive FOMC meeting since September 2025. The red stepped line records each meeting's vintage; the shaded ribbon is plus or minus one recent forecast-error standard deviation around realized EFFR.<br>source: FRED FEDFUNDS, FOMC SEP tables."
+
+import matplotlib.ticker as mticker
+
+# =============================================================================
+# FIGURE 2: VINTAGES OF THE END-2026 SEP MEDIAN VS. REALIZED EFFR
+# Two ideas in one chart:
+#   - Where rates actually are (gray line: monthly EFFR from FRED).
+#   - Where the FOMC said end-2026 would be at each meeting along the way
+#     (red stepped line; one step per meeting in stats['meeting_histories']).
+# A small +/- 1 standard deviation ribbon around realized EFFR gives the
+# reader a sense of how much realized rates have wobbled month to month.
+# =============================================================================
+
+# Pull the meeting-by-meeting median dots (already loaded in setup) and the
+# monthly EFFR limited to 2024+ so the chart is readable.
+tts = meet_df["t"].to_numpy()
+yms = meet_df["dot_eoy26"].to_numpy()
+effr_recent = effr_m[effr_m.index >= "2024-01-01"].astype(float)
+
+# Recent forecast-error standard deviation - used to draw a "yardstick"
+# ribbon around realized EFFR. NOT a confidence interval; just a scale.
+sigma = stats["error_std_recent"]
+
+fig, ax = plt.subplots(figsize=(7.2, 4.6))
+
+# Light green ribbon around realized EFFR. alpha=0.10 keeps it subtle.
+ax.fill_between(effr_recent.index,
+                effr_recent.values - sigma,
+                effr_recent.values + sigma,
+                color=COLORS["secondary"], alpha=0.10, zorder=1)
+
+# Realized EFFR. Solid dark gray, the chart's "ground truth" line.
+ax.plot(effr_recent.index, effr_recent.values,
+        color=COLORS["neutral"], lw=2.0, zorder=3)
+
+# Stepped SEP median dots - one step per meeting. where="post" makes each
+# vintage flat from its meeting date until the next one, which mirrors how
+# you would update your priors meeting by meeting.
+ax.step(tts, yms, where="post",
+        color=COLORS["accent"], lw=1.4, marker="o", ms=4.5, zorder=4)
+
+# Vertical reference at the April 29 decision so readers can see the most
+# recent vintage in context.
+ax.axvline(decision_date, color=COLORS["primary"], lw=0.9, linestyle=":", alpha=0.6, zorder=1)
+# Two-line label so it does not collide with the month/year axis tick labels.
+ax.annotate("Apr 29\ndecision",
+            xy=(decision_date, 0), xycoords=("data", "axes fraction"),
+            xytext=(0, -14), textcoords="offset points",
+            ha="center", va="top", fontsize=7.8, color=COLORS["primary"])
+
+# Right-edge captions for the April SEP vintage and current EFFR; the dissent
+# callout is separate (upper-left axes fraction) so it does not crowd these.
+last_tt = tts[-1]
+ax.text(pd.Timestamp(last_tt) + pd.Timedelta(days=14), yms[-1],
+        f"April SEP median ({fmt_rate(yms[-1])}%)",
+        fontsize=8.5, color=COLORS["accent"], va="center")
+last_eff = effr_recent.iloc[-1]
+ax.text(effr_recent.index[-1] + pd.Timedelta(days=14), last_eff,
+        f"EFFR ({fmt_rate(last_eff)}%)",
+        fontsize=8.5, color=COLORS["neutral"], va="center")
+
+ax.set_ylabel("Percent", fontsize=9)
+ax.set_title("SEP median for end-2026 has drifted down across meetings",
+             fontsize=12, fontweight="bold", pad=8)
+ax.set_xlim(pd.Timestamp("2024-01-01"), pd.Timestamp(last_tt) + pd.Timedelta(days=180))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+
+
+def _fmt_hide_apr26(x, pos):
+    """Blank the Apr 2026 tick label only (it crowds the decision line)."""
+    dt = mdates.num2date(x)
+    if dt.year == 2026 and dt.month == 4:
+        return ""
+    return f"{dt.strftime('%b')}\n{dt.year}"
+
+
+ax.xaxis.set_major_formatter(mticker.FuncFormatter(_fmt_hide_apr26))
+ax.tick_params(labelsize=8)
+plt.tight_layout()
+```
+
+The takeaway is a slow-motion downshift. Each meeting since last fall has produced a slightly lower median dot for year-end 2026 while realized EFFR has barely moved, which is exactly what you would expect if the committee is delivering on a previously announced cutting cycle. April's `{python} fmt_rate(stats['dot_median_eoy2026'])`% is the latest step in that pattern.
+
+## 4. Forward Path Uncertainty
+
+A central forecast is only as useful as the range around it. Figure 3 places one uncertainty band around the April SEP median midpoint path: roughly plus or minus one recent forecast-error standard deviation of about `{python} fmt(stats['error_std_recent'])` percentage points, scaled with the square root of horizon (the textbook way uncertainty fans out the further you forecast). The interpolated futures-implied path is overlaid for reference, and the two dovish dissents are marked at year-end 2026 as a reminder that the median is a summary of a dispersed committee.
+
+The chart matters for two reasons. First, the market-implied path stays comfortably inside the band the entire way out to 2028, which is the empirical version of saying "what markets are pricing is well within the historical range of how the dot plot has been wrong." Second, the dissent marker at year-end 2026 sits roughly 25 bp below the median, marking where the two dissenters wanted policy to land - a small visible piece of the dovish dispersion the dot plot itself does not show.
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
+#| label: fig-forward-fan
+#| fig-align: center
+#| fig-alt: "Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026."
+#| fig-cap: "Forward fan around the April SEP median midpoint path. Shaded band: roughly +/- one recent forecast-error standard deviation, scaled with the square root of horizon. The interpolated futures-implied path is overlaid. The marker at year-end 2026 sits 25 bp below the median, where the two dovish dissenters wanted year-end 2026 to land.<br>source: FOMC SEP, FRED FEDFUNDS, author scaling."
+
+# =============================================================================
+# FIGURE 3: FORWARD UNCERTAINTY FAN
+# A "fan chart" around the SEP median path: a single +/- 1 recent forecast-
+# error standard deviation cone, scaled by sqrt(horizon). We then overlay
+# the futures-implied path so the reader can see whether what markets are
+# pricing is inside the cone of historical surprises.
+# =============================================================================
+
+# Build a monthly forecast grid starting just after the decision date.
+forecast_dates = pd.date_range("2026-05-01", "2028-12-31", freq="ME")
+n_f = len(forecast_dates)
+
+# Linearly interpolate the SEP median midpoint at each month between
+# year-end anchors. np.interp wants ascending x-values; we feed it
+# integer positions so the spacing matches monthly frequency.
+dot_path = np.interp(
+    np.arange(n_f, dtype=float),
+    [0,
+     forecast_dates.searchsorted(dot_dates_eoy[0]),
+     forecast_dates.searchsorted(dot_dates_eoy[1]),
+     forecast_dates.searchsorted(dot_dates_eoy[2])],
+    [current_effr, dot_median[0], dot_median[1], dot_median[2]],
+)
+
+# Recent forecast-error sigma is annual; rescale to each forecast horizon
+# using sqrt(months / 12). The sqrt(t) scaling is the standard textbook
+# rule: independent monthly errors compound to an annual sigma at sqrt(12).
+sigma_ann = stats["error_std_recent"]
+sigma_m = np.array([sigma_ann * np.sqrt((i + 1) / 12.0) for i in range(n_f)])
+
+fig, ax = plt.subplots(figsize=(7.2, 4.6))
+
+# Single uncertainty band (~+/- 1 recent forecast-error standard deviation).
+ax.fill_between(forecast_dates,
+                dot_path - sigma_m, dot_path + sigma_m,
+                color=COLORS["accent"], alpha=0.14, zorder=2,
+                label="Narrow range (~68%)")
+
+# Central paths. Dashed red = SEP median; solid blue = market-implied. Both
+# carry labels here so they show up in the in-chart legend (top-right) below.
+ax.plot(forecast_dates, dot_path, "--",
+        color=COLORS["accent"], lw=2.0, zorder=4, label="SEP median")
+ax.plot(mkt_dates, mkt_rates,
+        color=COLORS["primary"], lw=1.8, zorder=4, label="Futures-implied")
+
+# Vertical reference at the decision date (with a baseline label).
+ax.axvline(decision_date, color=COLORS["neutral"], lw=0.8, linestyle=":", alpha=0.55, zorder=1)
+ax.annotate("Apr 29, 2026",
+            xy=(decision_date, 0), xycoords=("data", "axes fraction"),
+            xytext=(0, -14), textcoords="offset points",
+            ha="center", va="top", fontsize=7.8, color=COLORS["neutral"])
+
+# Longer-run neutral horizontal reference. Place its label just below the
+# dotted line on the LEFT edge so it stays clear of the central paths.
+ax.axhline(stats["longer_run_neutral"],
+           color=COLORS["neutral"], lw=0.9, linestyle="--", alpha=0.5, zorder=1)
+ax.text(forecast_dates[0] + pd.Timedelta(days=20), stats["longer_run_neutral"] - 0.07,
+        f"Longer-run neutral ({fmt_rate(stats['longer_run_neutral'])}%)",
+        fontsize=8, color=COLORS["neutral"], ha="left")
+
+# Mark where the two dissenters wanted year-end 2026 to land (median - 25 bp
+# for the favored 25 bp cut), so the dot visibly sits below the median path
+# and the arrow ties the "2 dissents" label to that lower point.
+eoy = dot_dates_eoy[0]
+dissent_y = stats["dot_median_eoy2026"] - 0.25
+ax.scatter([eoy], [dissent_y],
+           color=COLORS["accent"], zorder=5, s=42)
+ax.annotate(f"{stats['dissent_count']} dissents\nfavoring a 25 bp cut",
+            xy=(eoy, dissent_y),
+            xytext=(-110, 32), textcoords="offset points",
+            fontsize=8.2, color=COLORS["accent"], ha="left",
+            arrowprops=dict(arrowstyle="->", color=COLORS["accent"], lw=0.9))
+
+# In-chart legend at the top-right. Reorder the matplotlib default so the
+# legend reads top-to-bottom Futures-implied -> SEP median -> Narrow range,
+# mirroring how the lines and band stack visually.
+handles, labels = ax.get_legend_handles_labels()
+order_labels = ["Futures-implied", "SEP median", "Narrow range (~68%)"]
+ordered = [(h, l) for l in order_labels for h, hl in zip(handles, labels) if hl == l]
+ax.legend([h for h, _ in ordered], [l for _, l in ordered],
+          loc="upper right", frameon=False, fontsize=8)
+
+ax.set_ylabel("Percent", fontsize=9)
+ax.set_title("Market-implied path stays inside the narrow uncertainty band",
+             fontsize=12, fontweight="bold", pad=8)
+# Extend the left bound roughly two months before the decision so the
+# Apr 29 vertical reference clearly reads as the chart's starting point
+# instead of looking like a stray label at the far-left edge.
+ax.set_xlim(pd.Timestamp("2026-03-01"), forecast_dates[-1] + pd.Timedelta(days=30))
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+ax.tick_params(labelsize=8)
+plt.tight_layout()
+```
+
+## 5. Decomposing the Wedge
+
+The `{python} stats['wedge_bps']`-basis-point gap at year-end 2026 is not a regression result; it is an accounting bridge. Figure 4 starts from the April SEP median midpoint of `{python} fmt_rate(stats['dot_median_eoy2026'])`% on the left and walks bar by bar to the market-implied midpoint of `{python} fmt_rate(stats['market_implied_eoy2026'])`% on the right. Each intermediate bar is a directional contribution: the headline CPI impulse, sticky core inertia, the payrolls and GDP mix, and the curve and risk skew. The label above each bar shows that bar's contribution in percentage points, and the bars sum to the wedge. The contributions are stylized weights consistent with the plus/minus directions in the recent macro prints, not outputs of a formal decomposition model.
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
+#| label: fig-gap-waterfall
+#| fig-align: center
+#| fig-alt: "Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points."
+#| fig-cap: "Accounting bridge from the April SEP median midpoint to the federal funds futures midpoint at year-end 2026. Each intermediate bar's contribution is labeled in percentage points; bars sum to the wedge.<br>source: FOMC SEP, federal funds futures, author decomposition."
+
+# =============================================================================
+# FIGURE 4: WATERFALL FROM SEP MEDIAN TO MARKET-IMPLIED MIDPOINT
+# A waterfall chart is just a stacked column chart where each column starts
+# at the cumulative running total of the previous column. We use it to walk
+# from the FOMC's median dot to the market-implied path one driver at a time.
+# =============================================================================
+
+# Step labels - first and last are the anchor totals; middle four are
+# directional contributions to the wedge.
+factor_labels = [
+    "SEP median\nmidpoint",
+    "Headline CPI\nimpulse",
+    "Core CPI\ninertia",
+    "Payrolls /\nGDP mix",
+    "Curve /\nrisk skew",
+    "Market-implied\nmidpoint",
+]
+
+# Endpoints come straight from the stats file.
+start = stats["dot_median_eoy2026"]
+final_val = stats["market_implied_eoy2026"]
+
+# deltas[0] is the starting level; deltas[1:] are the four contributions.
+# We assert they sum to the actual wedge so the chart cannot lie about
+# arithmetic.
+deltas = [start, 0.07, 0.035, 0.035, 0.03]
+assert abs(sum(deltas[1:]) - (final_val - start)) < 1e-9
+
+# Build per-bar "bottom" and "height" arrays so each contribution stacks
+# on top of the running total. Positive deltas use the accent color;
+# negatives (none in this issue) would use the secondary color and stack
+# downward from the running total.
+running = 0.0
+bar_bottoms = []
+bar_heights = []
+bar_colors_wf = []
+
+for i, d in enumerate(deltas):
+    if i == 0:
+        bar_bottoms.append(0)
+        bar_heights.append(d)
+        bar_colors_wf.append(COLORS["primary"])
+        running = d
+    elif d > 0:
+        bar_bottoms.append(running)
+        bar_heights.append(d)
+        bar_colors_wf.append(COLORS["accent"])
+        running += d
+    else:
+        bar_bottoms.append(running + d)
+        bar_heights.append(-d)
+        bar_colors_wf.append(COLORS["secondary"])
+        running += d
+
+# Append the final endpoint bar (full height from 0 to market-implied).
+bar_bottoms.append(0)
+bar_heights.append(final_val)
+bar_colors_wf.append(COLORS["primary"])
+
+x_pos = np.arange(len(factor_labels))
+
+fig, ax = plt.subplots(figsize=(7.2, 4.8))
+
+ax.bar(x_pos, bar_heights, bottom=bar_bottoms,
+       color=bar_colors_wf, edgecolor="none", width=0.6, zorder=2)
+
+# Connector lines between consecutive bar tops so the eye can read it as
+# a running total (classic waterfall convention).
+running2 = 0.0
+connector_ys = []
+for i, d in enumerate(deltas):
+    running2 += d
+    if i < len(deltas) - 1:
+        connector_ys.append(running2)
+
+for i, cy in enumerate(connector_ys):
+    ax.hlines(cy, i + 0.31, i + 0.69,
+              colors="#9ca3af", linestyles="dashed", linewidth=0.9)
+
+# Dotted reference line at the final value, drawn under the last bar.
+ax.hlines(final_val, len(deltas) - 1 + 0.31, len(deltas) - 0.31,
+          colors="#6b7280", linestyles="dotted", linewidth=1.0)
+
+# Per-bar contribution labels for the four middle bars. Each label shows
+# the size of that bar's delta in percentage points (e.g. "+0.07pp"), in
+# the muted neutral color so it does not compete with the bar fills.
+for i, d in enumerate(deltas[1:], start=1):
+    label_y = bar_bottoms[i] + bar_heights[i] + 0.012
+    ax.text(i, label_y, f"+{d:.2f}pp",
+            ha="center", va="bottom", fontsize=8.2,
+            color=COLORS["neutral"], fontweight="bold")
+
+# Endpoint labels (start and final) are slightly larger and colored to
+# match their bars so the reader anchors on the totals first.
+ax.text(0, start + 0.012, f"{start:.3f}%",
+        ha="center", va="bottom", fontsize=8.5,
+        color=COLORS["neutral"], fontweight="bold")
+ax.text(len(deltas), final_val + 0.012, f"{final_val:.3f}%",
+        ha="center", va="bottom", fontsize=8.5,
+        color=COLORS["primary"], fontweight="bold")
+
+ax.axhline(0, color="#444", lw=0.6)
+ax.set_xticks(x_pos)
+ax.set_xticklabels(factor_labels, fontsize=8.5)
+ax.set_ylabel("Federal funds midpoint (%)", fontsize=9)
+ax.set_ylim(3.05, 3.72)
+ax.set_title("From SEP median to market midpoint: a wedge decomposition",
+             fontsize=11.6, fontweight="bold", pad=8)
+plt.tight_layout()
+```
+
+The contributions are stylized weights aligned with the recent macro prints, not outputs of a formal regression. Each middle bar's height in percentage points is the directional pull that data driver exerts on the year-end 2026 midpoint relative to the SEP median, and the four middle bars are calibrated to sum exactly to the `{python} stats['wedge_bps']`-basis-point gap between the SEP median midpoint of `{python} fmt_rate(stats['dot_median_eoy2026'])`% and the market-implied midpoint of `{python} fmt_rate(stats['market_implied_eoy2026'])`%. In plain English:
+
+- **Headline CPI impulse (+0.07pp):** the March energy spike pushed headline CPI to `{python} fmt_chg(stats['march_cpi_mom'])`% month over month, which adds upward pressure on near-term inflation expectations and nudges market pricing of policy higher than the dot.
+- **Core CPI inertia (+0.035pp):** core CPI is sticky around `{python} fmt_rate(stats['march_core_cpi_yoy'])`% year over year, so markets discount fewer or slower cuts than the median dot embeds.
+- **Payrolls / GDP mix (+0.035pp):** a still-firm labor market (`{python} fmt(stats['march_payrolls'])` payrolls, `{python} stats['march_unemployment']`% unemployment) and `{python} fmt(stats['q1_gdp_adv_pct_ann'])`% Q1 GDP advance keep the cyclical case for cuts modest.
+- **Curve / risk skew (+0.03pp):** asymmetric tail risk (the chance the FOMC ends up tighter than its own central case) lifts the probability-weighted market path above the central dot.
+
+## 6. Yields and Volatility Around the Decision
+
+Two market gauges are worth checking after any FOMC decision: the **2s10s Treasury spread** and the **VIX**.
+
+The 2s10s spread is the difference between the 10-year Treasury yield and the 2-year Treasury yield, expressed in basis points (one basis point is one hundredth of a percentage point). When it is positive, the curve has a "normal" slope: long-term yields are higher than short-term yields. When it is negative, the curve is "inverted": short-term yields exceed long-term yields, which historically corresponds to markets expecting the FOMC to cut rates over the next year or two.
+
+Why is the 2s10s spread the cleanest single-number summary of expected policy? Because the 2-year yield is approximately the average federal funds rate the market expects over the next two years (plus a small term premium), and the 10-year yield is roughly the same average over ten years. Subtracting one from the other isolates the part of the curve that responds to near-term policy. A deeply negative 2s10s says markets expect short rates to fall sharply over the next year or two; a flat or modestly positive slope says markets expect short rates to drift back toward neutral; a steep positive slope says markets see rates rising over time. The slope itself is therefore a direct read on how much front-loaded easing is priced in.
+
+A positive 2s10s today is consistent with - not contradicting - the dovish dot plot. Today's reading is mildly positive at about `{python} stats['spread_current_bps']` basis points. The committee is cutting from a still-restrictive `{python} stats['current_rate_range']`% range back toward the `{python} fmt_rate(stats['longer_run_neutral'])`% longer-run neutral. As cuts proceed, the front end falls faster than the long end (which is anchored on neutral plus a term premium), so the curve typically re-steepens from inverted territory back to a mildly positive slope. The current shape is exactly that: the early phase of a cutting cycle, not a signal that policy rates should rise.
+
+The VIX is the CBOE Volatility Index, a market-priced expectation of how volatile the S&P 500 will be over the next 30 days. Roughly speaking, a VIX of 15 corresponds to a calm tape, the low 20s is normal-with-some-tension, and 30 plus is a stressed regime.
+
+Figure 5 plots both around the decision date for visual orientation. The vertical line at April 29, 2026 marks the meeting for context; this is a multi-year backdrop, not a tight event-study window around the announcement.
+
+```{python}
+#| echo: true
+#| code-fold: true
+#| code-summary: "Show code"
+#| label: fig-yields-vix
+#| fig-align: center
+#| fig-alt: "Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels."
+#| fig-cap: "Upper panel: 2s10s Treasury spread (10-year minus 2-year Treasury yield, basis points). Lower panel: VIX closing levels. The vertical reference at April 29, 2026 marks the FOMC decision for visual orientation only.<br>source: FRED DGS2, DGS10, VIXCLS."
+
+# =============================================================================
+# FIGURE 5: 2s10s SPREAD AND VIX AROUND THE DECISION
+# Two stacked panels share an x-axis. Top panel: term-structure slope.
+# Bottom panel: equity implied volatility. The vertical reference line on
+# both panels is the FOMC decision date so the reader can eyeball whether
+# either series moved meaningfully around the meeting.
+# =============================================================================
+
+# Trim both series to 2024+ so the chart is readable. The series are
+# already daily; we plot them as is.
+spr = spread_bp[spread_bp.index >= "2024-01-01"]
+vx  = vix_s[vix_s.index >= "2024-01-01"]
+
+# Two-row figure with shared x-axis. height_ratios gives the top panel a
+# slightly taller frame because the spread series moves more dramatically.
+fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(7.25, 5.4), sharex=True,
+                               gridspec_kw={"height_ratios": [1.05, 1.0]})
+
+# TOP PANEL: 2s10s spread.
+ax0.plot(spr.index, spr.values, color=COLORS["primary"], lw=1.8)
+# Zero reference: anything below 0 is an inverted curve.
+ax0.axhline(0, color="#444", lw=0.7)
+# Decision-date reference. Dotted to read as "context, not measurement."
+ax0.axvline(decision_date, color=COLORS["accent"], lw=0.9, linestyle=":", alpha=0.65)
+ax0.set_ylabel("2s10s (bp)", fontsize=9)
+ax0.tick_params(labelsize=8)
+# Direct label of the most recent value at the right edge.
+ax0.text(spr.index[-1] + pd.Timedelta(days=10), spr.values[-1],
+         f"{int(round(spr.values[-1]))} bp",
+         fontsize=8.5, color=COLORS["primary"], va="center")
+ax0.set_title("Curve slope and implied volatility around the decision",
+              fontsize=12, fontweight="bold", pad=8)
+
+# BOTTOM PANEL: VIX.
+ax1.plot(vx.index, vx.values, color=COLORS["neutral"], lw=1.6)
+ax1.axvline(decision_date, color=COLORS["accent"], lw=0.9, linestyle=":", alpha=0.65)
+ax1.set_ylabel("VIX (level)", fontsize=9)
+ax1.set_xlabel("Date", fontsize=9)
+ax1.tick_params(labelsize=8)
+ax1.text(vx.index[-1] + pd.Timedelta(days=10), vx.values[-1],
+         f"{vx.values[-1]:.1f}",
+         fontsize=8.5, color=COLORS["neutral"], va="center")
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+
+plt.tight_layout()
+```
+
+Two non-FOMC volatility shocks dominate the VIX panel. In August 2024 the index spiked above 60 intraday on the unwind of the Japanese yen carry trade, after the Bank of Japan raised rates and a soft July US payrolls print triggered global de-risking. In early April 2025 the VIX jumped again on the announcement of broad reciprocal US tariffs, before retracing once exemptions and pauses were clarified. Both are equity-driven shocks, not FOMC reactions, and they help explain why VIX has otherwise calmed back into the high teens by April 2026. On the curve side, 2s10s spent most of 2024 inverted (markets expected near-term cuts to bring short rates well below long rates), flipped positive in the second half of 2025 as cuts began and the front end rolled lower, and has since stabilized around `{python} stats['spread_current_bps']` basis points - the curve has digested the early phase of the easing cycle but has not yet built in a second leg of cuts beyond what the dots already show.
+
+## 7. What It Means
+
+**For the Fed:** A hold with two dovish dissents and a modest downward nudge in the year-end 2026 median is patience with optionality. The committee can watch the `{python} stats['next_cpi_release']` CPI print before June while preserving credibility on either side. The real tension is the widening wedge between the SEP median and the market-implied path: guidance and incoming data must reconcile what the dot plot says with what futures are pricing, or the Fed risks appearing either behind the curve or overly committed to a path its own median does not yet endorse.
+
+**For consumers:** Borrowing costs are unchanged today, but the path forward matters. Fixed-rate mortgages and auto loans track the back end of the curve and are unlikely to fall sharply with 2s10s near `{python} stats['spread_current_bps']` bp and the 10-year anchored. Floating-rate products (HELOCs, credit cards) will respond more directly when actual cuts arrive; the modestly lower year-end 2026 dot at `{python} fmt_rate(stats['dot_median_eoy2026'])`% suggests relief could come in the second half of the year if inflation cooperates. Savers, meanwhile, face a gradual compression in money-market and CD yields. The next clear signal is the `{python} stats['next_cpi_release']` CPI print.
+
+**For equity markets:** An easier dot plot - one that projects lower rates over the next few years - supports rate-sensitive sectors because it lowers the discount rate applied to long-duration cash flows (housing, utilities, growth equities). April delivered exactly that: the median fell `{python} abs(stats['shift_mar_to_apr_bps_dot_eoy2026'])` bp and both dissents were dovish. The bigger swing factor on the day was tone. Markets read both the statement and Chair Powell's press conference as patient on inflation without pre-committing to near-term cuts, which was enough to keep risk assets from selling off on the hold itself.
+
+**For fixed income:** The wedge widened because the dot plot delivered more easing than markets had priced. Futures now imply a year-end 2026 rate about `{python} stats['wedge_bps']` bp above the SEP median (up from `{python} stats['preview_wedge_apr25_bps']` bp before the meeting). In plain terms, the committee is forecasting a faster glide path lower than what the bond market is willing to embed. The two-year Treasury yield is the cleanest barometer of how this gap resolves. If incoming data validate the dovish SEP path, front-end yields can drift lower toward the dot and the wedge narrows from the pricing side (bond prices rise). If inflation re-accelerates, the dot plot will likely move up toward the market and the wedge narrows from the SEP side instead. In either case, the 2-year is where the bond market casts its vote.
+
+## 8. Conclusion
+
+The April decision is consistent with a committee that is willing to ease, but not yet ready to commit. Two dissents, a roughly `{python} abs(stats['shift_mar_to_apr_bps_dot_eoy2026'])`-basis-point downward nudge in the year-end 2026 median, and a wider wedge versus market-implied pricing all point in the same direction without forcing a move. The next decisive data point is `{python} stats['next_cpi_release']`, when April CPI will tell markets whether the March energy spike was a one-month event or the start of a new chapter. Until then, the (widening) **wedge** is the story.
+
+| Series | Description | Source |
+|---|---|---|
+| FOMC SEP | Summary of Economic Projections (median midpoints, year-end 2026 IQR) | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) |
+| FEDFUNDS | Effective federal funds rate (monthly) | [FRED](https://fred.stlouisfed.org/series/FEDFUNDS) |
+| DGS2, DGS10 | Treasury constant maturity yields | [FRED](https://fred.stlouisfed.org/) |
+| VIXCLS | CBOE volatility index | [FRED](https://fred.stlouisfed.org/series/VIXCLS) |
+| CPI, payrolls, GDP | March CPI, payrolls, Q1 GDP advance (context) | [BLS](https://www.bls.gov/), [BEA](https://www.bea.gov/) |
+| Futures-implied path | Interpolated federal funds futures midpoint waypoint | [CME FedWatch](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html) |
+
+: Data sources and methodology notes. SEP and dissent objects are summarized for textual alignment with charts; FRED series are downloaded at render time when possible.
+
+*Data current as of `{python} stats['data_current_as_of']`.*

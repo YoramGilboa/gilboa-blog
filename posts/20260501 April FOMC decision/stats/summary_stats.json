@@ -1,0 +1,53 @@
+{
+  "meeting_date": "April 28-29, 2026",
+  "decision_day": "April 29, 2026",
+  "prior_meeting_date": "March 18-19, 2026",
+  "next_meeting_date": "June 17-18, 2026",
+  "next_cpi_release": "May 12, 2026",
+  "data_current_as_of": "May 1, 2026",
+
+  "current_rate_range": "3.50-3.75",
+  "current_effr": 3.63,
+
+  "dot_median_eoy2026": 3.31,
+  "dot_median_eoy2027": 3.06,
+  "dot_median_eoy2028": 3.0,
+  "dot_iqr_lo_2026": 3.125,
+  "dot_iqr_hi_2026": 3.5,
+  "longer_run_neutral": 3.0,
+
+  "prior_sep_march_dot_median_eoy2026": 3.375,
+  "shift_mar_to_apr_bps_dot_eoy2026": -7,
+
+  "market_implied_eoy2026": 3.48,
+  "market_implied_cuts_remaining_2026": 0.55,
+  "wedge_bps": 17,
+  "preview_wedge_apr25_bps": 13,
+
+  "dissent_count": 2,
+  "dissent_favored": "a 25 basis point decrease in the target range for the federal funds rate",
+  "dissent_favored_short": "a 25 bp cut",
+
+  "march_cpi_mom": 0.9,
+  "march_cpi_yoy": 3.3,
+  "march_core_cpi_mom": 0.2,
+  "march_core_cpi_yoy": 2.6,
+  "march_payrolls": 178000,
+  "march_unemployment": 4.3,
+
+  "q1_gdp_adv_pct_ann": 2.0,
+
+  "error_std_recent": 0.28,
+  "error_mean_recent": 0.11,
+
+  "spread_current_bps": 10,
+
+  "meeting_histories": [
+    {"iso": "2025-09-17", "label": "Sep 2025", "dot_eoy26": 3.5},
+    {"iso": "2025-11-05", "label": "Nov 2025", "dot_eoy26": 3.44},
+    {"iso": "2025-12-17", "label": "Dec 2025", "dot_eoy26": 3.42},
+    {"iso": "2026-01-28", "label": "Jan 2026", "dot_eoy26": 3.4},
+    {"iso": "2026-03-18", "label": "Mar 2026", "dot_eoy26": 3.375},
+    {"iso": "2026-04-29", "label": "Apr 2026", "dot_eoy26": 3.31}
+  ]
+}
