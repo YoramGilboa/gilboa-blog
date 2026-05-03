@@ -10,7 +10,2760 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Sat, 25 Apr 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 01 May 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>April 2026 FOMC: Dissents, Dots &amp; a Widening Wedge</title>
+  <dc:creator>Yoram Gilboa</dc:creator>
+  <link>https://gilboa.blog/posts/20260501 April FOMC decision/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<style>
+#title-block-header .quarto-title-meta > div:last-child {
+  text-align: right;
+}
+
+.table-caption,
+caption {
+  text-align: left;
+}
+
+#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
+#quarto-document-content .callout { border-radius: 8px; }
+#quarto-document-content .grid { margin: 1.25rem 0; }
+#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
+#quarto-document-content h2 { margin-top: 2.25rem; }
+
+#quarto-document-content table {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 1.5rem;
+}
+
+#quarto-document-content caption {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+</style>
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive summary</h2>
+<p>The Federal Open Market Committee held the federal funds target range at <strong>3.50-3.75%</strong> on April 29, 2026 and recorded <strong>2 dissents</strong> favoring a 25 bp cut. The Summary of Economic Projections (SEP) nudged the year-end 2026 median midpoint down to <strong>3.31%</strong> from 3.38% in March. Markets price the same horizon near <strong>3.48%</strong>. That <strong>17-basis-point wedge</strong> has widened since the <a href="https://gilboa.blog/posts/2026-04-25-fomc-preview/">pre-meeting snapshot</a> one week earlier - the clearest signal that the dot plot is delivering more easing than markets are pricing.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>SEP median midpoints, interquartile bands, dissent counts, and interpolated futures midpoint waypoints come from published FOMC materials and contemporaneous market snapshots as of May 1, 2026, summarized for this post. Monthly effective federal funds rates, Treasury yields, and the VIX are pulled from FRED series <code>FEDFUNDS</code>, <code>DGS2</code>, <code>DGS10</code>, and <code>VIXCLS</code>, retrieved with <code>fredapi</code> when <code>FRED_API_KEY</code> is set, otherwise via the FRED graph CSV export. This post does not reconstruct security-by-security futures positions; the interpolated path is for exposition only.</p>
+</div>
+</div>
+</div>
+<div id="3e1f4a37" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0; padding: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04); border-radius: 10px;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Target range</div>
+    <div style="font-size: 1.6rem; font-weight: 700; color: #2e5984; margin: 0.35rem 0;">3.50-3.75%</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">Hold; unchanged from March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Dissents</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000; margin: 0.35rem 0;">2</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">favored a 25 bp cut</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">SEP median, EOY 2026</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000; margin: 0.35rem 0;">3.31%</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">vs. 3.38% in March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Wedge vs. market, EOY 2026</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a; margin: 0.35rem 0;">17 bp</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">market at 3.48%; ~13 bp pre-meeting</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  FOMC SEP and statement, April 29, 2026 | Wedge: SEP median midpoint vs. interpolated futures midpoint, May 1, 2026
+</p>
+</div>
+</div>
+</section>
+<section id="the-april-decision-in-context" class="level2">
+<h2 class="anchored" data-anchor-id="the-april-decision-in-context">1. The April Decision in Context</h2>
+<section id="how-the-federal-open-market-committee-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-federal-open-market-committee-works">How the Federal Open Market Committee works</h3>
+<p>The Federal Open Market Committee (FOMC) is the body of the US Federal Reserve that sets the country’s interest rate policy. It has 19 participants: the seven members of the Board of Governors and the 12 presidents of the regional Federal Reserve Banks. Of these, 12 vote at any given meeting (all seven governors, the New York Fed president, and four of the remaining eleven regional bank presidents on a rotating basis). Congress gave the Fed a dual mandate of maximum employment and stable prices, and the FOMC’s primary tool for pursuing both is the federal funds rate, the overnight rate at which banks lend to each other. The Fed steers that rate by setting a quarter-point-wide “target range”; everything else (mortgage rates, auto loans, business credit, the dollar) ultimately reacts to where that range sits and where it is heading. See the Federal Reserve’s <a href="https://www.federalreserve.gov/aboutthefed/structure-federal-reserve-system.htm">FOMC structure overview</a> for the formal rules.</p>
+</section>
+<section id="the-april-2026-decision" class="level3">
+<h3 class="anchored" data-anchor-id="the-april-2026-decision">The April 2026 decision</h3>
+<p>On April 29, 2026 the FOMC voted to hold the federal funds target range at 3.50-3.75%. Two participants dissented in favor of a 25 basis point decrease in the target range for the federal funds rate. None dissented in the other direction. The asymmetry matters: the committee’s central case did not shift, but the visible dispersion is entirely on the dovish (more cuts) side.</p>
+</section>
+<section id="what-the-dot-plot-shows" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-dot-plot-shows">What the dot plot shows</h3>
+<p>Each FOMC meeting that ends in March, June, September, or December includes the Summary of Economic Projections (SEP), in which all 19 participants submit anonymous forecasts of where they think the federal funds rate should be at the end of the next three years and over the longer run. Those individual forecasts are plotted as dots and called the “dot plot.” This post focuses on the median dot - the middle value when the 19 forecasts are sorted from low to high. To translate the target range into a single number, the median is reported as the midpoint of each participant’s preferred range (the midpoint of 3.50-3.75%, for example, is 3.62%). The April SEP put that median at 3.31% for end-2026, 7 basis points lower than the March vintage of 3.38%. The longer-run neutral midpoint - the level at which the committee believes policy is neither restrictive nor stimulative - is unchanged at 3.00%.</p>
+</section>
+<section id="how-markets-price-the-same-path" class="level3">
+<h3 class="anchored" data-anchor-id="how-markets-price-the-same-path">How markets price the same path</h3>
+<p>Bond and futures markets price the same horizon every minute of every trading day. The cleanest source for that pricing is the federal funds futures market, where contracts settle on the average effective federal funds rate over a given month. Interpolating those contract prices forward yields a “market-implied path” for the federal funds rate. As of May 1, 2026, that path puts the end-2026 midpoint near 3.48%, about 17 basis points above the SEP median dot. The two paths differ for two structural reasons: the SEP is a central case from policymakers conditioned on their own forecasts, while market pricing is a probability-weighted average over many possible outcomes (including ones where the FOMC ends up tighter than its current plan). Markets can sit above the median dot for long stretches without rejecting the Fed’s baseline, and they have done so since early 2026.</p>
+</section>
+<section id="the-macro-backdrop" class="level3">
+<h3 class="anchored" data-anchor-id="the-macro-backdrop">The macro backdrop</h3>
+<p>The macro picture was mixed rather than directional. March headline CPI jumped +0.9% month over month on an energy spike, while core CPI (excluding food and energy) rose a contained +0.2%. Payrolls added 178,000 jobs and unemployment was steady at 4.3%, and the advance estimate of Q1 GDP came in at 2.0% annualized. None of those prints individually called for an immediate cut, but together they were consistent with a modest downward SEP shift and the dovish dispersion in the dissents.</p>
+</section>
+</section>
+<section id="dot-plot-vs.-market-path" class="level2">
+<h2 class="anchored" data-anchor-id="dot-plot-vs.-market-path">2. Dot Plot vs.&nbsp;Market Path</h2>
+<p>The April Summary of Economic Projections (SEP) did not close the gap with markets. The federal funds futures midpoint for year-end 2026 sits at 3.48%, about 17 basis points above the median dot and roughly 4 basis points wider than the pre-meeting wedge. The shaded band in Figure 1 is the interquartile range (IQR) of the year-end 2026 dot distribution, the gap between the 25th and 75th percentile of FOMC participant projections; it captures where the middle half of the committee sees end-2026 rates.</p>
+<div id="cell-fig-apr-sep-vs-market" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FIGURE 1: SEP MEDIAN PATH VS. MARKET-IMPLIED PATH</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Tells the story of the wedge in a single chart:</span></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   - Dashed red dots-and-line: the FOMC's own median forecast (the dot plot).</span></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   - Solid blue line: where federal funds futures price the same horizon.</span></span>
+<span id="cb1-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   - Red shaded band: the interquartile range (middle 50%) of FOMC dots</span></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     for year-end 2026 only; the data published with the SEP only gives a</span></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     real IQR for the nearest year-end, so we draw the band only there.</span></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Build the path that connects "today" to each year-end median dot.</span></span>
+<span id="cb1-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># We need three lists: x-values (dates), y-values (median rate), and the</span></span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># IQR endpoints. Putting the current EFFR as the leftmost point makes the</span></span>
+<span id="cb1-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># line start where realized rates are right now.</span></span>
+<span id="cb1-15">dot_x     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [current_date] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(dot_dates_eoy)</span>
+<span id="cb1-16">dot_y_med <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [current_effr]  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">list</span>(dot_median)</span>
+<span id="cb1-17"></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># IQR shading: ONLY published for end-2026, so we shade just that segment.</span></span>
+<span id="cb1-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The polygon goes (current date, EFFR) -&gt; (year-end 2026, IQR low) -&gt;</span></span>
+<span id="cb1-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># (year-end 2026, IQR high) -&gt; back to (current date, EFFR), giving a wedge</span></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># that opens toward year-end 2026 where the dot dispersion lives.</span></span>
+<span id="cb1-22">iqr_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [current_date, dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]]</span>
+<span id="cb1-23">iqr_lo <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [current_effr, stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_iqr_lo_2026"</span>]]</span>
+<span id="cb1-24">iqr_hi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [current_effr, stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_iqr_hi_2026"</span>]]</span>
+<span id="cb1-25"></span>
+<span id="cb1-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># figsize controls width and height in inches; 7.2 wide keeps the chart</span></span>
+<span id="cb1-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># inside the blog's content column.</span></span>
+<span id="cb1-28">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>))</span>
+<span id="cb1-29"></span>
+<span id="cb1-30"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Shaded IQR band (only through year-end 2026). alpha = transparency.</span></span>
+<span id="cb1-31">ax.fill_between(iqr_x, iqr_lo, iqr_hi,</span>
+<span id="cb1-32">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.10</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb1-33">                label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-end 2026 IQR (25th-75th pct.)"</span>)</span>
+<span id="cb1-34"></span>
+<span id="cb1-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Federal funds futures-implied path (a smooth interpolation, not raw</span></span>
+<span id="cb1-36"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># contract prices) - solid blue line, drawn under the dotted SEP line.</span></span>
+<span id="cb1-37">ax.plot(mkt_dates, mkt_rates,</span>
+<span id="cb1-38">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Futures-implied"</span>)</span>
+<span id="cb1-39"></span>
+<span id="cb1-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># SEP median path - dashed red line with circle markers at year-ends.</span></span>
+<span id="cb1-41">ax.plot(dot_x, dot_y_med, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--o"</span>,</span>
+<span id="cb1-42">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, ms<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median"</span>)</span>
+<span id="cb1-43"></span>
+<span id="cb1-44"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Longer-run neutral reference line. Place the label just below the dotted</span></span>
+<span id="cb1-45"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># line and to the left of where the SEP and futures paths converge toward</span></span>
+<span id="cb1-46"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 3.0% by 2028, so it stays clearly separated from the thicker path lines.</span></span>
+<span id="cb1-47">ax.axhline(stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"longer_run_neutral"</span>],</span>
+<span id="cb1-48">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-49">ax.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2027-04-01"</span>), stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"longer_run_neutral"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.07</span>,</span>
+<span id="cb1-50">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Longer-run neutral (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'longer_run_neutral'</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%)"</span>,</span>
+<span id="cb1-51">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>)</span>
+<span id="cb1-52"></span>
+<span id="cb1-53"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Thin vertical reference at the decision date, with a small label at the</span></span>
+<span id="cb1-54"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x-axis baseline so readers can see where April 29 sits on the timeline.</span></span>
+<span id="cb1-55">ax.axvline(decision_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">":"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-56"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Single-line label centered under the decision line (June ticks removed).</span></span>
+<span id="cb1-57">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Apr 29, 2026"</span>,</span>
+<span id="cb1-58">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(decision_date, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), xycoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"axes fraction"</span>),</span>
+<span id="cb1-59">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-60">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>])</span>
+<span id="cb1-61"></span>
+<span id="cb1-62"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Wedge marker at year-end 2026: a vertical connector between the two</span></span>
+<span id="cb1-63"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># endpoints with the size of the gap labeled in basis points.</span></span>
+<span id="cb1-64">eoy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb1-65">ax.plot([eoy, eoy],</span>
+<span id="cb1-66">        [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>]],</span>
+<span id="cb1-67">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb1-68">ax.scatter([eoy], [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>]],</span>
+<span id="cb1-69">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb1-70">ax.scatter([eoy], [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]],</span>
+<span id="cb1-71">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb1-72">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wedge_bps'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> bp wedge"</span>,</span>
+<span id="cb1-73">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(eoy, (stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb1-74">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-75">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>],</span>
+<span id="cb1-76">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>))</span>
+<span id="cb1-77"></span>
+<span id="cb1-78"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Legend at the upper right (instead of right-edge text) so labels never</span></span>
+<span id="cb1-79"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># collide with converging paths. Order: Futures-implied, SEP median, IQR.</span></span>
+<span id="cb1-80">handles, labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.get_legend_handles_labels()</span>
+<span id="cb1-81">order_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Futures-implied"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-end 2026 IQR (25th-75th pct.)"</span>]</span>
+<span id="cb1-82">ordered <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [(h, l) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> l <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order_labels <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> h, hl <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(handles, labels) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> hl <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> l]</span>
+<span id="cb1-83">ax.legend([h <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> h, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ordered], [l <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, l <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ordered],</span>
+<span id="cb1-84">          loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper right"</span>, frameon<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-85"></span>
+<span id="cb1-86"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Cap the y-axis at 4% so the chart zooms in on the relevant rate band; all</span></span>
+<span id="cb1-87"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># plotted paths and the IQR stay comfortably below this ceiling.</span></span>
+<span id="cb1-88">ax.set_ylim(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>)</span>
+<span id="cb1-89">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Federal funds midpoint (%)"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb1-90">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Markets sit above the April dot plot through year-end 2026"</span>,</span>
+<span id="cb1-91">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-92"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># December-only major ticks remove the crowded "Jun 2026" label while still</span></span>
+<span id="cb1-93"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># marking each calendar year at Dec 1 (near the year-end dot anchors).</span></span>
+<span id="cb1-94">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb1-95">ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>]))</span>
+<span id="cb1-96">ax.set_xlim(current_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>), dot_dates_eoy[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>))</span>
+<span id="cb1-97">ax.tick_params(labelsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-98">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." width="682" height="428">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: April 2026 SEP median midpoint path with the year-end 2026 interquartile range shaded, and an interpolated federal funds futures midpoint path through 2028. The dot plot eased modestly versus March; market pricing remains above it.<br>source: FOMC SEP (April 29, 2026), federal funds futures midpoint (May 1, 2026), FRED FEDFUNDS.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="how-the-committees-view-has-drifted" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-committees-view-has-drifted">3. How the Committee’s View Has Drifted</h2>
+<p>The wedge between the dot plot and market pricing did not appear all at once. To see how the committee’s own view has evolved, Figure 2 overlays two things:</p>
+<ol type="1">
+<li>The realized monthly effective federal funds rate (EFFR) from FRED, the dark gray line, which is what the federal funds rate has actually been on a monthly basis. EFFR sits roughly in the middle of the target range and is what the FOMC steers when it changes policy.</li>
+<li>The red stepped line, which records the SEP median midpoint forecast for year-end 2026 at each FOMC meeting since September 2025. Each step is a separate “vintage” of the dot plot - the committee’s best guess about end-2026 at the time of that meeting.</li>
+</ol>
+<p>The cumulative move from 3.50% at the September 2025 meeting to 3.31% at the April 2026 meeting is small in absolute terms but consistent in direction: every revision has been lower, none has been higher. The lightly shaded green ribbon around realized EFFR is plus or minus one recent forecast-error standard deviation (about 0.3 percentage points), included as a rough yardstick for how far recent realized rates can drift from the central case in normal data; it is not a confidence interval, just a sense of scale.</p>
+<div id="cell-fig-effr-sep-vintages" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.ticker <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> mticker</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FIGURE 2: VINTAGES OF THE </span><span class="re">END</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-2026 SEP MEDIAN VS. REALIZED EFFR</span></span>
+<span id="cb2-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Two ideas in one chart:</span></span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   - Where rates actually are (gray line: monthly EFFR from FRED).</span></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   - Where the FOMC said end-2026 would be at each meeting along the way</span></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#     (red stepped line; one step per meeting in stats['meeting_histories']).</span></span>
+<span id="cb2-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A small +/- 1 standard deviation ribbon around realized EFFR gives the</span></span>
+<span id="cb2-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># reader a sense of how much realized rates have wobbled month to month.</span></span>
+<span id="cb2-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb2-12"></span>
+<span id="cb2-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Pull the meeting-by-meeting median dots (already loaded in setup) and the</span></span>
+<span id="cb2-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># monthly EFFR limited to 2024+ so the chart is readable.</span></span>
+<span id="cb2-15">tts <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> meet_df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t"</span>].to_numpy()</span>
+<span id="cb2-16">yms <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> meet_df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_eoy26"</span>].to_numpy()</span>
+<span id="cb2-17">effr_recent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> effr_m[effr_m.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>].astype(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>)</span>
+<span id="cb2-18"></span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Recent forecast-error standard deviation - used to draw a "yardstick"</span></span>
+<span id="cb2-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ribbon around realized EFFR. NOT a confidence interval; just a scale.</span></span>
+<span id="cb2-21">sigma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"error_std_recent"</span>]</span>
+<span id="cb2-22"></span>
+<span id="cb2-23">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>))</span>
+<span id="cb2-24"></span>
+<span id="cb2-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Light green ribbon around realized EFFR. alpha=0.10 keeps it subtle.</span></span>
+<span id="cb2-26">ax.fill_between(effr_recent.index,</span>
+<span id="cb2-27">                effr_recent.values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> sigma,</span>
+<span id="cb2-28">                effr_recent.values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> sigma,</span>
+<span id="cb2-29">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.10</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-30"></span>
+<span id="cb2-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Realized EFFR. Solid dark gray, the chart's "ground truth" line.</span></span>
+<span id="cb2-32">ax.plot(effr_recent.index, effr_recent.values,</span>
+<span id="cb2-33">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-34"></span>
+<span id="cb2-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Stepped SEP median dots - one step per meeting. where="post" makes each</span></span>
+<span id="cb2-36"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># vintage flat from its meeting date until the next one, which mirrors how</span></span>
+<span id="cb2-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># you would update your priors meeting by meeting.</span></span>
+<span id="cb2-38">ax.step(tts, yms, where<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"post"</span>,</span>
+<span id="cb2-39">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.4</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>, ms<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb2-40"></span>
+<span id="cb2-41"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vertical reference at the April 29 decision so readers can see the most</span></span>
+<span id="cb2-42"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># recent vintage in context.</span></span>
+<span id="cb2-43">ax.axvline(decision_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">":"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb2-44"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Two-line label so it does not collide with the month/year axis tick labels.</span></span>
+<span id="cb2-45">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Apr 29</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">decision"</span>,</span>
+<span id="cb2-46">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(decision_date, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), xycoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"axes fraction"</span>),</span>
+<span id="cb2-47">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb2-48">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>])</span>
+<span id="cb2-49"></span>
+<span id="cb2-50"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Right-edge captions for the April SEP vintage and current EFFR; the dissent</span></span>
+<span id="cb2-51"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># callout is separate (upper-left axes fraction) so it does not crowd these.</span></span>
+<span id="cb2-52">last_tt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tts[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-53">ax.text(pd.Timestamp(last_tt) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), yms[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-54">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"April SEP median (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(yms[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%)"</span>,</span>
+<span id="cb2-55">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb2-56">last_eff <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> effr_recent.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-57">ax.text(effr_recent.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), last_eff,</span>
+<span id="cb2-58">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"EFFR (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(last_eff)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%)"</span>,</span>
+<span id="cb2-59">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb2-60"></span>
+<span id="cb2-61">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Percent"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb2-62">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median for end-2026 has drifted down across meetings"</span>,</span>
+<span id="cb2-63">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-64">ax.set_xlim(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>), pd.Timestamp(last_tt) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">180</span>))</span>
+<span id="cb2-65">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb2-66"></span>
+<span id="cb2-67"></span>
+<span id="cb2-68"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> _fmt_hide_apr26(x, pos):</span>
+<span id="cb2-69">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Blank the Apr 2026 tick label only (it crowds the decision line)."""</span></span>
+<span id="cb2-70">    dt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> mdates.num2date(x)</span>
+<span id="cb2-71">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> dt.year <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2026</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">and</span> dt.month <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>:</span>
+<span id="cb2-72">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span></span>
+<span id="cb2-73">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>dt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>strftime(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'%b'</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>dt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>year<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb2-74"></span>
+<span id="cb2-75"></span>
+<span id="cb2-76">ax.xaxis.set_major_formatter(mticker.FuncFormatter(_fmt_hide_apr26))</span>
+<span id="cb2-77">ax.tick_params(labelsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-78">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-effr-sep-vintages-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." width="672" height="435">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Monthly FRED effective federal funds rate (FEDFUNDS) with the SEP median midpoint for year-end 2026 at each successive FOMC meeting since September 2025. The red stepped line records each meeting’s vintage; the shaded ribbon is plus or minus one recent forecast-error standard deviation around realized EFFR.<br>source: FRED FEDFUNDS, FOMC SEP tables.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The takeaway is a slow-motion downshift. Each meeting since last fall has produced a slightly lower median dot for year-end 2026 while realized EFFR has barely moved, which is exactly what you would expect if the committee is delivering on a previously announced cutting cycle. April’s 3.31% is the latest step in that pattern.</p>
+</section>
+<section id="forward-path-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="forward-path-uncertainty">4. Forward Path Uncertainty</h2>
+<p>A central forecast is only as useful as the range around it. Figure 3 places one uncertainty band around the April SEP median midpoint path: roughly plus or minus one recent forecast-error standard deviation of about 0.3 percentage points, scaled with the square root of horizon (the textbook way uncertainty fans out the further you forecast). The interpolated futures-implied path is overlaid for reference, and the two dovish dissents are marked at year-end 2026 as a reminder that the median is a summary of a dispersed committee.</p>
+<p>The chart matters for two reasons. First, the market-implied path stays comfortably inside the band the entire way out to 2028, which is the empirical version of saying “what markets are pricing is well within the historical range of how the dot plot has been wrong.” Second, the dissent marker at year-end 2026 sits roughly 25 bp below the median, marking where the two dissenters wanted policy to land - a small visible piece of the dovish dispersion the dot plot itself does not show.</p>
+<div id="cell-fig-forward-fan" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FIGURE 3: FORWARD UNCERTAINTY FAN</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A "fan chart" around the SEP median path: a single +/- 1 recent forecast-</span></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># error standard deviation cone, scaled by sqrt(horizon). We then overlay</span></span>
+<span id="cb3-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the futures-implied path so the reader can see whether what markets are</span></span>
+<span id="cb3-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># pricing is inside the cone of historical surprises.</span></span>
+<span id="cb3-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Build a monthly forecast grid starting just after the decision date.</span></span>
+<span id="cb3-10">forecast_dates <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.date_range(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-05-01"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2028-12-31"</span>, freq<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ME"</span>)</span>
+<span id="cb3-11">n_f <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(forecast_dates)</span>
+<span id="cb3-12"></span>
+<span id="cb3-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Linearly interpolate the SEP median midpoint at each month between</span></span>
+<span id="cb3-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># year-end anchors. np.interp wants ascending x-values; we feed it</span></span>
+<span id="cb3-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># integer positions so the spacing matches monthly frequency.</span></span>
+<span id="cb3-16">dot_path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.interp(</span>
+<span id="cb3-17">    np.arange(n_f, dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>),</span>
+<span id="cb3-18">    [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb3-19">     forecast_dates.searchsorted(dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]),</span>
+<span id="cb3-20">     forecast_dates.searchsorted(dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]),</span>
+<span id="cb3-21">     forecast_dates.searchsorted(dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])],</span>
+<span id="cb3-22">    [current_effr, dot_median[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], dot_median[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], dot_median[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]],</span>
+<span id="cb3-23">)</span>
+<span id="cb3-24"></span>
+<span id="cb3-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Recent forecast-error sigma is annual; rescale to each forecast horizon</span></span>
+<span id="cb3-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># using sqrt(months / 12). The sqrt(t) scaling is the standard textbook</span></span>
+<span id="cb3-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rule: independent monthly errors compound to an annual sigma at sqrt(12).</span></span>
+<span id="cb3-28">sigma_ann <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"error_std_recent"</span>]</span>
+<span id="cb3-29">sigma_m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.array([sigma_ann <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.sqrt((i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.0</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(n_f)])</span>
+<span id="cb3-30"></span>
+<span id="cb3-31">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>))</span>
+<span id="cb3-32"></span>
+<span id="cb3-33"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Single uncertainty band (~+/- 1 recent forecast-error standard deviation).</span></span>
+<span id="cb3-34">ax.fill_between(forecast_dates,</span>
+<span id="cb3-35">                dot_path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> sigma_m, dot_path <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> sigma_m,</span>
+<span id="cb3-36">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.14</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb3-37">                label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Narrow range (~68%)"</span>)</span>
+<span id="cb3-38"></span>
+<span id="cb3-39"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Central paths. Dashed red = SEP median; solid blue = market-implied. Both</span></span>
+<span id="cb3-40"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># carry labels here so they show up in the in-chart legend (top-right) below.</span></span>
+<span id="cb3-41">ax.plot(forecast_dates, dot_path, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>,</span>
+<span id="cb3-42">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median"</span>)</span>
+<span id="cb3-43">ax.plot(mkt_dates, mkt_rates,</span>
+<span id="cb3-44">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Futures-implied"</span>)</span>
+<span id="cb3-45"></span>
+<span id="cb3-46"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vertical reference at the decision date (with a baseline label).</span></span>
+<span id="cb3-47">ax.axvline(decision_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">":"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-48">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Apr 29, 2026"</span>,</span>
+<span id="cb3-49">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(decision_date, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), xycoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"data"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"axes fraction"</span>),</span>
+<span id="cb3-50">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb3-51">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>])</span>
+<span id="cb3-52"></span>
+<span id="cb3-53"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Longer-run neutral horizontal reference. Place its label just below the</span></span>
+<span id="cb3-54"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># dotted line on the LEFT edge so it stays clear of the central paths.</span></span>
+<span id="cb3-55">ax.axhline(stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"longer_run_neutral"</span>],</span>
+<span id="cb3-56">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-57">ax.text(forecast_dates[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>), stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"longer_run_neutral"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.07</span>,</span>
+<span id="cb3-58">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Longer-run neutral (</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'longer_run_neutral'</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%)"</span>,</span>
+<span id="cb3-59">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>)</span>
+<span id="cb3-60"></span>
+<span id="cb3-61"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mark where the two dissenters wanted year-end 2026 to land (median - 25 bp</span></span>
+<span id="cb3-62"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># for the favored 25 bp cut), so the dot visibly sits below the median path</span></span>
+<span id="cb3-63"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># and the arrow ties the "2 dissents" label to that lower point.</span></span>
+<span id="cb3-64">eoy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dot_dates_eoy[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb3-65">dissent_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span></span>
+<span id="cb3-66">ax.scatter([eoy], [dissent_y],</span>
+<span id="cb3-67">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span>)</span>
+<span id="cb3-68">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'dissent_count'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> dissents</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">favoring a 25 bp cut"</span>,</span>
+<span id="cb3-69">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(eoy, dissent_y),</span>
+<span id="cb3-70">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb3-71">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>,</span>
+<span id="cb3-72">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>))</span>
+<span id="cb3-73"></span>
+<span id="cb3-74"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># In-chart legend at the top-right. Reorder the matplotlib default so the</span></span>
+<span id="cb3-75"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># legend reads top-to-bottom Futures-implied -&gt; SEP median -&gt; Narrow range,</span></span>
+<span id="cb3-76"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mirroring how the lines and band stack visually.</span></span>
+<span id="cb3-77">handles, labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.get_legend_handles_labels()</span>
+<span id="cb3-78">order_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Futures-implied"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Narrow range (~68%)"</span>]</span>
+<span id="cb3-79">ordered <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [(h, l) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> l <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> order_labels <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> h, hl <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(handles, labels) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> hl <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> l]</span>
+<span id="cb3-80">ax.legend([h <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> h, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ordered], [l <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, l <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ordered],</span>
+<span id="cb3-81">          loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper right"</span>, frameon<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb3-82"></span>
+<span id="cb3-83">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Percent"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb3-84">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Market-implied path stays inside the narrow uncertainty band"</span>,</span>
+<span id="cb3-85">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb3-86"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extend the left bound roughly two months before the decision so the</span></span>
+<span id="cb3-87"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Apr 29 vertical reference clearly reads as the chart's starting point</span></span>
+<span id="cb3-88"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># instead of looking like a stray label at the far-left edge.</span></span>
+<span id="cb3-89">ax.set_xlim(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>), forecast_dates[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>))</span>
+<span id="cb3-90">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb3-91">ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb3-92">ax.tick_params(labelsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb3-93">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-forward-fan-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." width="682" height="428">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Forward fan around the April SEP median midpoint path. Shaded band: roughly +/- one recent forecast-error standard deviation, scaled with the square root of horizon. The interpolated futures-implied path is overlaid. The marker at year-end 2026 sits 25 bp below the median, where the two dovish dissenters wanted year-end 2026 to land.<br>source: FOMC SEP, FRED FEDFUNDS, author scaling.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="decomposing-the-wedge" class="level2">
+<h2 class="anchored" data-anchor-id="decomposing-the-wedge">5. Decomposing the Wedge</h2>
+<p>The 17-basis-point gap at year-end 2026 is not a regression result; it is an accounting bridge. Figure 4 starts from the April SEP median midpoint of 3.31% on the left and walks bar by bar to the market-implied midpoint of 3.48% on the right. Each intermediate bar is a directional contribution: the headline CPI impulse, sticky core inertia, the payrolls and GDP mix, and the curve and risk skew. The label above each bar shows that bar’s contribution in percentage points, and the bars sum to the wedge. The contributions are stylized weights consistent with the plus/minus directions in the recent macro prints, not outputs of a formal decomposition model.</p>
+<div id="cell-fig-gap-waterfall" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FIGURE 4: WATERFALL FROM SEP MEDIAN TO MARKET-IMPLIED MIDPOINT</span></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A waterfall chart is just a stacked column chart where each column starts</span></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># at the cumulative running total of the previous column. We use it to walk</span></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># from the FOMC's median dot to the market-implied path one driver at a time.</span></span>
+<span id="cb4-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step labels - first and last are the anchor totals; middle four are</span></span>
+<span id="cb4-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># directional contributions to the wedge.</span></span>
+<span id="cb4-10">factor_labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb4-11">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"SEP median</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">midpoint"</span>,</span>
+<span id="cb4-12">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Headline CPI</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">impulse"</span>,</span>
+<span id="cb4-13">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core CPI</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">inertia"</span>,</span>
+<span id="cb4-14">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Payrolls /</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">GDP mix"</span>,</span>
+<span id="cb4-15">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Curve /</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">risk skew"</span>,</span>
+<span id="cb4-16">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Market-implied</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">midpoint"</span>,</span>
+<span id="cb4-17">]</span>
+<span id="cb4-18"></span>
+<span id="cb4-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Endpoints come straight from the stats file.</span></span>
+<span id="cb4-20">start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]</span>
+<span id="cb4-21">final_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>]</span>
+<span id="cb4-22"></span>
+<span id="cb4-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># deltas[0] is the starting level; deltas[1:] are the four contributions.</span></span>
+<span id="cb4-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># We assert they sum to the actual wedge so the chart cannot lie about</span></span>
+<span id="cb4-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># arithmetic.</span></span>
+<span id="cb4-26">deltas <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [start, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.07</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.035</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.035</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.03</span>]</span>
+<span id="cb4-27"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">assert</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sum</span>(deltas[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> (final_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> start)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-9</span></span>
+<span id="cb4-28"></span>
+<span id="cb4-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Build per-bar "bottom" and "height" arrays so each contribution stacks</span></span>
+<span id="cb4-30"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># on top of the running total. Positive deltas use the accent color;</span></span>
+<span id="cb4-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># negatives (none in this issue) would use the secondary color and stack</span></span>
+<span id="cb4-32"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># downward from the running total.</span></span>
+<span id="cb4-33">running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb4-34">bar_bottoms <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb4-35">bar_heights <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb4-36">bar_colors_wf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb4-37"></span>
+<span id="cb4-38"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(deltas):</span>
+<span id="cb4-39">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb4-40">        bar_bottoms.append(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-41">        bar_heights.append(d)</span>
+<span id="cb4-42">        bar_colors_wf.append(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>])</span>
+<span id="cb4-43">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> d</span>
+<span id="cb4-44">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> d <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb4-45">        bar_bottoms.append(running)</span>
+<span id="cb4-46">        bar_heights.append(d)</span>
+<span id="cb4-47">        bar_colors_wf.append(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>])</span>
+<span id="cb4-48">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> d</span>
+<span id="cb4-49">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb4-50">        bar_bottoms.append(running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> d)</span>
+<span id="cb4-51">        bar_heights.append(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>d)</span>
+<span id="cb4-52">        bar_colors_wf.append(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>])</span>
+<span id="cb4-53">        running <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> d</span>
+<span id="cb4-54"></span>
+<span id="cb4-55"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Append the final endpoint bar (full height from 0 to market-implied).</span></span>
+<span id="cb4-56">bar_bottoms.append(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-57">bar_heights.append(final_val)</span>
+<span id="cb4-58">bar_colors_wf.append(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>])</span>
+<span id="cb4-59"></span>
+<span id="cb4-60">x_pos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(factor_labels))</span>
+<span id="cb4-61"></span>
+<span id="cb4-62">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>))</span>
+<span id="cb4-63"></span>
+<span id="cb4-64">ax.bar(x_pos, bar_heights, bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_bottoms,</span>
+<span id="cb4-65">       color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_colors_wf, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb4-66"></span>
+<span id="cb4-67"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Connector lines between consecutive bar tops so the eye can read it as</span></span>
+<span id="cb4-68"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># a running total (classic waterfall convention).</span></span>
+<span id="cb4-69">running2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb4-70">connector_ys <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb4-71"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(deltas):</span>
+<span id="cb4-72">    running2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> d</span>
+<span id="cb4-73">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(deltas) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb4-74">        connector_ys.append(running2)</span>
+<span id="cb4-75"></span>
+<span id="cb4-76"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, cy <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(connector_ys):</span>
+<span id="cb4-77">    ax.hlines(cy, i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.31</span>, i <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.69</span>,</span>
+<span id="cb4-78">              colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#9ca3af"</span>, linestyles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dashed"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>)</span>
+<span id="cb4-79"></span>
+<span id="cb4-80"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Dotted reference line at the final value, drawn under the last bar.</span></span>
+<span id="cb4-81">ax.hlines(final_val, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(deltas) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.31</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(deltas) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.31</span>,</span>
+<span id="cb4-82">          colors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#6b7280"</span>, linestyles<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dotted"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>)</span>
+<span id="cb4-83"></span>
+<span id="cb4-84"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Per-bar contribution labels for the four middle bars. Each label shows</span></span>
+<span id="cb4-85"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the size of that bar's delta in percentage points (e.g. "+0.07pp"), in</span></span>
+<span id="cb4-86"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the muted neutral color so it does not compete with the bar fills.</span></span>
+<span id="cb4-87"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(deltas[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:], start<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>):</span>
+<span id="cb4-88">    label_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> bar_bottoms[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar_heights[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.012</span></span>
+<span id="cb4-89">    ax.text(i, label_y, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"+</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>d<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">pp"</span>,</span>
+<span id="cb4-90">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.2</span>,</span>
+<span id="cb4-91">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb4-92"></span>
+<span id="cb4-93"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Endpoint labels (start and final) are slightly larger and colored to</span></span>
+<span id="cb4-94"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># match their bars so the reader anchors on the totals first.</span></span>
+<span id="cb4-95">ax.text(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.012</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>start<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb4-96">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>,</span>
+<span id="cb4-97">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb4-98">ax.text(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(deltas), final_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.012</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>final_val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.3f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb4-99">        ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>,</span>
+<span id="cb4-100">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb4-101"></span>
+<span id="cb4-102">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#444"</span>, lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>)</span>
+<span id="cb4-103">ax.set_xticks(x_pos)</span>
+<span id="cb4-104">ax.set_xticklabels(factor_labels, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>)</span>
+<span id="cb4-105">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Federal funds midpoint (%)"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb4-106">ax.set_ylim(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.05</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.72</span>)</span>
+<span id="cb4-107">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"From SEP median to market midpoint: a wedge decomposition"</span>,</span>
+<span id="cb4-108">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11.6</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb4-109">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-gap-waterfall-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." width="681" height="450">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Accounting bridge from the April SEP median midpoint to the federal funds futures midpoint at year-end 2026. Each intermediate bar’s contribution is labeled in percentage points; bars sum to the wedge.<br>source: FOMC SEP, federal funds futures, author decomposition.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The contributions are stylized weights aligned with the recent macro prints, not outputs of a formal regression. Each middle bar’s height in percentage points is the directional pull that data driver exerts on the year-end 2026 midpoint relative to the SEP median, and the four middle bars are calibrated to sum exactly to the 17-basis-point gap between the SEP median midpoint of 3.31% and the market-implied midpoint of 3.48%. In plain English:</p>
+<ul>
+<li><strong>Headline CPI impulse (+0.07pp):</strong> the March energy spike pushed headline CPI to +0.9% month over month, which adds upward pressure on near-term inflation expectations and nudges market pricing of policy higher than the dot.</li>
+<li><strong>Core CPI inertia (+0.035pp):</strong> core CPI is sticky around 2.60% year over year, so markets discount fewer or slower cuts than the median dot embeds.</li>
+<li><strong>Payrolls / GDP mix (+0.035pp):</strong> a still-firm labor market (178,000 payrolls, 4.3% unemployment) and 2.0% Q1 GDP advance keep the cyclical case for cuts modest.</li>
+<li><strong>Curve / risk skew (+0.03pp):</strong> asymmetric tail risk (the chance the FOMC ends up tighter than its own central case) lifts the probability-weighted market path above the central dot.</li>
+</ul>
+</section>
+<section id="yields-and-volatility-around-the-decision" class="level2">
+<h2 class="anchored" data-anchor-id="yields-and-volatility-around-the-decision">6. Yields and Volatility Around the Decision</h2>
+<p>Two market gauges are worth checking after any FOMC decision: the <strong>2s10s Treasury spread</strong> and the <strong>VIX</strong>.</p>
+<p>The 2s10s spread is the difference between the 10-year Treasury yield and the 2-year Treasury yield, expressed in basis points (one basis point is one hundredth of a percentage point). When it is positive, the curve has a “normal” slope: long-term yields are higher than short-term yields. When it is negative, the curve is “inverted”: short-term yields exceed long-term yields, which historically corresponds to markets expecting the FOMC to cut rates over the next year or two.</p>
+<p>Why is the 2s10s spread the cleanest single-number summary of expected policy? Because the 2-year yield is approximately the average federal funds rate the market expects over the next two years (plus a small term premium), and the 10-year yield is roughly the same average over ten years. Subtracting one from the other isolates the part of the curve that responds to near-term policy. A deeply negative 2s10s says markets expect short rates to fall sharply over the next year or two; a flat or modestly positive slope says markets expect short rates to drift back toward neutral; a steep positive slope says markets see rates rising over time. The slope itself is therefore a direct read on how much front-loaded easing is priced in.</p>
+<p>A positive 2s10s today is consistent with - not contradicting - the dovish dot plot. Today’s reading is mildly positive at about 10 basis points. The committee is cutting from a still-restrictive 3.50-3.75% range back toward the 3.00% longer-run neutral. As cuts proceed, the front end falls faster than the long end (which is anchored on neutral plus a term premium), so the curve typically re-steepens from inverted territory back to a mildly positive slope. The current shape is exactly that: the early phase of a cutting cycle, not a signal that policy rates should rise.</p>
+<p>The VIX is the CBOE Volatility Index, a market-priced expectation of how volatile the S&amp;P 500 will be over the next 30 days. Roughly speaking, a VIX of 15 corresponds to a calm tape, the low 20s is normal-with-some-tension, and 30 plus is a stressed regime.</p>
+<p>Figure 5 plots both around the decision date for visual orientation. The vertical line at April 29, 2026 marks the meeting for context; this is a multi-year backdrop, not a tight event-study window around the announcement.</p>
+<div id="cell-fig-yields-vix" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># FIGURE 5: 2s10s SPREAD AND VIX AROUND THE DECISION</span></span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Two stacked panels share an x-axis. Top panel: term-structure slope.</span></span>
+<span id="cb5-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Bottom panel: equity implied volatility. The vertical reference line on</span></span>
+<span id="cb5-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># both panels is the FOMC decision date so the reader can eyeball whether</span></span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># either series moved meaningfully around the meeting.</span></span>
+<span id="cb5-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># =============================================================================</span></span>
+<span id="cb5-8"></span>
+<span id="cb5-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Trim both series to 2024+ so the chart is readable. The series are</span></span>
+<span id="cb5-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># already daily; we plot them as is.</span></span>
+<span id="cb5-11">spr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spread_bp[spread_bp.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>]</span>
+<span id="cb5-12">vx  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> vix_s[vix_s.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>]</span>
+<span id="cb5-13"></span>
+<span id="cb5-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Two-row figure with shared x-axis. height_ratios gives the top panel a</span></span>
+<span id="cb5-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># slightly taller frame because the spread series moves more dramatically.</span></span>
+<span id="cb5-16">fig, (ax0, ax1) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.25</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.4</span>), sharex<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb5-17">                               gridspec_kw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"height_ratios"</span>: [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.05</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>]})</span>
+<span id="cb5-18"></span>
+<span id="cb5-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># TOP PANEL: 2s10s spread.</span></span>
+<span id="cb5-20">ax0.plot(spr.index, spr.values, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>)</span>
+<span id="cb5-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Zero reference: anything below 0 is an inverted curve.</span></span>
+<span id="cb5-22">ax0.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#444"</span>, lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb5-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Decision-date reference. Dotted to read as "context, not measurement."</span></span>
+<span id="cb5-24">ax0.axvline(decision_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">":"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>)</span>
+<span id="cb5-25">ax0.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2s10s (bp)"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb5-26">ax0.tick_params(labelsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb5-27"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Direct label of the most recent value at the right edge.</span></span>
+<span id="cb5-28">ax0.text(spr.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), spr.values[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb5-29">         <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">round</span>(spr.values[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]))<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> bp"</span>,</span>
+<span id="cb5-30">         fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-31">ax0.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Curve slope and implied volatility around the decision"</span>,</span>
+<span id="cb5-32">              fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb5-33"></span>
+<span id="cb5-34"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># BOTTOM PANEL: VIX.</span></span>
+<span id="cb5-35">ax1.plot(vx.index, vx.values, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.6</span>)</span>
+<span id="cb5-36">ax1.axvline(decision_date, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">":"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>)</span>
+<span id="cb5-37">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"VIX (level)"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb5-38">ax1.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Date"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb5-39">ax1.tick_params(labelsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb5-40">ax1.text(vx.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), vx.values[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb5-41">         <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>vx<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>values[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb5-42">         fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-43">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb5-44"></span>
+<span id="cb5-45">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-yields-vix-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." width="683" height="505">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Upper panel: 2s10s Treasury spread (10-year minus 2-year Treasury yield, basis points). Lower panel: VIX closing levels. The vertical reference at April 29, 2026 marks the FOMC decision for visual orientation only.<br>source: FRED DGS2, DGS10, VIXCLS.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Two non-FOMC volatility shocks dominate the VIX panel. In August 2024 the index spiked above 60 intraday on the unwind of the Japanese yen carry trade, after the Bank of Japan raised rates and a soft July US payrolls print triggered global de-risking. In early April 2025 the VIX jumped again on the announcement of broad reciprocal US tariffs, before retracing once exemptions and pauses were clarified. Both are equity-driven shocks, not FOMC reactions, and they help explain why VIX has otherwise calmed back into the high teens by April 2026. On the curve side, 2s10s spent most of 2024 inverted (markets expected near-term cuts to bring short rates well below long rates), flipped positive in the second half of 2025 as cuts began and the front end rolled lower, and has since stabilized around 10 basis points - the curve has digested the early phase of the easing cycle but has not yet built in a second leg of cuts beyond what the dots already show.</p>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">7. What It Means</h2>
+<p><strong>For the Fed:</strong> A hold with two dovish dissents and a modest downward nudge in the year-end 2026 median is patience with optionality. The committee can watch the May 12, 2026 CPI print before June while preserving credibility on either side. The real tension is the widening wedge between the SEP median and the market-implied path: guidance and incoming data must reconcile what the dot plot says with what futures are pricing, or the Fed risks appearing either behind the curve or overly committed to a path its own median does not yet endorse.</p>
+<p><strong>For consumers:</strong> Borrowing costs are unchanged today, but the path forward matters. Fixed-rate mortgages and auto loans track the back end of the curve and are unlikely to fall sharply with 2s10s near 10 bp and the 10-year anchored. Floating-rate products (HELOCs, credit cards) will respond more directly when actual cuts arrive; the modestly lower year-end 2026 dot at 3.31% suggests relief could come in the second half of the year if inflation cooperates. Savers, meanwhile, face a gradual compression in money-market and CD yields. The next clear signal is the May 12, 2026 CPI print.</p>
+<p><strong>For equity markets:</strong> An easier dot plot - one that projects lower rates over the next few years - supports rate-sensitive sectors because it lowers the discount rate applied to long-duration cash flows (housing, utilities, growth equities). April delivered exactly that: the median fell 7 bp and both dissents were dovish. The bigger swing factor on the day was tone. Markets read both the statement and Chair Powell’s press conference as patient on inflation without pre-committing to near-term cuts, which was enough to keep risk assets from selling off on the hold itself.</p>
+<p><strong>For fixed income:</strong> The wedge widened because the dot plot delivered more easing than markets had priced. Futures now imply a year-end 2026 rate about 17 bp above the SEP median (up from 13 bp before the meeting). In plain terms, the committee is forecasting a faster glide path lower than what the bond market is willing to embed. The two-year Treasury yield is the cleanest barometer of how this gap resolves. If incoming data validate the dovish SEP path, front-end yields can drift lower toward the dot and the wedge narrows from the pricing side (bond prices rise). If inflation re-accelerates, the dot plot will likely move up toward the market and the wedge narrows from the SEP side instead. In either case, the 2-year is where the bond market casts its vote.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">8. Conclusion</h2>
+<p>The April decision is consistent with a committee that is willing to ease, but not yet ready to commit. Two dissents, a roughly 7-basis-point downward nudge in the year-end 2026 median, and a wider wedge versus market-implied pricing all point in the same direction without forcing a move. The next decisive data point is May 12, 2026, when April CPI will tell markets whether the March energy spike was a one-month event or the start of a new chapter. Until then, the (widening) <strong>wedge</strong> is the story.</p>
+<table class="caption-top table">
+<caption>Data sources and methodology notes. SEP and dissent objects are summarized for textual alignment with charts; FRED series are downloaded at render time when possible.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FOMC SEP</td>
+<td>Summary of Economic Projections (median midpoints, year-end 2026 IQR)</td>
+<td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve</a></td>
+</tr>
+<tr class="even">
+<td>FEDFUNDS</td>
+<td>Effective federal funds rate (monthly)</td>
+<td><a href="https://fred.stlouisfed.org/series/FEDFUNDS">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>DGS2, DGS10</td>
+<td>Treasury constant maturity yields</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>VIXCLS</td>
+<td>CBOE volatility index</td>
+<td><a href="https://fred.stlouisfed.org/series/VIXCLS">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CPI, payrolls, GDP</td>
+<td>March CPI, payrolls, Q1 GDP advance (context)</td>
+<td><a href="https://www.bls.gov/">BLS</a>, <a href="https://www.bea.gov/">BEA</a></td>
+</tr>
+<tr class="even">
+<td>Futures-implied path</td>
+<td>Interpolated federal funds futures midpoint waypoint</td>
+<td><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html">CME FedWatch</a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Data current as of May 1, 2026.</em></p>
+
+
+</section>
+
+ ]]></description>
+  <category>economics</category>
+  <category>federal reserve</category>
+  <category>interest rates</category>
+  <category>fomc</category>
+  <category>data visualization</category>
+  <guid>https://gilboa.blog/posts/20260501 April FOMC decision/</guid>
+  <pubDate>Fri, 01 May 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>April 2026 Federal Open Market Committee (FOMC) Preview: Dot Plot and Market Rate Paths Reshuffled by CPI</title>
   <link>https://gilboa.blog/posts/2026-04-25-fomc-preview/</link>
@@ -2944,7 +5697,7 @@ Figure&nbsp;5: 2s10s Treasury yield spread, measured as the 10-year Treasury yie
 <p>The March 2026 Consumer Price Index delivered the largest monthly increase since June 2022. Headline CPI-U rose <strong>+0.9%</strong> month-over-month and <strong>+3.3%</strong> year-over-year, driven almost entirely by a historic surge in gasoline prices.</p>
 <p>At first glance, this looks like broad inflation reacceleration. The details point to a narrower story. Energy rose +10.9% in March, led by a historic <strong>21.2%</strong> monthly surge in gasoline. Gasoline alone accounted for roughly 75% of the all-items monthly gain. Core inflation, excluding food and energy, stayed at +0.2% MoM and +2.6% YoY.</p>
 <p>That distinction matters. For the Fed, a headline shock can delay confidence even when core is stable. For consumers, the pain is concentrated in gasoline and energy bills. For markets, the question is whether this stays a one-month energy shock or starts passing through into transportation services, goods shipping, and inflation expectations.</p>
-<div id="a42be5bd" class="cell" data-execution_count="2">
+<div id="cf1e4105" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
