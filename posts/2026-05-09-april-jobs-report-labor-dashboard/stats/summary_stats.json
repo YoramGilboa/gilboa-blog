@@ -1,0 +1,31 @@
+{
+  "report_month": "April 2026",
+  "release_date": "May 8, 2026",
+  "data_current_as_of": "May 8, 2026",
+
+  "payroll_april": 115,
+  "payroll_consensus": 180,
+  "payroll_march_revised": 185,
+  "payroll_feb_revision": -23,
+
+  "unrate_april": 4.3,
+  "unrate_march": 4.3,
+
+  "household_emp_change_april": -226,
+
+  "ahe_level": 37.41,
+  "ahe_mom_pct": 0.2,
+  "ahe_prodnonsup_mom_pct": 0.3,
+
+  "sector_health_care": 37,
+  "sector_transport_warehouse": 30,
+  "sector_retail": 22,
+  "sector_federal_gov": -9,
+  "sector_information": -13,
+
+  "fomc_window": "May 6 to 7, 2026",
+  "next_cpi_release": "May 12, 2026",
+
+  "spirit_airlines_employees": 13000,
+  "spirit_airlines_filing_month": "May 2026"
+}
