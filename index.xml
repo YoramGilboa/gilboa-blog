@@ -10,7 +10,1119 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data visualization and predictive modeling</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Sat, 09 May 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 12 May 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>April 2026 CPI: When an Energy Shock Starts Testing the Core Story</title>
+  <link>https://gilboa.blog/posts/2026-05-12-april-2026-cpi/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The release still begins with gasoline, but the audience that should pay closest attention is anyone pricing the path of inflation persistence. The April CPI report is not important because it was hotter than March. It was not. Headline CPI-U slowed to <strong>+0.6%</strong> month-over-month after March’s +0.9% jump (driven by gasoline and energy). The problem is that the composition changed in a less comfortable direction. Energy was still hot, gasoline was still rising, and core CPI accelerated to <strong>+0.4%</strong>. Shelter rose <strong>+0.6%</strong>, services less energy rose <strong>+0.5%</strong>, and food at home rose <strong>+0.7%</strong>. The message that should resonate most is for Fed watchers, rate-sensitive investors, and business decision-makers: the inflation story is moving from a visible energy shock toward a test of whether that shock stays isolated.</p>
+<div id="aa3040c7" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000;">+0.6%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Headline CPI MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">after +0.9% in March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">+0.4%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">up from +0.2%</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #cc7722;">+17.9%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Energy CPI YoY</div>
+    <div style="font-size: 0.7rem; color: #64748b;">gasoline +28.4% YoY</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a;">-0.5%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Real Hourly Earnings MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">consumer pain despite nominal wage gains</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  BLS CPI News Release, May 12, 2026 | MoM seasonally adjusted, YoY not seasonally adjusted
+</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Python code used to generate each chart is embedded in this post. Click on any code block to see the implementation. The complete data pipeline includes:</p>
+<ul>
+<li><code>01_fetch_data.py</code> - Fetches historical CPI series from FRED</li>
+<li><code>02_clean_data.py</code> - Computes historical month-over-month and year-over-year changes</li>
+<li><code>04_compute_stats.py</code> - Writes <code>stats/summary_stats.json</code> from the chart data and official BLS release values</li>
+</ul>
+<p>The April 2026 release values come from the official <a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>. The April chart row uses official BLS monthly and 12-month changes; historical rows come from FRED series <code>CPIAUCSL</code>, <code>CPILFESL</code>, <code>CPIENGSL</code>, <code>CUSR0000SAH1</code>, and <code>CPIFABSL</code>. This keeps the article aligned with the May 12 release while preserving the historical trend context used in prior CPI posts.</p>
+</div>
+</div>
+</div>
+<section id="the-story-before-the-audience" class="level2">
+<h2 class="anchored" data-anchor-id="the-story-before-the-audience">1. The Story Before the Audience</h2>
+<p>The first read on April is mechanical: energy contributed more than 40% of the all-items increase, according to BLS, and gasoline was still rising after March’s spike. That is the part that shows up quickly in household budgets and inflation headlines.</p>
+<p>The second read is policy-relevant: core moved from +0.2% in March to +0.4% in April. Shelter, food at home, airline fares, household furnishings, and personal care all moved higher. Some of that may be noise. Some of the shelter pickup may also reflect timing effects as delayed survey collection normalizes after the federal shutdown. But the burden of proof has shifted. The next release has to show that these moves fade before investors or policymakers can treat April as another one-off energy print.<sup>1</sup></p>
+<p>That ordering identifies the audience. This post is mainly for readers who need to price persistence: Fed watchers, bond and equity investors, corporate planners, and households trying to distinguish a temporary gasoline shock from a broader cost-of-living squeeze. The consumer story matters because it is the transmission channel. The market and policy story matters because it is where the reaction function lives.</p>
+</section>
+<section id="where-the-heat-moved" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-heat-moved">2. Where the Heat Moved</h2>
+<p>Readers who care about persistence should start with the shift in composition. Energy still explains a large share of the headline print, but core inflation, shelter, and food all moved in the wrong direction at the same time. That mix matters more than the headline slowdown from March.</p>
+<div id="171843ff" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<table class="table caption-top table-sm table-striped small">
+<caption>Table 1. Key CPI metrics from the BLS April 2026 release. Month-over-month (MoM) values are seasonally adjusted (SA); year-over-year (YoY) values are official 12-month, not seasonally adjusted (NSA) changes.</caption>
+<thead>
+<tr class="header">
+<th rowspan="2" data-quarto-table-cell-role="th" scope="col">CPI category</th>
+<th colspan="2" data-quarto-table-cell-role="th" scope="colgroup">2026 MoM (SA)</th>
+<th colspan="2" data-quarto-table-cell-role="th" scope="colgroup">2026 YoY (NSA)</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="col">Apr</th>
+<th data-quarto-table-cell-role="th" scope="col">Mar</th>
+<th data-quarto-table-cell-role="th" scope="col">Apr</th>
+<th data-quarto-table-cell-role="th" scope="col">Mar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">All items</th>
+<td>+0.6%</td>
+<td>+0.9%</td>
+<td>+3.8%</td>
+<td>+3.3%</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">Core, less food and energy</th>
+<td>+0.4%</td>
+<td>+0.2%</td>
+<td>+2.8%</td>
+<td>+2.6%</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">Energy</th>
+<td>+3.8%</td>
+<td>+10.9%</td>
+<td>+17.9%</td>
+<td>+12.5%</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">Gasoline</th>
+<td>+5.4%</td>
+<td>+21.2%</td>
+<td>+28.4%</td>
+<td>+18.9%</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">Food</th>
+<td>+0.5%</td>
+<td>0.0%</td>
+<td>+3.2%</td>
+<td>+2.7%</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">Shelter</th>
+<td>+0.6%</td>
+<td>+0.3%</td>
+<td>+3.3%</td>
+<td>+3.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="cell-fig-momentum" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Put the categories in April-descending order so the chart reads from the</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># hottest current component to the summary all-items measure.</span></span>
+<span id="cb1-3">metrics <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({</span>
+<span id="cb1-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Category"</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Food"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All items"</span>],</span>
+<span id="cb1-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Each list below uses the same category order. The values come from</span></span>
+<span id="cb1-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># stats/summary_stats.json, which keeps the chart and prose in sync.</span></span>
+<span id="cb1-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"April"</span>: [</span>
+<span id="cb1-8">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_mom"</span>],</span>
+<span id="cb1-9">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shelter_mom"</span>],</span>
+<span id="cb1-10">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"food_mom"</span>],</span>
+<span id="cb1-11">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_mom"</span>],</span>
+<span id="cb1-12">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_mom"</span>],</span>
+<span id="cb1-13">    ],</span>
+<span id="cb1-14">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"March"</span>: [</span>
+<span id="cb1-15">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prev_energy_mom"</span>],</span>
+<span id="cb1-16">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prev_shelter_mom"</span>],</span>
+<span id="cb1-17">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prev_food_mom"</span>],</span>
+<span id="cb1-18">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prev_core_mom"</span>],</span>
+<span id="cb1-19">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prev_headline_mom"</span>],</span>
+<span id="cb1-20">    ],</span>
+<span id="cb1-21">})</span>
+<span id="cb1-22"></span>
+<span id="cb1-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x is simply the numeric position of each category on the horizontal axis.</span></span>
+<span id="cb1-24">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.arange(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(metrics))</span>
+<span id="cb1-25">width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.36</span></span>
+<span id="cb1-26"></span>
+<span id="cb1-27">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.8</span>))</span>
+<span id="cb1-28">bars_april <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.bar(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, metrics[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"April"</span>], width, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"April"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb1-29">bars_march <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.bar(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> width <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, metrics[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"March"</span>], width, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"March"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"light"</span>], edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb1-30"></span>
+<span id="cb1-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Highlight the two story drivers: energy is the shock, core is the persistence test.</span></span>
+<span id="cb1-32">bars_april[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>].set_color(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>])</span>
+<span id="cb1-33">bars_april[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>].set_color(COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>])</span>
+<span id="cb1-34"></span>
+<span id="cb1-35">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb1-36">ax.set_xticks(x)</span>
+<span id="cb1-37">ax.set_xticklabels(metrics[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Category"</span>])</span>
+<span id="cb1-38">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Month-over-month change, %"</span>)</span>
+<span id="cb1-39">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"April Broadened the Inflation Signal"</span>)</span>
+<span id="cb1-40">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper right"</span>, frameon<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb1-41"></span>
+<span id="cb1-42"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Label each bar directly so readers do not have to read values off the y-axis.</span></span>
+<span id="cb1-43"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bars <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [bars_march, bars_april]:</span>
+<span id="cb1-44">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bar <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> bars:</span>
+<span id="cb1-45">        value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> bar.get_height()</span>
+<span id="cb1-46">        ax.text(</span>
+<span id="cb1-47">            bar.get_x() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar.get_width() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-48">            value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>,</span>
+<span id="cb1-49">            <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>value<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb1-50">            ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>,</span>
+<span id="cb1-51">            va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span>,</span>
+<span id="cb1-52">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb1-53">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>],</span>
+<span id="cb1-54">        )</span>
+<span id="cb1-55"></span>
+<span id="cb1-56">ax.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.0</span>)</span>
+<span id="cb1-57">plt.tight_layout()</span>
+<span id="cb1-58">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"april-2026-cpi-momentum.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-momentum" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-momentum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-05-12-april-2026-cpi/index_files/figure-html/fig-momentum-output-1.png" width="682" height="355" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-momentum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: March and April CPI momentum by major category. April’s headline print slowed from March, but core, shelter, and food all firmed, making the release broader than a simple energy shock.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="energy-is-still-the-headline-problem" class="level2">
+<h2 class="anchored" data-anchor-id="energy-is-still-the-headline-problem">3. Energy Is Still the Headline Problem</h2>
+<p>Energy did not repeat March’s extreme jump, but it did not reverse either. The energy index rose another +3.8% in April after March’s +10.9% surge. Gasoline rose +5.4% on the month and +28.4% over the year. BLS said energy accounted for over 40% of the monthly all-items increase.</p>
+<p>That matters because the consumer experience is driven by prices people see often. Gasoline, electricity, fuel oil, and groceries are not abstract indexes. They are high-frequency price signals that shape inflation expectations even when some other categories are stable. The real-earnings release makes the same point from the wage side: average hourly earnings fell -0.5% after adjusting for inflation in April, and were down -0.3% over the year.</p>
+<div id="cell-fig-yoy-trends" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Keep the trend window short enough for recent inflection points to remain visible.</span></span>
+<span id="cb2-2">plot_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[df.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>].copy()</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>))</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># "All items" is headline CPI-U: the full consumer basket before excluding food</span></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># and energy. Core removes food and energy to focus on slower-moving inflation.</span></span>
+<span id="cb2-8">series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb2-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All items"</span>: (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.2</span>),</span>
+<span id="cb2-10">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>: (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>),</span>
+<span id="cb2-11">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>: (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.2</span>),</span>
+<span id="cb2-12">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>: (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shelter_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>),</span>
+<span id="cb2-13">}</span>
+<span id="cb2-14"></span>
+<span id="cb2-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Place end-of-line labels manually. The offsets keep the labels from colliding</span></span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># where all-items, core, and shelter finish near each other.</span></span>
+<span id="cb2-17">label_offsets <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb2-18">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All items"</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>),</span>
+<span id="cb2-19">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>),</span>
+<span id="cb2-20">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>),</span>
+<span id="cb2-21">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb2-22">}</span>
+<span id="cb2-23"></span>
+<span id="cb2-24"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, (col, color, linewidth) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> series.items():</span>
+<span id="cb2-25">    ax.plot(plot_df.index, plot_df[col], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>linewidth, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label)</span>
+<span id="cb2-26">    last_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-27">    last_val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df[col].iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-28">    ax.annotate(</span>
+<span id="cb2-29">        <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>last_val<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb2-30">        xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(last_date, last_val),</span>
+<span id="cb2-31">        xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label_offsets[label],</span>
+<span id="cb2-32">        textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb2-33">        va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>,</span>
+<span id="cb2-34">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb2-35">        color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb2-36">    )</span>
+<span id="cb2-37"></span>
+<span id="cb2-38">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-39">ax.text(plot_df.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.55</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">% r</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">eference"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-40"></span>
+<span id="cb2-41">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy Stayed Hot While Core and Shelter Firmed"</span>)</span>
+<span id="cb2-42">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change, %"</span>)</span>
+<span id="cb2-43">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb2-44">ax.yaxis.set_major_formatter(ticker.PercentFormatter(decimals<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb2-45">ax.legend().remove()</span>
+<span id="cb2-46">plt.tight_layout()</span>
+<span id="cb2-47">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"april-2026-cpi-yoy-trends.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-yoy-trends" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-yoy-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-05-12-april-2026-cpi/index_files/figure-html/fig-yoy-trends-output-1.png" width="806" height="451" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-yoy-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Year-over-year CPI trends through April 2026. Energy remained the outlier, but core and shelter also edged higher, which makes the inflation problem less contained than it looked in March.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-sticky-core-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-sticky-core-question">4. The Sticky-Core Question</h2>
+<p>Core CPI is the audience separator in this report. A one-month energy shock is painful but easier for policymakers and markets to discount. A core acceleration is different because it points to categories that tend to move more slowly.</p>
+<p>The April details were not uniformly hot. New vehicles fell, communication fell, used cars were flat, and medical care eased. But those offsets were not enough to keep core contained. Shelter rose +0.6%, household furnishings rose +0.7%, airline fares rose +2.8%, apparel rose +0.6%, and personal care rose +0.7%.</p>
+<p>The right interpretation is not “core has reaccelerated” as a settled fact. It is more precise than that. April created a monitoring problem. If the next print gives back shelter, food, and travel-services strength, then April was a messy release with an energy aftershock. If it repeats, the policy story changes from delayed disinflation to renewed persistence.</p>
+<p>OER means owners’ equivalent rent, the BLS estimate of what homeowners would pay to rent their own homes. It is not connected to gasoline in a direct mechanical way. The connection is interpretive: an energy shock is easier to discount when rent and other sticky services stay calm. When rent, OER, travel, and household goods also move up, the energy shock starts looking like a broader pricing problem.</p>
+<div id="cell-fig-core-movers" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># This chart isolates non-energy categories. The purpose is to test whether the</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># April report was only gasoline, or whether sticky/non-energy categories also moved.</span></span>
+<span id="cb3-3">component_moves <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({</span>
+<span id="cb3-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Component"</span>: [</span>
+<span id="cb3-5">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Lodging away</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">from home"</span>,</span>
+<span id="cb3-6">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Airline</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">fares"</span>,</span>
+<span id="cb3-7">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Household</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">furnishings"</span>,</span>
+<span id="cb3-8">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Personal</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">care"</span>,</span>
+<span id="cb3-9">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Apparel"</span>,</span>
+<span id="cb3-10">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rent"</span>,</span>
+<span id="cb3-11">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Owners'</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">equiv. rent"</span>,</span>
+<span id="cb3-12">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Medical</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">care"</span>,</span>
+<span id="cb3-13">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"New</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">vehicles"</span>,</span>
+<span id="cb3-14">    ],</span>
+<span id="cb3-15">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MoM"</span>: [</span>
+<span id="cb3-16">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lodging_away_mom"</span>],</span>
+<span id="cb3-17">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"airline_fares_mom"</span>],</span>
+<span id="cb3-18">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"household_furnishings_mom"</span>],</span>
+<span id="cb3-19">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"personal_care_mom"</span>],</span>
+<span id="cb3-20">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"apparel_mom"</span>],</span>
+<span id="cb3-21">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rent_mom"</span>],</span>
+<span id="cb3-22">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"owners_equivalent_rent_mom"</span>],</span>
+<span id="cb3-23">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"medical_care_mom"</span>],</span>
+<span id="cb3-24">        stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"new_vehicles_mom"</span>],</span>
+<span id="cb3-25">    ],</span>
+<span id="cb3-26">})</span>
+<span id="cb3-27"></span>
+<span id="cb3-28"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Sorting puts the strongest April increases at the top of the horizontal chart.</span></span>
+<span id="cb3-29">component_moves <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> component_moves.sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MoM"</span>)</span>
+<span id="cb3-30">colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb3-31">    COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]</span>
+<span id="cb3-32">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> component_moves[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MoM"</span>]</span>
+<span id="cb3-33">]</span>
+<span id="cb3-34"></span>
+<span id="cb3-35">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>))</span>
+<span id="cb3-36">bars <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax.barh(component_moves[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Component"</span>], component_moves[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MoM"</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>colors, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb3-37"></span>
+<span id="cb3-38">ax.axvline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb3-39">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Month-over-month change, %"</span>)</span>
+<span id="cb3-40">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core Pressure Was Mixed, But the Sticky Pieces Moved Up"</span>)</span>
+<span id="cb3-41">ax.xaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, pos: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>))</span>
+<span id="cb3-42">ax.set_xlim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.1</span>)</span>
+<span id="cb3-43"></span>
+<span id="cb3-44"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Add value labels just beyond each bar. Negative values are labeled to the left.</span></span>
+<span id="cb3-45"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bar, value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">zip</span>(bars, component_moves[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MoM"</span>]):</span>
+<span id="cb3-46">    offset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span></span>
+<span id="cb3-47">    ha <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span></span>
+<span id="cb3-48">    ax.text(value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> offset, bar.get_y() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>value<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ha, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb3-49"></span>
+<span id="cb3-50">plt.tight_layout()</span>
+<span id="cb3-51">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"april-2026-cpi-core-movers.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">300</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-core-movers" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-core-movers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-05-12-april-2026-cpi/index_files/figure-html/fig-core-movers-output-1.png" width="778" height="451" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-core-movers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Selected April 2026 non-energy CPI components. Shelter and several service-sensitive categories moved higher, while vehicles, communication, and medical care helped offset the core increase.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="what-it-means-for" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means-for">5. What It Means For</h2>
+<p><strong>For Fed and policy readers:</strong> The April report argues against treating the inflation pickup as only an energy-price disturbance. Core CPI rose +0.4%, shelter accelerated, and services less energy rose +0.5%. That does not force a rate hike by itself, but it makes near-term cuts harder to justify unless labor-market weakness becomes much more obvious.</p>
+<p><strong>For consumers:</strong> The pressure is visible in the categories households notice most: gasoline, electricity, groceries, and rent. Food at home rose +0.7%, electricity rose +2.1%, and gasoline was still up +5.4% after March’s surge. Even if wage growth is steady, the monthly budget feels tighter when frequent purchases are the source of inflation and real hourly earnings are falling.</p>
+<p><strong>For markets:</strong> The report is a bad mix for rate-cut expectations: headline inflation is high enough to keep inflation risk visible, while core inflation is firm enough to complicate the “look through energy” argument. Bond markets should care less about whether April was hotter than consensus and more about whether May confirms that shelter and services are reaccelerating.</p>
+<p><strong>For businesses:</strong> This is the second primary audience, especially for transportation, retail, hospitality, insurance, and other price-reset businesses. Energy and transportation-sensitive firms face margin pressure first, but the broader risk is pricing behavior. If firms see energy, wages, rent, and services all rising together, temporary surcharges and price resets become easier to justify. That is how a relative-price shock can become an inflation persistence problem.</p>
+</section>
+<section id="what-to-watch-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-watch-next">6. What To Watch Next</h2>
+<p>The next CPI release is scheduled for June 10, 2026. The key question is not whether energy remains high in level terms. It is whether April’s broader core firming repeats.</p>
+<p>Three checks matter most:</p>
+<ul>
+<li><strong>Shelter:</strong> If rent and owners’ equivalent rent stay near +0.5% monthly, core disinflation gets harder.</li>
+<li><strong>Services:</strong> If services less energy keep rising near +0.5%, the Fed will read the report as persistence, not noise.</li>
+<li><strong>Energy pass-through:</strong> If gasoline and electricity remain hot while airline fares, furnishings, delivery-sensitive goods, and food also rise, the shock is spreading.</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>April CPI is a worse report than March for readers who care about persistence, not because the headline monthly print was higher. It was lower. The problem is composition. March was dominated by energy. April still had energy, but it also had a firmer core, hotter shelter, a food rebound, and weaker real hourly earnings. The message should resonate most with policy and market readers because it pushes against easy rate-cut timing. It should also resonate with business readers because it turns energy from a cost shock into a pricing-risk question. Consumers are not the secondary story because they matter less. They are the evidence that the shock is visible enough to shape expectations.</p>
+<table class="caption-top table">
+<caption>Data sources used for the April 2026 CPI analysis.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPI-U all items</td>
+<td>Headline consumer price index</td>
+<td><a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>, FRED <code>CPIAUCSL</code></td>
+</tr>
+<tr class="even">
+<td>CPI less food and energy</td>
+<td>Core CPI</td>
+<td><a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>, FRED <code>CPILFESL</code></td>
+</tr>
+<tr class="odd">
+<td>Energy CPI</td>
+<td>Energy goods and services</td>
+<td><a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>, FRED <code>CPIENGSL</code></td>
+</tr>
+<tr class="even">
+<td>Shelter CPI</td>
+<td>Rent, owners’ equivalent rent, lodging</td>
+<td><a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>, FRED <code>CUSR0000SAH1</code></td>
+</tr>
+<tr class="odd">
+<td>Food CPI</td>
+<td>Food at home and away from home</td>
+<td><a href="https://www.bls.gov/news.release/archives/cpi_05122026.htm">BLS CPI News Release</a>, FRED <code>CPIFABSL</code></td>
+</tr>
+<tr class="even">
+<td>Real average hourly earnings</td>
+<td>Inflation-adjusted wage pressure</td>
+<td><a href="https://www.bls.gov/news.release/realer.nr0.htm">BLS Real Earnings News Release</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Data current as of April 2026 (BLS release: May 12, 2026).</em></p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Kiplinger framed the release as an energy-led inflation problem that can limit Fed cuts: <a href="https://www.kiplinger.com/economic-forecasts/inflation">Kiplinger inflation outlook</a>. Redfin made the same Fed-patience link through mortgage rates and oil prices: <a href="https://www.redfin.com/news/cpi-april-2026/">Redfin CPI analysis</a>. Realtor.com called out possible “inflation contagion” while noting shelter may be affected by shutdown-related data timing: <a href="https://www.realtor.com/research/cpi-inflation-april-2026/">Realtor.com CPI analysis</a>. KPMG emphasized the household wage squeeze: <a href="https://kpmg.com/us/en/articles/2026/april-2026-cpi.html">KPMG April CPI analysis</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>economics</category>
+  <category>inflation</category>
+  <category>data visualization</category>
+  <category>markets</category>
+  <category>federal reserve</category>
+  <guid>https://gilboa.blog/posts/2026-05-12-april-2026-cpi/</guid>
+  <pubDate>Tue, 12 May 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>April 2026 Jobs Report: Soft Payrolls Follow March Rebound - What the Full Labor Dashboard Reveals</title>
   <dc:creator>Yoram Gilboa</dc:creator>
@@ -533,7 +1645,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-80">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout.">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." width="752" height="426">
@@ -1043,7 +2155,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-89">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="804" height="589">
@@ -1911,7 +3023,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-137">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -2399,7 +3511,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-70">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -2893,7 +4005,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis.">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." width="752" height="656">
@@ -8748,7 +9860,7 @@ Figure&nbsp;5: 2s10s Treasury yield spread, measured as the 10-year Treasury yie
 <p>The March 2026 Consumer Price Index delivered the largest monthly increase since June 2022. Headline CPI-U rose <strong>+0.9%</strong> month-over-month and <strong>+3.3%</strong> year-over-year, driven almost entirely by a historic surge in gasoline prices.</p>
 <p>At first glance, this looks like broad inflation reacceleration. The details point to a narrower story. Energy rose +10.9% in March, led by a historic <strong>21.2%</strong> monthly surge in gasoline. Gasoline alone accounted for roughly 75% of the all-items monthly gain. Core inflation, excluding food and energy, stayed at +0.2% MoM and +2.6% YoY.</p>
 <p>That distinction matters. For the Fed, a headline shock can delay confidence even when core is stable. For consumers, the pain is concentrated in gasoline and energy bills. For markets, the question is whether this stays a one-month energy shock or starts passing through into transportation services, goods shipping, and inflation expectations.</p>
-<div id="589d4a2c" class="cell" data-execution_count="2">
+<div id="1f90f29f" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://gilboa.blog/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.275Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.483Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.276Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-04-25-fomc-preview/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.484Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.490Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.275Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.491Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/20260501 April FOMC decision/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.490Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.481Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-04-18-march-2026-cpi/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.483Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gilboa.blog/posts/2026-03-15-divergence/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.277Z</lastmod>
+    <loc>https://gilboa.blog/about.html</loc>
+    <lastmod>2026-05-16T18:49:04.332Z</lastmod>
   </url>
   <url>
     <loc>https://gilboa.blog/posts/2026-03-22-btos-march/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.379Z</lastmod>
+    <lastmod>2026-05-16T18:49:04.436Z</lastmod>
   </url>
   <url>
-    <loc>https://gilboa.blog/posts/2025-02-01-first-visualization/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.275Z</lastmod>
+    <loc>https://gilboa.blog/posts/20260501 April FOMC decision/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-05-12-april-2026-cpi/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.333Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.333Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-04-18-march-2026-cpi/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.537Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-04-25-fomc-preview/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.537Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-03-15-divergence/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.334Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/drafts/2026-03-08-feb-jobs-miss/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.547Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.535Z</lastmod>
   </url>
   <url>
     <loc>https://gilboa.blog/posts/2026-02-16-us-inflation-cooling/index.html</loc>
-    <lastmod>2026-05-11T01:36:13.276Z</lastmod>
+    <lastmod>2026-05-16T18:49:04.333Z</lastmod>
   </url>
   <url>
-    <loc>https://gilboa.blog/about.html</loc>
-    <lastmod>2026-05-11T01:36:13.275Z</lastmod>
+    <loc>https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.536Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2025-02-01-first-visualization/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.332Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.334Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.543Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gilboa.blog/index.html</loc>
+    <lastmod>2026-05-16T18:49:04.332Z</lastmod>
   </url>
 </urlset>
