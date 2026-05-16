@@ -1,0 +1,512 @@
+---
+title: "April 2026 CPI: When an Energy Shock Starts Testing the Core Story"
+date: "2026-05-12"
+categories: [economics, inflation, data visualization, markets, federal reserve]
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+
+import json
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+POST_DIR = Path(".").resolve()
+DATA_PATH = POST_DIR / "data" / "clean" / "cpi_trends.csv"
+STATS_PATH = POST_DIR / "stats" / "summary_stats.json"
+IMG_DIR = POST_DIR / "images"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_PATH, encoding="utf-8") as f:
+    stats = json.load(f)
+
+df = pd.read_csv(DATA_PATH, index_col="date", parse_dates=True)
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "fed_target": "#cc0000",
+    "warning": "#cc7722",
+}
+
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.size": 10,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "axes.linewidth": 0.5,
+})
+
+def fmt(n):
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+
+def fmt_chg(n):
+    sign = "+" if n > 0 else ""
+    return f"{sign}{n:.1f}"
+```
+
+The release still begins with gasoline, but the audience that should pay closest
+attention is anyone pricing the path of inflation persistence. The April CPI report is
+not important because it was hotter than March. It was not. Headline CPI-U slowed to
+**`{python} fmt_chg(stats['headline_mom'])`%** month-over-month after March's
+`{python} fmt_chg(stats['prev_headline_mom'])`% jump (driven by gasoline and energy).
+The problem is that the composition changed in a less comfortable direction. Energy
+was still hot, gasoline was still rising, and core CPI accelerated to
+**`{python} fmt_chg(stats['core_mom'])`%**. Shelter rose
+**`{python} fmt_chg(stats['shelter_mom'])`%**, services less energy rose
+**`{python} fmt_chg(stats['services_ex_energy_mom'])`%**, and food at home rose
+**`{python} fmt_chg(stats['food_at_home_mom'])`%**. The message that should resonate
+most is for Fed watchers, rate-sensitive investors, and business decision-makers:
+the inflation story is moving from a visible energy shock toward a test of whether
+that shock stays isolated.
+
+```{python}
+#| echo: false
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['accent']};">{fmt_chg(stats['headline_mom'])}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Headline CPI MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">after {fmt_chg(stats['prev_headline_mom'])}% in March</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['primary']};">{fmt_chg(stats['core_mom'])}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">up from {fmt_chg(stats['prev_core_mom'])}%</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['warning']};">{fmt_chg(stats['energy_yoy'])}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Energy CPI YoY</div>
+    <div style="font-size: 0.7rem; color: #64748b;">gasoline {fmt_chg(stats['gasoline_yoy'])}% YoY</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: {COLORS['neutral']};">{fmt_chg(stats['real_hourly_earnings_mom'])}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Real Hourly Earnings MoM</div>
+    <div style="font-size: 0.7rem; color: #64748b;">consumer pain despite nominal wage gains</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  BLS CPI News Release, {stats['release_date']} | MoM seasonally adjusted, YoY not seasonally adjusted
+</p>
+"""
+HTML(html)
+```
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is embedded in this post. Click on any
+code block to see the implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` - Fetches historical CPI series from FRED
+- `02_clean_data.py` - Computes historical month-over-month and year-over-year changes
+- `04_compute_stats.py` - Writes `stats/summary_stats.json` from the chart data and official BLS release values
+
+The April 2026 release values come from the official
+[BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm).
+The April chart row uses official BLS monthly and 12-month changes; historical rows
+come from FRED series `CPIAUCSL`, `CPILFESL`, `CPIENGSL`, `CUSR0000SAH1`, and
+`CPIFABSL`. This keeps the article aligned with the May 12 release while preserving
+the historical trend context used in prior CPI posts.
+:::
+
+## 1. The Story Before the Audience
+
+The first read on April is mechanical: energy contributed more than
+`{python} stats['energy_contribution_share']`% of the all-items increase, according to
+BLS, and gasoline was still rising after March's spike. That is the part that shows up
+quickly in household budgets and inflation headlines.
+
+The second read is policy-relevant: core moved from
+`{python} fmt_chg(stats['prev_core_mom'])`% in March to
+`{python} fmt_chg(stats['core_mom'])`% in April. Shelter, food at home, airline fares,
+household furnishings, and personal care all moved higher. Some of that may be noise.
+Some of the shelter pickup may also reflect timing effects as delayed survey collection
+normalizes after the federal shutdown. But the burden of proof has shifted. The next
+release has to show that these moves fade before investors or policymakers can treat
+April as another one-off energy print.^[Kiplinger framed the release as an energy-led
+inflation problem that can limit Fed cuts: [Kiplinger inflation outlook](https://www.kiplinger.com/economic-forecasts/inflation).
+Redfin made the same Fed-patience link through mortgage rates and oil prices:
+[Redfin CPI analysis](https://www.redfin.com/news/cpi-april-2026/). Realtor.com
+called out possible "inflation contagion" while noting shelter may be affected by
+shutdown-related data timing: [Realtor.com CPI analysis](https://www.realtor.com/research/cpi-inflation-april-2026/).
+KPMG emphasized the household wage squeeze: [KPMG April CPI analysis](https://kpmg.com/us/en/articles/2026/april-2026-cpi.html).]
+
+That ordering identifies the audience. This post is mainly for readers who need to
+price persistence: Fed watchers, bond and equity investors, corporate planners, and
+households trying to distinguish a temporary gasoline shock from a broader cost-of-living
+squeeze. The consumer story matters because it is the transmission channel. The market
+and policy story matters because it is where the reaction function lives.
+
+## 2. Where the Heat Moved
+
+Readers who care about persistence should start with the shift in composition. Energy
+still explains a large share of the headline print, but core inflation, shelter, and
+food all moved in the wrong direction at the same time. That mix matters more than the
+headline slowdown from March.
+
+```{python}
+#| echo: false
+
+rows = [
+    ("All items", stats["headline_mom"], stats["prev_headline_mom"], stats["headline_yoy"], stats["prev_headline_yoy"]),
+    ("Core, less food and energy", stats["core_mom"], stats["prev_core_mom"], stats["core_yoy"], stats["prev_core_yoy"]),
+    ("Energy", stats["energy_mom"], stats["prev_energy_mom"], stats["energy_yoy"], stats["prev_energy_yoy"]),
+    ("Gasoline", stats["gasoline_mom"], stats["prev_gasoline_mom"], stats["gasoline_yoy"], stats["prev_gasoline_yoy"]),
+    ("Food", stats["food_mom"], stats["prev_food_mom"], stats["food_yoy"], stats["prev_food_yoy"]),
+    ("Shelter", stats["shelter_mom"], stats["prev_shelter_mom"], stats["shelter_yoy"], stats["prev_shelter_yoy"]),
+]
+
+body = "\n".join(
+    f"""
+    <tr>
+      <th scope="row">{label}</th>
+      <td>{fmt_chg(apr_mom)}%</td>
+      <td>{fmt_chg(mar_mom)}%</td>
+      <td>{fmt_chg(apr_yoy)}%</td>
+      <td>{fmt_chg(mar_yoy)}%</td>
+    </tr>
+    """
+    for label, apr_mom, mar_mom, apr_yoy, mar_yoy in rows
+)
+
+HTML(f"""
+<table class="table caption-top">
+  <caption>Table 1. Key CPI metrics from the BLS April 2026 release. Month-over-month (MoM) values are seasonally adjusted (SA); year-over-year (YoY) values are official 12-month, not seasonally adjusted (NSA) changes.</caption>
+  <thead>
+    <tr>
+      <th rowspan="2" scope="col">CPI category</th>
+      <th colspan="2" scope="colgroup">2026 MoM (SA)</th>
+      <th colspan="2" scope="colgroup">2026 YoY (NSA)</th>
+    </tr>
+    <tr>
+      <th scope="col">Apr</th>
+      <th scope="col">Mar</th>
+      <th scope="col">Apr</th>
+      <th scope="col">Mar</th>
+    </tr>
+  </thead>
+  <tbody>
+    {body}
+  </tbody>
+</table>
+""")
+```
+
+```{python}
+#| echo: true
+#| label: fig-momentum
+#| fig-cap: "March and April CPI momentum by major category. April's headline print slowed from March, but core, shelter, and food all firmed, making the release broader than a simple energy shock."
+
+# Put the categories in April-descending order so the chart reads from the
+# hottest current component to the summary all-items measure.
+metrics = pd.DataFrame({
+    "Category": ["Energy", "Shelter", "Food", "Core", "All items"],
+    # Each list below uses the same category order. The values come from
+    # stats/summary_stats.json, which keeps the chart and prose in sync.
+    "April": [
+        stats["energy_mom"],
+        stats["shelter_mom"],
+        stats["food_mom"],
+        stats["core_mom"],
+        stats["headline_mom"],
+    ],
+    "March": [
+        stats["prev_energy_mom"],
+        stats["prev_shelter_mom"],
+        stats["prev_food_mom"],
+        stats["prev_core_mom"],
+        stats["prev_headline_mom"],
+    ],
+})
+
+# x is simply the numeric position of each category on the horizontal axis.
+x = np.arange(len(metrics))
+width = 0.36
+
+fig, ax = plt.subplots(figsize=(7.2, 3.8))
+bars_april = ax.bar(x - width / 2, metrics["April"], width, label="April", color=COLORS["primary"], edgecolor="white")
+bars_march = ax.bar(x + width / 2, metrics["March"], width, label="March", color=COLORS["light"], edgecolor="white")
+
+# Highlight the two story drivers: energy is the shock, core is the persistence test.
+bars_april[0].set_color(COLORS["warning"])
+bars_april[3].set_color(COLORS["accent"])
+
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+ax.set_xticks(x)
+ax.set_xticklabels(metrics["Category"])
+ax.set_ylabel("Month-over-month change, %")
+ax.set_title("April Broadened the Inflation Signal")
+ax.legend(loc="upper right", frameon=False, fontsize=8)
+
+# Label each bar directly so readers do not have to read values off the y-axis.
+for bars in [bars_march, bars_april]:
+    for bar in bars:
+        value = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            value + 0.12,
+            f"{value:.1f}%",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            color=COLORS["neutral"],
+        )
+
+ax.set_ylim(0, 12.0)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "april-2026-cpi-momentum.png", dpi=300, bbox_inches="tight")
+```
+
+## 3. Energy Is Still the Headline Problem
+
+Energy did not repeat March's extreme jump, but it did not reverse either. The energy
+index rose another `{python} fmt_chg(stats['energy_mom'])`% in April after March's
+`{python} fmt_chg(stats['prev_energy_mom'])`% surge. Gasoline rose
+`{python} fmt_chg(stats['gasoline_mom'])`% on the month and
+`{python} fmt_chg(stats['gasoline_yoy'])`% over the year. BLS said energy accounted
+for over `{python} stats['energy_contribution_share']`% of the monthly all-items
+increase.
+
+That matters because the consumer experience is driven by prices people see often.
+Gasoline, electricity, fuel oil, and groceries are not abstract indexes. They are
+high-frequency price signals that shape inflation expectations even when some other
+categories are stable. The real-earnings release makes the same point from the wage
+side: average hourly earnings fell `{python} fmt_chg(stats['real_hourly_earnings_mom'])`%
+after adjusting for inflation in April, and were down
+`{python} fmt_chg(stats['real_hourly_earnings_yoy'])`% over the year.
+
+```{python}
+#| echo: true
+#| label: fig-yoy-trends
+#| fig-cap: "Year-over-year CPI trends through April 2026. Energy remained the outlier, but core and shelter also edged higher, which makes the inflation problem less contained than it looked in March."
+
+# Keep the trend window short enough for recent inflection points to remain visible.
+plot_df = df[df.index >= "2024-01-01"].copy()
+
+fig, ax = plt.subplots(figsize=(8.5, 4.8))
+
+# "All items" is headline CPI-U: the full consumer basket before excluding food
+# and energy. Core removes food and energy to focus on slower-moving inflation.
+series = {
+    "All items": ("headline_yoy", COLORS["primary"], 2.2),
+    "Core": ("core_yoy", COLORS["accent"], 2.0),
+    "Energy": ("energy_yoy", COLORS["warning"], 2.2),
+    "Shelter": ("shelter_yoy", COLORS["secondary"], 2.0),
+}
+
+# Place end-of-line labels manually. The offsets keep the labels from colliding
+# where all-items, core, and shelter finish near each other.
+label_offsets = {
+    "All items": (8, 8),
+    "Core": (8, -14),
+    "Energy": (8, 0),
+    "Shelter": (8, -2),
+}
+
+for label, (col, color, linewidth) in series.items():
+    ax.plot(plot_df.index, plot_df[col], color=color, linewidth=linewidth, label=label)
+    last_date = plot_df.index[-1]
+    last_val = plot_df[col].iloc[-1]
+    ax.annotate(
+        f"{label}: {last_val:.1f}%",
+        xy=(last_date, last_val),
+        xytext=label_offsets[label],
+        textcoords="offset points",
+        va="center",
+        fontsize=8,
+        color=color,
+    )
+
+ax.axhline(2, color=COLORS["fed_target"], linestyle="--", linewidth=1, alpha=0.5)
+ax.text(plot_df.index[4], 1.55, "2% reference", color=COLORS["fed_target"], fontsize=8)
+
+ax.set_title("Energy Stayed Hot While Core and Shelter Firmed")
+ax.set_ylabel("Year-over-year change, %")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.yaxis.set_major_formatter(ticker.PercentFormatter(decimals=0))
+ax.legend().remove()
+plt.tight_layout()
+fig.savefig(IMG_DIR / "april-2026-cpi-yoy-trends.png", dpi=300, bbox_inches="tight")
+```
+
+## 4. The Sticky-Core Question
+
+Core CPI is the audience separator in this report. A one-month energy shock is painful
+but easier for policymakers and markets to discount. A core acceleration is different
+because it points to categories that tend to move more slowly.
+
+The April details were not uniformly hot. New vehicles fell, communication fell, used
+cars were flat, and medical care eased. But those offsets were not enough to keep core
+contained. Shelter rose `{python} fmt_chg(stats['shelter_mom'])`%, household furnishings
+rose `{python} fmt_chg(stats['household_furnishings_mom'])`%, airline fares rose
+`{python} fmt_chg(stats['airline_fares_mom'])`%, apparel rose
+`{python} fmt_chg(stats['apparel_mom'])`%, and personal care rose
+`{python} fmt_chg(stats['personal_care_mom'])`%.
+
+The right interpretation is not "core has reaccelerated" as a settled fact. It is more
+precise than that. April created a monitoring problem. If the next print gives back
+shelter, food, and travel-services strength, then April was a messy release with an
+energy aftershock. If it repeats, the policy story changes from delayed disinflation to
+renewed persistence.
+
+OER means owners' equivalent rent, the BLS estimate of what homeowners would pay to
+rent their own homes. It is not connected to gasoline in a direct mechanical way. The
+connection is interpretive: an energy shock is easier to discount when rent and other
+sticky services stay calm. When rent, OER, travel, and household goods also move up,
+the energy shock starts looking like a broader pricing problem.
+
+```{python}
+#| echo: true
+#| label: fig-core-movers
+#| fig-cap: "Selected April 2026 non-energy CPI components. Shelter and several service-sensitive categories moved higher, while vehicles, communication, and medical care helped offset the core increase."
+
+# This chart isolates non-energy categories. The purpose is to test whether the
+# April report was only gasoline, or whether sticky/non-energy categories also moved.
+component_moves = pd.DataFrame({
+    "Component": [
+        "Lodging away\nfrom home",
+        "Airline\nfares",
+        "Household\nfurnishings",
+        "Personal\ncare",
+        "Apparel",
+        "Rent",
+        "Owners'\nequiv. rent",
+        "Medical\ncare",
+        "New\nvehicles",
+    ],
+    "MoM": [
+        stats["lodging_away_mom"],
+        stats["airline_fares_mom"],
+        stats["household_furnishings_mom"],
+        stats["personal_care_mom"],
+        stats["apparel_mom"],
+        stats["rent_mom"],
+        stats["owners_equivalent_rent_mom"],
+        stats["medical_care_mom"],
+        stats["new_vehicles_mom"],
+    ],
+})
+
+# Sorting puts the strongest April increases at the top of the horizontal chart.
+component_moves = component_moves.sort_values("MoM")
+colors = [
+    COLORS["secondary"] if value < 0 else COLORS["accent"] if value >= 1.0 else COLORS["primary"]
+    for value in component_moves["MoM"]
+]
+
+fig, ax = plt.subplots(figsize=(8.2, 4.8))
+bars = ax.barh(component_moves["Component"], component_moves["MoM"], color=colors, edgecolor="white")
+
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+ax.set_xlabel("Month-over-month change, %")
+ax.set_title("Core Pressure Was Mixed, But the Sticky Pieces Moved Up")
+ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f"{x:.1f}%"))
+ax.set_xlim(-0.5, 3.1)
+
+# Add value labels just beyond each bar. Negative values are labeled to the left.
+for bar, value in zip(bars, component_moves["MoM"]):
+    offset = 0.08 if value >= 0 else -0.08
+    ha = "left" if value >= 0 else "right"
+    ax.text(value + offset, bar.get_y() + bar.get_height() / 2, f"{value:+.1f}%", va="center", ha=ha, fontsize=8)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "april-2026-cpi-core-movers.png", dpi=300, bbox_inches="tight")
+```
+
+## 5. What It Means For
+
+**For Fed and policy readers:** The April report argues against treating the inflation
+pickup as only an energy-price disturbance. Core CPI rose
+`{python} fmt_chg(stats['core_mom'])`%, shelter accelerated, and services less energy
+rose `{python} fmt_chg(stats['services_ex_energy_mom'])`%. That does not force a rate
+hike by itself, but it makes near-term cuts harder to justify unless labor-market
+weakness becomes much more obvious.
+
+**For consumers:** The pressure is visible in the categories households notice most:
+gasoline, electricity, groceries, and rent. Food at home rose
+`{python} fmt_chg(stats['food_at_home_mom'])`%, electricity rose
+`{python} fmt_chg(stats['electricity_mom'])`%, and gasoline was still up
+`{python} fmt_chg(stats['gasoline_mom'])`% after March's surge. Even if wage growth is
+steady, the monthly budget feels tighter when frequent purchases are the source of
+inflation and real hourly earnings are falling.
+
+**For markets:** The report is a bad mix for rate-cut expectations: headline inflation
+is high enough to keep inflation risk visible, while core inflation is firm enough to
+complicate the "look through energy" argument. Bond markets should care less about
+whether April was hotter than consensus and more about whether May confirms that
+shelter and services are reaccelerating.
+
+**For businesses:** This is the second primary audience, especially for transportation,
+retail, hospitality, insurance, and other price-reset businesses. Energy and
+transportation-sensitive firms face margin pressure first, but the broader risk is
+pricing behavior. If firms see energy, wages, rent, and services all rising together,
+temporary surcharges and price resets become easier to justify. That is how a
+relative-price shock can become an inflation persistence problem.
+
+## 6. What To Watch Next
+
+The next CPI release is scheduled for `{python} stats['next_release']`. The key question
+is not whether energy remains high in level terms. It is whether April's broader core
+firming repeats.
+
+Three checks matter most:
+
+- **Shelter:** If rent and owners' equivalent rent stay near
+  `{python} fmt_chg(stats['rent_mom'])`% monthly, core disinflation gets harder.
+- **Services:** If services less energy keep rising near
+  `{python} fmt_chg(stats['services_ex_energy_mom'])`%, the Fed will read the report
+  as persistence, not noise.
+- **Energy pass-through:** If gasoline and electricity remain hot while airline fares,
+  furnishings, delivery-sensitive goods, and food also rise, the shock is spreading.
+
+## Conclusion
+
+April CPI is a worse report than March for readers who care about persistence, not
+because the headline monthly print was higher. It was lower. The problem is composition.
+March was dominated by energy. April still had energy, but it also had a firmer core,
+hotter shelter, a food rebound, and weaker real hourly earnings. The message should
+resonate most with policy and market readers because it pushes against easy rate-cut
+timing. It should also resonate with business readers because it turns energy from a
+cost shock into a pricing-risk question. Consumers are not the secondary story because
+they matter less. They are the evidence that the shock is visible enough to shape
+expectations.
+
+| Series | Description | Source |
+|---|---|---|
+| CPI-U all items | Headline consumer price index | [BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm), FRED `CPIAUCSL` |
+| CPI less food and energy | Core CPI | [BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm), FRED `CPILFESL` |
+| Energy CPI | Energy goods and services | [BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm), FRED `CPIENGSL` |
+| Shelter CPI | Rent, owners' equivalent rent, lodging | [BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm), FRED `CUSR0000SAH1` |
+| Food CPI | Food at home and away from home | [BLS CPI News Release](https://www.bls.gov/news.release/archives/cpi_05122026.htm), FRED `CPIFABSL` |
+| Real average hourly earnings | Inflation-adjusted wage pressure | [BLS Real Earnings News Release](https://www.bls.gov/news.release/realer.nr0.htm) |
+
+: Data sources used for the April 2026 CPI analysis.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*
