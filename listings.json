@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-05-29-q1-gdp-revision-consumer-ai/index.html",
       "/posts/2026-05-23-energy-shock-cpi-passthrough/index.html",
       "/posts/2026-05-12-april-2026-cpi/index.html",
       "/posts/2026-05-09-april-jobs-report-labor-dashboard/index.html",
@@ -16,8 +17,8 @@
       "/posts/2026-03-01-core-ppi-divergence/index.html",
       "/posts/2026-02-22-scotus-tariff-alliances/index.html",
       "/posts/2026-02-16-us-inflation-cooling/index.html",
-      "/posts/2025-02-01-pc-severity-cpi/index.html",
-      "/posts/2025-02-01-first-visualization/index.html"
+      "/posts/2025-02-01-first-visualization/index.html",
+      "/posts/2025-02-01-pc-severity-cpi/index.html"
     ]
   }
 ]
