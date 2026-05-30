@@ -1,0 +1,590 @@
+---
+title: "Q1 2026 GDP Revision: Consumer Pullback Meets AI Investment Surge"
+date: "2026-05-29"
+author: Yoram Gilboa
+categories: [economics, data analysis, data visualization, federal reserve, markets]
+description: "The BEA's second estimate revised Q1 2026 GDP growth down to 1.6% from 2.0%, revealing a consumer spending deceleration offset by the strongest equipment investment quarter since 2021."
+image: images/gdp-contributions.png
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+<style>
+.quarto-title-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: 2rem;
+}
+
+.quarto-title-meta > div:nth-child(2) {
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .quarto-title-meta {
+    grid-template-columns: 1fr;
+    row-gap: 0.75rem;
+  }
+
+  .quarto-title-meta > div:nth-child(2) {
+    justify-self: start;
+    text-align: left;
+  }
+}
+</style>
+
+```{python}
+#| echo: false
+
+# ── Imports ──
+# Standard library
+import json
+import warnings
+from pathlib import Path
+
+# Data and visualization libraries
+import matplotlib.dates as mdates    # date formatting on x-axes
+import matplotlib.pyplot as plt      # core plotting
+import matplotlib.ticker as ticker   # axis tick formatting
+import numpy as np                   # numerical operations
+import pandas as pd                  # data manipulation
+from adjustText import adjust_text   # automatic label collision avoidance
+from IPython.display import HTML     # render HTML metric cards in Quarto
+
+# Suppress matplotlib layout warnings that do not affect output
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# ── File paths ──
+# All paths are relative to the post folder so scripts and rendering
+# work from the same root regardless of where Quarto is invoked.
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [CLEAN_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+# ── Load pre-computed statistics ──
+# summary_stats.json is built by scripts/04_compute_stats.py.
+# Every inline number in the post text is pulled from this dict
+# so the prose stays in sync with the data automatically.
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
+    stats = json.load(f)
+
+# ── Load cleaned datasets ──
+# gdp_quarterly.csv: quarterly GDP growth, PCE growth, equipment growth, deflator
+# monthly_indicators.csv: core PCE YoY, unemployment, payrolls (monthly)
+# expansion_indexed.csv: real GDP indexed to 100 at three cycle troughs
+df_q = pd.read_csv(CLEAN_DIR / "gdp_quarterly.csv", index_col="date", parse_dates=True)
+df_m = pd.read_csv(CLEAN_DIR / "monthly_indicators.csv", index_col="date", parse_dates=True)
+df_exp = pd.read_csv(CLEAN_DIR / "expansion_indexed.csv")
+
+# ── Color palette ──
+# Consistent across all gilboa.blog charts. Each key has a semantic role:
+#   primary  = main data series or neutral emphasis
+#   accent   = negative/hot signal (inflation pressure, declines)
+#   secondary = positive/cool signal (growth, easing)
+#   neutral  = labels, reference lines
+#   warning  = caution (energy, elevated readings)
+COLORS = {
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "warning":    "#cc7722",
+    "fed_target": "#cc0000",
+    "recession":  "#888888",
+}
+
+# ── Matplotlib global settings ──
+# Clean, minimal aesthetic inspired by Edward Tufte:
+# no top/right spines, no grid, serif font, light background.
+plt.rcParams.update({
+    "font.family":        "Calibri",
+    "font.size":          10,
+    "axes.spines.top":    False,
+    "axes.spines.right":  False,
+    "axes.grid":          False,
+    "figure.facecolor":   "white",
+    "axes.facecolor":     "#fafafa",
+    "axes.linewidth":     0.5,
+})
+
+def fmt(n):
+    """Format a number for inline display: floats to 1 decimal, ints with commas."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+
+def fmt_chg(n):
+    """Format a signed change value with explicit + or - prefix."""
+    if isinstance(n, float):
+        return f"{n:+.1f}"
+    return f"{n:+,}"
+```
+
+```{python}
+#| echo: false
+
+# ── Key Metrics Cards ──
+# Three square tiles showing the most critical numbers from the GDP release.
+# Each card: number with +/- direction, label, and comparison baseline.
+# Square design: fixed 130px width and height for a uniform look.
+html = f"""
+<div style="display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              width: 130px; height: 130px;
+              display: flex; flex-direction: column; align-items: center; justify-content: center;
+              text-align: center; padding: 0.5rem;">
+    <div style="font-size: 1.6rem; font-weight: 700; color: {COLORS['primary']};">+{fmt(stats['gdp_growth_revised'])}%</div>
+    <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">Revised Q1 GDP</div>
+    <div style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.15rem;">vs. initial +{fmt(stats['gdp_growth_advance'])}%</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              width: 130px; height: 130px;
+              display: flex; flex-direction: column; align-items: center; justify-content: center;
+              text-align: center; padding: 0.5rem;">
+    <div style="font-size: 1.6rem; font-weight: 700; color: {COLORS['secondary']};">+{fmt(stats['equipment_growth'])}%</div>
+    <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">Equipment Inv.</div>
+    <div style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.15rem;">vs. +{fmt(stats['equipment_growth_prev'])}% in Q4</div>
+  </div>
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              width: 130px; height: 130px;
+              display: flex; flex-direction: column; align-items: center; justify-content: center;
+              text-align: center; padding: 0.5rem;">
+    <div style="font-size: 1.6rem; font-weight: 700; color: {COLORS['warning']};">+{fmt(stats['gdp_deflator_q1'])}%</div>
+    <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">GDP Price Index</div>
+    <div style="font-size: 0.65rem; color: #94a3b8; margin-top: 0.15rem;">vs. Fed's +2.0% target</div>
+  </div>
+</div>
+<p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-top: -0.25rem;">
+  BEA GDP second estimate, {stats['release_date']} | Annualized quarterly rates (SAAR)
+</p>
+"""
+HTML(html)
+```
+
+The Bureau of Economic Analysis (BEA) revised Q1 2026 GDP growth to **+`{python} fmt(stats['gdp_growth_revised'])`%** annualized, down `{python} fmt_chg(stats['gdp_revision'])` percentage points (pp) from the **+`{python} fmt(stats['gdp_growth_advance'])`%** advance estimate published in April. A percentage point change measures the absolute shift in a growth rate, so a -0.4pp revision means the growth rate itself fell from +2.0% to +1.6%. The headline number tells a slowing story, but the composition underneath tells a more complicated one. Consumer spending, which accounts for roughly two thirds of GDP, contributed just +`{python} fmt(stats['pce_contribution'])`pp to growth. Meanwhile, nonresidential equipment investment surged **+`{python} fmt(stats['equipment_growth'])`%** annualized, the fastest pace since the post-pandemic capital spending boom, driven heavily by data center buildouts, AI server deployments, and cloud infrastructure. The question for the rest of 2026 is whether the business investment wave can sustain overall growth if consumers continue to pull back.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any
+code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` - Fetches quarterly and monthly data from FRED
+- `02_clean_data.py` - Computes growth rates, YoY changes, and expansion indices
+- `04_compute_stats.py` - Computes summary statistics for inline values
+
+All data sourced from [BEA](https://www.bea.gov/data/gdp/gross-domestic-product) and [FRED](https://fred.stlouisfed.org/).
+:::
+
+## 1. The Revision: Where the Growth Went
+
+The `{python} fmt_chg(stats['gdp_revision'])`pp downward revision was concentrated in consumer spending. Personal consumption expenditures (PCE) contributed **+`{python} fmt(stats['pce_contribution'])`pp** to Q1 growth, down -0.5pp from +`{python} fmt(stats['pce_contribution_advance'])`pp in the advance estimate. The revision reflected weaker-than-initially-reported spending on durable goods and discretionary services, as BEA incorporated more complete retail sales and credit card transaction data available for the second estimate^[BEA's advance estimate relies on two months of source data plus projections for the third month. The second estimate incorporates the full quarter of retail sales, services spending, and trade data. See [BEA GDP methodology](https://www.bea.gov/resources/methodologies/nipa-handbook).].
+
+Gross private domestic investment (GPDI) moved in the opposite direction, revised up +0.3pp to **+`{python} fmt(stats['gpdi_contribution'])`pp** from +`{python} fmt(stats['gpdi_contribution_advance'])`pp, as BEA incorporated more complete data on business capital expenditures. Within GPDI, the strength was concentrated in nonresidential equipment (+`{python} fmt(stats['equipment_growth'])`% annualized), while residential fixed investment continued to contract (`{python} fmt(stats['residential_growth'])`%), marking the fourth consecutive quarter of housing weakness. Private inventories subtracted an estimated `{python} fmt(stats['inventory_contribution'])`pp from growth, as businesses continued drawing down stockpiles (the change in private inventories was `{python} fmt(stats['inventory_change_q1'])`B in Q1, compared to `{python} fmt(stats['inventory_change_q4'])`B in Q4). Government spending held steady at +`{python} fmt(stats['govt_contribution'])`pp.
+
+Net exports subtracted `{python} fmt(stats['netex_contribution'])`pp, a larger drag than the `{python} fmt(stats['netex_contribution_advance'])`pp estimated in the advance release. The wider trade deficit reflected two reinforcing forces: a pull-forward of imports as businesses front-loaded purchases ahead of the additional tariffs on Chinese goods announced in February 2026 (a 10pp increase on electronics and industrial components, effective April 15), and a slowdown in services exports as the stronger dollar made U.S. tourism and professional services more expensive for foreign buyers^[The Census Bureau's advance trade data for March 2026, released after the GDP advance estimate, showed goods imports rising +4.2% month-over-month. See [Census trade release](https://www.census.gov/foreign-trade/Press-Release/current_press_release/index.html).].
+
+```{python}
+#| echo: true
+#| label: fig-gdp-contributions
+#| fig-cap: "The downward revision was driven almost entirely by weaker consumer spending, while investment was revised higher. Bars compare the advance and second estimates by GDP component."
+
+# ── Define the data ──
+# Each component's contribution to GDP growth (in percentage points),
+# from BEA NIPA Table 1.1.2. The advance estimate was published April 30;
+# the revised (second) estimate is from today's release.
+components = ["Net Exports", "Government", "Investment\n(GPDI)", "Consumer\n(PCE)", "GDP Growth"]
+revised =  [stats["netex_contribution"], stats["govt_contribution"],
+            stats["gpdi_contribution"], stats["pce_contribution"],
+            stats["gdp_growth_revised"]]
+advance =  [stats["netex_contribution_advance"], stats["govt_contribution_advance"],
+            stats["gpdi_contribution_advance"], stats["pce_contribution_advance"],
+            stats["gdp_growth_advance"]]
+
+# y positions for each component row; bar_height controls thickness
+y = np.arange(len(components))
+bar_height = 0.32
+
+# ── Create the figure ──
+# Width of 7.0 ensures the chart fits within the Quarto column without clipping
+fig, ax = plt.subplots(figsize=(7.0, 4.2))
+
+# Advance estimate: lighter gray bars, positioned slightly above center
+bars_adv = ax.barh(y + bar_height / 2, advance, bar_height,
+                   color=COLORS["light"], edgecolor="white", linewidth=0.5,
+                   label="Advance estimate", zorder=2)
+
+# Revised estimate: colored bars positioned slightly below center
+# Red for negative contributions, green for positive, blue for total GDP
+rev_colors = [COLORS["accent"] if v < 0 else COLORS["secondary"] for v in revised]
+rev_colors[-1] = COLORS["primary"]   # GDP total row gets its own color
+bars_rev = ax.barh(y - bar_height / 2, revised, bar_height,
+                   color=rev_colors, edgecolor="white", linewidth=0.5,
+                   label="Second estimate", zorder=3)
+
+# ── Add value labels beside each bar ──
+# Labels sit just outside the bar end, using +/- signs for clarity
+for bar_set, values, offset_y in [(bars_adv, advance, bar_height / 2),
+                                   (bars_rev, revised, -bar_height / 2)]:
+    for i, (bar, val) in enumerate(zip(bar_set, values)):
+        # Offset label slightly beyond the bar end
+        xpos = val + 0.06 if val >= 0 else val - 0.06
+        ha = "left" if val >= 0 else "right"
+        # Components show pp (percentage points); GDP total shows %
+        label_text = f"{val:+.1f}pp" if i < 4 else f"+{val:.1f}%"
+        ax.text(xpos, y[i] + offset_y, label_text,
+                va="center", ha=ha, fontsize=8, color=COLORS["neutral"], zorder=4)
+
+# ── Formatting ──
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)  # zero reference
+ax.set_yticks(y)
+ax.set_yticklabels(components, fontsize=9)
+ax.set_xlabel("Percentage points contribution to GDP growth", fontsize=9)
+ax.set_title("Q1 2026 GDP: Advance vs. Revised Estimates",
+             fontsize=12, fontweight="bold", pad=10)
+ax.legend(loc="lower right", fontsize=8, frameon=False)
+ax.set_xlim(-1.5, 2.8)
+
+# Source note placed below the chart area
+fig.text(0.08, -0.04,
+         "Source: BEA NIPA Table 1.1.2. GDP Growth shown as annualized % change (SAAR).",
+         fontsize=7.5, color="#64748b")
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-contributions.png", dpi=150, bbox_inches="tight")
+```
+
+The pattern is notable: the parts of the economy that households drive directly weakened between estimates, while the parts driven by corporate capital allocation strengthened. This divergence is the central dynamic of Q1 2026.
+
+## 2. Consumer Pullback Meets AI Investment Surge
+
+Real personal consumption expenditures grew **+`{python} fmt(stats['pce_growth'])`%** annualized in Q1, a deceleration from +`{python} fmt(stats['pce_growth_prev'])`% in Q4 2025. The softness was broad: durable goods spending rose +`{python} fmt(stats['pce_durable_growth'])`%, nondurables +`{python} fmt(stats['pce_nondurable_growth'])`%, and services +`{python} fmt(stats['pce_services_growth'])`%. The spending weakness connects directly to the income picture: real disposable personal income, which adjusts for taxes and price increases, contracted at roughly `{python} fmt(stats['real_dpi_q1_ann'])`% annualized in Q1 and fell another `{python} fmt(stats['real_dpi_mom_latest'])`% month-over-month in April. Consumer sentiment fell to **`{python} fmt(stats['consumer_sentiment_latest'])`** in `{python} stats['unemployment_month']`, its lowest level since late 2022, reflecting growing concern about tariff-driven price increases and labor market cooling.
+
+The counterweight was nonresidential equipment investment, which surged **+`{python} fmt(stats['equipment_growth'])`%** annualized. This category captures servers, networking gear, and data center hardware, which makes it the closest available proxy for the AI-driven capital spending cycle. Total private nonresidential fixed investment grew +`{python} fmt(stats['pnfi_growth'])`%, confirming that the strength was concentrated in equipment rather than structures.
+
+```{python}
+#| echo: true
+#| label: fig-pce-vs-equipment
+#| fig-cap: "Consumer spending growth decelerated sharply while equipment investment surged to its highest level since 2021, highlighting the growing divergence between household and corporate spending."
+
+# ── Prepare data ──
+# Filter quarterly data from 2020-Q1 through Q1 2026 (the latest quarter
+# with complete GDP component data). This avoids plotting partial Q2 data.
+plot_q = df_q[(df_q.index >= "2020-01-01") & (df_q.index <= "2026-01-01")].copy()
+
+fig, ax = plt.subplots(figsize=(7.0, 4.5))
+
+# ── Plot both growth series ──
+# PCE (consumer spending): red accent signals weakness
+pce_series = plot_q["pce_growth"].dropna()
+ax.plot(pce_series.index, pce_series.values, color=COLORS["accent"],
+        linewidth=2, label="Real PCE growth", zorder=3)
+
+# Equipment investment: green secondary signals strength
+equip_series = plot_q["equipment_growth"].dropna()
+ax.plot(equip_series.index, equip_series.values, color=COLORS["secondary"],
+        linewidth=2, label="Equipment investment growth", zorder=3)
+
+# ── Mark the final data point on each series with a dot ──
+ax.scatter(pce_series.index[-1], pce_series.iloc[-1],
+           s=40, color=COLORS["accent"], zorder=5, edgecolors="white", linewidth=0.8)
+ax.scatter(equip_series.index[-1], equip_series.iloc[-1],
+           s=40, color=COLORS["secondary"], zorder=5, edgecolors="white", linewidth=0.8)
+
+# Zero reference line: growth above = expansion, below = contraction
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8, linestyle="-", alpha=0.5, zorder=1)
+
+# ── End-of-line labels ──
+# Simple value labels placed just to the right of the endpoint dot
+equip_last = equip_series.iloc[-1]
+ax.text(equip_series.index[-1], equip_last, f"  {equip_last:+.1f}%",
+        fontsize=9, color=COLORS["secondary"], fontweight="bold", va="center")
+
+pce_last = pce_series.iloc[-1]
+ax.text(pce_series.index[-1], pce_last, f"  {pce_last:+.1f}%",
+        fontsize=9, color=COLORS["accent"], fontweight="bold", va="center")
+
+# ── Axis formatting ──
+max_date = max(pce_series.index[-1], equip_series.index[-1])
+date_range = max_date - plot_q.index[0]
+ax.set_xlim(right=max_date + date_range * 0.12)  # room for labels
+
+ax.set_ylabel("Annualized quarterly growth (%)", fontsize=9)
+ax.set_title("Consumer Spending vs. Equipment Investment",
+             fontsize=12, fontweight="bold", pad=10)
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.legend(loc="upper right", fontsize=8, frameon=False)
+
+fig.text(0.08, -0.04,
+         "Source: FRED series PCEC96 (Real PCE) and Y033RC1Q027SBEA "
+         "(Nonresidential Equipment). QoQ annualized.",
+         fontsize=7.5, color="#64748b")
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "pce-vs-equipment.png", dpi=150, bbox_inches="tight")
+```
+
+The scale of this divergence is striking. The gap between equipment investment growth and consumer spending growth in Q1 was one of the widest on record outside of recession quarters. Tech companies across the cloud and semiconductor industries have publicly committed to over $300 billion in combined AI capital spending for 2026, and the BEA data suggests those commitments are flowing through at an accelerating pace.
+
+## 3. Inflation Stayed Contained
+
+Two price measures help gauge whether the GDP slowdown is accompanied by easing or persistent inflation. They measure different things:
+
+- The **GDP price index** (also called the GDP deflator) captures price changes across everything the U.S. economy produces, including exports and government spending. It is reported as a quarter-over-quarter annualized rate.
+- The **core PCE price index** strips out volatile food and energy prices and measures only what consumers pay. The Fed uses it as its primary inflation target. It is typically reported as a year-over-year rate.
+
+The GDP price index rose **+`{python} fmt(stats['gdp_deflator_q1'])`%** annualized in Q1 2026, revised up from +`{python} fmt(stats['gdp_deflator_advance'])`% in the advance estimate. This tells us that overall price pressures across the economy accelerated modestly. The core PCE price index, the Fed's preferred inflation gauge, stood at **+`{python} fmt(stats['core_pce_yoy_latest'])`%** year-over-year in `{python} stats['latest_inflation_month']`, compared to +`{python} fmt(stats['core_pce_yoy_prev'])`% the prior month.
+
+```{python}
+#| echo: true
+#| label: fig-inflation-measures
+#| fig-cap: "Core PCE remains above the Fed's 2% target but has stabilized in the low 3% range, while headline PCE has risen sharply in recent months."
+
+fig, ax = plt.subplots(figsize=(7.0, 4.5))
+
+# ── Monthly PCE price series (2023 onward) ──
+pce_plot = df_m[df_m.index >= "2023-01-01"]
+
+# Core PCE (excluding food and energy): the Fed's preferred measure
+ax.plot(pce_plot.index, pce_plot["core_pce_yoy"], color=COLORS["primary"],
+        linewidth=2, label="Core PCE (YoY)", zorder=3)
+
+# Headline PCE (including food and energy): more volatile
+ax.plot(pce_plot.index, pce_plot["pce_yoy"], color=COLORS["warning"],
+        linewidth=1.5, alpha=0.7, label="Headline PCE (YoY)", zorder=2)
+
+# ── Reference lines: Fed 2% target (green) and 4% upper bound (red) ──
+ax.axhline(2.0, color=COLORS["secondary"], linestyle="--", linewidth=1,
+           alpha=0.5, zorder=1)
+ax.text(pce_plot.index[6], 2.08, "Fed 2% target",
+        fontsize=8, color=COLORS["secondary"], alpha=0.7)
+
+ax.axhline(4.0, color=COLORS["fed_target"], linestyle=":", linewidth=1,
+           alpha=0.4, zorder=1)
+ax.text(pce_plot.index[-6], 4.08, "4% upper bound",
+        fontsize=8, color=COLORS["fed_target"], alpha=0.6, ha="right")
+
+# ── Endpoint dots (matching Fig 2 style) ──
+ax.scatter(pce_plot.index[-1], pce_plot["core_pce_yoy"].iloc[-1],
+           s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8)
+ax.scatter(pce_plot.index[-1], pce_plot["pce_yoy"].iloc[-1],
+           s=40, color=COLORS["warning"], zorder=5, edgecolors="white", linewidth=0.8)
+
+# ── End-of-line labels: value just to the right of each dot ──
+core_last = pce_plot["core_pce_yoy"].iloc[-1]
+headline_last = pce_plot["pce_yoy"].iloc[-1]
+
+ax.text(pce_plot.index[-1], core_last, f"  {core_last:.1f}%",
+        fontsize=9, color=COLORS["primary"], fontweight="bold", va="center")
+ax.text(pce_plot.index[-1], headline_last, f"  {headline_last:.1f}%",
+        fontsize=9, color=COLORS["warning"], fontweight="bold", va="center")
+
+# ── Axis formatting ──
+date_range = pce_plot.index[-1] - pce_plot.index[0]
+ax.set_xlim(right=pce_plot.index[-1] + date_range * 0.10)
+
+ax.set_ylabel("Percent change (%)", fontsize=9)
+ax.set_title("Inflation Measures: Core and Headline PCE",
+             fontsize=12, fontweight="bold", pad=10)
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+ax.legend(loc="upper right", fontsize=8, frameon=False)
+
+fig.text(0.08, -0.04,
+         "Source: FRED series PCEPILFE (Core PCE), PCEPI (Headline PCE).",
+         fontsize=7.5, color="#64748b")
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "inflation-measures.png", dpi=150, bbox_inches="tight")
+```
+
+The inflation picture is mixed but not alarming. Core PCE has been range-bound between +3% and +4% year-over-year for several months, well above the Fed's +2% target but not accelerating. The GDP price index's +`{python} fmt(stats['gdp_deflator_q1'])`% print is consistent with an economy where price pressures are persistent but not intensifying. For the Fed, this data supports a continued hold: the rate of price increases is too high to justify rate cuts, but too stable to warrant rate hikes.
+
+## 4. Labor Market and Expansion Context
+
+The broader macro environment behind the GDP number tells a story of moderation rather than deterioration. The unemployment rate stood at **`{python} fmt(stats['unemployment_latest'])`%** in `{python} stats['unemployment_month']`, roughly stable. Nonfarm payrolls added **`{python} f"{stats['payroll_change_latest']:+,}"`K** jobs, with the three-month average at `{python} f"{stats['payroll_3m_avg']:,}"`K, a pace consistent with gradual cooling but not contraction.
+
+```{python}
+#| echo: true
+#| label: fig-macro-dashboard
+#| fig-cap: "GDP growth has been uneven across recent quarters, while the labor market has cooled gradually from its 2023 peak. Payroll gains remain positive but trending lower."
+
+# ── Three-panel dashboard ──
+# Each panel shows a different macro indicator on its own y-axis,
+# stacked vertically to give a unified view of the business cycle.
+fig, axes = plt.subplots(3, 1, figsize=(7.0, 8.0), sharex=False)
+
+# ── Panel A: Quarterly GDP growth bars ──
+ax1 = axes[0]
+gdp_bars = df_q[df_q.index >= "2022-01-01"]["gdp_growth"].dropna()
+# Color negative quarters red (contraction), positive blue (expansion)
+bar_colors = [COLORS["accent"] if v < 0 else COLORS["primary"] for v in gdp_bars.values]
+ax1.bar(gdp_bars.index, gdp_bars.values, width=60, color=bar_colors,
+        edgecolor="white", linewidth=0.5, zorder=2)
+ax1.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+
+# Call out Q1 2026 with an annotated arrow
+q1_date = pd.Timestamp("2026-01-01")
+q1_val = gdp_bars.loc[q1_date]
+ax1.annotate(f"Q1 2026: +{q1_val:.1f}%",
+             xy=(q1_date, q1_val), xytext=(0, 18), textcoords="offset points",
+             fontsize=9, color=COLORS["primary"], fontweight="bold",
+             arrowprops=dict(arrowstyle="->", color=COLORS["primary"], lw=0.8),
+             bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85),
+             ha="center", zorder=5)
+
+ax1.set_ylabel("GDP Growth\n(%, SAAR)", fontsize=9)
+ax1.set_title("Macro Dashboard: GDP, Unemployment, and Payrolls",
+              fontsize=12, fontweight="bold", pad=10)
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+# ── Panel B: Monthly unemployment rate ──
+ax2 = axes[1]
+unemp = df_m[df_m.index >= "2022-01-01"]["unrate"].dropna()
+ax2.plot(unemp.index, unemp.values, color=COLORS["accent"], linewidth=2, zorder=3)
+# Dashed reference at pre-pandemic level
+ax2.axhline(3.5, color=COLORS["light"], linestyle="--", linewidth=0.8,
+            alpha=0.6, zorder=1)
+ax2.text(unemp.index[1], 3.55, "Pre-pandemic ~3.5%",
+         fontsize=7.5, color=COLORS["light"])
+
+# End-of-line label with latest value
+ax2.text(unemp.index[-1], unemp.iloc[-1], f"  {unemp.iloc[-1]:.1f}%",
+         fontsize=9, color=COLORS["accent"], va="center", fontweight="bold")
+ax2.set_xlim(right=unemp.index[-1] + (unemp.index[-1] - unemp.index[0]) * 0.08)
+
+ax2.set_ylabel("Unemployment\nRate (%)", fontsize=9)
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+# ── Panel C: Monthly payroll changes ──
+ax3 = axes[2]
+payroll = df_m[df_m.index >= "2022-01-01"][["payroll_change", "payroll_3m_avg"]].dropna()
+# Monthly bars: red if negative, blue if positive
+pay_colors = [COLORS["accent"] if v < 0 else COLORS["primary"]
+              for v in payroll["payroll_change"]]
+ax3.bar(payroll.index, payroll["payroll_change"], width=22, color=pay_colors,
+        edgecolor="white", linewidth=0.3, alpha=0.6, zorder=2)
+# Overlay the 3-month moving average as a smoothed trend line
+ax3.plot(payroll.index, payroll["payroll_3m_avg"], color=COLORS["warning"],
+         linewidth=1.8, label="3-month avg", zorder=3)
+ax3.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax3.legend(loc="upper right", fontsize=8, frameon=False)
+
+ax3.set_ylabel("Payroll Change\n(thousands)", fontsize=9)
+ax3.set_xlabel("")
+ax3.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax3.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
+
+fig.text(0.01, -0.02, "Source: BEA (GDP), BLS (unemployment, payrolls) via FRED.",
+         fontsize=7.5, color="#64748b")
+
+plt.tight_layout(h_pad=1.5)
+fig.savefig(IMG_DIR / "macro-dashboard.png", dpi=150, bbox_inches="tight")
+```
+
+Zooming out further, the current expansion that began in Q2 2020 is now **`{python} fmt(stats['current_expansion_quarters'])`** quarters old. Cumulative real GDP growth since the trough stands at **+`{python} fmt(stats['current_expansion_growth'])`%**, well ahead of where both the post-GFC and post-dot-com recoveries stood at the same point.
+
+```{python}
+#| echo: true
+#| label: fig-expansion-compare
+#| fig-cap: "The COVID-era expansion has produced significantly faster cumulative growth than the GFC or dot-com recoveries at the same point in the cycle, though much of the early gain reflects the sharp rebound from the pandemic shutdown."
+
+fig, ax = plt.subplots(figsize=(7.0, 4.5))
+
+# ── Plot each expansion as an indexed line ──
+# Real GDP is indexed to 100 at the NBER-dated business cycle trough.
+# This lets us compare expansions of different magnitudes on a common scale.
+expansion_styles = {
+    "covid":  {"color": COLORS["primary"],   "lw": 2.5, "ls": "-",
+               "label": "COVID recovery (2020-Q2)"},
+    "gfc":    {"color": COLORS["light"],     "lw": 1.8, "ls": "-",
+               "label": "GFC recovery (2009-Q2)"},
+    "dotcom": {"color": COLORS["secondary"], "lw": 1.8, "ls": "--",
+               "label": "Dot-com recovery (2001-Q4)"},
+}
+
+for name, style in expansion_styles.items():
+    subset = df_exp[df_exp["expansion"] == name]
+    ax.plot(subset["quarters_since_trough"], subset["gdp_indexed"],
+            color=style["color"], linewidth=style["lw"], linestyle=style["ls"],
+            label=style["label"], zorder=3)
+
+    # Endpoint dot and value label to the right
+    last_q = subset["quarters_since_trough"].iloc[-1]
+    last_val = subset["gdp_indexed"].iloc[-1]
+    growth = last_val - 100
+    ax.scatter(last_q, last_val, s=40, color=style["color"],
+               zorder=5, edgecolors="white", linewidth=0.8)
+    ax.text(last_q + 0.6, last_val, f"+{growth:.1f}%",
+            fontsize=9, color=style["color"], va="center", fontweight="bold",
+            ha="left")
+
+# Reference line at index = 100 (trough level)
+ax.axhline(100, color=COLORS["neutral"], linewidth=0.8, linestyle="--",
+           alpha=0.4, zorder=1)
+
+# ── Axis formatting ──
+ax.set_xlabel("Quarters since trough", fontsize=9)
+ax.set_ylabel("Real GDP (indexed, trough = 100)", fontsize=9)
+ax.set_title("Current Expansion vs. Past Recoveries",
+             fontsize=12, fontweight="bold", pad=10)
+ax.legend(loc="upper left", fontsize=8, frameon=False)
+ax.margins(y=0.08)
+ax.set_xlim(right=max(df_exp["quarters_since_trough"]) * 1.25)
+
+fig.text(0.08, -0.04,
+         "Source: FRED series GDPC1 (Real GDP). Each line indexed to 100 "
+         "at the NBER-dated trough quarter.",
+         fontsize=7.5, color="#64748b")
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "expansion-compare.png", dpi=150, bbox_inches="tight")
+```
+
+## What It Means
+
+**For the Fed:** The combination of +`{python} fmt(stats['gdp_growth_revised'])`% growth and a +`{python} fmt(stats['gdp_deflator_q1'])`% GDP price index keeps the FOMC in its current holding pattern. Growth is too weak to justify further tightening (raising the federal funds rate to slow inflation), but inflation remains too elevated for rate cuts (lowering the rate to stimulate borrowing and spending). The `{python} stats['fed_next_meeting']` meeting will likely produce another hold at `{python} stats['fed_rate_range']`%, with the committee watching whether consumer spending stabilizes or deteriorates further.
+
+**For consumers:** The pullback in spending aligns with falling consumer sentiment (`{python} fmt(stats['consumer_sentiment_latest'])`) and real wage growth that has barely kept pace with prices. If labor market cooling continues, with payrolls averaging +`{python} f"{stats['payroll_3m_avg']:,}"`K per month, the consumer contribution to GDP is unlikely to recover sharply in Q2.
+
+**For markets:** The AI investment surge is the bright spot, but it also introduces concentration risk. GDP growth is increasingly dependent on a narrow category of corporate capital spending. If AI investment plateaus or if the consumer weakness deepens, the economy faces a more challenging second half of 2026.
+
+**What to watch next:** The May employment report (`{python} stats['may_jobs_date']`) and May CPI (`{python} stats['may_cpi_date']`) will signal whether the consumer and inflation trends are stabilizing or deteriorating. BEA releases the third (and final) Q1 GDP estimate on `{python} stats['third_estimate_date']`, which will incorporate more complete corporate profits and trade data and could shift the component mix further. If May payrolls slow further and inflation remains sticky, the divergence at the heart of this GDP report - consumers retrenching while businesses pour capital into AI - will become the defining question for the Fed's second-half policy path.
+
+### Limitations
+
+- Equipment investment serves as a proxy for AI-related capital spending. BEA does not publish a dedicated AI investment category, so the +`{python} fmt(stats['equipment_growth'])`% equipment growth figure includes non-AI equipment purchases alongside data center and server buildouts.
+- GDP estimates undergo three rounds of revision (advance, second, third) plus annual benchmark revisions. The component contributions shown here may shift when the third estimate is released in June.
+- GDP is a backward-looking indicator. The Q1 data covers January through March 2026 and may not reflect more recent shifts in trade policy, financial conditions, or consumer behavior.
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| A191RL1Q225SBEA | Real GDP percent change (SAAR) | [FRED](https://fred.stlouisfed.org/series/A191RL1Q225SBEA) |
+| GDPC1 | Real GDP level (chained 2017$) | [FRED](https://fred.stlouisfed.org/series/GDPC1) |
+| PCEC96 | Real personal consumption expenditures | [FRED](https://fred.stlouisfed.org/series/PCEC96) |
+| Y033RC1Q027SBEA | Nonresidential equipment investment | [FRED](https://fred.stlouisfed.org/series/Y033RC1Q027SBEA) |
+| PNFI | Private nonresidential fixed investment | [FRED](https://fred.stlouisfed.org/series/PNFI) |
+| GDPDEF | GDP implicit price deflator | [FRED](https://fred.stlouisfed.org/series/GDPDEF) |
+| PCEPILFE | Core PCE price index (less food/energy) | [FRED](https://fred.stlouisfed.org/series/PCEPILFE) |
+| PCEPI | PCE price index | [FRED](https://fred.stlouisfed.org/series/PCEPI) |
+| UNRATE | Civilian unemployment rate | [FRED](https://fred.stlouisfed.org/series/UNRATE) |
+| PAYEMS | Nonfarm payrolls (thousands) | [FRED](https://fred.stlouisfed.org/series/PAYEMS) |
+| UMCSENT | Consumer sentiment (Michigan) | [FRED](https://fred.stlouisfed.org/series/UMCSENT) |
+
+: Data sources used in this analysis. Component contributions (Table 1.1.2) from BEA GDP press release.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*
