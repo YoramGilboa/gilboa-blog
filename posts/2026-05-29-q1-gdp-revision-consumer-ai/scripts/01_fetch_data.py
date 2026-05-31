@@ -17,6 +17,7 @@ Run from the post folder:
 """
 
 import os
+import time
 
 import pandas as pd
 from fredapi import Fred
@@ -40,9 +41,9 @@ QUARTERLY_SERIES = {
     "govt_contribution":    "A822RE1Q156NBEA",    # Government contribution (pp)
     "netex_contribution":   "A019RE1Q156NBEA",    # Net exports contribution (pp)
     "real_pce":             "PCEC96",              # Real PCE (chained 2017$)
-    "pce_durable":          "PCEDG",               # PCE durable goods
-    "pce_nondurable":       "PCEND",               # PCE nondurable goods
-    "pce_services":         "PCESV",               # PCE services
+    "pce_durable":          "PCDGCC96",            # Real PCE durable goods (chained 2017$)
+    "pce_nondurable":       "PCNDGC96",            # Real PCE nondurable goods (chained 2017$)
+    "pce_services":         "PCESVC96",            # Real PCE services (chained 2017$)
     "nres_equipment":       "Y033RC1Q027SBEA",     # Nonresidential equipment
     "pnfi":                 "PNFI",                # Private nonresidential fixed investment
     "gdp_deflator":         "GDPDEF",              # GDP implicit price deflator (index)
@@ -67,16 +68,24 @@ def fetch_group(fred, series_dict, start, end, label):
     print(f"\nFetching {len(series_dict)} {label} series ({start} to {end})...\n")
     frames = {}
     for friendly_name, series_id in series_dict.items():
-        try:
-            data = fred.get_series(
-                series_id,
-                observation_start=start,
-                observation_end=end,
-            )
-            frames[friendly_name] = data
-            print(f"  {friendly_name:22s} <- {series_id}  ({len(data)} obs)")
-        except Exception as e:
-            print(f"  WARNING: could not fetch {friendly_name} ({series_id}): {e}")
+        for attempt in range(3):
+            try:
+                data = fred.get_series(
+                    series_id,
+                    observation_start=start,
+                    observation_end=end,
+                )
+                frames[friendly_name] = data
+                print(f"  {friendly_name:22s} <- {series_id}  ({len(data)} obs)")
+                break
+            except Exception as e:
+                if "Rate Limit" in str(e) and attempt < 2:
+                    wait = 10 * (attempt + 1)
+                    print(f"  {friendly_name:22s} <- rate limited, retrying in {wait}s...")
+                    time.sleep(wait)
+                else:
+                    print(f"  WARNING: could not fetch {friendly_name} ({series_id}): {e}")
+        time.sleep(1)  # pace requests to avoid rate limits
 
     df = pd.DataFrame(frames)
     df.index.name = "date"

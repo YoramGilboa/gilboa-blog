@@ -46,18 +46,16 @@ def build_gdp_quarterly(df_q):
     pnfi_growth = annualized_qoq(df_q["pnfi"].dropna())
     pnfi_growth.name = "pnfi_growth"
 
-    # PCE components: real_pce, pce_durable, pce_nondurable are monthly.
-    # Resample to quarterly averages, then compute annualized growth.
-    pce_monthly = df_q[["real_pce", "pce_durable", "pce_nondurable"]].dropna()
-    pce_q = pce_monthly.resample("QS").mean()
-    pce_growth = annualized_qoq(pce_q["real_pce"])
+    # PCE total (PCEC96) is monthly; resample to quarterly averages
+    pce_q = df_q["real_pce"].dropna().resample("QS").mean()
+    pce_growth = annualized_qoq(pce_q)
     pce_growth.name = "pce_growth"
-    pce_dur_growth = annualized_qoq(pce_q["pce_durable"])
-    pce_dur_growth.name = "pce_durable_growth"
-    pce_nondur_growth = annualized_qoq(pce_q["pce_nondurable"])
-    pce_nondur_growth.name = "pce_nondurable_growth"
 
-    # PCE services is already quarterly
+    # PCE sub-components (PCDGCC96, PCNDGC96, PCESVC96) are already quarterly
+    pce_dur_growth = annualized_qoq(df_q["pce_durable"].dropna())
+    pce_dur_growth.name = "pce_durable_growth"
+    pce_nondur_growth = annualized_qoq(df_q["pce_nondurable"].dropna())
+    pce_nondur_growth.name = "pce_nondurable_growth"
     pce_svc_growth = annualized_qoq(df_q["pce_services"].dropna())
     pce_svc_growth.name = "pce_services_growth"
 
