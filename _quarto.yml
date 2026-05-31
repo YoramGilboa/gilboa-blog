@@ -18,7 +18,7 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: posts/
+      - href: index.qmd
         text: Blog
     right:
       - icon: rss
