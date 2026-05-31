@@ -204,37 +204,6 @@ meet_df["t"] = pd.to_datetime(meet_df["iso"])
 meet_df.sort_values("t", inplace=True)
 ```
 
-```{=html}
-<style>
-#title-block-header .quarto-title-meta > div:last-child {
-  text-align: right;
-}
-
-.table-caption,
-caption {
-  text-align: left;
-}
-
-#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
-#quarto-document-content .callout { border-radius: 8px; }
-#quarto-document-content .grid { margin: 1.25rem 0; }
-#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
-#quarto-document-content h2 { margin-top: 2.25rem; }
-
-#quarto-document-content table {
-  font-size: 0.82rem;
-  color: #64748b;
-  margin-top: 1.5rem;
-}
-
-#quarto-document-content caption {
-  font-size: 0.78rem;
-  color: #94a3b8;
-  font-weight: 500;
-}
-</style>
-```
-
 ## Executive summary
 
 The Federal Open Market Committee held the federal funds target range at **`{python} stats['current_rate_range']`%** on `{python} stats['decision_day']` and recorded **`{python} stats['dissent_count']` dissents** favoring a 25 bp cut. The Summary of Economic Projections (SEP) nudged the year-end 2026 median midpoint down to **`{python} fmt_rate(stats['dot_median_eoy2026'])`%** from `{python} fmt_rate(stats['prior_sep_march_dot_median_eoy2026'])`% in March. Markets price the same horizon near **`{python} fmt_rate(stats['market_implied_eoy2026'])`%**. That **`{python} stats['wedge_bps']`-basis-point wedge** has widened since the [pre-meeting snapshot](https://gilboa.blog/posts/2026-04-25-fomc-preview/) one week earlier - the clearest signal that the dot plot is delivering more easing than markets are pricing.

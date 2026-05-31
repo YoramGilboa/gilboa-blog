@@ -1,7 +1,10 @@
 ---
 title: "Post Title"
 date: "YYYY-MM-DD"
+author: Yoram Gilboa
 categories: [economics, data visualization]
+description: "One sentence summary for social previews and search engines."
+image: images/preview-image.png
 draft: true
 toc: true
 toc-location: right
@@ -9,7 +12,94 @@ code-fold: true
 code-summary: "Show code"
 ---
 
-<!-- Lead with the key finding or framing question. No Introduction heading. -->
+```{python}
+#| echo: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+# from adjustText import adjust_text  # only needed for 4+ overlapping labels
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+RAW_DIR = DATA_DIR / "raw"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [RAW_DIR, CLEAN_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
+    stats = json.load(f)
+
+# Adjust data loading per post:
+# df = pd.read_csv(CLEAN_DIR / "main.csv", index_col=0, parse_dates=True)
+
+COLORS = {
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "warning":    "#cc7722",
+    "fed_target": "#cc0000",
+    "recession":  "#888888",
+}
+
+plt.rcParams.update({
+    "font.family":        "Calibri",
+    "font.size":          10,
+    "axes.spines.top":    False,
+    "axes.spines.right":  False,
+    "axes.grid":          False,
+    "figure.facecolor":   "white",
+    "axes.facecolor":     "#fafafa",
+    "axes.linewidth":     0.5,
+})
+
+def fmt(n):
+    """Format numbers for inline display."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+
+def fmt_chg(n):
+    """Format signed change values with + prefix."""
+    if isinstance(n, float):
+        return f"{n:+.1f}"
+    return f"{n:+,}"
+```
+
+```{python}
+#| echo: false
+
+# Key metrics cards - adjust values and labels per post
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+              padding: 1.25rem; text-align: center;">
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">{stats['key_value']}%</div>
+    <div style="font-size: 0.8rem; color: #64748b;">Label</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  Data as of {stats['latest_month']} | Source: [Source Name]
+</p>
+"""
+HTML(html)
+```
+
+<!-- Lead with the key finding or framing question. No heading. One tight paragraph. -->
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this analysis
@@ -17,66 +107,59 @@ code-summary: "Show code"
 The Python code used to generate each chart is included in this post. Click on any
 code block to see the full implementation. The complete data pipeline includes:
 
-- `01_fetch_data.py` - Fetches raw data from [source]
+- `01_fetch_data.py` - Fetches data from FRED and BEA NIPA API
 - `02_clean_data.py` - Cleans and computes derived series
 - `04_compute_stats.py` - Computes summary statistics
 
 All data sourced from [Source Name](https://example.com).
 :::
 
+## 1. First Section
+
+<!-- Chart + prose. Use numbered headings for analytical posts. -->
+
 ```{python}
-#| echo: false
+#| echo: true
+#| label: fig-descriptive-name
+#| fig-cap: "Full sentence describing what the chart shows and what to notice."
 
-import json
-from pathlib import Path
+fig, ax = plt.subplots(figsize=(7.0, 4.5))
 
-import numpy as np
-import pandas as pd
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
-from IPython.display import HTML
+# Plot data
+ax.plot(df.index, df["series"], color=COLORS["primary"], linewidth=2, zorder=3)
 
-POST_DIR = Path(".").resolve()
-DATA_DIR = POST_DIR / "data"
-STATS_PATH = POST_DIR / "stats" / "summary_stats.json"
+# Endpoint dot + label (standard pattern for all charts)
+ax.scatter(df.index[-1], df["series"].iloc[-1],
+           s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8)
+last_val = df["series"].iloc[-1]
+ax.text(df.index[-1], last_val, f"  {last_val:.1f}",
+        fontsize=9, color=COLORS["primary"], fontweight="bold", va="center")
 
-with open(STATS_PATH, encoding="utf-8") as f:
-    stats = json.load(f)
+# Room for labels
+date_range = df.index[-1] - df.index[0]
+ax.set_xlim(right=df.index[-1] + date_range * 0.12)
 
-COLORS = {
-    "primary": "#2e5984",
-    "accent": "#8b0000",
-    "secondary": "#6b8e6b",
-    "neutral": "#4a4a4a",
-    "light": "#b0b0b0",
-    "fed_target": "#cc0000",
-}
-
-plt.rcParams.update({
-    "font.family": "serif",
-    "font.size": 10,
-    "axes.spines.top": False,
-    "axes.spines.right": False,
-    "axes.grid": False,
-    "figure.facecolor": "white",
-    "axes.facecolor": "#fafafa",
-    "axes.linewidth": 0.5,
-})
-
-def fmt(n):
-    if isinstance(n, float):
-        return f"{n:.1f}"
-    return f"{n:,}"
+plt.tight_layout()
+fig.savefig(IMG_DIR / "chart-name.png", dpi=150, bbox_inches="tight")
 ```
-
-## Section
-
-<!-- Body of the post -->
 
 ## Conclusion
 
-<!-- Key takeaways -->
+**For [audience]:** [implication in 2-3 sentences]
+
+**For [audience]:** [implication in 2-3 sentences]
+
+### Limitations
+
+- [Data caveat or methodological limitation]
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| SERIES_ID | What it measures | [Source](url) |
+
+: Data sources used in this analysis.
 
 ---
 

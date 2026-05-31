@@ -124,19 +124,6 @@ mkt_rates = np.interp(
 )
 ```
 
-```{=html}
-<style>
-#title-block-header .quarto-title-meta > div:last-child {
-  text-align: right;
-}
-
-.table-caption,
-caption {
-  text-align: left;
-}
-</style>
-```
-
 The Federal Open Market Committee meets `{python} stats['meeting_date']` with the rate outlook at its most contested point since the cutting cycle began. For investors tracking the April 2026 FOMC meeting, the central issue is the gap between the Fed dot plot and the market-implied federal funds rate path. Two March data releases, published in the weeks before the blackout period, have reshuffled expectations sharply.
 
 Headline CPI surged **`{python} fmt_chg(stats['march_cpi_mom'])`% month-over-month**, its largest monthly gain since June 2022, driven almost entirely by a historic gasoline spike. March payrolls came in at **`{python} fmt(stats['march_payrolls'])` nonfarm jobs**, a solid rebound from February's weak print, with unemployment at `{python} stats['march_unemployment']`%. Together, these prints have pushed markets to price less than one full 25-basis-point cut for all of 2026, down from a more confident easing path earlier in the year.

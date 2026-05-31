@@ -1,1 +1,55 @@
-/* css styles */
+/* ── Responsive title metadata layout ──
+   Renders author and date side-by-side on desktop,
+   stacked on mobile. Applied site-wide so individual
+   posts do not need inline <style> blocks. */
+
+.quarto-title-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: 2rem;
+}
+
+.quarto-title-meta > div:nth-child(2) {
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .quarto-title-meta {
+    grid-template-columns: 1fr;
+    row-gap: 0.75rem;
+  }
+
+  .quarto-title-meta > div:nth-child(2) {
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+/* ── Content spacing and typography ──
+   Consistent spacing for headings, callouts, charts,
+   and data tables across all posts. */
+
+.table-caption,
+caption {
+  text-align: left;
+}
+
+#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
+#quarto-document-content .callout { border-radius: 8px; }
+#quarto-document-content .grid { margin: 1.25rem 0; }
+#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
+#quarto-document-content h2 { margin-top: 2.25rem; }
+
+#quarto-document-content table {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 1.5rem;
+}
+
+#quarto-document-content caption {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+}

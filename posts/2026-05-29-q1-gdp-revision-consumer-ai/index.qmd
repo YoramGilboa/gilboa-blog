@@ -11,32 +11,6 @@ code-fold: true
 code-summary: "Show code"
 ---
 
-<style>
-.quarto-title-meta {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  column-gap: 2rem;
-}
-
-.quarto-title-meta > div:nth-child(2) {
-  justify-self: end;
-  text-align: right;
-}
-
-@media (max-width: 768px) {
-  .quarto-title-meta {
-    grid-template-columns: 1fr;
-    row-gap: 0.75rem;
-  }
-
-  .quarto-title-meta > div:nth-child(2) {
-    justify-self: start;
-    text-align: left;
-  }
-}
-</style>
-
 ```{python}
 #| echo: false
 

@@ -5,8 +5,12 @@ project:
 website:
   title: "Yoram Gilboa"
   site-url: "https://gilboa.blog"
-  description: "Data visualization and predictive modeling"
+  description: "Economics, inflation, and labor market analysis through data visualization"
   draft-mode: unlinked
+  favicon: favicon.png
+  open-graph: true
+  twitter-card:
+    site: "@gilboa"
 
   navbar:
     background: primary
@@ -17,11 +21,18 @@ website:
       - href: posts/
         text: Blog
     right:
+      - icon: rss
+        href: index.xml
       - icon: github
         href: https://github.com/YoramGilboa
 
   page-footer:
-    center: "© 2025-2026 Gilboa"
+    left: "© 2025-2026 Gilboa"
+    right:
+      - text: About
+        href: about.qmd
+      - text: RSS
+        href: index.xml
 
 format:
   html:

@@ -64,10 +64,15 @@ quarto preview                      # live-reloading local preview
 ### Creating a new post
 
 1. Copy `posts/drafts/_template/` to `posts/drafts/YYYY-MM-DD-slug/`
-2. Write the post with `draft: true` in the frontmatter
-3. `quarto preview` re-renders on save; Python output is cached to `_freeze/` automatically
-4. When ready to publish: remove `draft: true`, move folder to `posts/YYYY-MM-DD-slug/`
-5. Commit and push:
+2. **Chart plan:** Before writing any chart code, list each planned chart with
+   a one-line description, the data series required, and the chart type (line,
+   bar, multi-panel, etc.). Get approval on this list before coding. Changes to
+   chart specifications after code is written are the single largest source of
+   iteration cost.
+3. Write the post with `draft: true` in the frontmatter
+4. `quarto preview` re-renders on save; Python output is cached to `_freeze/` automatically
+5. When ready to publish: remove `draft: true`, move folder to `posts/YYYY-MM-DD-slug/`
+6. Commit and push:
 
 ```bash
 git add posts/YYYY-MM-DD-slug/ _freeze/
@@ -101,7 +106,10 @@ Every post must include:
 ---
 title: "Post Title"
 date: "YYYY-MM-DD"
+author: Yoram Gilboa
 categories: [economics, data visualization]
+description: "One sentence summary for social previews and search engines."
+image: images/preview-image-name.png
 draft: true                    # remove when publishing
 toc: true
 toc-location: right
@@ -110,16 +118,28 @@ code-summary: "Show code"
 ---
 ```
 
-`categories` should use lowercase, consistent labels. Existing categories:
-`economics`, `data analysis`, `inflation`, `supreme court`, `data visualization`,
-`law`, `politics`, `meta`, `python`, `visualization`, `insurance`, `actuarial`
+`categories` should use lowercase, space-separated labels (no hyphens).
+Existing categories:
+`economics`, `data analysis`, `inflation`, `energy`, `federal reserve`, `fomc`,
+`interest rates`, `labor market`, `markets`, `supreme court`, `data visualization`,
+`visualization`, `law`, `politics`, `meta`, `python`, `insurance`, `actuarial`
+
+---
+
+### Responsive title style
+
+The responsive `.quarto-title-meta` grid CSS and shared content styles (table
+formatting, callout radius, heading spacing) live in `styles.css` at the repo
+root. This file is loaded site-wide via `_quarto.yml`. **Do not add inline
+`<style>` blocks in posts** - all shared styles belong in `styles.css`.
 
 ---
 
 ### Opening paragraph
 
-Begin immediately after the frontmatter, no `## Introduction` heading at the top.
-Lead with the key finding or framing question. One tight paragraph, no preamble.
+Begin immediately after the frontmatter closing `---`, no `## Introduction`
+heading at the top. Lead with the key finding or framing question. One tight
+paragraph, no preamble.
 
 ---
 
@@ -164,39 +184,56 @@ sets the color palette, and configures matplotlib. Always `#| echo: false`.
 #| echo: false
 
 import json
-import pandas as pd
-import numpy as np
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import matplotlib.dates as mdates
+import numpy as np
+import pandas as pd
+from adjustText import adjust_text
 from IPython.display import HTML
 
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+RAW_DIR = DATA_DIR / "raw"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [RAW_DIR, CLEAN_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
 # Load pre-computed statistics
-with open("stats/summary_stats.json") as f:
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
     stats = json.load(f)
 
 # Load cleaned data
-df = pd.read_csv("data/clean/main.csv", index_col=0, parse_dates=True)
+df = pd.read_csv(CLEAN_DIR / "main.csv", index_col=0, parse_dates=True)
 
 # Tufte-inspired color palette
 COLORS = {
-    'primary':   '#2e5984',
-    'accent':    '#8b0000',
-    'secondary': '#6b8e6b',
-    'neutral':   '#4a4a4a',
-    'light':     '#b0b0b0',
-    'fed_target':'#cc0000',
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "warning":    "#cc7722",
+    "fed_target": "#cc0000",
+    "recession":  "#888888",
 }
 
 plt.rcParams.update({
-    'font.family':        'serif',
-    'font.size':          10,
-    'axes.spines.top':    False,
-    'axes.spines.right':  False,
-    'axes.grid':          False,
-    'figure.facecolor':   'white',
-    'axes.facecolor':     '#fafafa',
-    'axes.linewidth':     0.5,
+    "font.family":        "serif",
+    "font.size":          10,
+    "axes.spines.top":    False,
+    "axes.spines.right":  False,
+    "axes.grid":          False,
+    "figure.facecolor":   "white",
+    "axes.facecolor":     "#fafafa",
+    "axes.linewidth":     0.5,
 })
 
 def fmt(n):
@@ -204,10 +241,22 @@ def fmt(n):
     if isinstance(n, float):
         return f"{n:.1f}"
     return f"{n:,}"
+
+def fmt_chg(n):
+    """Format signed change values with + prefix."""
+    if isinstance(n, float):
+        return f"{n:+.1f}"
+    return f"{n:+,}"
 ```
 
-Keep this palette consistent across all charts in a post. Do not introduce
-one-off colors mid-post.
+Keep this palette consistent across all charts in a post. Add topic-specific
+color keys as needed (e.g., `"soft"` for shading), but always extend `COLORS`
+rather than introducing one-off hex values mid-post.
+
+Every chart block should end with `plt.tight_layout()` and optionally
+`fig.savefig(IMG_DIR / "chart-name.png", dpi=150, bbox_inches="tight")`
+for social preview images. Set the `image:` frontmatter field to one of
+these saved PNGs.
 
 ---
 
@@ -278,6 +327,126 @@ These rules apply to every chart:
 
 ---
 
+### Chart quality: preventing overlaps
+
+Visual overlap is the most common chart defect. These rules are mandatory.
+
+**End-of-line labels (the #1 overlap source):**
+
+The default pattern is a plain text label placed immediately to the right of an
+endpoint dot. No connector lines, no `arrowprops`. This is the settled style
+across all gilboa.blog charts:
+
+```python
+# 1. Endpoint dot on the last data point
+ax.scatter(series.index[-1], series.iloc[-1],
+           s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+
+# 2. Value label just to the right of the dot
+last_val = series.iloc[-1]
+ax.text(series.index[-1], last_val, f"  {last_val:+.1f}%",
+        fontsize=9, color=color, fontweight="bold", va="center")
+
+# 3. Extend x-axis to make room for labels
+date_range = series.index[-1] - series.index[0]
+ax.set_xlim(right=series.index[-1] + date_range * 0.12)
+```
+
+**When to use adjustText (4+ overlapping labels only):**
+
+If a chart has four or more end-of-line labels whose values are close enough
+to overlap, use `adjustText` for automatic collision avoidance. Do not use it
+for fewer labels - manual positioning is more predictable and avoids silent
+repositioning bugs:
+
+```python
+from adjustText import adjust_text
+
+texts = []
+for label, col, color in series_list:
+    last_val = df[col].dropna().iloc[-1]
+    last_date = df[col].dropna().index[-1]
+    t = ax.text(last_date, last_val, f"  {label}",
+                fontsize=9, color=color, va="center", fontweight="bold")
+    texts.append(t)
+
+adjust_text(texts, ax=ax, only_move={"text": "y"},
+            arrowprops=dict(arrowstyle="-", color="#4a4a4a", lw=1.0))
+```
+
+**Annotation placement:**
+
+- Always add a semi-transparent background to annotations over data:
+  `bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85)`
+- Use `zorder=5` on annotation text so it renders above lines (`zorder=2`)
+  and fills (`zorder=1`)
+- When placing multiple annotations, check that they do not share the same
+  approximate y-position. If they do, stagger `xytext` offsets vertically.
+
+**Bar chart value labels:**
+
+- Compute padding proportionally: `xpad = data_range * 0.04`, not a fixed constant
+- For horizontal bars, flip labels inside when they approach the axis limit:
+  ```python
+  near_edge = abs(value) >= 0.85 * max_abs_value
+  if near_edge:
+      ax.text(value - xpad, i, txt, ha="right", color="white")
+  else:
+      ax.text(value + xpad, i, txt, ha="left", color="#334155")
+  ```
+- For vertical bars, check that `value + offset < ylim_max` before placing
+  above; place inside the bar if it would clip.
+
+**Dual-axis (twinx) charts:**
+
+Always apply these three steps when using `ax.twinx()`:
+
+```python
+ax2 = ax.twinx()
+ax2.grid(False)                         # 1. disable secondary grid
+ax2.spines["top"].set_visible(False)    # 2. clean top spine
+# 3. synchronize tick count so grids align:
+ax.set_yticks(np.linspace(ax.get_ylim()[0], ax.get_ylim()[1], 6))
+ax2.set_yticks(np.linspace(ax2.get_ylim()[0], ax2.get_ylim()[1], 6))
+```
+
+**Axis margins for labels:**
+
+- Extend `xlim` at least 10% past the last data point when using
+  end-of-line labels (not a fixed number of days)
+- Use `ax.margins(y=0.1)` or manually pad `ylim` to prevent top/bottom clipping
+- For the right edge: `ax.set_xlim(right=last_date + (last_date - first_date) * 0.1)`
+
+**Seaborn interaction:**
+
+If using `seaborn`, call `sns.set_theme()` **before** `plt.rcParams.update()`
+so that rcParams overrides take precedence. Never let seaborn re-enable grids
+after the setup block.
+
+---
+
+### Chart review checklist
+
+Run this checklist on every chart before finalizing a post. Use `quarto preview`
+and visually inspect each rendered chart:
+
+1. **Label overlap** - Do any end-of-line labels touch or overlap each other?
+2. **Label clipping** - Are any labels cut off at the axes boundary?
+3. **Legend occlusion** - Does the legend cover any data points or trend lines?
+4. **Annotation collision** - Do annotation boxes or arrows overlap each other
+   or overlap data?
+5. **Axis readability** - Are tick labels readable? Do date labels overlap?
+6. **Dual-axis grids** - On twinx charts, is only one grid visible?
+7. **Bar labels** - Are value labels inside the bars when they approach the axis
+   limit? Is text color readable against the bar color?
+8. **Color contrast** - Are all text labels readable against their background?
+   Light text on light bars? Dark text on dark fills?
+9. **Mobile width** - At 400px viewport width, do charts remain legible?
+10. **Data-dependent fragility** - If the data values shift by 20%, would any
+    labels collide? Test by mentally moving values closer together.
+
+---
+
 ### Inline Python values in text
 
 Use inline expressions to pull live values from `stats` into prose.
@@ -341,13 +510,15 @@ For data-source attribution, use a table with columns: Series, Description, Sour
 - Unnumbered sections for narrative posts
 
 Standard section order for data posts:
-1. Opening paragraph (no heading)
-2. Reproducing this analysis (callout)
-3. Key Metrics (cards)
-4. Analytical sections (2-5 charts with prose)
-5. Conclusion / What It Means
-6. Methodology & Data (table)
-7. References (if applicable)
+1. Style block (responsive title CSS)
+2. Setup code block (hidden, `#| echo: false`)
+3. Key Metrics cards (hidden, `#| echo: false`)
+4. Opening paragraph (no heading)
+5. Reproducing this analysis / Note on data (callout)
+6. Analytical sections (2-5 charts with numbered headings, e.g., `## 1. Title`)
+7. Conclusion / What It Means
+8. Methodology & Data (table)
+9. References (if applicable)
 
 End with a horizontal rule and an italicized data-currency note:
 
@@ -384,7 +555,7 @@ When a post requires fetching or processing external data, organize scripts as:
 
 ```
 posts/YYYY-MM-DD-slug/scripts/
-├── 01_fetch_data.py      ← download raw data from APIs / BLS / FRED / etc.
+├── 01_fetch_data.py      ← download raw data from FRED and BEA NIPA API
 ├── 02_clean_data.py      ← clean, compute derived series, output to data/clean/
 ├── 03_visualizations.py  ← (optional) standalone chart exports
 └── 04_compute_stats.py   ← compute summary_stats.json used in the post
@@ -407,6 +578,27 @@ Then render:
 quarto render posts/YYYY-MM-DD-slug/index.qmd
 ```
 
+### Data sources
+
+**FRED (Federal Reserve Economic Data):**
+- API key: `FRED_API_KEY` environment variable
+- Python package: `fredapi` (in requirements.txt)
+- Registration: https://fred.stlouisfed.org/docs/api/api_key.html
+
+**BEA NIPA (Bureau of Economic Analysis):**
+- API key: `BEA_API_KEY` environment variable
+- Access: Direct REST API (`https://apps.bea.gov/api/data/`)
+- Registration: https://apps.bea.gov/api/signup/
+- Common tables: `T10102` (contributions to GDP growth), `T10101` (GDP percent
+  change), `T20100` (personal income), `T20301` (PCE by category)
+
+**Rule: No hardcoded release values.** All statistics in `04_compute_stats.py`
+must be computed from fetched data in `data/raw/` or `data/clean/`. If a value
+cannot be fetched programmatically (e.g., it exists only in a press release
+PDF), document it with a `# MANUAL:` comment and the source URL. Run
+`/blog-data-validate` before writing fetch scripts to confirm all series IDs
+are valid.
+
 ---
 
 ## Dependencies
@@ -422,15 +614,40 @@ pip freeze | grep new-package >> requirements.txt
 
 ---
 
+## Git workflow
+
+New posts are developed on a local branch and merged to `main` before pushing:
+
+```bash
+# Start a new post
+git checkout -b post/YYYY-MM-DD-slug
+
+# ... write the post, render, commit ...
+
+# When ready to publish
+git checkout main
+git merge post/YYYY-MM-DD-slug
+git push origin main
+# GitHub Actions deploys to gilboa.blog within ~2 minutes
+```
+
+Branch naming convention: `post/YYYY-MM-DD-slug` (matches the post folder name).
+
+---
+
 ## Publishing checklist
 
-Before removing `draft: true` and pushing:
+Before merging to `main` and pushing:
 
 - [ ] All inline `{python}` values render correctly (`quarto preview`)
 - [ ] All charts display without errors
+- [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
 - [ ] Figure captions are complete sentences
 - [ ] The "Reproducing this analysis" callout accurately describes the pipeline
 - [ ] `stats/summary_stats.json` is up to date
 - [ ] Data currency note at the bottom is accurate
 - [ ] `_freeze/` reflects the latest render (run `quarto render` if unsure)
 - [ ] Post folder is moved out of `drafts/` into `posts/`
+- [ ] Social preview image saved to `images/` and referenced in `image:` frontmatter
+- [ ] All FRED/BEA series IDs validated via `/blog-data-validate`
+- [ ] No `plt.show()` calls in any code block

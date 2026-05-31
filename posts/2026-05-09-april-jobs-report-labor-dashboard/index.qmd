@@ -11,37 +11,6 @@ code-fold: true
 code-summary: "Show code"
 ---
 
-```{=html}
-<style>
-#title-block-header .quarto-title-meta > div:last-child {
-  text-align: right;
-}
-
-.table-caption,
-caption {
-  text-align: left;
-}
-
-#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
-#quarto-document-content .callout { border-radius: 8px; }
-#quarto-document-content .grid { margin: 1.25rem 0; }
-#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
-#quarto-document-content h2 { margin-top: 2.25rem; }
-
-#quarto-document-content table {
-  font-size: 0.82rem;
-  color: #64748b;
-  margin-top: 1.5rem;
-}
-
-#quarto-document-content caption {
-  font-size: 0.78rem;
-  color: #94a3b8;
-  font-weight: 500;
-}
-</style>
-```
-
 ```{python}
 #| echo: false
 
