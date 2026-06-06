@@ -1,7 +1,6 @@
 ---
 title: "May 2026 Jobs Report: Labor Market Stabilization at +172k"
-subtitle: "Payrolls beat consensus, April was revised up sharply, and unemployment held at 4.3% for a fourth straight month. What it means for the June FOMC, wages, and markets."
-description-meta: "May 2026 jobs report shows +172k payrolls, 4.3% unemployment, and a +64k upward revision to April. Full dashboard analysis of the trend, sectors, wages, JOLTS, claims, and implications for the June FOMC and markets."
+description: "May 2026 jobs report shows +172k payrolls, 4.3% unemployment, and a +64k upward revision to April. Full dashboard analysis of the trend, sectors, wages, JOLTS, claims, and implications for the June FOMC and markets."
 date: 2026-06-06
 author: Yoram Gilboa
 categories: ["economics", "labor market", "data visualization", "federal reserve"]
