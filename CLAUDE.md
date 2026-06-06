@@ -41,6 +41,11 @@ gilboa-blog/
 - **One `.venv`.** Create it once at the repo root. Never create a `.venv` inside a post folder.
 - **`_freeze/` is committed.** This is what allows GitHub Actions to publish without re-running Python.
 - **`_site/` is gitignored.** It is generated output; never commit it.
+- **Raw `data/` CSVs are not committed.** Fetched FRED/BEA data is regenerable
+  via the post's fetch script (e.g. `scripts/download_fred_data.py`), so it is
+  left out of git. Commit only `index.qmd`, `scripts/`, `stats/`, `images/`,
+  and the matching `_freeze/` entry. (Cleaned `data/clean/` outputs that a post
+  reads directly may be committed if small; raw API dumps should not be.)
 
 ---
 
@@ -123,6 +128,14 @@ Existing categories:
 `economics`, `data analysis`, `inflation`, `energy`, `federal reserve`, `fomc`,
 `interest rates`, `labor market`, `markets`, `supreme court`, `data visualization`,
 `visualization`, `law`, `politics`, `meta`, `python`, `insurance`, `actuarial`
+
+**Do not add a `subtitle:` field.** On the homepage listing, a `subtitle`
+renders *in addition to* the auto-extracted excerpt (or the `description`),
+producing a doubled-up description block on the listing card that does not
+match the other posts. Put the one-line summary in `description:` only. If you
+need an SEO/social description that differs from the listing text, use
+`description-meta:` (which sets the meta tags without affecting the visible
+listing card) - but verify the listing card afterward (see publishing checklist).
 
 ---
 
@@ -642,9 +655,18 @@ Before merging to `main` and pushing:
 - [ ] All inline `{python}` values render correctly (`quarto preview`)
 - [ ] All charts display without errors
 - [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
+- [ ] **Homepage listing card checked**, not just the post page. View the post in
+      the `index.qmd` listing and confirm the card shows a single, clean
+      description line (title → categories → one description → date/author).
+      A doubled-up description usually means a stray `subtitle:` field (see the
+      YAML frontmatter rules).
 - [ ] Figure captions are complete sentences
 - [ ] The "Reproducing this analysis" callout accurately describes the pipeline
 - [ ] `stats/summary_stats.json` is up to date
+- [ ] **No unverified placeholder values shipping.** Grep the post and
+      `04_compute_stats.py` for `# MANUAL:`, `placeholder`, and `TODO`. Any
+      `# MANUAL:` value (e.g. a consensus estimate that cannot be fetched from
+      FRED) must be confirmed against its primary source before publishing.
 - [ ] Data currency note at the bottom is accurate
 - [ ] `_freeze/` reflects the latest render (run `quarto render` if unsure)
 - [ ] Post folder is moved out of `drafts/` into `posts/`

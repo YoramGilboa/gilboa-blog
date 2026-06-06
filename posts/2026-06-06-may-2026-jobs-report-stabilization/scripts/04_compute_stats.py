@@ -71,12 +71,12 @@ def compute() -> dict:
 
         # Establishment survey headline (BLS Table B-1, thousands)
         "payroll_may": payroll_may,
-        # Bloomberg/Reuters pre-release consensus median heading into release.
-        # MANUAL: this value cannot be fetched from FRED. Source: Bloomberg
-        # ECO release survey, accessed June 6, 2026. Update from the actual
-        # published survey median before publishing.
-        "payroll_consensus": 150,
-        "payroll_consensus_source": "Bloomberg pre-release survey median",
+        # Pre-release consensus median heading into the release.
+        # MANUAL: this value cannot be fetched from FRED. Source: Dow Jones
+        # consensus of economists as reported by CNBC, "Jobs report May 2026"
+        # (June 5-6, 2026). The +172k print came in well above this estimate.
+        "payroll_consensus": 80,
+        "payroll_consensus_source": "Dow Jones consensus of economists (via CNBC)",
         "payroll_april_revised": payroll_april_revised,
         # Initial April print from the May 8 release (April post's headline)
         "payroll_april_initial": 115,
