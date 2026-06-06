@@ -41,6 +41,8 @@ SERIES_IDS = [
     # Sector employment (using public-endpoint-friendly aliases)
     "USCONS", "MANEMP", "USTPU", "USPBS", "USEHS",
     "CES6562000001", "USLAH", "USGOVT", "USINFO",
+    # Federal government (state/local derived as USGOVT minus federal)
+    "CES9091000001",
     # State unemployment
     "CAUR", "TXUR", "NYUR", "FLUR",
 ]

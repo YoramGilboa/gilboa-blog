@@ -1,9 +1,9 @@
 ---
 title: "May 2026 Jobs Report: Labor Market Stabilization at +172k"
-description: "May 2026 jobs report shows +172k payrolls, 4.3% unemployment, and a +64k upward revision to April. Full dashboard analysis of the trend, sectors, wages, JOLTS, claims, and implications for the June FOMC and markets."
+description: "May 2026 payrolls printed +172k, well above the +80k consensus but within sampling error, with gains concentrated in three acyclical sectors (health care, government, leisure). Full dashboard analysis of the trend, sectors, wages, JOLTS, claims, and implications for the June FOMC."
 date: 2026-06-06
 author: Yoram Gilboa
-categories: ["economics", "labor market", "data visualization", "federal reserve"]
+categories: ["economics", "labor market", "labor market breadth", "data visualization", "federal reserve"]
 image: images/may-2026-labor-dashboard.png
 image-alt: "Six-panel labor market dashboard showing payrolls, unemployment, JOLTS quits, initial claims, job openings, and CES vs ADP private payroll growth through May 2026."
 toc: true
@@ -89,6 +89,7 @@ series_ids = {
     "health_care":     "CES6562000001",
     "leisure":         "USLAH",
     "government":      "USGOVT",
+    "gov_federal":     "CES9091000001",
     "information":     "USINFO",
     "ca_unrate":       "CAUR",
     "tx_unrate":       "TXUR",
@@ -185,12 +186,24 @@ mom = pay.diff()
 
 ## Executive summary
 
-The May 2026 Employment Situation release printed **`{python} fmt_jobs(stats['payroll_may'])` nonfarm payrolls**, more than doubling the consensus near `{python} f"+{stats['payroll_consensus'] * 1000:,}"`, while the **unemployment rate held at `{python} fmt_pct(stats['unrate_may'])`** for the fourth consecutive month. The household survey added **`{python} f"+{stats['household_emp_change_may'] * 1000:,}"` employed persons**, reversing the April decline that markets had read as one-month noise. The bigger story is in the revisions: **April was revised up to `{python} fmt_jobs(stats['payroll_april_revised'])`** from an initial print of `{python} fmt_jobs(stats['payroll_april_initial'])`, a **`{python} f"+{stats['payroll_april_revision'] * 1000:,}"`** lift that meaningfully changes the recent trend picture. The three-month average now sits at **`{python} fmt_jobs(stats['payroll_3mo_avg'])`**, well above the six-month pace of `{python} fmt_jobs(stats['payroll_6mo_avg'])` and the twelve-month pace of `{python} fmt_jobs(stats['payroll_12mo_avg'])`. The clean read on the cycle: a **labor market that has stabilized at a slower pace than 2023-24 but has not broken**, headed into the June 11 CPI release and the June 16-17 FOMC.
+The May 2026 Employment Situation release printed **`{python} fmt_jobs(stats['payroll_may'])` nonfarm payrolls**, well above the consensus near `{python} f"+{stats['payroll_consensus'] * 1000:,}"`, though the beat sits well within the CES survey's standard 90% confidence interval of roughly ±130,000 jobs and is therefore not statistically distinguishable from the median estimate. The **unemployment rate held at `{python} fmt_pct(stats['unrate_may'])`** for the fourth consecutive month. The household survey added **`{python} f"+{stats['household_emp_change_may'] * 1000:,}"` employed persons**, directionally consistent with the establishment survey but too noisy to count as independent confirmation. The revisions are notable: **April was revised up to `{python} fmt_jobs(stats['payroll_april_revised'])`** from an initial print of `{python} fmt_jobs(stats['payroll_april_initial'])`, a **`{python} f"+{stats['payroll_april_revision'] * 1000:,}"`** lift - and revisions matter precisely because the first print is the noisiest one. The figure in the next two releases uses meaningfully more sample and is materially more reliable, so the disciplined read weights revisions more heavily than fresh prints. The three-month average now sits at **`{python} fmt_jobs(stats['payroll_3mo_avg'])`**, well above the six-month pace of `{python} fmt_jobs(stats['payroll_6mo_avg'])` and the twelve-month pace of `{python} fmt_jobs(stats['payroll_12mo_avg'])`, though part of that gap may close as recent prints are revised. Full sampling-error and revision context is in the callout below. The clean read on the cycle: a **labor market that has stabilized at a slower pace than 2023-24 but has not broken**, headed into the June 11 CPI release and the June 16-17 FOMC.
 
 ::: {.callout-note collapse="true"}
 ## Note on data
 
 Headline payroll, unemployment, average hourly earnings, household-survey employment, and industry-detail values are computed from the FRED-cached BLS series in this post's `data/` directory and recorded in `stats/summary_stats.json` as the single source of truth used by the prose, the executive-summary cards, and the figure annotations. The initial April print (`{python} fmt_jobs(stats['payroll_april_initial'])`) and the consensus estimate (`{python} f"+{stats['payroll_consensus'] * 1000:,}"`) are taken from the prior May 8, 2026 release and the Dow Jones pre-release survey of economists, respectively. All FRED-pulled series (PAYEMS, UNRATE, CIVPART, EMRATIO, JTSJOL, JTSQUR, ICSA, CPIAUCSL, OPHNFB, ULCNFB, USREC, ADPMNUSNERSA, CE16OV, state UR, and the sector employment aliases listed in the sources table) are retrieved with `fredapi` when `FRED_API_KEY` is set, otherwise via the FRED graph CSV export cached in `data/`. The ADP series is rescaled from persons to thousands so its month-over-month changes line up with CES private employment. Recession shading uses the monthly USREC indicator and is illustrative rather than an official NBER chronology graphic. Data current as of `{python} stats['data_current_as_of']`.
+:::
+
+::: {.callout-note collapse="true"}
+## Interpreting monthly labor data
+
+The headline payroll change from the CES (establishment) survey carries a 90% confidence interval of approximately **±130,000 jobs**. That means the `{python} fmt_jobs(stats['payroll_may'])` print and the `{python} f"+{stats['payroll_consensus'] * 1000:,}"` consensus estimate are not statistically distinguishable from each other in any single month. The household survey (CPS) is even noisier: its 90% confidence interval on the monthly employment change is roughly **±500,000**, so the `{python} f"+{stats['household_emp_change_may'] * 1000:,}"` household figure is consistent with anything from a large decline to a large gain. This is why the post emphasizes trend reads (3/6/12-month moving averages) over any single month's headline.
+
+Revisions add a second layer of uncertainty - but they also progressively resolve it. Initial CES prints are based on roughly **40% of the final establishment sample**. The first revision (released one month later) typically brings that to about **75%**, and the second revision (two months after the initial) brings it to about **95%**. Because the standard error of a sample estimate shrinks as sample coverage grows, **the confidence interval on a payroll number tightens with each revision**: the figure reported two months after its initial print is materially more reliable than the initial. The practical takeaway is to **weight revised numbers more heavily than fresh prints and avoid overreacting to any single first release** - the second-revision figure, two months later, is closer to the truth.
+
+Beyond monthly revisions, the annual CES benchmark reconciles survey-based estimates against the near-universe QCEW (Quarterly Census of Employment and Wages). The 2024 preliminary benchmark revision was approximately **-818,000 jobs**, meaning the BLS had materially overestimated payroll levels for that period. This is a separate and larger class of revision risk than the two monthly revisions; the direction and magnitude of future benchmarks is not predictable from current data.
+
+In this post, single-month readings (the consensus beat, the household survey change) are reported because they are the standard currency of jobs-day coverage, but the analytical weight is on the trend. Readers should hold any individual month's numbers lightly.
 :::
 
 ```{python}
@@ -208,7 +221,7 @@ html = f"""
               padding: 1.25rem; text-align: center;">
     <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; letter-spacing: 0.02em;">Nonfarm Payrolls</div>
     <div style="font-size: 1.65rem; font-weight: 700; color: {COLORS['primary']}; margin: 0.35rem 0;">{fmt_jobs(stats['payroll_may'])}</div>
-    <div style="font-size: 0.7rem; color: #94a3b8;">{stats['report_month']} (beat +{stats['payroll_consensus'] * 1000:,} consensus)</div>
+    <div style="font-size: 0.7rem; color: #94a3b8;">{stats['report_month']} vs. +{stats['payroll_consensus'] * 1000:,} consensus</div>
   </div>
 
   <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
@@ -242,7 +255,7 @@ The monthly Employment Situation release combines two surveys with different con
 
 ### What May delivered
 
-In `{python} stats['report_month']`, the establishment count moved up `{python} fmt_jobs(stats['payroll_may'])` while household employment rose `{python} f"+{stats['household_emp_change_may'] * 1000:,}"`. Both surveys pointed the same direction this month, which is the configuration that resolves the April ambiguity in favor of the cleaner read: hiring is not collapsing. The unemployment rate held at `{python} fmt_pct(stats['unrate_may'])` for a fourth consecutive month, while the labor force participation rate stayed at `{python} fmt_pct(stats['lfpr_may'])` and the employment-to-population ratio ticked up to `{python} fmt_pct(stats['emp_pop_ratio_may'])`. Revisions were a major part of the story: **April was lifted to `{python} fmt_jobs(stats['payroll_april_revised'])` from `{python} fmt_jobs(stats['payroll_april_initial'])`**, while March was revised to `{python} fmt_jobs(stats['payroll_march_revised'])`. The disciplined way to read this is to track the **three-, six-, and twelve-month moving averages** alongside the latest print, which smooths weather, strikes, and the sampling and benchmarking quirks that move single months around. The 3-month average has now climbed to `{python} fmt_jobs(stats['payroll_3mo_avg'])`, but the 12-month average remains a softer `{python} fmt_jobs(stats['payroll_12mo_avg'])` - that gap is the heart of the stabilization story.
+In `{python} stats['report_month']`, the establishment count moved up `{python} fmt_jobs(stats['payroll_may'])` while household employment rose `{python} f"+{stats['household_emp_change_may'] * 1000:,}"`. Both surveys were positive this month, though the household survey is meaningfully noisier (the callout above quantifies the confidence interval), so its monthly change is too noisy to treat as independent confirmation, directionally consistent rather than corroboration. The unemployment rate held at `{python} fmt_pct(stats['unrate_may'])` for a fourth consecutive month, while the labor force participation rate stayed at `{python} fmt_pct(stats['lfpr_may'])` and the employment-to-population ratio ticked up to `{python} fmt_pct(stats['emp_pop_ratio_may'])`. Revisions were notable: **April was lifted to `{python} fmt_jobs(stats['payroll_april_revised'])` from `{python} fmt_jobs(stats['payroll_april_initial'])`**, while March was revised to `{python} fmt_jobs(stats['payroll_march_revised'])`. Initial CES prints carry the largest revision risk, and the direction is not predetermined (the callout above explains why later releases are more reliable). A skeptical read of the rising 3-month average is that some of the gap between recent prints and the 12-month pace may close as the preliminary numbers are revised. The disciplined way to read this is to track the **three-, six-, and twelve-month moving averages** alongside the latest print, which smooths weather, strikes, and the sampling and benchmarking quirks that move single months around. The 3-month average has now climbed to `{python} fmt_jobs(stats['payroll_3mo_avg'])`, but the 12-month average remains a softer `{python} fmt_jobs(stats['payroll_12mo_avg'])` - that gap is the heart of the stabilization story, with the caveat that some of it may reflect preliminary-print optimism.
 
 ```{python}
 #| echo: true
@@ -251,7 +264,7 @@ In `{python} stats['report_month']`, the establishment count moved up `{python} 
 #| label: fig-payrolls-ma
 #| fig-align: center
 #| fig-alt: "Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout."
-#| fig-cap: "Month-over-month nonfarm payroll change with 3-, 6-, and 12-month moving averages. May's +172k beat consensus; April was revised up to +179k from the initial +115k.<br>source: BLS via FRED (PAYEMS); recession shading from USREC."
+#| fig-cap: "Month-over-month nonfarm payroll change with 3-, 6-, and 12-month moving averages. May's print came in above consensus but within the one-month CES confidence interval; April was revised up by +64k.<br>source: BLS via FRED (PAYEMS); recession shading from USREC."
 
 # =============================================================================
 # FIGURE 1: PAYROLLS MoM WITH MOVING AVERAGES
@@ -261,12 +274,12 @@ In `{python} stats['report_month']`, the establishment count moved up `{python} 
 # upper-right callout summarizes the latest two months.
 # =============================================================================
 
-# Build moving averages on the MoM change series. min_periods=1 keeps the
-# line continuous from the leftmost date instead of starting blank for the
-# first 11 months.
-ma3  = mom.rolling(3,  min_periods=1).mean()
-ma6  = mom.rolling(6,  min_periods=1).mean()
-ma12 = mom.rolling(12, min_periods=1).mean()
+# Build moving averages on the MoM change series. Use min_periods=window so
+# each average is computed from a full window of data (e.g., a 12-month MA
+# is always from 12 months, never fewer). Then slice to the display window.
+ma3  = mom.rolling(3,  min_periods=3).mean()
+ma6  = mom.rolling(6,  min_periods=6).mean()
+ma12 = mom.rolling(12, min_periods=12).mean()
 
 # Start the window in 2022 so both the post-COVID rebound distortion AND the
 # residual swing in the 12-month moving average from rolling that rebound out
@@ -404,8 +417,10 @@ axes[0, 2].set_ylabel("%")
 # by Treasury and Fed staff.
 cl    = S("claims")
 cl    = cl.loc[cl.index >= (start - pd.DateOffset(months=1))]
-cl_ma = cl.rolling(4, min_periods=1).mean()
-axes[1, 0].plot(cl_ma.index, cl_ma.values, color=COLORS["secondary"])
+cl_ma = cl.rolling(4, min_periods=4).mean()
+# ICSA is published in persons; divide by 1000 so the y-axis reads "Claims
+# (000), SA" correctly (i.e., 215 on the axis = 215,000 claims).
+axes[1, 0].plot(cl_ma.index, cl_ma.values / 1000.0, color=COLORS["secondary"])
 axes[1, 0].set_title("Initial claims, 4-week avg.")
 axes[1, 0].set_ylabel("Claims (000), SA")
 
@@ -453,7 +468,7 @@ plt.show()
 
 Walking the panels top-to-bottom, left-to-right:
 
-The **top-left** bars show the recent volatility: a few negative months scattered through late 2025, the February dip, but the most recent three bars are all clearly above zero - that is the visual signal of stabilization rather than continued deceleration.
+The **top-left** bars show the recent volatility: a few negative months scattered through late 2025, the February dip, but the most recent three bars are positive, consistent with stabilization rather than continued deceleration. Any single bar, however, should be read against the ±130,000 sampling-error context the callout above establishes.
 
 The **top-middle** unemployment rate has stayed within a `{python} fmt_pct(stats['unrate_may'])` band for several months. A stable unemployment rate while hiring continues at a slower pace is the textbook signature of a labor market that is **rebalancing**, not breaking - if firms were actually shedding workers, this line would already be moving up.
 
@@ -463,13 +478,17 @@ The **bottom-left** four-week initial claims line sits in the **`{python} f"{sta
 
 The **bottom-middle** job-openings line has fallen from a 12 million peak in 2022 to about 7 million today, but it has been flat-to-rising for several months. Firms still want workers; the post-pandemic frenzy is over but demand has not collapsed.
 
-The **bottom-right** panel is the cross-check on the BLS print: it overlays year-over-year private payroll growth from BLS (CES, blue) and from ADP's independent payroll-processing data (red). The two lines decelerated together from about 2.5% to under 1% through 2024-25 and have moved sideways since - the strongest evidence that the slowdown the BLS reported is real, and the recent stabilization equally so.
+The **bottom-right** panel is the cross-check on the BLS print: it overlays year-over-year private payroll growth from BLS (CES, blue) and from ADP's independent payroll-processing data (red). The two lines decelerated together from about 2.5% to under 1% through 2024-25 and have moved sideways since - directionally consistent with the BLS read of stabilization, though year-over-year overlays will mechanically co-move because both are slow aggregates. The monthly scatter in Section 5 is the more granular view, and it shows more dispersion than the YoY overlay suggests.
 
-Read together, every panel says **stable**, no panel says **breaking**, and the recent direction in payrolls, household employment, and the employment-to-population ratio leans slightly **firmer**.
+Read together and on a trend basis, every panel reads **stable** rather than **breaking**, and the recent direction in payrolls and the employment-to-population ratio leans slightly **firmer**. That is the cleanest read, though not the only one - Section 3 will show that the composition of the headline tells a more nuanced story.
 
 ## 3. Sectoral and geographic divergences
 
-Sector detail in the BLS press release showed continued strength in **leisure and hospitality** (`{python} fmt_jobs(stats['sector_leisure'])`), **government** (`{python} fmt_jobs(stats['sector_government'])`), and **health care** (`{python} fmt_jobs(stats['sector_health_care'])`), with **construction** also adding `{python} fmt_jobs(stats['sector_construction'])`. The "Others" bar in the chart below collects four smaller-moving supersectors that do not individually clear the 10,000-job threshold: **manufacturing** (`{python} fmt_jobs(stats['sector_manufacturing'])`), **professional and business services** (`{python} fmt_jobs(stats['sector_prof_bus'])`), **information** (`{python} fmt_jobs(stats['sector_information'])`), and **trade, transportation, and utilities** (`{python} fmt_jobs(stats['sector_trade_trans_util'])`); their net contribution is small and quiet, which is itself diagnostic. The pattern is broadly consistent with a **service-led expansion** still doing the heavy lifting, with goods-adjacent supersectors mostly flat rather than contracting.
+The headline is misleading without the sector detail. Three sectors carried nearly the entire print: **leisure and hospitality** (`{python} fmt_jobs(stats['sector_leisure'])`), **government** (`{python} fmt_jobs(stats['sector_government'])`), and **health care** (`{python} fmt_jobs(stats['sector_health_care'])`) sum to roughly `{python} fmt_jobs(stats['sector_leisure'] + stats['sector_government'] + stats['sector_health_care'])` of the `{python} fmt_jobs(stats['payroll_may'])` headline. Outside those three, **construction** added `{python} fmt_jobs(stats['sector_construction'])`, but cyclical service sectors - **manufacturing** (`{python} fmt_jobs(stats['sector_manufacturing'])`), **professional and business services** (`{python} fmt_jobs(stats['sector_prof_bus'])`), **information** (`{python} fmt_jobs(stats['sector_information'])`), and **trade, transportation, and utilities** (`{python} fmt_jobs(stats['sector_trade_trans_util'])`) - were collectively at stall speed, and the remaining smaller supersectors (financial activities, other services, mining/logging, and the non-health portion of education and health services) netted slightly negative. Private cyclical demand is not contributing meaningfully to the May print.
+
+That concentration matters. Health care and government are among the most acyclical sectors in the economy - health care follows demographics and insurance coverage, not the business cycle, and government employment is driven by fiscal budgets rather than private demand. The government number (`{python} fmt_jobs(stats['sector_government'])`) breaks down as federal `{python} fmt_jobs(stats['sector_gov_federal'])` and state/local `{python} fmt_jobs(stats['sector_gov_state_local'])` - nearly all of the government hiring was at the state and local level, with federal employment essentially flat despite the 2025-26 federal workforce backdrop. Leisure and hospitality is more cyclically sensitive, but its `{python} fmt_jobs(stats['sector_leisure'])` print continues a catch-up from the pandemic-era deficit.
+
+This composition is a **yellow flag**, not a red one. Stabilization is real - the headline is positive, claims are contained, the unemployment rate is flat - but the breadth of that stabilization is narrow. Sustained reliance on acyclical sectors would signal weaker underlying private demand. If the acyclical sectors were removed, private cyclical hiring is running near zero, which is the kind of composition that can precede a broader softening if it persists. The chart below makes the concentration visible.
 
 The bottom panel shows the latest unemployment rate for **California, Texas, New York, and Florida** against the US average. The four largest states sit in a tight band around the national figure, which means regional labor markets are not dramatically decoupled from the national picture even where industry mix differs. Divergences at the state level typically reflect that industry mix and migration flows rather than a separate national cycle.
 
@@ -701,17 +720,17 @@ plt.show()
 
 The **top panel** answers the question every worker asks: is your raise keeping up with prices? Nominal AHE (blue) is growing about `{python} fmt_pct(stats['ahe_yoy_pct'])` year over year, while real AHE (red, after taking CPI out) is meaningfully positive - workers are getting raises, and after the inflation pass-through their purchasing power is still rising, just modestly. When the red line was below zero in 2021-22, real wages were actually falling; the fact that it has been above zero through 2024-26 is the (slow) repair of pandemic-era purchasing-power losses.
 
-The **bottom panel** answers the question the Fed cares about: is the wage path sustainable for prices? Productivity (green) growing faster than unit labor costs (gray) is the green light, because firms can pay higher wages without raising their own prices to offset. Today productivity is running near 2-3% YoY while unit labor costs are near 1-2%, which is comfortably inside the sustainable zone. When the gray line is above the green line (as it was in 2022), unit-cost pressure builds and the inflation hand-off from wages gets harder to contain.
+The **bottom panel** answers the question the Fed cares about: is the wage path sustainable for prices? Productivity (green) growing faster than unit labor costs (gray) is the green light, because firms can pay higher wages without raising their own prices to offset. Today productivity is running near 2-3% YoY while unit labor costs are near 1-2%, which is inside the sustainable zone. A caveat: OPHNFB and ULCNFB are among the most heavily revised series in macro, and a couple of quarters of readings should be held lightly - the picture can shift materially with the next annual revision. When the gray line is above the green line (as it was in 2022), unit-cost pressure builds and the inflation hand-off from wages gets harder to contain.
 
 The light **gray vertical bars** on both panels mark NBER-dated US recessions. In this window the only one is the short 2020 COVID recession; it is shown so the reader can compare today's wage and productivity readings to a known downturn rather than to a blank background.
 
 ## 5. Cross-checks: ADP and initial claims
 
-When the establishment and household surveys disagree, the right move is to consult independent sources. The two best high-frequency cross-checks are the **ADP National Employment Report** (a separate private-sector payroll measure built from real payroll-processing data) and **initial unemployment claims** (a weekly count from state UI offices, available on a one-week lag). Neither is a substitute for the BLS survey, but together they help reject the most aggressive interpretations of any single soft month - and equally, they help confirm a stronger print is not just an artifact of one survey's seasonal adjustment.
+When the establishment and household surveys disagree, the right move is to consult independent sources. The two best high-frequency cross-checks are the **ADP National Employment Report** (a separate private-sector payroll measure built from real payroll-processing data) and **initial unemployment claims** (a weekly count from state UI offices, available on a one-week lag). ADP is model-assisted and has a poor month-to-month track record against CES - its value is directional rather than precise, and the scatter in the top panel below shows more dispersion than a tight "confirmation" would require. Neither source is a substitute for the BLS survey, but together they help reject the most extreme interpretations of any single month.
 
-The figure below shows two views. In the **top panel**, each dot is one month from the last 24. Its position on the x-axis is the ADP private change, its position on the y-axis is the BLS (CES) private change, and the **color** runs from dark purple (earliest month in the window) to bright yellow (most recent) - that is what the colorbar on the right labels as "earliest" and "latest." Dots clustered near the gray 45-degree line mean the two independent sources tell the same story for that month; dots far off the line are months where the two sources disagree. The most recent dots cluster tightly along the line in the positive quadrant, which is the configuration that backs the May BLS read.
+The figure below shows three views. In the **top panel**, each dot is one month from the last 24, positioned by the ADP private change (x-axis) against the BLS private change (y-axis), colored from dark purple (earliest) to bright yellow (most recent). Dots near the 45-degree line agree; dots off the line disagree. The dispersion is meaningful - the two sources diverge substantially in many months - but the most recent dots sit in the positive quadrant, directionally consistent with the May BLS read.
 
-The **bottom panel** stacks two series whose movement together would be the most reliable downturn signal: monthly payroll changes (blue bars, left axis) and the four-week initial-claims average (red line, right axis). In a real downturn, **both** would move at once - payroll bars would tip persistently negative AND the claims line would step up. The picture today is the opposite: bars are averaging positive again after the April scare while the red line sits flat in the **`{python} f"{stats['claims_4wk_avg']},000"`** neighborhood. That is the visual signature of a labor market that has stabilized at a slower-but-positive trend.
+The **middle** and **bottom panels** separate the two series whose joint movement would be the most reliable downturn signal - payroll bars and the four-week claims average - onto independent axes, so the visual relationship is not an artifact of scaling choice. In a real downturn, payroll bars would tip persistently negative AND the claims line would step up. Today: bars are averaging positive again after the April scare while claims sit flat in the **`{python} f"{stats['claims_4wk_avg']},000"`** neighborhood. That is the visual signature of stabilization at a slower-but-positive trend.
 
 ```{python}
 #| echo: true
@@ -719,15 +738,16 @@ The **bottom panel** stacks two series whose movement together would be the most
 #| code-summary: "Show code"
 #| label: fig-cross-checks
 #| fig-align: center
-#| fig-alt: "Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis."
-#| fig-cap: "Top panel: scatter of ADP private vs. CES private monthly changes (last 24 months) with a 45-degree reference. Bottom panel: monthly payroll change against the four-week initial-claims average.<br>source: BLS via FRED; ADP via FRED."
+#| fig-alt: "Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average."
+#| fig-cap: "Top: scatter of ADP vs. CES private monthly changes (last 24 months) with 45-degree reference line. Middle & bottom: monthly payroll change and four-week initial claims average shown on separate axes to avoid scaling artifacts.<br>source: BLS via FRED; ADP via FRED."
 
 # =============================================================================
-# FIGURE 5: ADP-vs-CES SCATTER AND PAYROLLS-vs-CLAIMS DUAL AXIS
-# What the chart says: independent sources line up with the BLS read. ADP
-# tracks CES (top), and four-week claims have not jumped despite the volatile
-# print sequence in early 2026 (bottom). That argues for reading the recent
-# numbers as stabilization rather than turn.
+# FIGURE 5: ADP-vs-CES SCATTER AND PAYROLLS + CLAIMS SMALL-MULTIPLE
+# What the chart says: independent sources are directionally consistent with
+# the BLS read. ADP tracks CES with meaningful dispersion (top). Payrolls
+# and claims are shown on independent axes (middle and bottom) so the reader
+# can judge each series on its own terms without hand-pinned dual-axis
+# scaling that can manufacture or erase a visual relationship.
 # =============================================================================
 
 # Restrict to the last 24 months so the scatter is dense enough to see
@@ -742,13 +762,13 @@ scat    = (pd.concat([pm.rename("ces"), am.rename("adp")], axis=1, join="inner")
            .loc[start24:end].dropna())
 
 cl  = S("claims")
-clm = cl.rolling(4).mean().loc[start24 - pd.DateOffset(weeks=8):]
+clm = cl.rolling(4, min_periods=4).mean().loc[start24 - pd.DateOffset(weeks=8):]
 
-fig, (axs, axb) = plt.subplots(2, 1, figsize=(8, 7))
+fig, (axs, axb, axc) = plt.subplots(3, 1, figsize=(8, 8.2),
+                                     gridspec_kw={"height_ratios": [1.5, 0.7, 0.7],
+                                                  "hspace": 0.45})
 
-# Top: scatter colored by time so the eye can pick up trend. The colorbar
-# attached below labels its ends "earliest" / "latest" so a beginner can
-# read the time progression without remembering the viridis convention.
+# --- Top panel: scatter colored by time ---
 sc = axs.scatter(scat["adp"], scat["ces"],
                  c=range(len(scat)), cmap="viridis", s=28, alpha=0.75)
 axs.set_xlabel("ADP private MoM (000)")
@@ -757,52 +777,49 @@ axs.set_title("Private payrolls: ADP vs CES (monthly changes)")
 axs.grid(alpha=0.25, linewidth=0.6)
 axs.set_axisbelow(True)
 
+# Colorbar with quarterly tick labels so intermediate months are readable.
 cbar = fig.colorbar(sc, ax=axs, fraction=0.04, pad=0.02)
-cbar.set_ticks([0, len(scat) - 1])
-cbar.set_ticklabels(["earliest", "latest"])
-cbar.ax.tick_params(labelsize=8)
+n_ticks = min(5, len(scat))
+tick_positions = np.linspace(0, len(scat) - 1, n_ticks).astype(int)
+cbar.set_ticks(tick_positions)
+cbar.set_ticklabels([scat.index[i].strftime("%b '%y") for i in tick_positions])
+cbar.ax.tick_params(labelsize=7)
 cbar.set_label("month in window", fontsize=8)
+
+# Annotate the 3 most recent dots with month labels for trajectory.
+for i in range(-3, 0):
+    row = scat.iloc[i]
+    lbl = scat.index[i].strftime("%b")
+    axs.annotate(lbl, (row["adp"], row["ces"]),
+                 textcoords="offset points", xytext=(6, 4),
+                 fontsize=7, color=COLORS["neutral"], fontweight="bold")
 
 # 45-degree reference line: identical changes would fall on this diagonal.
 lims = max(np.nanmax(np.abs(scat["adp"])),
            np.nanmax(np.abs(scat["ces"])), 100) * 1.1
 axs.plot([-lims, lims], [-lims, lims], color=COLORS["light"], linewidth=1)
 
-# Bottom: dual-axis. Bars on the left axis (payrolls) so the level is the
-# dominant visual; line on the right axis (claims) overlays the timing. We
-# explicitly DISABLE grid on the right axis so we are not drawing two sets
-# of horizontal lines; the left axis grid is the only one visible.
-axb2 = axb.twinx()
-axb.bar(mom.loc[start24:end].index, mom.loc[start24:end].values,
-        width=18, alpha=0.35, color=COLORS["primary"], label="Payrolls MoM")
-axb2.plot(clm.index, clm.values,
-          color=COLORS["accent"], linewidth=1.5, label="Claims 4wk MA")
-
-axb.set_ylabel("Payrolls MoM (000)", color=COLORS["primary"])
-axb2.set_ylabel("Claims (000), SA",   color=COLORS["accent"])
-axb.tick_params(axis="y", colors=COLORS["primary"])
-axb2.tick_params(axis="y", colors=COLORS["accent"])
-axb.set_title("Payroll momentum vs claims (monthly bars + weekly line)")
+# --- Middle panel: payroll bars (independent y-axis) ---
+payroll_window = mom.loc[start24:end]
+axb.bar(payroll_window.index, payroll_window.values,
+        width=18, alpha=0.35, color=COLORS["primary"])
+axb.axhline(0, color=COLORS["neutral"], linewidth=0.5, alpha=0.5)
+axb.set_ylabel("Payrolls MoM (000)")
+axb.set_title("Monthly payroll change")
 axb.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
-
-# Pin both axes to clean, round increments so the gridlines from the left
-# axis line up with the right-axis ticks.
-axb.set_ylim(-200, 300)
-axb.set_yticks(np.arange(-200, 301, 100))
-axb2.set_ylim(200000, 250000)
-axb2.set_yticks(np.arange(200000, 250001, 10000))
-axb2.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{int(x):,}"))
-
 axb.grid(axis="y", alpha=0.25, linewidth=0.6)
 axb.grid(axis="x", visible=False)
-axb2.grid(False)
 axb.set_axisbelow(True)
 
-# Combined legend so both series appear in one box.
-h1, l1 = axb.get_legend_handles_labels()
-h2, l2 = axb2.get_legend_handles_labels()
-axb.legend(h1 + h2, l1 + l2, loc="upper right", fontsize=8,
-           frameon=True, framealpha=0.9, edgecolor="#cbd5e1")
+# --- Bottom panel: claims line (independent y-axis) ---
+axc.plot(clm.index, clm.values / 1000,
+         color=COLORS["accent"], linewidth=1.5)
+axc.set_ylabel("Claims 4wk MA (000)")
+axc.set_title("Four-week initial claims average")
+axc.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
+axc.grid(axis="y", alpha=0.25, linewidth=0.6)
+axc.grid(axis="x", visible=False)
+axc.set_axisbelow(True)
 
 plt.tight_layout()
 fig.savefig(IMG_DIR / "may-2026-cross-checks.png", dpi=300, bbox_inches="tight")
@@ -813,27 +830,27 @@ plt.show()
 
 For rate markets, May is one input among several arriving into the **`{python} stats['fomc_window']`** Federal Open Market Committee window, which will also carry an updated Summary of Economic Projections and dot plot. The [Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) translates staff forecasts and participant judgments into a simple picture of the expected policy path, and June meetings tend to draw more attention because they include a refresh of the dot plot. The May labor data feed the **growth side of the reaction function**, while the next major inflation print arrives on **`{python} stats['next_cpi_release']`** with the May CPI release.
 
-Two practical observations for positioning. First, a payroll beat does not, on its own, derail an easing path: if real wage growth and unit labor costs remain contained (panel 4), the inflation side of the mandate remains the binding constraint, not the labor side. The committee can still describe the labor market as "in better balance" and proceed with a measured-cut framework. Second, the **2-year vs. 10-year Treasury spread** continues to embed both policy expectations and term premia, and a labor report that stabilizes without overheating is consistent with the dot-plot path of measured cuts later this year. The cross-checks in section 5 - ADP tracking CES and four-week claims contained - support reading May as a stabilization print rather than a re-acceleration that would trouble the inflation outlook.
+Two practical observations for positioning. First, a payroll print above consensus does not, on its own, derail an easing path: if real wage growth and unit labor costs remain contained (panel 4), the inflation side of the mandate remains the binding constraint, not the labor side. The committee can still describe the labor market as "in better balance" and proceed with a measured-cut framework. Second, the **2-year vs. 10-year Treasury spread** continues to embed both policy expectations and term premia, and a labor report that stabilizes without overheating is consistent with the dot-plot path of measured cuts later this year. The cross-checks in section 5 - ADP directionally consistent with CES and four-week claims contained - support reading May as a stabilization print rather than a re-acceleration that would trouble the inflation outlook, with the caveat that the sectoral concentration documented in section 3 is the single most important thing the committee will want to see broaden before leaning into a stronger labor narrative.
 
 For a deeper dive on the April FOMC decision and the dot-plot framework, see the companion post on the [April FOMC decision](https://gilboa.blog/posts/20260501%20April%20FOMC%20decision/).
 
 ## 7. What it means
 
-May delivers a clean three-part story: a positive surprise on the headline payroll number, a steady unemployment rate at `{python} fmt_pct(stats['unrate_may'])`, and revisions that lift the recent trend meaningfully higher. The cross-checks (ADP, claims, JOLTS) line up with the BLS read, and wage growth remains contained at a pace consistent with the Fed's reaction function. Each constituency reads it a little differently.
+May reads as stabilization, but with three caveats that the careful reader has already met: the headline beat is within one CES confidence interval of consensus, the gains are concentrated in three acyclical sectors, and recent prints carry the largest revision risk. The unemployment rate is steady at `{python} fmt_pct(stats['unrate_may'])`, the cross-checks are directionally consistent with the BLS read, and wage growth remains contained. None of that is overturned by the caveats - but the confidence level the headline alone would suggest is not the right one. Each constituency reads it a little differently.
 
-**For policymakers:** the report does not, on its own, change the trajectory of policy. The labor market is no longer cooling fast enough to demand defensive cuts on growth grounds, but it is also not overheating in a way that would force the committee to reverse course. AHE growth at `{python} fmt_pct(stats['ahe_yoy_pct'])` YoY and stable productivity gains keep the unit labor cost pressure muted. The `{python} stats['fomc_window']` FOMC will see more information than this single print, but the direction of travel - stabilizing hiring, contained claims, wage growth near productivity plus 2% - is consistent with the dot-plot path of measured cuts later in the year. The June dot plot will tell us whether participants have narrowed the dispersion around that path.
+**For policymakers:** the report does not, on its own, change the trajectory of policy. The labor market is no longer cooling fast enough to demand defensive cuts on growth grounds, but the narrow breadth of hiring is the kind of signal the committee will want to see broaden before it leans into a stronger labor read. AHE growth at `{python} fmt_pct(stats['ahe_yoy_pct'])` YoY and productivity gains keep unit labor cost pressure muted, though the productivity and ULC series are both heavily revised. The `{python} stats['fomc_window']` FOMC will see more information than this single print; the direction of travel - stabilizing hiring, contained claims - is consistent with the dot-plot path of measured cuts later in the year, but only if the breadth of hiring fills in beyond the three acyclical sectors that carried May.
 
-**For markets:** positioning into the **`{python} stats['next_cpi_release']`** CPI release should account for the possibility that a stabilizing labor market and services inflation persistence can coexist. The 2-year vs. 10-year Treasury spread is the cleanest single read on whether traders are crediting the dot-plot path or fading it; May's print is consistent with the configuration that has held for several weeks - front-end pricing modestly above the dots, long-end pricing reflecting term premia rather than panic. A stronger-than-expected payroll number with contained wages is a benign mix for risk assets, even if it modestly trims the implied probability of a near-term cut.
+**For markets:** positioning into the **`{python} stats['next_cpi_release']`** CPI release should account for the possibility that a stabilizing labor market and services inflation persistence can coexist. The 2-year vs. 10-year Treasury spread is the cleanest single read on whether traders are crediting the dot-plot path or fading it; May's print is consistent with the configuration that has held for several weeks - front-end pricing modestly above the dots, long-end pricing reflecting term premia rather than panic. A headline payroll number well above consensus with contained wages is a benign mix for risk assets, even if the within-CI nature of the beat and the sector concentration warrant less of a directional move than the surface number alone implies.
 
 **For readers tracking the cycle:** the next datapoint that will move the read is the **`{python} stats['next_cpi_release']`** CPI; the labor print after that is the June Employment Situation on **`{python} stats['next_jobs_release']`**. Three specific items to watch:
 
-1. Whether the 6-month payroll average (`{python} fmt_jobs(stats['payroll_6mo_avg'])`) catches up to the 3-month (`{python} fmt_jobs(stats['payroll_3mo_avg'])`), or whether the more recent strength reverses.
+1. Whether the 6-month payroll average (`{python} fmt_jobs(stats['payroll_6mo_avg'])`) catches up to the 3-month (`{python} fmt_jobs(stats['payroll_3mo_avg'])`), or whether the more recent strength reverses as preliminary prints are revised.
 2. Whether the unemployment rate breaks the four-month plateau at `{python} fmt_pct(stats['unrate_may'])` in either direction - the longer it holds, the more confidence the committee can take from the "in better balance" framing.
-3. Whether the June dot plot narrows the dispersion around the 2026 year-end policy rate. A median that holds the prior two-cut path with a tighter cluster around it would be the cleanest endorsement of the soft-landing framing this May report is consistent with.
+3. **Whether breadth improves:** whether cyclical sectors (manufacturing, professional/business services, information, trade) move off stall speed, or whether the next print again leans on health care, government, and leisure to carry the headline.
 
 ## 8. Conclusion
 
-May was a stabilization print inside a clearly slower trend. The household survey's positive employment change reverses the April decline and resolves the cross-survey ambiguity in favor of the cleaner read. The upward revision to April is the bigger structural news: the initial `{python} fmt_jobs(stats['payroll_april_initial'])` print, which seeded a "soft month" narrative, became `{python} fmt_jobs(stats['payroll_april_revised'])` once the BLS had more establishment responses in hand. Independent cross-checks line up with the BLS read; wage and productivity dynamics continue to suggest contained unit labor cost pressure. The cycle is **stabilizing at a slower pace**, not breaking. The next markers - `{python} stats['next_cpi_release']` CPI, the June FOMC, and the June Employment Situation on `{python} stats['next_jobs_release']` - will tell us whether that framing still holds.
+May was a stabilization print inside a clearly slower trend, but the stabilization is narrower than the headline suggests. Three sectors (leisure, government, and health care) accounted for nearly all of the `{python} fmt_jobs(stats['payroll_may'])` gain; private cyclical demand is running near zero. The household survey was directionally consistent but too noisy to count as confirmation. The upward revision to April is notable - the initial `{python} fmt_jobs(stats['payroll_april_initial'])` print became `{python} fmt_jobs(stats['payroll_april_revised'])` - but initial prints carry the largest revision risk, and recent annual CES benchmarks have been large and downward. Independent cross-checks are directionally consistent with the BLS read; wage and productivity dynamics suggest contained unit labor cost pressure, with the caveat that both series are heavily revised. The cycle is **stabilizing at a slower pace**, not breaking - but the breadth of that stabilization bears watching. The next markers - `{python} stats['next_cpi_release']` CPI, the June FOMC, and the June Employment Situation on `{python} stats['next_jobs_release']` - will tell us whether the framing holds.
 
 ### Sources
 
@@ -855,6 +872,7 @@ May was a stabilization print inside a clearly slower trend. The household surve
 | [USREC](https://fred.stlouisfed.org/series/USREC) | NBER recession indicator | NBER via FRED | Monthly |
 | [USPRIV](https://fred.stlouisfed.org/series/USPRIV), [USCONS](https://fred.stlouisfed.org/series/USCONS), [MANEMP](https://fred.stlouisfed.org/series/MANEMP), [USTPU](https://fred.stlouisfed.org/series/USTPU), [USPBS](https://fred.stlouisfed.org/series/USPBS), [USEHS](https://fred.stlouisfed.org/series/USEHS), [USLAH](https://fred.stlouisfed.org/series/USLAH), [USGOVT](https://fred.stlouisfed.org/series/USGOVT), [USINFO](https://fred.stlouisfed.org/series/USINFO) | Sector employment aliases used in place of the CES supersector codes that the public CSV endpoint does not serve | BLS CES via FRED | Monthly |
 | [CES6562000001](https://fred.stlouisfed.org/series/CES6562000001) | Health care employment | BLS CES via FRED | Monthly |
+| [CES9091000001](https://fred.stlouisfed.org/series/CES9091000001) | Federal government employment | BLS CES via FRED | Monthly |
 | [CAUR](https://fred.stlouisfed.org/series/CAUR), [TXUR](https://fred.stlouisfed.org/series/TXUR), [NYUR](https://fred.stlouisfed.org/series/NYUR), [FLUR](https://fred.stlouisfed.org/series/FLUR) | State unemployment rates | BLS LAUS via FRED | Monthly |
 
 : Series used in this post (BLS press release: [Employment Situation, `{python} stats['report_month']`](https://www.bls.gov/news.release/empsit.toc.htm); release date `{python} stats['release_date']`).

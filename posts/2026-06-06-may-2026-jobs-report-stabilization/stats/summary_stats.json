@@ -31,6 +31,8 @@
   "sector_prof_bus": 6,
   "sector_trade_trans_util": -3,
   "sector_information": -2,
+  "sector_gov_federal": 1,
+  "sector_gov_state_local": 51,
   "claims_4wk_avg": 215,
   "fomc_window": "June 16 to 17, 2026",
   "next_cpi_release": "June 11, 2026",

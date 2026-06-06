@@ -60,9 +60,15 @@ def compute() -> dict:
         ("prof_bus", "USPBS"),
         ("trade_trans_util", "USTPU"),
         ("information", "USINFO"),
+        ("gov_federal", "CES9091000001"),
     ]:
         s = load(sid)
         sectors[key] = int(round(s.iloc[-1] - s.iloc[-2]))
+
+    # State/local government = total government minus federal. This is more
+    # reliable than summing CES state + CES local because USGOVT is the
+    # published supersector aggregate.
+    sectors["gov_state_local"] = sectors["government"] - sectors["gov_federal"]
 
     stats = {
         "report_month": "May 2026",
@@ -115,6 +121,8 @@ def compute() -> dict:
         "sector_prof_bus": sectors["prof_bus"],
         "sector_trade_trans_util": sectors["trade_trans_util"],
         "sector_information": sectors["information"],
+        "sector_gov_federal": sectors["gov_federal"],
+        "sector_gov_state_local": sectors["gov_state_local"],
 
         # Claims (4-week moving average around release)
         "claims_4wk_avg": int(round(icsa.tail(4).mean() / 1000)),
