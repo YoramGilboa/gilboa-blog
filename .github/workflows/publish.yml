@@ -28,6 +28,9 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Lint posts (deterministic guardrails)
+        run: python tools/lint_post.py --all
+
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:

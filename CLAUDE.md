@@ -41,11 +41,15 @@ gilboa-blog/
 - **One `.venv`.** Create it once at the repo root. Never create a `.venv` inside a post folder.
 - **`_freeze/` is committed.** This is what allows GitHub Actions to publish without re-running Python.
 - **`_site/` is gitignored.** It is generated output; never commit it.
-- **Raw `data/` CSVs are not committed.** Fetched FRED/BEA data is regenerable
-  via the post's fetch script (e.g. `scripts/download_fred_data.py`), so it is
-  left out of git. Commit only `index.qmd`, `scripts/`, `stats/`, `images/`,
-  and the matching `_freeze/` entry. (Cleaned `data/clean/` outputs that a post
-  reads directly may be committed if small; raw API dumps should not be.)
+- **Commit the data a post needs to render; do not commit regenerable caches.**
+  Posts render in CI from the committed `_freeze/` cache, so Python does not
+  re-run there. Commit cleaned/derived data a post reads at render time when it
+  cannot be re-fetched in CI (e.g. the BTOS `.xlsx` source files, or
+  `data/clean/*.csv`). Do **not** commit the large regenerable single-series
+  FRED cache that jobs posts produce - those top-level `posts/*/data/*.csv`
+  files are gitignored and rebuilt by `scripts/download_fred_data.py`. Always
+  commit `index.qmd`, `scripts/`, `stats/`, `images/`, and the matching
+  `_freeze/` entry.
 
 ---
 
@@ -95,7 +99,6 @@ These rules apply to all prose in every post:
 
 - **No em dashes or en dashes.** Do not use `---` (Quarto em dash) or `--` (en dash). Use spaced hyphens ` - `, commas, colons, periods, or restructured sentences instead.
 - **No wildcard imports.** Never use `from pandas import *` or similar.
-- **No `plt.show()` in Quarto.** Quarto handles figure display automatically.
 - **Full URLs for all links.** Never use "click here" as link text.
 - **Never hard-code numbers in text.** Use inline `{python} fmt(stats['key'])` expressions. Wrap key numbers in `**bold**` on first mention.
 
@@ -652,6 +655,12 @@ Branch naming convention: `post/YYYY-MM-DD-slug` (matches the post folder name).
 
 Before merging to `main` and pushing:
 
+- [ ] **`python tools/lint_post.py <post-dir>` passes with no errors.** This is
+      the deterministic guardrail (also run by the pre-commit hook and the CI
+      gate). It enforces the frontmatter, prose-style, and `# MANUAL:`-source
+      rules mechanically so they do not depend on memory. It checks form, not
+      truth - it cannot judge chart overlap (use `/blog-chart-review`) or
+      whether a value is correct.
 - [ ] All inline `{python}` values render correctly (`quarto preview`)
 - [ ] All charts display without errors
 - [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
@@ -672,4 +681,3 @@ Before merging to `main` and pushing:
 - [ ] Post folder is moved out of `drafts/` into `posts/`
 - [ ] Social preview image saved to `images/` and referenced in `image:` frontmatter
 - [ ] All FRED/BEA series IDs validated via `/blog-data-validate`
-- [ ] No `plt.show()` calls in any code block

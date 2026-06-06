@@ -1,0 +1,20 @@
+#!/bin/sh
+# gilboa.blog deterministic guardrail.
+#
+# Lints any staged published post (posts/<slug>/index.qmd) before the commit
+# is created, in strict mode. Blocks the commit if any ERROR is found.
+#
+# Activate once per clone:   git config core.hooksPath .githooks
+# Bypass in an emergency:    git commit --no-verify
+#
+# The CI gate (.github/workflows/publish.yml) runs the same linter in --all
+# mode and is the backstop that cannot be bypassed.
+
+python tools/lint_post.py --staged
+status=$?
+if [ "$status" -ne 0 ]; then
+  echo ""
+  echo "pre-commit: lint_post.py found errors. Fix them, or bypass with"
+  echo "            'git commit --no-verify' if you know what you are doing."
+fi
+exit "$status"

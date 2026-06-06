@@ -21,6 +21,18 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Local tooling (skills, commands, automation docs)
+.claude/commands/
+BLOG_AUTOMATION.md
+BLOG_DEV_SETUP.md
+RESUME.md
+
+# Regenerable raw FRED single-series cache (jobs posts re-fetch live and CI
+# renders from the committed _freeze/). Matches only top-level data/*.csv, so
+# cleaned data under data/clean/ and raw sources under data/raw/ that a post
+# renders from are still tracked. Rebuild with scripts/download_fred_data.py.
+posts/*/data/*.csv
+
 # Misc
 *.log
 
