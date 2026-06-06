@@ -40,7 +40,7 @@
 </div>
 </div>
 </div>
-<div id="e2f27b56" class="cell" data-execution_count="2">
+<div id="e05fb9fb" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr));
@@ -9370,7 +9370,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-80">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout.">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." width="752" height="426">
@@ -9880,7 +9880,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-89">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="804" height="589">
@@ -10748,7 +10748,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-137">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -11236,7 +11236,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-70">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -11730,7 +11730,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis.">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." width="752" height="656">
@@ -12609,7 +12609,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb1-98">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." data-fig-align="center">
+<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." width="682" height="428">
@@ -13070,7 +13070,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb2-78">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." data-fig-align="center">
+<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-effr-sep-vintages-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." width="672" height="435">
@@ -13663,7 +13663,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb3-93">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." data-fig-align="center">
+<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-forward-fan-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." width="682" height="428">
@@ -14240,7 +14240,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb4-109">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." data-fig-align="center">
+<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-gap-waterfall-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." width="681" height="450">
@@ -14572,7 +14572,7 @@ font-style: inherit;">%Y"</span>))</span>
 <span id="cb5-45">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." data-fig-align="center">
+<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-yields-vix-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." width="683" height="505">
