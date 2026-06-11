@@ -1,0 +1,532 @@
+---
+title: "May 2026 CPI: Energy Shock From Iran War Tests Core CPI Stability - Passthrough Analysis and Implications"
+date: "2026-06-13"
+author: Yoram Gilboa
+categories: [economics, inflation, energy, federal reserve, data visualization]
+description: "May 2026 CPI put headline inflation at +4.2% with energy up +23.0% and gasoline up +40.5%, while core held at +2.8% and core momentum cooled. A passthrough check before the June FOMC."
+image: images/may-2026-cpi-passthrough-dashboard.png
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+RAW_DIR = DATA_DIR / "raw"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [RAW_DIR, CLEAN_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
+    stats = json.load(f)
+
+cpi = pd.read_csv(CLEAN_DIR / "cpi_monthly.csv", index_col="date", parse_dates=True)
+labor = pd.read_csv(CLEAN_DIR / "labor_monthly.csv", index_col="date", parse_dates=True)
+energy_m = pd.read_csv(CLEAN_DIR / "energy_markets.csv", index_col="date", parse_dates=True)
+rates = pd.read_csv(CLEAN_DIR / "rates_daily.csv", index_col="date", parse_dates=True)
+
+COLORS = {
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "warning":    "#cc7722",
+    "fed_target": "#cc0000",
+    "recession":  "#888888",
+    "soft":       "#d9e6ef",
+    "food":       "#9b6a44",
+}
+
+plt.rcParams.update({
+    "font.family":        "Calibri",
+    "font.size":          10,
+    "axes.spines.top":    False,
+    "axes.spines.right":  False,
+    "axes.grid":          False,
+    "figure.facecolor":   "white",
+    "axes.facecolor":     "#fafafa",
+    "axes.linewidth":     0.5,
+})
+
+def fmt(n):
+    """Format numbers for inline display."""
+    if isinstance(n, float):
+        return f"{n:.1f}"
+    return f"{n:,}"
+
+def fmt_chg(n):
+    """Format signed change values with + prefix."""
+    if isinstance(n, float):
+        return f"{n:+.1f}"
+    return f"{n:+,}"
+
+def fmt2(n):
+    """Format dollar-style values with two decimals."""
+    return f"{n:.2f}"
+
+def fmt_rate(n):
+    """Format policy rates without trailing zeros."""
+    return f"{n:.3f}".rstrip("0").rstrip(".")
+
+# The Iran conflict oil repricing window used for chart shading: the run-up
+# began in February 2026 and WTI peaked in early April.
+SHOCK_START = pd.Timestamp("2026-02-01")
+SHOCK_PEAK = pd.Timestamp("2026-04-07")
+```
+
+```{python}
+#| echo: false
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Headline CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984; margin-top: 0.35rem;">{fmt_chg(stats['headline_yoy'])}%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April {fmt_chg(stats['prev_headline_yoy'])}%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Energy CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000; margin-top: 0.35rem;">{fmt_chg(stats['energy_yoy'])}%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April {fmt_chg(stats['prev_energy_yoy'])}%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Gasoline CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #cc7722; margin-top: 0.35rem;">{fmt_chg(stats['gasoline_yoy'])}%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April {fmt_chg(stats['prev_gasoline_yoy'])}%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a; margin-top: 0.35rem;">{fmt_chg(stats['core_yoy'])}%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">MoM {fmt_chg(stats['core_mom'])}% vs {fmt_chg(stats['prev_core_mom'])}%</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  BLS CPI release dated {stats['release_date']} | Source: BLS via FRED
+</p>
+"""
+HTML(html)
+```
+
+The May CPI report, released `{python} stats['release_date']`, delivered the hottest headline inflation print of this cycle and, at the same time, the most reassuring core reading in months. Headline CPI rose to **`{python} fmt_chg(stats['headline_yoy'])`%** year over year, up from `{python} fmt_chg(stats['prev_headline_yoy'])`% in April, with energy up **`{python} fmt_chg(stats['energy_yoy'])`%** and gasoline up **`{python} fmt_chg(stats['gasoline_yoy'])`%**. The driver is no mystery: the Iran conflict repriced oil starting in February, WTI crude^[WTI: West Texas Intermediate, the benchmark grade of US crude oil. Its spot price is the standard reference for domestic oil costs, the same role Brent crude plays for international markets.] peaked at **$`{python} fmt(stats['wti_peak_2026'])`** per barrel on `{python} stats['wti_peak_2026_date']`, spent `{python} fmt(stats['days_above_100'])` trading days above $100, and retail gasoline now averages **$`{python} fmt2(stats['gas_retail_latest'])`** per gallon. Yet core CPI held at **`{python} fmt_chg(stats['core_yoy'])`%**, and core momentum actually cooled: `{python} fmt_chg(stats['core_mom'])`% month over month versus `{python} fmt_chg(stats['prev_core_mom'])`% in April, with core goods prices falling outright. That combination frames the two questions this post works through with the data: is the energy shock leaking into core prices, and what does the answer mean for the Federal Reserve's `{python} stats['fomc_window']` meeting?
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any
+code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` - Fetches CPI, labor, oil, gasoline, and Treasury series from FRED
+- `02_clean_data.py` - Computes year-over-year and month-over-month changes on a complete monthly calendar, builds indexed energy-market series
+- `04_compute_stats.py` - Computes every statistic shown in this post from the cleaned data
+
+All data sourced from [FRED](https://fred.stlouisfed.org/) (BLS and EIA series).
+October 2025 CPI was never published, so year-over-year changes are computed
+with a calendar-month shift rather than a row shift; months whose comparison
+base is the missing month are left blank rather than approximated. The FOMC
+dot plot values come from the March 2026 [Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm),
+and the market-implied rate path is an author approximation from the
+[CME FedWatch tool](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html).
+:::
+
+## 1. Headline and core: one report, two stories
+
+The gap between what households experience and what the Federal Reserve watches has rarely been this wide. Headline CPI at `{python} fmt_chg(stats['headline_yoy'])`% is the full consumer basket, and it is accelerating. Core CPI, which strips out food and energy, sits at `{python} fmt_chg(stats['core_yoy'])`% and is not. The decomposition below shows why that distinction is doing so much work right now: shelter eased to `{python} fmt_chg(stats['shelter_mom'])`% month over month from `{python} fmt_chg(stats['prev_shelter_mom'])`%, core services momentum slowed to `{python} fmt_chg(stats['core_services_mom'])`% from `{python} fmt_chg(stats['prev_core_services_mom'])`%, and core goods prices fell `{python} fmt(stats['core_goods_mom'])`% on the month. Every part of the basket the energy shock would eventually infect is, for now, decelerating.
+
+```{python}
+#| echo: true
+#| label: fig-headline-core-components
+#| fig-cap: "Headline CPI is accelerating on energy while every core component holds steady or decelerates. The top panel shows the slow-moving basket; the bottom panel shows the energy shock on its own, much larger, scale. The shaded band marks the Iran conflict oil repricing window.<br>Source: BLS via FRED (CPIAUCSL, CPILFESL, CUSR0000SAH1, CUSR0000SASLE, CUSR0000SACL1E, CPIENGSL, CUSR0000SETB01). October 2025 CPI was never published; lines connect across that month."
+
+plot_df = cpi[cpi.index >= "2023-01-01"]
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.0, 7.0), sharex=True,
+                               height_ratios=[3, 2])
+
+top_series = [
+    ("Headline", "headline_yoy", COLORS["primary"]),
+    ("Core", "core_yoy", COLORS["neutral"]),
+    ("Shelter", "shelter_yoy", COLORS["secondary"]),
+    ("Core services", "core_services_yoy", COLORS["accent"]),
+    ("Core goods", "core_goods_yoy", COLORS["light"]),
+]
+for label, col, color in top_series:
+    s = plot_df[col].dropna()  # October 2025 was never published
+    ax1.plot(s.index, s, color=color, linewidth=1.8, zorder=3)
+    ax1.scatter(s.index[-1], s.iloc[-1], s=40, color=color, zorder=5,
+                edgecolors="white", linewidth=0.8)
+
+ax1.axhline(2, color=COLORS["fed_target"], linestyle="--", linewidth=1, alpha=0.5)
+ax1.text(pd.Timestamp("2023-02-01"), 1.45, "2% reference",
+         color=COLORS["fed_target"], fontsize=8,
+         bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+ax1.set_ylabel("Year-over-year change, %")
+# Compute limits from the plotted data so no series is clipped if values shift.
+top_vals = pd.concat([plot_df[col] for _, col, _ in top_series])
+ax1.set_ylim(0, top_vals.max() * 1.12)
+
+# Place every label just to the right of its endpoint dot, in the extended
+# margin where no line can run underneath it. Two series end at nearly the
+# same value (shelter and core services), so labels are spread vertically:
+# working from the highest value down, each label is pushed below the one
+# above it whenever the two would collide.
+ends = sorted(
+    [(plot_df[col].dropna().iloc[-1], label, color) for label, col, color in top_series],
+    reverse=True,
+)
+last_date = plot_df["headline_yoy"].dropna().index[-1]
+min_sep = (ax1.get_ylim()[1] - ax1.get_ylim()[0]) * 0.048
+prev_y = None
+for val, label, color in ends:
+    y = val if prev_y is None else min(val, prev_y - min_sep)
+    ax1.text(last_date, y, f"  {label} {fmt_chg(val)}%",
+             fontsize=9, color=color, va="center", fontweight="bold")
+    prev_y = y
+
+bottom_series = [
+    ("Energy", "energy_yoy", COLORS["warning"]),
+    ("Gasoline", "gasoline_yoy", COLORS["accent"]),
+]
+for label, col, color in bottom_series:
+    s = plot_df[col].dropna()
+    ax2.plot(s.index, s, color=color, linewidth=1.8, zorder=3)
+    ax2.scatter(s.index[-1], s.iloc[-1], s=40, color=color, zorder=5,
+                edgecolors="white", linewidth=0.8)
+    ax2.text(s.index[-1], s.iloc[-1], f"  {label} {fmt_chg(s.iloc[-1])}%",
+             fontsize=9, color=color, va="center", fontweight="bold")
+
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.45)
+ax2.set_ylabel("Year-over-year change, %")
+bot_vals = pd.concat([plot_df[col] for _, col, _ in bottom_series])
+ax2.set_ylim(bot_vals.min() - 6, bot_vals.max() * 1.32)
+
+for ax in (ax1, ax2):
+    ax.axvspan(SHOCK_START, plot_df.index[-1], color=COLORS["warning"], alpha=0.08)
+    date_range = plot_df.index[-1] - plot_df.index[0]
+    ax.set_xlim(plot_df.index[0], plot_df.index[-1] + date_range * 0.22)
+
+ax2.annotate("Iran conflict\noil repricing",
+             xy=(pd.Timestamp("2026-03-01"), bot_vals.max() * 1.12), fontsize=8,
+             color=COLORS["warning"], ha="center", zorder=5,
+             bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "may-2026-cpi-passthrough-dashboard.png", dpi=150, bbox_inches="tight")
+```
+
+The bottom panel is the shock; the top panel is the test. A year ago this divergence would have read as a curiosity. Today it is the entire policy debate, because the headline-minus-core gap of **`{python} fmt(stats['headline_core_gap'])`** percentage points is the widest of this cycle, and which line the other one converges toward decides the rest of 2026.
+
+## 2. The passthrough chain: crude to pump to index
+
+Energy passthrough happens in a sequence with measurable lags. Crude oil reprices in minutes. Retail gasoline follows over two to four weeks as wholesale costs work through distribution. The CPI gasoline index follows retail with another partial-month lag, because BLS samples prices throughout the month. The chart below puts all three steps on one scale, indexed to their January 2026 averages, the last calm month before the Iran conflict repricing.
+
+```{python}
+#| echo: true
+#| label: fig-crude-pump-cpi
+#| fig-cap: "WTI crude, retail gasoline, and the CPI gasoline index, each indexed to its January 2026 average. Crude moved first and has partially retraced; retail gasoline and the CPI index followed with the usual lags and have given back much less.<br>Source: FRED (DCOILWTICO, GASREGW, CUSR0000SETB01). Weekly observations; the CPI gasoline index is monthly and steps at each release."
+
+m = energy_m[energy_m.index >= "2025-08-01"]
+
+fig, ax = plt.subplots(figsize=(7.0, 4.6))
+
+chain = [
+    ("WTI crude", "wti_idx", COLORS["primary"]),
+    ("Retail gasoline", "gas_retail_idx", COLORS["warning"]),
+    ("CPI gasoline index", "cpi_gasoline_idx", COLORS["accent"]),
+]
+for label, col, color in chain:
+    s = m[col].dropna()
+    ax.plot(s.index, s, color=color, linewidth=2.0, zorder=3)
+    ax.scatter(s.index[-1], s.iloc[-1], s=40, color=color, zorder=5,
+               edgecolors="white", linewidth=0.8)
+    ax.text(s.index[-1], s.iloc[-1], f"  {label} {s.iloc[-1]:.0f}",
+            fontsize=9, color=color, fontweight="bold", va="center")
+
+ax.axhline(100, color=COLORS["neutral"], linewidth=0.8, alpha=0.45)
+# The baseline note sits below all three series at the left edge of the
+# chart, so it cannot overlap the lines, which stay above the low 90s here.
+chain_vals = pd.concat([m[col] for _, col, _ in chain])
+ax.set_ylim(bottom=chain_vals.min() - 9)
+ax.text(m.index[0], chain_vals.min() - 4, "January 2026 average = 100",
+        fontsize=8, color=COLORS["neutral"], va="top",
+        bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+
+ax.axvspan(SHOCK_START, SHOCK_PEAK, color=COLORS["warning"], alpha=0.10)
+peak_idx = m["wti_idx"].idxmax()
+ax.annotate(f"WTI peak ${stats['wti_peak_2026']:.0f}/bbl\n{stats['wti_peak_2026_date']}",
+            xy=(peak_idx, m["wti_idx"].max()),
+            xytext=(-95, -2), textcoords="offset points",
+            arrowprops=dict(arrowstyle="->", color=COLORS["primary"], lw=0.8),
+            fontsize=8, color=COLORS["primary"], zorder=5,
+            bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+
+ax.set_ylabel("Index, January 2026 = 100")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+date_range = m.index[-1] - m.index[0]
+ax.set_xlim(m.index[0], m.index[-1] + date_range * 0.32)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "crude-pump-cpi-chain.png", dpi=150, bbox_inches="tight")
+```
+
+The asymmetry in the chart is the practical story. WTI peaked `{python} fmt_chg(stats['wti_peak_pct_vs_jan'])`% above its January average and has since fallen back to **$`{python} fmt(stats['wti_latest'])`** per barrel. Retail gasoline, up `{python} fmt_chg(stats['gas_retail_pct_vs_jan'])`% from January, has barely retraced, which is typical: pump prices rise like a rocket and fall like a feather. For the CPI, this means June's energy reading depends less on today's crude price than on how quickly retailers pass the crude retracement through, and the May report captured the chain near its widest point.
+
+## 3. How big is this shock? Contributions and history
+
+Two reference points discipline the narrative. First, the decomposition: energy contributed roughly **`{python} fmt(stats['contrib_energy_pp'])`** percentage points of the `{python} fmt_chg(stats['headline_yoy'])`% headline rate, about `{python} fmt(stats['energy_contribution_share'])`% of all inflation in the report from a category that is only `{python} fmt(stats['weights']['energy'])`% of the basket. Second, history: this energy shock is large, but it is not 2022. Energy CPI peaked at `{python} fmt_chg(stats['energy_peak_2022'])`% in `{python} stats['energy_peak_2022_month']` and `{python} fmt_chg(stats['energy_peak_2008'])`% in `{python} stats['energy_peak_2008_month']`, and in both episodes the headline-minus-core gap blew out to around three percentage points, more than double today's `{python} fmt(stats['headline_core_gap'])` points.
+
+```{python}
+#| echo: true
+#| label: fig-contribution-history
+#| fig-cap: "Top: approximate contributions to the May 2026 headline CPI rate; energy delivers about a third of all inflation from 6.5% of the basket. Bottom: energy CPI in historical context; the current shock is roughly half the size of the 2022 peak, with prior shock episodes shaded.<br>Source: BLS via FRED. Contributions are approximate: BLS relative-importance weights (December 2025) applied to component year-over-year changes, with the residual bucket absorbing the remainder."
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.0, 7.4), height_ratios=[2, 3])
+
+contrib = pd.DataFrame({
+    "label": ["Energy", "Shelter", "Core services ex shelter + other", "Food", "Core goods"],
+    "pp": [stats["contrib_energy_pp"], stats["contrib_shelter_pp"],
+           stats["contrib_residual_pp"], stats["contrib_food_pp"],
+           stats["contrib_core_goods_pp"]],
+    "color": [COLORS["warning"], COLORS["secondary"], COLORS["primary"],
+              COLORS["food"], COLORS["light"]],
+}).sort_values("pp")
+
+ax1.barh(contrib["label"], contrib["pp"], color=contrib["color"], edgecolor="white")
+xmax = contrib["pp"].max()
+xpad = xmax * 0.04
+for i, (_, row) in enumerate(contrib.iterrows()):
+    near_edge = row["pp"] >= 0.85 * xmax
+    if near_edge:
+        ax1.text(row["pp"] - xpad, i, f"{row['pp']:+.1f} pp", ha="right",
+                 va="center", fontsize=9, color="white", fontweight="bold")
+    else:
+        ax1.text(row["pp"] + xpad, i, f"{row['pp']:+.1f} pp", ha="left",
+                 va="center", fontsize=9, color="#334155", fontweight="bold")
+ax1.set_xlim(0, xmax * 1.18)
+ax1.set_xlabel("Contribution to May 2026 headline CPI, percentage points")
+ax1.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f"{x:+.1f}"))
+
+hist = cpi.loc["2000-01-01":, "energy_yoy"].dropna()
+ax2.plot(hist.index, hist, color=COLORS["warning"], linewidth=1.4, zorder=3)
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.45)
+
+episodes = [
+    (pd.Timestamp("2007-06-01"), pd.Timestamp("2009-06-01")),
+    (pd.Timestamp("2021-03-01"), pd.Timestamp("2022-12-01")),
+    (SHOCK_START, hist.index[-1]),
+]
+for lo, hi in episodes:
+    ax2.axvspan(lo, hi, color=COLORS["recession"], alpha=0.08)
+
+for name in ["2008", "2022", "current"]:
+    month = pd.Timestamp(stats[f"energy_peak_{name}_month"])
+    val = stats[f"energy_peak_{name}"]
+    ax2.annotate(f"{stats[f'energy_peak_{name}_month']}\n{fmt_chg(val)}%",
+                 xy=(month, val), xytext=(0, 14), textcoords="offset points",
+                 ha="center", fontsize=8, color=COLORS["neutral"], zorder=5,
+                 bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+
+ax2.scatter(hist.index[-1], hist.iloc[-1], s=40, color=COLORS["warning"],
+            zorder=5, edgecolors="white", linewidth=0.8)
+ax2.set_ylabel("Energy CPI, year-over-year change, %")
+ax2.set_ylim(-32, 58)
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+date_range = hist.index[-1] - hist.index[0]
+ax2.set_xlim(hist.index[0], hist.index[-1] + date_range * 0.04)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "contribution-history-panel.png", dpi=150, bbox_inches="tight")
+```
+
+The 2022 comparison cuts both ways. Optimists note that the current shock is roughly half the 2022 peak and that core inflation entered this episode at `{python} fmt_chg(stats['core_yoy'])`% rather than above five percent. Pessimists note that in 2022 the passthrough into core took roughly two to three quarters to fully register, which means the May report may simply be too early to show it. Both readings are consistent with the data; the next two core prints decide between them.
+
+## 4. The labor market backdrop: real wages turn negative
+
+Passthrough needs a transmission mechanism, and the most important one is wages. Here the May evidence points toward containment. The [May jobs report](/posts/2026-06-06-may-2026-jobs-report-stabilization/) showed payrolls up **`{python} fmt_chg(stats['payroll_latest'])`k** with unemployment steady at `{python} fmt(stats['unrate_latest'])`%, a labor market stabilizing rather than overheating. Average hourly earnings rose `{python} fmt_chg(stats['ahe_yoy'])`% over the year, unchanged in pace for months. With headline inflation at `{python} fmt_chg(stats['headline_yoy'])`%, that arithmetic has turned **real wage growth negative**: `{python} fmt_chg(stats['real_ahe_yoy'])`% year over year in `{python} stats['labor_month']`.
+
+```{python}
+#| echo: true
+#| label: fig-wages-inflation
+#| fig-cap: "Nominal wage growth has been stable while headline inflation accelerated past it, pushing real wage growth below zero for the second time this cycle. A wage-price spiral would show nominal wages chasing inflation upward; the data show the opposite.<br>Source: BLS via FRED (CES0500000003, CPIAUCSL). Real wage growth deflates average hourly earnings by headline CPI."
+
+w = labor[labor.index >= "2021-01-01"]
+c = cpi[cpi.index >= "2021-01-01"]
+
+fig, ax = plt.subplots(figsize=(7.0, 4.6))
+
+series_list = [
+    ("Headline CPI", c["headline_yoy"], COLORS["warning"]),
+    ("Avg hourly earnings", w["ahe_yoy"], COLORS["primary"]),
+    ("Real wage growth", w["real_ahe_yoy"], COLORS["accent"]),
+]
+for label, s, color in series_list:
+    s = s.dropna()
+    ax.plot(s.index, s, color=color, linewidth=1.8, zorder=3)
+    ax.scatter(s.index[-1], s.iloc[-1], s=40, color=color, zorder=5,
+               edgecolors="white", linewidth=0.8)
+    ax.text(s.index[-1], s.iloc[-1], f"  {label} {fmt_chg(s.iloc[-1])}%",
+            fontsize=9, color=color, fontweight="bold", va="center")
+
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.45)
+ax.fill_between(w.index, w["real_ahe_yoy"].where(w["real_ahe_yoy"] < 0), 0,
+                color=COLORS["accent"], alpha=0.1)
+ax.annotate("2021-2023:\nreal wages negative\nfor two years",
+            xy=(pd.Timestamp("2024-01-01"), -2.9), fontsize=8, ha="center",
+            color=COLORS["accent"], zorder=5,
+            bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+
+ax.set_ylabel("Year-over-year change, %")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+date_range = w.index[-1] - w.index[0]
+ax.set_xlim(w.index[0], w.index[-1] + date_range * 0.34)
+ax.set_ylim(-4.8, 9.5)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "wages-real-earnings.png", dpi=150, bbox_inches="tight")
+```
+
+This is the chart that separates 2026 from the 1970s template. A wage-price spiral requires wages to chase prices upward. Instead, nominal wage growth is flat, hiring is concentrated in a few sectors, and the energy shock is eroding purchasing power rather than igniting compensation demands. That erosion is itself a disinflationary force: households absorbing a `{python} fmt_chg(stats['gas_retail_pct_vs_jan'])`% gasoline increase have less to spend elsewhere, which is one reason core goods prices fell in May.
+
+## 5. Policy and market implications
+
+The Federal Reserve meets on `{python} stats['fomc_window']`, and the May report effectively wrote the meeting's script: acknowledge the headline, anchor on the core. Markets price a hold as a near certainty, with the CME FedWatch tool showing roughly `{python} fmt(stats['june_hold_prob_pct'])`% probability of no change.^[The FedWatch tool derives probabilities from 30-Day Fed Funds futures prices. The market-implied path shown here converts those probabilities into an expected rate, an author approximation as of June 12, 2026.] The more interesting question is the path. The March dot plot median still shows the funds rate at `{python} fmt_rate(stats['dot_median_eoy2026'])`% by year-end, a full cut from the current `{python} stats['target_range']`% range. Market pricing has drifted hawkish of that, to roughly `{python} fmt_rate(stats['market_implied_eoy2026'])`%, a bit less than half a cut. Meanwhile the Treasury curve has steepened: the 10-year yield at `{python} fmt2(stats['dgs10_latest'])`% now sits `{python} fmt(stats['spread_latest_bps'])` basis points above the 2-year, as long rates absorb the inflation repricing while short rates stay pinned by the on-hold Fed.
+
+```{python}
+#| echo: true
+#| label: fig-rate-path-curve
+#| fig-cap: "Top: the March 2026 dot plot median path against the market-implied path; markets price less easing than the FOMC projects, and the June SEP update will show whether the committee concedes. Bottom: the 10-year minus 2-year Treasury spread has steepened through the energy shock.<br>Source: FOMC Summary of Economic Projections (March 2026), CME FedWatch (June 12, 2026, author approximation), FRED (DGS10, DGS2, DFEDTARL, DFEDTARU)."
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(7.0, 7.2), height_ratios=[3, 2])
+
+today = pd.Timestamp("2026-06-12")
+dot_x = [today, pd.Timestamp("2026-12-31"), pd.Timestamp("2027-12-31"),
+         pd.Timestamp("2028-12-31")]
+dot_y = [stats["target_midpoint"], stats["dot_median_eoy2026"],
+         stats["dot_median_eoy2027"], stats["dot_median_eoy2028"]]
+mkt_x = [today, pd.Timestamp("2026-12-31"), pd.Timestamp("2027-12-31")]
+mkt_y = [stats["target_midpoint"], stats["market_implied_eoy2026"],
+         stats["market_implied_eoy2027"]]
+
+ax1.plot(dot_x, dot_y, color=COLORS["accent"], linewidth=1.8, linestyle="--",
+         marker="o", markersize=6, zorder=4, label="FOMC dot plot median (Mar 2026 SEP)")
+ax1.plot(mkt_x, mkt_y, color=COLORS["primary"], linewidth=2.2, marker="o",
+         markersize=6, zorder=4, label="Market-implied path (Jun 12, 2026)")
+
+# Interquartile range of the 2026 dots, drawn as a vertical band at year-end.
+ax1.errorbar([pd.Timestamp("2026-12-31")], [stats["dot_median_eoy2026"]],
+             yerr=[[stats["dot_median_eoy2026"] - stats["dot_iqr_lo_2026"]],
+                   [stats["dot_iqr_hi_2026"] - stats["dot_median_eoy2026"]]],
+             color=COLORS["accent"], alpha=0.4, capsize=5, linewidth=3, zorder=2)
+
+wedge_bps = (stats["market_implied_eoy2026"] - stats["dot_median_eoy2026"]) * 100
+ax1.annotate(f"Markets price {wedge_bps:.0f} bps\nless easing than the dots",
+             xy=(pd.Timestamp("2027-01-20"),
+                 (stats["market_implied_eoy2026"] + stats["dot_median_eoy2026"]) / 2),
+             xytext=(35, -55), textcoords="offset points",
+             arrowprops=dict(arrowstyle="->", color=COLORS["neutral"], lw=0.8),
+             fontsize=8, color=COLORS["neutral"], zorder=5,
+             bbox=dict(facecolor="#fafafa", edgecolor="none", pad=1.5, alpha=0.85))
+
+for x, y, color in [(dot_x[-1], dot_y[-1], COLORS["accent"]),
+                    (mkt_x[-1], mkt_y[-1], COLORS["primary"])]:
+    ax1.scatter(x, y, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+ax1.text(dot_x[-1], dot_y[-1], f"  {fmt_rate(dot_y[-1])}%", fontsize=9,
+         color=COLORS["accent"], fontweight="bold", va="center")
+ax1.text(mkt_x[-1], mkt_y[-1], f"  {fmt_rate(mkt_y[-1])}%", fontsize=9,
+         color=COLORS["primary"], fontweight="bold", va="center")
+
+ax1.set_ylabel("Federal funds rate, %")
+ax1.set_ylim(2.9, 4.0)
+ax1.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: f"{x:.2f}%"))
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax1.set_xlim(today - pd.Timedelta(days=30), pd.Timestamp("2029-06-30"))
+ax1.legend(loc="upper right", fontsize=8, frameon=False)
+
+spread = rates.loc["2024-01-01":, "spread_bps"].dropna()
+ax2.plot(spread.index, spread, color=COLORS["primary"], linewidth=1.4, zorder=3)
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.45)
+ax2.fill_between(spread.index, spread.where(spread < 0), 0,
+                 color=COLORS["accent"], alpha=0.1)
+ax2.scatter(spread.index[-1], spread.iloc[-1], s=40, color=COLORS["primary"],
+            zorder=5, edgecolors="white", linewidth=0.8)
+ax2.text(spread.index[-1], spread.iloc[-1], f"  {stats['spread_latest_bps']} bps",
+         fontsize=9, color=COLORS["primary"], fontweight="bold", va="center")
+ax2.axvspan(SHOCK_START, spread.index[-1], color=COLORS["warning"], alpha=0.08)
+ax2.set_ylabel("10y minus 2y Treasury, bps")
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+date_range = spread.index[-1] - spread.index[0]
+ax2.set_xlim(spread.index[0], spread.index[-1] + date_range * 0.10)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "rate-path-yield-curve.png", dpi=150, bbox_inches="tight")
+```
+
+For insurance and actuarial readers, this report lands directly on loss-cost assumptions. Energy and parts costs feed auto physical damage severity, and the `{python} fmt_chg(stats['gasoline_yoy'])`% gasoline increase will, with the usual lag, suppress miles driven and claim frequency at the same time as it raises towing, materials, and replacement costs. Reserving against a `{python} fmt_chg(stats['headline_yoy'])`% headline world while core trends at `{python} fmt_chg(stats['core_yoy'])`% means the choice of inflation index for trend assumptions matters more than usual: indexing severity to headline CPI overstates the persistent component if the energy shock fades, and understates it if passthrough arrives.
+
+## Conclusion
+
+**For the Fed:** The May report argues for patience in both directions: too much headline inflation to cut, too little core pressure to hike. A hold on `{python} stats['fomc_window']` with a hawkish-leaning statement is the path of least resistance, and the updated dot plot will reveal how many participants still see a 2026 cut.
+
+**For consumers:** The squeeze is real but narrow. Gasoline at $`{python} fmt2(stats['gas_retail_latest'])` per gallon and negative real wage growth of `{python} fmt_chg(stats['real_ahe_yoy'])`% hit budgets now, while the slower-moving categories, shelter and services, are finally decelerating.
+
+**For markets and insurers:** The data so far support the contained-shock scenario: core momentum halved in May, core goods deflated, and wages show no spiral. But containment is a verdict the data must re-earn every month. The `{python} stats['next_cpi_release']` CPI release, covering June, is the first month that will show whether the crude retracement reaches the pump, and the first that could show second-round effects if they are coming.
+
+### Limitations
+
+- The contribution decomposition uses approximate BLS relative-importance weights applied to year-over-year changes, not the exact BLS methodology; treat the bars as a reading frame, not an official decomposition.
+- The market-implied rate path is an author approximation from CME FedWatch pricing, not an official series; values shift daily.
+- October 2025 CPI was never published. Year-over-year calculations skip that base month cleanly, but multi-month averages spanning it cover fewer observations.
+- CPI is not the Fed's preferred PCE inflation gauge; PCE typically runs a few tenths cooler, and the May PCE release arrives after the June FOMC meeting.
+- Recession-probability models are omitted because the standard published series lag by several months and would not reflect the current shock.
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| CPIAUCSL | CPI-U, all items, SA | [FRED](https://fred.stlouisfed.org/series/CPIAUCSL) |
+| CPILFESL | CPI-U less food and energy, SA | [FRED](https://fred.stlouisfed.org/series/CPILFESL) |
+| CPIENGSL | CPI energy, SA | [FRED](https://fred.stlouisfed.org/series/CPIENGSL) |
+| CUSR0000SETB01 | CPI gasoline (all types), SA | [FRED](https://fred.stlouisfed.org/series/CUSR0000SETB01) |
+| CUSR0000SAH1 | CPI shelter, SA | [FRED](https://fred.stlouisfed.org/series/CUSR0000SAH1) |
+| CPIFABSL | CPI food and beverages, SA | [FRED](https://fred.stlouisfed.org/series/CPIFABSL) |
+| CUSR0000SACL1E | CPI commodities less food and energy, SA | [FRED](https://fred.stlouisfed.org/series/CUSR0000SACL1E) |
+| CUSR0000SASLE | CPI services less energy services, SA | [FRED](https://fred.stlouisfed.org/series/CUSR0000SASLE) |
+| DCOILWTICO | WTI crude oil spot price | [FRED](https://fred.stlouisfed.org/series/DCOILWTICO) |
+| GASREGW | US regular gasoline retail price (EIA) | [FRED](https://fred.stlouisfed.org/series/GASREGW) |
+| CES0500000003 | Average hourly earnings, private | [FRED](https://fred.stlouisfed.org/series/CES0500000003) |
+| PAYEMS, UNRATE | Nonfarm payrolls; unemployment rate | [FRED](https://fred.stlouisfed.org/series/PAYEMS) |
+| DGS2, DGS10 | 2-year and 10-year Treasury yields | [FRED](https://fred.stlouisfed.org/series/DGS10) |
+| DFEDTARL, DFEDTARU | Fed funds target range bounds | [FRED](https://fred.stlouisfed.org/series/DFEDTARU) |
+| March 2026 SEP | FOMC dot plot projections | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) |
+| FedWatch | Market-implied rate path (approximation) | [CME Group](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html) |
+
+: Data sources used in this analysis. All FRED series fetched by `scripts/01_fetch_data.py`.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*
