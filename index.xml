@@ -10,7 +10,2703 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Economics, inflation, and labor market analysis through data visualization</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Sat, 06 Jun 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 13 Jun 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>May 2026 CPI: Energy Shock From Iran War Tests Core CPI Stability - Passthrough Analysis and Implications</title>
+  <dc:creator>Yoram Gilboa</dc:creator>
+  <link>https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div id="66d5b126" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem; margin: 1.5rem 0;">
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Headline CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984; margin-top: 0.35rem;">+4.2%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April +3.8%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Energy CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #8b0000; margin-top: 0.35rem;">+23.0%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April +17.5%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Gasoline CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #cc7722; margin-top: 0.35rem;">+40.5%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">vs April +28.4%</div>
+  </div>
+  <div style="background: #fffaf5; border: 1px solid #ead6ca; border-radius: 8px;
+              padding: 1rem; text-align: center; min-height: 130px;">
+    <div style="font-size: 0.8rem; color: #64748b;">Core CPI YoY</div>
+    <div style="font-size: 1.75rem; font-weight: 700; color: #4a4a4a; margin-top: 0.35rem;">+2.8%</div>
+    <div style="font-size: 0.72rem; color: #8b0000; margin-top: 0.5rem; line-height: 1.2;">MoM +0.2% vs +0.4%</div>
+  </div>
+</div>
+<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
+  BLS CPI release dated June 10, 2026 | Source: BLS via FRED
+</p>
+</div>
+</div>
+<p>The May CPI report, released June 10, 2026, delivered the hottest headline inflation print of this cycle and, at the same time, the most reassuring core reading in months. Headline CPI rose to <strong>+4.2%</strong> year over year, up from +3.8% in April, with energy up <strong>+23.0%</strong> and gasoline up <strong>+40.5%</strong>. The driver is no mystery: the Iran conflict repriced oil starting in February, WTI crude<sup>1</sup> peaked at <strong>$114.6</strong> per barrel on April 07, 2026, spent 24 trading days above $100, and retail gasoline now averages <strong>$4.15</strong> per gallon. Yet core CPI held at <strong>+2.8%</strong>, and core momentum actually cooled: +0.2% month over month versus +0.4% in April, with core goods prices falling outright. That combination frames the two questions this post works through with the data: is the energy shock leaking into core prices, and what does the answer mean for the Federal Reserve’s June 16-17, 2026 meeting?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:</p>
+<ul>
+<li><code>01_fetch_data.py</code> - Fetches CPI, labor, oil, gasoline, and Treasury series from FRED</li>
+<li><code>02_clean_data.py</code> - Computes year-over-year and month-over-month changes on a complete monthly calendar, builds indexed energy-market series</li>
+<li><code>04_compute_stats.py</code> - Computes every statistic shown in this post from the cleaned data</li>
+</ul>
+<p>All data sourced from <a href="https://fred.stlouisfed.org/">FRED</a> (BLS and EIA series). October 2025 CPI was never published, so year-over-year changes are computed with a calendar-month shift rather than a row shift; months whose comparison base is the missing month are left blank rather than approximated. The FOMC dot plot values come from the March 2026 <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Summary of Economic Projections</a>, and the market-implied rate path is an author approximation from the <a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html">CME FedWatch tool</a>.</p>
+</div>
+</div>
+</div>
+<section id="headline-and-core-one-report-two-stories" class="level2">
+<h2 class="anchored" data-anchor-id="headline-and-core-one-report-two-stories">1. Headline and core: one report, two stories</h2>
+<p>The gap between what households experience and what the Federal Reserve watches has rarely been this wide. Headline CPI at +4.2% is the full consumer basket, and it is accelerating. Core CPI, which strips out food and energy, sits at +2.8% and is not. The decomposition below shows why that distinction is doing so much work right now: shelter eased to +0.3% month over month from +0.6%, core services momentum slowed to +0.3% from +0.5%, and core goods prices fell -0.1% on the month. Every part of the basket the energy shock would eventually infect is, for now, decelerating.</p>
+<div id="cell-fig-headline-core-components" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">plot_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpi[cpi.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-01-01"</span>]</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>), sharex<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-4">                               height_ratios<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">top_series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb1-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Headline"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb1-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>]),</span>
+<span id="cb1-9">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shelter_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>]),</span>
+<span id="cb1-10">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core services"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_services_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb1-11">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core goods"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_goods_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"light"</span>]),</span>
+<span id="cb1-12">]</span>
+<span id="cb1-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, col, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> top_series:</span>
+<span id="cb1-14">    s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df[col].dropna()  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># October 2025 was never published</span></span>
+<span id="cb1-15">    ax1.plot(s.index, s, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb1-16">    ax1.scatter(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb1-17">                edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb1-18"></span>
+<span id="cb1-19">ax1.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb1-20">ax1.text(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-02-01"</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.45</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">% r</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">eference"</span>,</span>
+<span id="cb1-21">         color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb1-22">         bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb1-23">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change, %"</span>)</span>
+<span id="cb1-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute limits from the plotted data so no series is clipped if values shift.</span></span>
+<span id="cb1-25">top_vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.concat([plot_df[col] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, col, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> top_series])</span>
+<span id="cb1-26">ax1.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, top_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.12</span>)</span>
+<span id="cb1-27"></span>
+<span id="cb1-28"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Place every label just to the right of its endpoint dot, in the extended</span></span>
+<span id="cb1-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># margin where no line can run underneath it. Two series end at nearly the</span></span>
+<span id="cb1-30"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># same value (shelter and core services), so labels are spread vertically:</span></span>
+<span id="cb1-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># working from the highest value down, each label is pushed below the one</span></span>
+<span id="cb1-32"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># above it whenever the two would collide.</span></span>
+<span id="cb1-33">ends <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">sorted</span>(</span>
+<span id="cb1-34">    [(plot_df[col].dropna().iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], label, color) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, col, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> top_series],</span>
+<span id="cb1-35">    reverse<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb1-36">)</span>
+<span id="cb1-37">last_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_yoy"</span>].dropna().index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb1-38">min_sep <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (ax1.get_ylim()[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> ax1.get_ylim()[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.048</span></span>
+<span id="cb1-39">prev_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb1-40"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> val, label, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ends:</span>
+<span id="cb1-41">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> val <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> prev_y <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(val, prev_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> min_sep)</span>
+<span id="cb1-42">    ax1.text(last_date, y, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_chg(val)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb1-43">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb1-44">    prev_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> y</span>
+<span id="cb1-45"></span>
+<span id="cb1-46">bottom_series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb1-47">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>]),</span>
+<span id="cb1-48">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Gasoline"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gasoline_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb1-49">]</span>
+<span id="cb1-50"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, col, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> bottom_series:</span>
+<span id="cb1-51">    s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df[col].dropna()</span>
+<span id="cb1-52">    ax2.plot(s.index, s, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb1-53">    ax2.scatter(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb1-54">                edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb1-55">    ax2.text(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_chg(s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb1-56">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb1-57"></span>
+<span id="cb1-58">ax2.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>)</span>
+<span id="cb1-59">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change, %"</span>)</span>
+<span id="cb1-60">bot_vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.concat([plot_df[col] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, col, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> bottom_series])</span>
+<span id="cb1-61">ax2.set_ylim(bot_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, bot_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.32</span>)</span>
+<span id="cb1-62"></span>
+<span id="cb1-63"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> ax <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (ax1, ax2):</span>
+<span id="cb1-64">    ax.axvspan(SHOCK_START, plot_df.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>)</span>
+<span id="cb1-65">    date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_df.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> plot_df.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb1-66">    ax.set_xlim(plot_df.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], plot_df.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.22</span>)</span>
+<span id="cb1-67"></span>
+<span id="cb1-68">ax2.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Iran conflict</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">oil repricing"</span>,</span>
+<span id="cb1-69">             xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-03-01"</span>), bot_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.12</span>), fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,</span>
+<span id="cb1-70">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb1-71">             bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb1-72">ax2.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb1-73"></span>
+<span id="cb1-74">plt.tight_layout()</span>
+<span id="cb1-75">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"may-2026-cpi-passthrough-dashboard.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-headline-core-components" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-headline-core-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index_files/figure-html/fig-headline-core-components-output-1.png" width="658" height="664" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-headline-core-components-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Headline CPI is accelerating on energy while every core component holds steady or decelerates. The top panel shows the slow-moving basket; the bottom panel shows the energy shock on its own, much larger, scale. The shaded band marks the Iran conflict oil repricing window.<br>Source: BLS via FRED (CPIAUCSL, CPILFESL, CUSR0000SAH1, CUSR0000SASLE, CUSR0000SACL1E, CPIENGSL, CUSR0000SETB01). October 2025 CPI was never published; lines connect across that month.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The bottom panel is the shock; the top panel is the test. A year ago this divergence would have read as a curiosity. Today it is the entire policy debate, because the headline-minus-core gap of <strong>1.3</strong> percentage points is the widest of this cycle, and which line the other one converges toward decides the rest of 2026.</p>
+</section>
+<section id="the-passthrough-chain-crude-to-pump-to-index" class="level2">
+<h2 class="anchored" data-anchor-id="the-passthrough-chain-crude-to-pump-to-index">2. The passthrough chain: crude to pump to index</h2>
+<p>Energy passthrough happens in a sequence with measurable lags. Crude oil reprices in minutes. Retail gasoline follows over two to four weeks as wholesale costs work through distribution. The CPI gasoline index follows retail with another partial-month lag, because BLS samples prices throughout the month. The chart below puts all three steps on one scale, indexed to their January 2026 averages, the last calm month before the Iran conflict repricing.</p>
+<div id="cell-fig-crude-pump-cpi" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> energy_m[energy_m.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-08-01"</span>]</span>
+<span id="cb2-2"></span>
+<span id="cb2-3">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>))</span>
+<span id="cb2-4"></span>
+<span id="cb2-5">chain <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-6">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"WTI crude"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wti_idx"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb2-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Retail gasoline"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gas_retail_idx"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>]),</span>
+<span id="cb2-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CPI gasoline index"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cpi_gasoline_idx"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb2-9">]</span>
+<span id="cb2-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, col, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> chain:</span>
+<span id="cb2-11">    s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m[col].dropna()</span>
+<span id="cb2-12">    ax.plot(s.index, s, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb2-13">    ax.scatter(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb2-14">               edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb2-15">    ax.text(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>s<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb2-16">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb2-17"></span>
+<span id="cb2-18">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>)</span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The baseline note sits below all three series at the left edge of the</span></span>
+<span id="cb2-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># chart, so it cannot overlap the lines, which stay above the low 90s here.</span></span>
+<span id="cb2-21">chain_vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.concat([m[col] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> _, col, _ <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> chain])</span>
+<span id="cb2-22">ax.set_ylim(bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>chain_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>)</span>
+<span id="cb2-23">ax.text(m.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], chain_vals.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"January 2026 average = 100"</span>,</span>
+<span id="cb2-24">        fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>,</span>
+<span id="cb2-25">        bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb2-26"></span>
+<span id="cb2-27">ax.axvspan(SHOCK_START, SHOCK_PEAK, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.10</span>)</span>
+<span id="cb2-28">peak_idx <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wti_idx"</span>].idxmax()</span>
+<span id="cb2-29">ax.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"WTI peak $</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wti_peak_2026'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/bbl</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'wti_peak_2026_date'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>,</span>
+<span id="cb2-30">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(peak_idx, m[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wti_idx"</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>()),</span>
+<span id="cb2-31">            xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">95</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb2-32">            arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>),</span>
+<span id="cb2-33">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb2-34">            bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb2-35"></span>
+<span id="cb2-36">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Index, January 2026 = 100"</span>)</span>
+<span id="cb2-37">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb2-38">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> m.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> m.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-39">ax.set_xlim(m.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], m.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.32</span>)</span>
+<span id="cb2-40"></span>
+<span id="cb2-41">plt.tight_layout()</span>
+<span id="cb2-42">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"crude-pump-cpi-chain.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-crude-pump-cpi" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crude-pump-cpi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index_files/figure-html/fig-crude-pump-cpi-output-1.png" width="663" height="433" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crude-pump-cpi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: WTI crude, retail gasoline, and the CPI gasoline index, each indexed to its January 2026 average. Crude moved first and has partially retraced; retail gasoline and the CPI index followed with the usual lags and have given back much less.<br>Source: FRED (DCOILWTICO, GASREGW, CUSR0000SETB01). Weekly observations; the CPI gasoline index is monthly and steps at each release.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The asymmetry in the chart is the practical story. WTI peaked +90.8% above its January average and has since fallen back to <strong>$95.0</strong> per barrel. Retail gasoline, up +47.6% from January, has barely retraced, which is typical: pump prices rise like a rocket and fall like a feather. For the CPI, this means June’s energy reading depends less on today’s crude price than on how quickly retailers pass the crude retracement through, and the May report captured the chain near its widest point.</p>
+</section>
+<section id="how-big-is-this-shock-contributions-and-history" class="level2">
+<h2 class="anchored" data-anchor-id="how-big-is-this-shock-contributions-and-history">3. How big is this shock? Contributions and history</h2>
+<p>Two reference points discipline the narrative. First, the decomposition: energy contributed roughly <strong>1.5</strong> percentage points of the +4.2% headline rate, about 36% of all inflation in the report from a category that is only 6.5% of the basket. Second, history: this energy shock is large, but it is not 2022. Energy CPI peaked at +41.5% in June 2022 and +29.3% in July 2008, and in both episodes the headline-minus-core gap blew out to around three percentage points, more than double today’s 1.3 points.</p>
+<div id="cell-fig-contribution-history" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.4</span>), height_ratios<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>])</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">contrib <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame({</span>
+<span id="cb3-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core services ex shelter + other"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Food"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core goods"</span>],</span>
+<span id="cb3-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>: [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_energy_pp"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_shelter_pp"</span>],</span>
+<span id="cb3-6">           stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_residual_pp"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_food_pp"</span>],</span>
+<span id="cb3-7">           stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_core_goods_pp"</span>]],</span>
+<span id="cb3-8">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>: [COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>],</span>
+<span id="cb3-9">              COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"food"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"light"</span>]],</span>
+<span id="cb3-10">}).sort_values(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>)</span>
+<span id="cb3-11"></span>
+<span id="cb3-12">ax1.barh(contrib[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"label"</span>], contrib[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>contrib[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>], edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>)</span>
+<span id="cb3-13">xmax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> contrib[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>()</span>
+<span id="cb3-14">xpad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> xmax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.04</span></span>
+<span id="cb3-15"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i, (_, row) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">enumerate</span>(contrib.iterrows()):</span>
+<span id="cb3-16">    near_edge <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> xmax</span>
+<span id="cb3-17">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> near_edge:</span>
+<span id="cb3-18">        ax1.text(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> xpad, i, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pp'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> pp"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"right"</span>,</span>
+<span id="cb3-19">                 va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb3-20">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb3-21">        ax1.text(row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pp"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> xpad, i, <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>row[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pp'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> pp"</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>,</span>
+<span id="cb3-22">                 va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#334155"</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>)</span>
+<span id="cb3-23">ax1.set_xlim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, xmax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.18</span>)</span>
+<span id="cb3-24">ax1.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Contribution to May 2026 headline CPI, percentage points"</span>)</span>
+<span id="cb3-25">ax1.xaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, pos: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>))</span>
+<span id="cb3-26"></span>
+<span id="cb3-27">hist <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpi.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2000-01-01"</span>:, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_yoy"</span>].dropna()</span>
+<span id="cb3-28">ax2.plot(hist.index, hist, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.4</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb3-29">ax2.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>)</span>
+<span id="cb3-30"></span>
+<span id="cb3-31">episodes <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb3-32">    (pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2007-06-01"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2009-06-01"</span>)),</span>
+<span id="cb3-33">    (pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2021-03-01"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2022-12-01"</span>)),</span>
+<span id="cb3-34">    (SHOCK_START, hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]),</span>
+<span id="cb3-35">]</span>
+<span id="cb3-36"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> lo, hi <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> episodes:</span>
+<span id="cb3-37">    ax2.axvspan(lo, hi, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"recession"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>)</span>
+<span id="cb3-38"></span>
+<span id="cb3-39"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> name <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2008"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2022"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"current"</span>]:</span>
+<span id="cb3-40">    month <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(stats[<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"energy_peak_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_month"</span>])</span>
+<span id="cb3-41">    val <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"energy_peak_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>]</span>
+<span id="cb3-42">    ax2.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'energy_peak_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>name<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_month'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_chg(val)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb3-43">                 xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(month, val), xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb3-44">                 ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb3-45">                 bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb3-46"></span>
+<span id="cb3-47">ax2.scatter(hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], hist.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>],</span>
+<span id="cb3-48">            zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb3-49">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy CPI, year-over-year change, %"</span>)</span>
+<span id="cb3-50">ax2.set_ylim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">58</span>)</span>
+<span id="cb3-51">ax2.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%Y"</span>))</span>
+<span id="cb3-52">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> hist.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb3-53">ax2.set_xlim(hist.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], hist.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.04</span>)</span>
+<span id="cb3-54"></span>
+<span id="cb3-55">plt.tight_layout()</span>
+<span id="cb3-56">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contribution-history-panel.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-contribution-history" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contribution-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index_files/figure-html/fig-contribution-history-output-1.png" width="664" height="702" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contribution-history-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Top: approximate contributions to the May 2026 headline CPI rate; energy delivers about a third of all inflation from 6.5% of the basket. Bottom: energy CPI in historical context; the current shock is roughly half the size of the 2022 peak, with prior shock episodes shaded.<br>Source: BLS via FRED. Contributions are approximate: BLS relative-importance weights (December 2025) applied to component year-over-year changes, with the residual bucket absorbing the remainder.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The 2022 comparison cuts both ways. Optimists note that the current shock is roughly half the 2022 peak and that core inflation entered this episode at +2.8% rather than above five percent. Pessimists note that in 2022 the passthrough into core took roughly two to three quarters to fully register, which means the May report may simply be too early to show it. Both readings are consistent with the data; the next two core prints decide between them.</p>
+</section>
+<section id="the-labor-market-backdrop-real-wages-turn-negative" class="level2">
+<h2 class="anchored" data-anchor-id="the-labor-market-backdrop-real-wages-turn-negative">4. The labor market backdrop: real wages turn negative</h2>
+<p>Passthrough needs a transmission mechanism, and the most important one is wages. Here the May evidence points toward containment. The <a href="../../posts/2026-06-06-may-2026-jobs-report-stabilization/">May jobs report</a> showed payrolls up <strong>+172k</strong> with unemployment steady at 4.3%, a labor market stabilizing rather than overheating. Average hourly earnings rose +3.4% over the year, unchanged in pace for months. With headline inflation at +4.2%, that arithmetic has turned <strong>real wage growth negative</strong>: -0.7% year over year in May 2026.</p>
+<div id="cell-fig-wages-inflation" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">w <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> labor[labor.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2021-01-01"</span>]</span>
+<span id="cb4-2">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cpi[cpi.index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2021-01-01"</span>]</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.6</span>))</span>
+<span id="cb4-5"></span>
+<span id="cb4-6">series_list <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb4-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Headline CPI"</span>, c[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_yoy"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>]),</span>
+<span id="cb4-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Avg hourly earnings"</span>, w[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ahe_yoy"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb4-9">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Real wage growth"</span>, w[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"real_ahe_yoy"</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb4-10">]</span>
+<span id="cb4-11"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, s, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> series_list:</span>
+<span id="cb4-12">    s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> s.dropna()</span>
+<span id="cb4-13">    ax.plot(s.index, s, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb4-14">    ax.scatter(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb4-15">               edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb4-16">    ax.text(s.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_chg(s.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb4-17">            fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb4-18"></span>
+<span id="cb4-19">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>)</span>
+<span id="cb4-20">ax.fill_between(w.index, w[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"real_ahe_yoy"</span>].where(w[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"real_ahe_yoy"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb4-21">                color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb4-22">ax.annotate(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2021-2023:</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">real wages negative</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">for two years"</span>,</span>
+<span id="cb4-23">            xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>), <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.9</span>), fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, ha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>,</span>
+<span id="cb4-24">            color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb4-25">            bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb4-26"></span>
+<span id="cb4-27">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change, %"</span>)</span>
+<span id="cb4-28">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%Y"</span>))</span>
+<span id="cb4-29">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> w.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> w.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb4-30">ax.set_xlim(w.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], w.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.34</span>)</span>
+<span id="cb4-31">ax.set_ylim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.5</span>)</span>
+<span id="cb4-32"></span>
+<span id="cb4-33">plt.tight_layout()</span>
+<span id="cb4-34">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"wages-real-earnings.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-wages-inflation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wages-inflation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index_files/figure-html/fig-wages-inflation-output-1.png" width="660" height="433" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wages-inflation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Nominal wage growth has been stable while headline inflation accelerated past it, pushing real wage growth below zero for the second time this cycle. A wage-price spiral would show nominal wages chasing inflation upward; the data show the opposite.<br>Source: BLS via FRED (CES0500000003, CPIAUCSL). Real wage growth deflates average hourly earnings by headline CPI.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is the chart that separates 2026 from the 1970s template. A wage-price spiral requires wages to chase prices upward. Instead, nominal wage growth is flat, hiring is concentrated in a few sectors, and the energy shock is eroding purchasing power rather than igniting compensation demands. That erosion is itself a disinflationary force: households absorbing a +47.6% gasoline increase have less to spend elsewhere, which is one reason core goods prices fell in May.</p>
+</section>
+<section id="policy-and-market-implications" class="level2">
+<h2 class="anchored" data-anchor-id="policy-and-market-implications">5. Policy and market implications</h2>
+<p>The Federal Reserve meets on June 16-17, 2026, and the May report effectively wrote the meeting’s script: acknowledge the headline, anchor on the core. Markets price a hold as a near certainty, with the CME FedWatch tool showing roughly 93% probability of no change.<sup>2</sup> The more interesting question is the path. The March dot plot median still shows the funds rate at 3.375% by year-end, a full cut from the current 3.50-3.75% range. Market pricing has drifted hawkish of that, to roughly 3.55%, a bit less than half a cut. Meanwhile the Treasury curve has steepened: the 10-year yield at 4.53% now sits 40 basis points above the 2-year, as long rates absorb the inflation repricing while short rates stay pinned by the on-hold Fed.</p>
+<div id="cell-fig-rate-path-curve" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.2</span>), height_ratios<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">today <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-06-12"</span>)</span>
+<span id="cb5-4">dot_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [today, pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-12-31"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2027-12-31"</span>),</span>
+<span id="cb5-5">         pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2028-12-31"</span>)]</span>
+<span id="cb5-6">dot_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"target_midpoint"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>],</span>
+<span id="cb5-7">         stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2027"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2028"</span>]]</span>
+<span id="cb5-8">mkt_x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [today, pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-12-31"</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2027-12-31"</span>)]</span>
+<span id="cb5-9">mkt_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"target_midpoint"</span>], stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>],</span>
+<span id="cb5-10">         stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2027"</span>]]</span>
+<span id="cb5-11"></span>
+<span id="cb5-12">ax1.plot(dot_x, dot_y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>,</span>
+<span id="cb5-13">         marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"FOMC dot plot median (Mar 2026 SEP)"</span>)</span>
+<span id="cb5-14">ax1.plot(mkt_x, mkt_y, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.2</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>,</span>
+<span id="cb5-15">         markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Market-implied path (Jun 12, 2026)"</span>)</span>
+<span id="cb5-16"></span>
+<span id="cb5-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Interquartile range of the 2026 dots, drawn as a vertical band at year-end.</span></span>
+<span id="cb5-18">ax1.errorbar([pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-12-31"</span>)], [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]],</span>
+<span id="cb5-19">             yerr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[[stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_iqr_lo_2026"</span>]],</span>
+<span id="cb5-20">                   [stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_iqr_hi_2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]]],</span>
+<span id="cb5-21">             color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, capsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb5-22"></span>
+<span id="cb5-23">wedge_bps <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb5-24">ax1.annotate(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Markets price </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>wedge_bps<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> bps</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">less easing than the dots"</span>,</span>
+<span id="cb5-25">             xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2027-01-20"</span>),</span>
+<span id="cb5-26">                 (stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"market_implied_eoy2026"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dot_median_eoy2026"</span>]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb5-27">             xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">55</span>), textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb5-28">             arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>),</span>
+<span id="cb5-29">             fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb5-30">             bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb5-31"></span>
+<span id="cb5-32"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x, y, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [(dot_x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], dot_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb5-33">                    (mkt_x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], mkt_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>])]:</span>
+<span id="cb5-34">    ax1.scatter(x, y, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb5-35">ax1.text(dot_x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], dot_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(dot_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb5-36">         color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-37">ax1.text(mkt_x[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], mkt_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fmt_rate(mkt_y[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb5-38">         color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-39"></span>
+<span id="cb5-40">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Federal funds rate, %"</span>)</span>
+<span id="cb5-41">ax1.set_ylim(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.0</span>)</span>
+<span id="cb5-42">ax1.yaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> x, pos: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>))</span>
+<span id="cb5-43">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb5-44">ax1.set_xlim(today <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> pd.Timedelta(days<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>), pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2029-06-30"</span>))</span>
+<span id="cb5-45">ax1.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper right"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, frameon<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb5-46"></span>
+<span id="cb5-47">spread <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> rates.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>:, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"spread_bps"</span>].dropna()</span>
+<span id="cb5-48">ax2.plot(spread.index, spread, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.4</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb5-49">ax2.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>)</span>
+<span id="cb5-50">ax2.fill_between(spread.index, spread.where(spread <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb5-51">                 color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb5-52">ax2.scatter(spread.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], spread.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>],</span>
+<span id="cb5-53">            zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb5-54">ax2.text(spread.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], spread.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'spread_latest_bps'</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> bps"</span>,</span>
+<span id="cb5-55">         fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>], fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-56">ax2.axvspan(SHOCK_START, spread.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.08</span>)</span>
+<span id="cb5-57">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10y minus 2y Treasury, bps"</span>)</span>
+<span id="cb5-58">ax2.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb5-59">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> spread.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> spread.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb5-60">ax2.set_xlim(spread.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], spread.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.10</span>)</span>
+<span id="cb5-61"></span>
+<span id="cb5-62">plt.tight_layout()</span>
+<span id="cb5-63">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rate-path-yield-curve.png"</span>, dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-rate-path-curve" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rate-path-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index_files/figure-html/fig-rate-path-curve-output-1.png" width="663" height="684" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rate-path-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Top: the March 2026 dot plot median path against the market-implied path; markets price less easing than the FOMC projects, and the June SEP update will show whether the committee concedes. Bottom: the 10-year minus 2-year Treasury spread has steepened through the energy shock.<br>Source: FOMC Summary of Economic Projections (March 2026), CME FedWatch (June 12, 2026, author approximation), FRED (DGS10, DGS2, DFEDTARL, DFEDTARU).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>For insurance and actuarial readers, this report lands directly on loss-cost assumptions. Energy and parts costs feed auto physical damage severity, and the +40.5% gasoline increase will, with the usual lag, suppress miles driven and claim frequency at the same time as it raises towing, materials, and replacement costs. Reserving against a +4.2% headline world while core trends at +2.8% means the choice of inflation index for trend assumptions matters more than usual: indexing severity to headline CPI overstates the persistent component if the energy shock fades, and understates it if passthrough arrives.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p><strong>For the Fed:</strong> The May report argues for patience in both directions: too much headline inflation to cut, too little core pressure to hike. A hold on June 16-17, 2026 with a hawkish-leaning statement is the path of least resistance, and the updated dot plot will reveal how many participants still see a 2026 cut.</p>
+<p><strong>For consumers:</strong> The squeeze is real but narrow. Gasoline at $4.15 per gallon and negative real wage growth of -0.7% hit budgets now, while the slower-moving categories, shelter and services, are finally decelerating.</p>
+<p><strong>For markets and insurers:</strong> The data so far support the contained-shock scenario: core momentum halved in May, core goods deflated, and wages show no spiral. But containment is a verdict the data must re-earn every month. The July 14, 2026 CPI release, covering June, is the first month that will show whether the crude retracement reaches the pump, and the first that could show second-round effects if they are coming.</p>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>The contribution decomposition uses approximate BLS relative-importance weights applied to year-over-year changes, not the exact BLS methodology; treat the bars as a reading frame, not an official decomposition.</li>
+<li>The market-implied rate path is an author approximation from CME FedWatch pricing, not an official series; values shift daily.</li>
+<li>October 2025 CPI was never published. Year-over-year calculations skip that base month cleanly, but multi-month averages spanning it cover fewer observations.</li>
+<li>CPI is not the Fed’s preferred PCE inflation gauge; PCE typically runs a few tenths cooler, and the May PCE release arrives after the June FOMC meeting.</li>
+<li>Recession-probability models are omitted because the standard published series lag by several months and would not reflect the current shock.</li>
+</ul>
+</section>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data sources used in this analysis. All FRED series fetched by <code>scripts/01_fetch_data.py</code>.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPIAUCSL</td>
+<td>CPI-U, all items, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CPIAUCSL">FRED</a></td>
+</tr>
+<tr class="even">
+<td>CPILFESL</td>
+<td>CPI-U less food and energy, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CPILFESL">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CPIENGSL</td>
+<td>CPI energy, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CPIENGSL">FRED</a></td>
+</tr>
+<tr class="even">
+<td>CUSR0000SETB01</td>
+<td>CPI gasoline (all types), SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CUSR0000SETB01">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CUSR0000SAH1</td>
+<td>CPI shelter, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CUSR0000SAH1">FRED</a></td>
+</tr>
+<tr class="even">
+<td>CPIFABSL</td>
+<td>CPI food and beverages, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CPIFABSL">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CUSR0000SACL1E</td>
+<td>CPI commodities less food and energy, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CUSR0000SACL1E">FRED</a></td>
+</tr>
+<tr class="even">
+<td>CUSR0000SASLE</td>
+<td>CPI services less energy services, SA</td>
+<td><a href="https://fred.stlouisfed.org/series/CUSR0000SASLE">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>DCOILWTICO</td>
+<td>WTI crude oil spot price</td>
+<td><a href="https://fred.stlouisfed.org/series/DCOILWTICO">FRED</a></td>
+</tr>
+<tr class="even">
+<td>GASREGW</td>
+<td>US regular gasoline retail price (EIA)</td>
+<td><a href="https://fred.stlouisfed.org/series/GASREGW">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CES0500000003</td>
+<td>Average hourly earnings, private</td>
+<td><a href="https://fred.stlouisfed.org/series/CES0500000003">FRED</a></td>
+</tr>
+<tr class="even">
+<td>PAYEMS, UNRATE</td>
+<td>Nonfarm payrolls; unemployment rate</td>
+<td><a href="https://fred.stlouisfed.org/series/PAYEMS">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>DGS2, DGS10</td>
+<td>2-year and 10-year Treasury yields</td>
+<td><a href="https://fred.stlouisfed.org/series/DGS10">FRED</a></td>
+</tr>
+<tr class="even">
+<td>DFEDTARL, DFEDTARU</td>
+<td>Fed funds target range bounds</td>
+<td><a href="https://fred.stlouisfed.org/series/DFEDTARU">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>March 2026 SEP</td>
+<td>FOMC dot plot projections</td>
+<td><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm">Federal Reserve</a></td>
+</tr>
+<tr class="even">
+<td>FedWatch</td>
+<td>Market-implied rate path (approximation)</td>
+<td><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html">CME Group</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Data current as of May 2026 CPI (BLS release: June 10, 2026); market data through June 08, 2026.</em></p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>WTI: West Texas Intermediate, the benchmark grade of US crude oil. Its spot price is the standard reference for domestic oil costs, the same role Brent crude plays for international markets.↩︎</p></li>
+<li id="fn2"><p>The FedWatch tool derives probabilities from 30-Day Fed Funds futures prices. The market-implied path shown here converts those probabilities into an expected rate, an author approximation as of June 12, 2026.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>economics</category>
+  <category>inflation</category>
+  <category>energy</category>
+  <category>federal reserve</category>
+  <category>data visualization</category>
+  <guid>https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/</guid>
+  <pubDate>Sat, 13 Jun 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/images/may-2026-cpi-passthrough-dashboard.png" medium="image" type="image/png" height="145" width="144"/>
+</item>
 <item>
   <title>May 2026 Jobs Report: Labor Market Stabilization at +172k</title>
   <dc:creator>Yoram Gilboa</dc:creator>
@@ -533,7 +3229,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." data-fig-align="center">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." width="753" height="426">
@@ -1045,7 +3741,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="801" height="589">
@@ -1892,7 +4588,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-130">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -2368,7 +5064,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-66">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -2868,7 +5564,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." data-fig-align="center">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." width="728" height="672">
@@ -32459,134 +35155,6 @@ Figure&nbsp;9: CPI year-over-year from 1960 to present. Gray bars indicate NBER 
   <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
 </item>
 <item>
-  <title>Setting Up My Data Science Blog</title>
-  <link>https://gilboa.blog/posts/2025-02-01-first-visualization/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="welcome" class="level2">
-<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
-<p>This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.</p>
-</section>
-<section id="testing-the-setup" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
-<p>Let me verify that Python code execution and visualization rendering work correctly.</p>
-<div id="9713fbc9" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span>
-<span id="cb1-3"></span>
-<span id="cb1-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Generate sample data</span></span>
-<span id="cb1-5">x <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span> np.pi, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>)</span>
-<span id="cb1-6">y_sin <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.sin(x)</span>
-<span id="cb1-7">y_cos <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.cos(x)</span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Create visualization</span></span>
-<span id="cb1-10">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>))</span>
-<span id="cb1-11">ax.plot(x, y_sin, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'sin(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span>
-<span id="cb1-12">ax.plot(x, y_cos, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'cos(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)</span>
-<span id="cb1-13">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'x'</span>)</span>
-<span id="cb1-14">ax.set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'y'</span>)</span>
-<span id="cb1-15">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Trigonometric Functions'</span>)</span>
-<span id="cb1-16">ax.legend()</span>
-<span id="cb1-17">ax.grid(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>)</span>
-<span id="cb1-18">plt.tight_layout()</span>
-<span id="cb1-19">plt.show()</span></code></pre></div></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="https://gilboa.blog/posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png" width="950" height="566" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
-<p>I plan to explore:</p>
-<ul>
-<li>Financial data visualization (particularly nuclear energy stocks)</li>
-<li>Time series analysis</li>
-<li>Predictive modeling techniques</li>
-<li>Interactive visualizations</li>
-</ul>
-<p>Stay tuned for more technical content!</p>
-
-
-</section>
-
- ]]></description>
-  <category>meta</category>
-  <category>visualization</category>
-  <category>python</category>
-  <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
-  <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
-</item>
-<item>
   <title>P&amp;C Severity CPI: A Claims-Weighted Inflation Index</title>
   <link>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</link>
   <description><![CDATA[ 
@@ -33142,6 +35710,134 @@ font-style: inherit;">'y'</span>)</span>
   <category>visualization</category>
   <category>insurance</category>
   <guid>https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/</guid>
+  <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Setting Up My Data Science Blog</title>
+  <link>https://gilboa.blog/posts/2025-02-01-first-visualization/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="welcome" class="level2">
+<h2 class="anchored" data-anchor-id="welcome">Welcome</h2>
+<p>This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.</p>
+</section>
+<section id="testing-the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-setup">Testing the Setup</h2>
+<p>Let me verify that Python code execution and visualization rendering work correctly.</p>
+<div id="9713fbc9" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generate sample data</span></span>
+<span id="cb1-5">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linspace(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> np.pi, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>)</span>
+<span id="cb1-6">y_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.sin(x)</span>
+<span id="cb1-7">y_cos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.cos(x)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create visualization</span></span>
+<span id="cb1-10">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>))</span>
+<span id="cb1-11">ax.plot(x, y_sin, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sin(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-12">ax.plot(x, y_cos, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'cos(x)'</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-13">ax.set_xlabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'x'</span>)</span>
+<span id="cb1-14">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>)</span>
+<span id="cb1-15">ax.set_title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Trigonometric Functions'</span>)</span>
+<span id="cb1-16">ax.legend()</span>
+<span id="cb1-17">ax.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>)</span>
+<span id="cb1-18">plt.tight_layout()</span>
+<span id="cb1-19">plt.show()</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://gilboa.blog/posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next</h2>
+<p>I plan to explore:</p>
+<ul>
+<li>Financial data visualization (particularly nuclear energy stocks)</li>
+<li>Time series analysis</li>
+<li>Predictive modeling techniques</li>
+<li>Interactive visualizations</li>
+</ul>
+<p>Stay tuned for more technical content!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>meta</category>
+  <category>visualization</category>
+  <category>python</category>
+  <guid>https://gilboa.blog/posts/2025-02-01-first-visualization/</guid>
   <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
 </item>
 </channel>
