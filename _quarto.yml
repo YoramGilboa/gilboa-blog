@@ -36,8 +36,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: theme.scss
     css: styles.css
+    html-math-method: katex
     toc: true
     toc-depth: 3
     code-fold: false
