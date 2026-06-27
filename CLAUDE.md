@@ -21,6 +21,10 @@ gilboa-blog/
 ├── CNAME                        ← custom domain (gilboa.blog)
 ├── requirements.txt             ← all Python dependencies
 ├── .github/workflows/publish.yml
+├── .githooks/pre-commit         ← runs lint_post.py on staged posts
+├── .claude/commands/            ← blog-post-create, blog-chart-review, blog-data-validate, blog-final-review skills
+├── tools/lint_post.py           ← deterministic post linter (pre-commit + CI gate)
+├── scripts/check_post.ps1       ← per-post preflight: lint checks + render
 ├── _freeze/                     ← cached Python output — COMMIT THIS
 ├── posts/
 │   ├── _metadata.yml            ← shared defaults for all posts
@@ -60,7 +64,9 @@ gilboa-blog/
 ```bash
 python -m venv .venv
 source .venv/Scripts/activate      # Windows Git Bash
+# PowerShell instead: .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+git config core.hooksPath .githooks   # activate the lint pre-commit hook
 ```
 
 ### Every session
@@ -90,6 +96,45 @@ git push
 ```
 
 GitHub Actions deploys to gilboa.blog within ~2 minutes.
+
+---
+
+## Guardrails and verification commands
+
+Three layers enforce the rules in this file mechanically. All are driven by
+`tools/lint_post.py` (stdlib only), which checks **form, not truth** - it
+catches a stray `subtitle:` or an em dash, but cannot judge chart overlap
+(use `/blog-chart-review`) or whether a number is correct.
+
+```bash
+python tools/lint_post.py posts/SLUG/index.qmd   # one post (or a post dir)
+python tools/lint_post.py --staged               # what the pre-commit hook runs
+python tools/lint_post.py --all                  # every published post (what CI runs)
+```
+
+Exit code 0 means no ERRORs (WARNs print but do not block); 1 blocks the
+commit / fails the deploy.
+
+1. **Pre-commit hook** (`.githooks/pre-commit`) - lints staged published
+   posts. Requires one-time activation: `git config core.hooksPath .githooks`.
+   Bypass only in an emergency with `git commit --no-verify`.
+2. **CI gate** (`.github/workflows/publish.yml`) - runs `lint_post.py --all`
+   before rendering; the backstop that cannot be bypassed. CI then renders
+   from the committed `_freeze/` cache and publishes to the `gh-pages` branch.
+   `FRED_API_KEY` is available as a repo secret in CI.
+3. **Per-post preflight** (`scripts/check_post.ps1`) - PowerShell wrapper
+   that checks stale template headings, `draft: true`, `plt.show()`, wildcard
+   imports, missing stats files, then renders the target post:
+
+```powershell
+.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft
+# -RunPipeline runs the numbered scripts/ first; -SkipRender skips the render
+```
+
+The `/blog-post-create`, `/blog-chart-review`, `/blog-data-validate`, and
+`/blog-final-review` skills live in `.claude/commands/`. `BLOG_AUTOMATION.md` and
+`BLOG_DEV_SETUP.md` describe a superseded 5-role automation experiment;
+those four skills are the active replacements.
 
 ---
 
@@ -316,6 +361,10 @@ Every chart block must have a label and figure caption:
 - `#| echo: false` for setup and data-wrangling blocks only
 - Labels use `fig-` prefix and kebab-case: `fig-headline`, `fig-shelter-detail`
 - Figure captions are full sentences. They describe the chart AND call out the key takeaway.
+- Treat `#| fig-cap:` as the chart's interpretation sentence. Do not repeat that same interpretation inside the plotted image with `fig.text()` or `ax.text()`.
+- Put `Source:` on its own line directly below the rendered figure in the post body, not inside the image. Use the shared `.figure-source` style from `styles.css` rather than inline styling.
+- If a line chart marks the latest point with an endpoint dot, label that dot by default unless doing so would create a worse overlap problem than the unlabeled point.
+- Size charts for the article column first. Prefer figure widths that render near column width so the browser does not aggressively shrink the PNG and make chart typography look smaller than intended.
 
 ---
 
@@ -333,6 +382,7 @@ These rules apply to every chart:
 - Use direct end-of-line labels instead of legends where possible
 - If a legend is needed, place it `loc='upper right'` with `fontsize=8`
 - Annotate key points (peaks, current value) with `ax.annotate()` and arrows
+- Avoid mixing multiple caption systems. The chart should have one figure caption, one source line, and then only data labels or annotations that are truly part of the visual.
 
 **Shading:**
 - Use `ax.axvspan()` for recession bands with `alpha=0.08, color='#888888'`
@@ -664,12 +714,16 @@ Before merging to `main` and pushing:
 - [ ] All inline `{python}` values render correctly (`quarto preview`)
 - [ ] All charts display without errors
 - [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
+- [ ] Post passes `/blog-final-review` (accuracy, flow, and consistency)
+- [ ] `stats/final_review_status.json` reviewed; resolve any non-PASS warning before publishing
 - [ ] **Homepage listing card checked**, not just the post page. View the post in
       the `index.qmd` listing and confirm the card shows a single, clean
       description line (title → categories → one description → date/author).
       A doubled-up description usually means a stray `subtitle:` field (see the
       YAML frontmatter rules).
 - [ ] Figure captions are complete sentences
+- [ ] Figure caption, source line, and any endpoint labels follow the shared chart presentation pattern
+- [ ] No duplicate chart interpretation text appears both in the Quarto caption and inside the image
 - [ ] The "Reproducing this analysis" callout accurately describes the pipeline
 - [ ] `stats/summary_stats.json` is up to date
 - [ ] **No unverified placeholder values shipping.** Grep the post and
@@ -678,6 +732,7 @@ Before merging to `main` and pushing:
       FRED) must be confirmed against its primary source before publishing.
 - [ ] Data currency note at the bottom is accurate
 - [ ] `_freeze/` reflects the latest render (run `quarto render` if unsure)
+- [ ] Rendered HTML checked for raw `{python}` leaks, stale duplicate figure outputs in `_freeze`, and oversized figures that are being visibly downscaled by the browser
 - [ ] Post folder is moved out of `drafts/` into `posts/`
 - [ ] Social preview image saved to `images/` and referenced in `image:` frontmatter
 - [ ] All FRED/BEA series IDs validated via `/blog-data-validate`
