@@ -19440,7 +19440,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb1-98">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028.">
+<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." width="682" height="428">
@@ -19901,7 +19901,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb2-78">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates.">
+<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-effr-sep-vintages-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." width="672" height="435">
@@ -20494,7 +20494,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb3-93">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026.">
+<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-forward-fan-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." width="682" height="428">
@@ -21071,7 +21071,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb4-109">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points.">
+<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-gap-waterfall-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." width="681" height="450">
@@ -21403,7 +21403,7 @@ font-style: inherit;">%Y"</span>))</span>
 <span id="cb5-45">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels.">
+<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-yields-vix-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." width="683" height="505">
