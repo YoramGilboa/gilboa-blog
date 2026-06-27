@@ -1,0 +1,544 @@
+---
+title: "June 2026 Labor Market Dashboard: Strong May Payrolls vs. Slower Hiring Signals"
+date: "2026-06-27"
+author: Yoram Gilboa
+categories: [labor market, economics, data visualization]
+description: "A June 2026 labor market dashboard using May payrolls, April JOLTS, and weekly claims to separate headline resilience from slower hiring-flow signals."
+image: images/june-2026-labor-market-dashboard.png
+draft: false
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import requests
+import json
+
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [DATA_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+plt.rcParams.update({
+    "font.family": ["Garamond", "Georgia", "DejaVu Serif"],
+    "font.size": 12,
+    "axes.titlesize": 13,
+    "axes.labelsize": 12,
+    "xtick.labelsize": 11.5,
+    "ytick.labelsize": 11.5,
+    "legend.fontsize": 11,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+})
+
+COLORS = {
+    "payroll": "#1f4e79",
+    "claims": "#8c2d04",
+    "unemp": "#4a7c59",
+    "openings": "#7f3c8d",
+    "hires": "#118ab2",
+    "quits": "#ef476f",
+    "wage_nom": "#003f5c",
+    "wage_real": "#2f4b7c",
+    "ulc": "#bc5090",
+    "neutral": "#4d4d4d",
+}
+
+
+def fmt(n):
+    if isinstance(n, float):
+        s = f"{n:.1f}"
+        return s.rstrip("0").rstrip(".")
+    return f"{n:,}"
+
+
+def fmt2(n):
+    if isinstance(n, float):
+        s = f"{n:.2f}"
+        return s.rstrip("0").rstrip(".")
+    return f"{n:,}"
+
+
+def fmt_chg(n):
+    if isinstance(n, float):
+        if abs(n) < 1e-9:
+            return "0"
+        s = f"{n:+.1f}"
+        return s.rstrip("0").rstrip(".")
+    return f"{n:+,}"
+
+
+def fred_csv(series_id: str) -> pd.Series:
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+    r = requests.get(url, timeout=30)
+    r.raise_for_status()
+    df = pd.read_csv(pd.io.common.StringIO(r.text))
+    df.columns = ["date", series_id]
+    df["date"] = pd.to_datetime(df["date"])
+    df[series_id] = pd.to_numeric(df[series_id], errors="coerce")
+    s = df.set_index("date")[series_id].dropna()
+    return s
+
+
+series_ids = {
+    "PAYEMS": "Total Nonfarm Payrolls",
+    "UNRATE": "Unemployment Rate",
+    "ICSA": "Initial Claims",
+    "CCSA": "Continuing Claims",
+    "JTSJOR": "Job Openings Rate",
+    "JTSHIR": "Hires Rate",
+    "JTSQUR": "Quits Rate",
+    "CES0500000003": "Average Hourly Earnings, Total Private",
+    "CPIAUCSL": "CPI All Urban Consumers",
+    "ULCNFB": "Unit Labor Costs, Nonfarm Business",
+    "USGOOD": "Goods-Producing Payrolls",
+    "SRVPRD": "Service-Providing Payrolls",
+    "USGOVT": "Government Payrolls",
+    "MANEMP": "Manufacturing Payrolls",
+}
+
+raw = {sid: fred_csv(sid) for sid in series_ids}
+
+monthly = pd.concat(
+    [
+        raw["PAYEMS"],
+        raw["UNRATE"],
+        raw["JTSJOR"],
+        raw["JTSHIR"],
+        raw["JTSQUR"],
+        raw["CES0500000003"],
+        raw["CPIAUCSL"],
+        raw["ULCNFB"],
+        raw["USGOOD"],
+        raw["SRVPRD"],
+        raw["USGOVT"],
+        raw["MANEMP"],
+    ],
+    axis=1,
+).sort_index()
+
+weekly_claims = pd.concat([raw["ICSA"], raw["CCSA"]], axis=1).sort_index()
+weekly_claims["ICSA_4WMA"] = weekly_claims["ICSA"].rolling(4).mean()
+weekly_claims["CCSA_4WMA"] = weekly_claims["CCSA"].rolling(4).mean()
+
+claims_monthly = weekly_claims[["ICSA_4WMA", "CCSA_4WMA"]].resample("ME").last()
+monthly = monthly.join(claims_monthly, how="left")
+
+monthly["payroll_change"] = monthly["PAYEMS"].diff()
+monthly["payroll_change_3m"] = monthly["payroll_change"].rolling(3).mean()
+
+# JTSJOR, JTSHIR, JTSQUR are the BLS-published rates (percent of employment).
+monthly["job_openings_rate"] = monthly["JTSJOR"]
+monthly["hires_rate"] = monthly["JTSHIR"]
+
+monthly["ahe_yoy"] = monthly["CES0500000003"].pct_change(12, fill_method=None) * 100
+monthly["cpi_yoy"] = monthly["CPIAUCSL"].pct_change(12, fill_method=None) * 100
+monthly["real_wage_yoy"] = monthly["ahe_yoy"] - monthly["cpi_yoy"]
+ulc_yoy_q = raw["ULCNFB"].pct_change(4, fill_method=None) * 100
+monthly["ulc_yoy"] = ulc_yoy_q.reindex(monthly.index, method="ffill")
+
+sector_cols = [
+    "USGOOD",
+    "SRVPRD",
+    "USGOVT",
+    "MANEMP",
+]
+sector_names = {
+    "USGOOD": "Goods-Producing",
+    "SRVPRD": "Service-Providing",
+    "USGOVT": "Government",
+    "MANEMP": "Manufacturing",
+}
+
+sector_change = monthly[sector_cols].diff()
+sector_latest = sector_change.iloc[-1].rename(index=sector_names)
+sector_3m = sector_change.rolling(3).mean().iloc[-1].rename(index=sector_names)
+
+payroll_idx = monthly.dropna(subset=["payroll_change", "UNRATE"]).index
+latest_month = payroll_idx[-1]
+prev_month = payroll_idx[-2]
+
+# JOLTS (openings, hires, quits) lag payrolls by about a month, so select the
+# latest month for which those series are actually populated.
+jolts_df = monthly[["job_openings_rate", "hires_rate", "JTSQUR"]].dropna()
+jolts_latest = jolts_df.index[-1]
+jolts_prev = jolts_df.index[-2]
+
+claims_latest_date = weekly_claims.dropna(subset=["ICSA_4WMA"]).index[-1]
+claims_prev_date = weekly_claims.dropna(subset=["ICSA_4WMA"]).index[-5]
+
+stats = {
+    "latest_month": latest_month.strftime("%B %Y"),
+    "prev_month": prev_month.strftime("%B %Y"),
+    "jolts_month": jolts_latest.strftime("%B %Y"),
+    "payroll_change_latest": float(monthly.loc[latest_month, "payroll_change"]),
+    "payroll_change_prev": float(monthly.loc[prev_month, "payroll_change"]),
+    "payroll_change_3m": float(monthly.loc[latest_month, "payroll_change_3m"]),
+    "unrate_latest": float(monthly.loc[latest_month, "UNRATE"]),
+    "unrate_prev": float(monthly.loc[prev_month, "UNRATE"]),
+    "claims_4w_latest": float(weekly_claims.loc[claims_latest_date, "ICSA_4WMA"]) / 1000,
+    "claims_4w_prev": float(weekly_claims.loc[claims_prev_date, "ICSA_4WMA"]) / 1000,
+    "claims_4w_chg": (float(weekly_claims.loc[claims_latest_date, "ICSA_4WMA"]) - float(weekly_claims.loc[claims_prev_date, "ICSA_4WMA"])) / 1000,
+    "openings_rate_latest": float(jolts_df.loc[jolts_latest, "job_openings_rate"]),
+    "openings_rate_prev": float(jolts_df.loc[jolts_prev, "job_openings_rate"]),
+    "openings_rate_chg": float(jolts_df.loc[jolts_latest, "job_openings_rate"]) - float(jolts_df.loc[jolts_prev, "job_openings_rate"]),
+    "hires_rate_latest": float(jolts_df.loc[jolts_latest, "hires_rate"]),
+    "hires_rate_prev": float(jolts_df.loc[jolts_prev, "hires_rate"]),
+    "hires_rate_chg": float(jolts_df.loc[jolts_latest, "hires_rate"]) - float(jolts_df.loc[jolts_prev, "hires_rate"]),
+    "quits_rate_latest": float(jolts_df.loc[jolts_latest, "JTSQUR"]),
+    "quits_rate_prev": float(jolts_df.loc[jolts_prev, "JTSQUR"]),
+    "quits_rate_chg": float(jolts_df.loc[jolts_latest, "JTSQUR"]) - float(jolts_df.loc[jolts_prev, "JTSQUR"]),
+    "ahe_yoy_latest": float(monthly.loc[latest_month, "ahe_yoy"]),
+    "cpi_yoy_latest": float(monthly.loc[latest_month, "cpi_yoy"]),
+    "real_wage_yoy_latest": float(monthly.loc[latest_month, "real_wage_yoy"]),
+    "ulc_yoy_latest": float(monthly["ulc_yoy"].dropna().iloc[-1]),
+    "data_current_as_of": claims_latest_date.strftime("%Y-%m-%d"),
+}
+
+with open(STATS_DIR / "summary_stats.json", "w", encoding="utf-8") as f:
+    json.dump(stats, f, indent=2)
+```
+
+```{python}
+#| echo: false
+#| warning: false
+
+from IPython.display import HTML, display
+
+cards = f"""
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.8rem;margin:1rem 0 1.5rem 0;">
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center;">
+    <div style="font-size:1.6rem;font-weight:700;color:#1f4e79;">{fmt_chg(stats['payroll_change_latest'])}k</div>
+    <div style="font-size:0.8rem;color:#64748b;">Payroll change ({stats['latest_month']})</div>
+  </div>
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center;">
+    <div style="font-size:1.6rem;font-weight:700;color:#4a7c59;">{fmt(stats['unrate_latest'])}%</div>
+    <div style="font-size:0.8rem;color:#64748b;">Unemployment rate</div>
+  </div>
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center;">
+    <div style="font-size:1.6rem;font-weight:700;color:#8c2d04;">{fmt(stats['claims_4w_latest'])}k</div>
+    <div style="font-size:0.8rem;color:#64748b;">Initial claims (4-week avg)</div>
+  </div>
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1rem;text-align:center;">
+    <div style="font-size:1.6rem;font-weight:700;color:#003f5c;">{fmt(stats['real_wage_yoy_latest'])}%</div>
+    <div style="font-size:0.8rem;color:#64748b;">Real wage growth (YoY)</div>
+  </div>
+</div>
+<p style="font-size:0.75rem;color:#94a3b8;text-align:center;margin-top:-0.3rem;">Data current as of {stats['data_current_as_of']} | Source: FRED / BLS</p>
+"""
+HTML(cards)
+```
+
+The headline numbers say the US job market is holding up. The story underneath is more interesting. Employers added **`{python} fmt(stats['payroll_change_latest'])`k** jobs in `{python} stats['latest_month']`, close to the **`{python} fmt(stats['payroll_change_prev'])`k** added in `{python} stats['prev_month']`, and the unemployment rate stayed near **`{python} fmt(stats['unrate_latest'])`%**. Hiring is still happening. But the quieter parts of the data - how many jobs companies are advertising, how often workers quit for something better, how many people are filing for unemployment - all lean the same way: the labor market is cooling, just slowly.
+
+Why does that gap matter now? Because 2026 is an energy-shock year. When fuel prices jump, they push up headline inflation and squeeze what households can actually buy with their paychecks. That changes the Fed's calculus. A decision to hold rates steady is no longer about a single strong jobs report. It is a bet that the labor market can absorb pricier energy without either reigniting broad inflation or buckling into sudden layoffs. This post turns that question into a compact dashboard, reading May payrolls, April JOLTS, and weekly claims through `{python} stats['data_current_as_of']` to separate the durable signal from the monthly noise.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. The workflow is fully self-contained in this file:
+
+- Data fetch from FRED CSV endpoints backed by BLS source series
+- Transformation into payroll, claims, hiring, wages, and sector contribution metrics
+- Chart generation with consistent styling and saved figures in `images/`
+
+Data sources:
+- FRED API and CSV endpoints: https://fred.stlouisfed.org/
+- BLS program pages via FRED mirrored series: https://www.bls.gov/
+:::
+
+## 1. Headline vs Underlying: Payroll Strength, Hiring Friction, Claims Drift
+
+Start with the part that looks strong. Hiring is still net positive every month, and the three-month average of **`{python} fmt(stats['payroll_change_3m'])`k** smooths out the bumps to confirm it: this is an economy still adding jobs, not one sliding toward contraction. The unemployment rate of **`{python} fmt(stats['unrate_latest'])`%** has drifted up from its 2023 lows, but it sits in the range you would expect from an economy cooling late in a cycle, not one where labor demand has cracked.
+
+Now look one layer down, at the JOLTS survey, which tracks the plumbing of the job market: openings, hires, and quits. As of `{python} stats['jolts_month']`, job openings stand at **`{python} fmt2(stats['openings_rate_latest'])`%** of employment (`{python} fmt_chg(stats['openings_rate_chg'])` percentage points from the prior month), hires at **`{python} fmt2(stats['hires_rate_latest'])`%** (`{python} fmt_chg(stats['hires_rate_chg'])`), and quits at **`{python} fmt2(stats['quits_rate_latest'])`%** (`{python} fmt_chg(stats['quits_rate_chg'])`). These rates describe flow - how fast workers and jobs move through the economy - rather than the static count of who is unemployed.
+
+Each of these tells you something specific. Because openings and hires are both measured against the same employment base, the gap between them is informative: when openings stay high but hires lag, it means companies are still advertising roles but filling them more slowly. Quits are the market's confidence gauge - workers only walk away from a paycheck when they believe a better one is within reach, so falling quits signal that people are playing it safe. Jobless claims round out the picture from the exit side; the four-week average has climbed to about **`{python} fmt(stats['claims_4w_latest'])`k**, **`{python} fmt_chg(stats['claims_4w_chg'])`k** higher than a few weeks earlier, though still nowhere near the spikes that mark a recession.
+
+The key insight for policy is that this exact pattern - solid headline, softening internals - can run for a long time. Companies typically trim hiring and pull back job postings well before they resort to outright layoffs. So a strong payroll number and cooling flows are not a contradiction; they are two stages of the same gradual adjustment. For investors, that means a soft set of internal readings does not cancel out a strong jobs print. Both can be true at once, and right now they are.
+
+```{python}
+#| label: fig-composite-labor-dashboard
+#| fig-cap: "Payroll growth remains positive, but claims and hiring-flow rates point to slower labor turnover."
+#| warning: false
+
+plot_df = monthly.loc[monthly.index >= "2022-01-01"].copy()
+claims_df = weekly_claims.loc[weekly_claims.index >= "2022-01-01"].copy()
+
+fig, axes = plt.subplots(2, 2, figsize=(9.6, 6.8), sharex=False)
+
+axes[0, 0].bar(plot_df.index, plot_df["payroll_change"], color=COLORS["payroll"], alpha=0.85, width=20)
+axes[0, 0].plot(plot_df.index, plot_df["payroll_change_3m"], color="black", linewidth=1.8, label="3M avg")
+axes[0, 0].axhline(0, color="#777777", linewidth=1)
+axes[0, 0].set_title("Payroll Change (thousands)")
+axes[0, 0].legend(frameon=False)
+
+axes[0, 1].plot(plot_df.index, plot_df["UNRATE"], color=COLORS["unemp"], linewidth=2)
+axes[0, 1].scatter(plot_df.index[-1], plot_df["UNRATE"].iloc[-1], s=45, color=COLORS["unemp"], edgecolors="white", linewidth=0.8, zorder=5)
+axes[0, 1].set_title("Unemployment Rate (%)")
+
+axes[1, 0].plot(claims_df.index, claims_df["ICSA_4WMA"] / 1000, color=COLORS["claims"], linewidth=2)
+axes[1, 0].set_title("Initial Claims, 4-week average")
+axes[1, 0].set_ylabel("Thousands")
+
+axes[1, 1].plot(plot_df.index, plot_df["job_openings_rate"], color=COLORS["openings"], linewidth=2, label="Openings rate")
+axes[1, 1].plot(plot_df.index, plot_df["hires_rate"], color=COLORS["hires"], linewidth=2, label="Hires rate")
+axes[1, 1].set_title("Labor Demand and Hiring Flow Rates (%)")
+axes[1, 1].legend(frameon=False)
+
+for ax in axes.flat:
+    ax.tick_params(axis="x", labelrotation=0)
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+fig.suptitle("US Labor Market Composite Dashboard", fontsize=15, y=1.01)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "june-2026-labor-market-dashboard.png", dpi=150, bbox_inches="tight")
+```
+
+<div class="figure-source">Source: FRED/BLS (PAYEMS, UNRATE, ICSA, JTSJOR, JTSHIR).</div>
+
+```{python}
+#| label: fig-hires-quits-openings
+#| fig-cap: "Openings remain above hires, and subdued quits suggest workers are less willing to change jobs."
+#| warning: false
+
+hqo = monthly[["job_openings_rate", "hires_rate", "JTSQUR"]].dropna()
+hqo = hqo.loc[hqo.index >= "2022-01-01"]
+
+fig, ax = plt.subplots(figsize=(8.4, 4.8))
+ax.plot(hqo.index, hqo["job_openings_rate"], color=COLORS["openings"], linewidth=2.2, label="Openings rate")
+ax.plot(hqo.index, hqo["hires_rate"], color=COLORS["hires"], linewidth=2.2, label="Hires rate")
+ax.plot(hqo.index, hqo["JTSQUR"], color=COLORS["quits"], linewidth=2.2, label="Quits rate")
+
+for col, color in [("job_openings_rate", COLORS["openings"]), ("hires_rate", COLORS["hires"]), ("JTSQUR", COLORS["quits"] )]:
+    y = hqo[col].iloc[-1]
+    x = hqo.index[-1]
+    ax.scatter(x, y, s=40, color=color, edgecolors="white", linewidth=0.8, zorder=5)
+    ax.text(x, y, f"  {fmt2(y)}%", va="center", fontsize=11, color=color, fontweight="bold")
+
+date_range = hqo.index[-1] - hqo.index[0]
+ax.set_xlim(right=hqo.index[-1] + date_range * 0.12)
+ax.set_title("Hiring and Churn Metrics: Cooling but Not Collapsing")
+ax.set_ylabel("Percent of payroll base")
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.legend(frameon=False, loc="upper right")
+plt.tight_layout()
+```
+
+<div class="figure-source">Source: FRED/BLS (JTSJOR, JTSHIR, JTSQUR).</div>
+
+## 2. Broad Sector Divergences: Demand Is Rotating, Not Uniform
+
+One total jobs number can hide very different stories. Two months can post identical payroll gains and still mean opposite things, depending on which parts of the economy did the hiring. So it pays to ask not just how many jobs were added, but where. The breakdown here is deliberately broad - goods producers, service providers, government, and manufacturing - rather than a fine-grained industry map, but even at this level the composition is revealing.
+
+Some corners of the job market are defensive. Health care, education, and public administration keep hiring fairly steadily even when growth slows, because the demand behind them does not rise and fall with the business cycle. Others are transaction-intensive: retail, transportation and warehousing, and parts of manufacturing move with consumer spending and inventory swings, so they feel a slowdown first.
+
+This mix matters for two reasons. First, it tells you how durable the gains are. If most of the hiring is concentrated in just a few sectors, the cushion can vanish quickly if those sectors turn. Broad-based hiring is sturdier than a narrow rally. Second, it shapes how inflation flows through wages. Different sectors have different bargaining dynamics and labor intensity, so the same headline gain can put more or less upward pressure on pay depending on where it lands.
+
+The chart below uses a simple device to surface all this: it plots each sector's latest month against its own three-month average. The distance between the two dots shows where hiring is speeding up or slowing down relative to its recent trend, which keeps a single noisy month from dominating the read. The takeaway is that the aggregate still looks resilient, even if this broad cut cannot match the detail of a full industry-breadth dashboard.
+
+```{python}
+#| label: fig-sectoral-contributions
+#| fig-cap: "The dumbbell distance shows where latest hiring momentum is above or below each sector's recent trend."
+#| warning: false
+
+sector_plot = pd.DataFrame({
+    "Latest": sector_latest,
+    "3M avg": sector_3m,
+}).sort_values("Latest")
+
+fig, ax = plt.subplots(figsize=(8.8, 5.8))
+y = np.arange(len(sector_plot))
+for i in y:
+    ax.plot(
+        [sector_plot["3M avg"].iloc[i], sector_plot["Latest"].iloc[i]],
+        [i, i],
+        color="#1f4e79",
+        linewidth=1.5,
+        linestyle="--",
+        alpha=0.8,
+        zorder=2,
+    )
+
+ax.scatter(sector_plot["Latest"], y, color="#1f4e79", s=70, label="Latest month", zorder=4)
+ax.scatter(
+    sector_plot["3M avg"],
+    y,
+    facecolors="none",
+    edgecolors="#1f4e79",
+    linewidth=1.5,
+    s=70,
+    label="3M average",
+    zorder=5,
+)
+
+for i, (name, latest, avg) in enumerate(zip(sector_plot.index, sector_plot["Latest"], sector_plot["3M avg"])):
+    pad = max(2.0, max(abs(latest), abs(avg)) * 0.08)
+    if name == "Service-Providing":
+        x = max(latest, avg) + pad
+        ha = "left"
+    else:
+        ha = "left" if latest >= 0 else "right"
+        x = latest + pad if latest >= 0 else latest - pad
+    ax.text(
+        x,
+        i,
+        f"{latest:+.0f}",
+        va="center",
+        ha=ha,
+        fontsize=11,
+        color="#333",
+        zorder=6,
+        bbox=dict(facecolor="#fafafa", edgecolor="none", pad=0.25, alpha=0.9),
+    )
+
+ax.set_yticks(y)
+ax.set_yticklabels(sector_plot.index)
+ax.set_xlabel("Payroll change (thousands)")
+ax.set_title("Sector Payroll Contributions: Latest vs. 3-Month Average")
+ax.legend(frameon=False, loc="lower right")
+ax.margins(x=0.18)
+plt.tight_layout()
+```
+
+<div class="figure-source">Source: FRED/BLS broad payroll aggregates (USGOOD, SRVPRD, USGOVT, MANEMP).</div>
+
+Wages tell the same split-screen story. On paper, pay is still rising: nominal wage growth runs near **`{python} fmt(stats['ahe_yoy_latest'])`%** a year. But headline inflation is running hotter, near **`{python} fmt(stats['cpi_yoy_latest'])`%**, so once you adjust for rising prices, real wage growth has already turned negative, at roughly **`{python} fmt(stats['real_wage_yoy_latest'])`%** year over year. This is the energy shock showing up in household budgets: paychecks are growing, but the cost of living is growing faster, so workers are quietly losing ground. And if higher fuel costs spread further - into transportation, goods, and the services tied to housing - that squeeze deepens, no deep recession required.
+
+```{python}
+#| label: fig-wages-real-ulc
+#| fig-cap: "Nominal wage growth is still positive, but real wage growth remains negative as CPI runs hotter."
+#| warning: false
+
+wr = monthly[["ahe_yoy", "real_wage_yoy", "ulc_yoy"]].dropna()
+wr = wr.loc[wr.index >= "2014-01-01"]
+
+fig, ax = plt.subplots(figsize=(8.8, 5.0))
+ax.plot(wr.index, wr["ahe_yoy"], color=COLORS["wage_nom"], linewidth=2, label="Nominal wage growth (YoY)")
+ax.plot(wr.index, wr["real_wage_yoy"], color=COLORS["wage_real"], linewidth=2, label="Real wage growth (YoY)")
+ax.plot(wr.index, wr["ulc_yoy"], color=COLORS["ulc"], linewidth=2, alpha=0.9, label="Unit labor costs (YoY, quarterly)")
+ax.axhline(0, color="#666", linewidth=1)
+
+for col, color in [("ahe_yoy", COLORS["wage_nom"]), ("real_wage_yoy", COLORS["wage_real"]), ("ulc_yoy", COLORS["ulc"])]:
+    y = wr[col].iloc[-1]
+    x = wr.index[-1]
+    ax.scatter(x, y, s=40, color=color, edgecolors="white", linewidth=0.8, zorder=5)
+    ax.text(
+        x,
+        y,
+        f"  {fmt2(y)}%",
+        va="center",
+        fontsize=11,
+        color=color,
+        fontweight="bold",
+    )
+
+date_range = wr.index[-1] - wr.index[0]
+ax.set_xlim(right=wr.index[-1] + date_range * 0.12)
+ax.set_title("Wage and Cost Pressure Dashboard")
+ax.set_ylabel("Percent")
+ax.xaxis.set_major_locator(mdates.YearLocator(2))
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.legend(frameon=False, loc="upper right", fontsize=8)
+plt.tight_layout()
+```
+
+<div class="figure-source">Source: FRED/BLS (CES0500000003, CPIAUCSL, ULCNFB).</div>
+
+## 3. Fed and Market Implications: Resilience, But a Narrower Margin for Error
+
+Put yourself in the Fed's chair. An energy shock leaves you facing risk from both directions. Cut rates too soon and you could re-fuel inflation just as fuel prices are already lifting it. Wait too long and you could miss a labor market that is quietly weakening. With the jobs data still firm, there is no case for an urgent rate cut - but with fuel prices clouding the inflation outlook and eroding real incomes, there is no case for committing to a fixed path either. Holding steady while watching the flow data closely is the more defensible move, because it keeps the Fed's options open.
+
+Over the next six to eight weeks, three questions will decide which way the data break:
+
+1. Do payroll gains stay strong enough to keep up with population growth while openings and hires level off, instead of continuing to slide?
+2. Do jobless claims stay range-bound, or do they break higher in a way that signals layoffs spreading beyond a few sectors?
+3. Does the already-negative real wage trend stabilize, or sink further as energy keeps feeding headline inflation?
+
+For markets, the honest framing is not recession versus no recession. It is a divergence to be navigated. As long as the job market stays resilient and the inflation passthrough stays contained, bond markets can keep pricing a slow, unhurried path of rate cuts. But if hiring deteriorates while energy keeps headline inflation hot, pricing could get choppy, because growth would be flashing one signal and inflation the opposite.
+
+The final chart strips the picture back to the simplest labor-market signal: the unemployment rate itself. It has risen from its post-pandemic lows, but it is still low in absolute terms and far from the levels that usually define a clear labor-market break. That is exactly the kind of backdrop that lets the Fed stay patient while continuing to watch for further softening.
+
+```{python}
+#| label: fig-unemployment-historical-context
+#| fig-cap: "The unemployment rate has moved up from cycle lows, but it still looks low in absolute terms."
+#| warning: false
+
+u = monthly[["UNRATE"]].dropna().copy()
+recent = u.loc[u.index >= "2023-01-01"].copy()
+
+fig, ax = plt.subplots(figsize=(8.8, 4.8))
+ax.plot(recent.index, recent["UNRATE"], color=COLORS["unemp"], linewidth=2.4)
+ax.scatter(recent.index[-1], recent["UNRATE"].iloc[-1], s=42, color=COLORS["unemp"], edgecolors="white", linewidth=0.8, zorder=5)
+ax.text(
+    recent.index[-1],
+    recent["UNRATE"].iloc[-1],
+    f"  {recent['UNRATE'].iloc[-1]:.1f}%",
+    va="center",
+    fontsize=11,
+    color=COLORS["unemp"],
+    fontweight="bold",
+)
+
+ax.set_title("Unemployment Rate Since 2023")
+ax.set_ylabel("Percent")
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.margins(x=0.03, y=0.12)
+plt.tight_layout()
+```
+
+<div class="figure-source">Source: FRED/BLS (UNRATE).</div>
+
+## What This Means for Policy and Markets
+
+**For Fed policy:** The data call for patience, not panic. Solid payrolls and low unemployment take the urgency out of any near-term rate cut. But cooling hiring flows and an unsettled energy picture argue for watching the incoming data closely - especially the July CPI and the next jobs report - rather than pre-committing to a move.
+
+**For inflation passthrough:** Households have little cushion left. Real wages are already running near **`{python} fmt(stats['real_wage_yoy_latest'])`%** a year, meaning purchasing power is slipping even with people employed. If energy costs bleed into the stickier, core parts of inflation, that erosion can deepen well before any meaningful payroll losses show up.
+
+**For rates and risk assets:** A steady job market with cooling churn keeps the soft-landing story alive, but the energy shock narrows the path. The thing to watch is not simply whether jobs come in stronger or weaker. It is this specific tension - strong payrolls alongside slowing hiring - and whether it resolves by hiring re-accelerating or by labor weakness arriving on a delay.
+
+## Conclusion
+
+The June 2026 labor market is resilient on the surface and cautious underneath. Payrolls and unemployment still point to an economy that is expanding, while the trends in hires, openings, and claims point to a job market that is gradually losing momentum in a higher energy-cost world. Taken together, that mix supports a Fed that holds rates steady and keeps its summer decisions tied tightly to the data.
+
+The decisive test comes when the next jobs report meets the July CPI. If hiring holds broad and the energy shock stays contained in the inflation numbers, the soft landing stays on the table. If hiring slows further while energy keeps headline inflation elevated, the odds of policy missteps and market turbulence climb. For now, the dashboard reads steady - but it is worth watching every gauge.
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| PAYEMS, UNRATE | Total nonfarm payrolls and unemployment rate | FRED / BLS |
+| ICSA, CCSA | Initial and continuing jobless claims | FRED / BLS (DOL) |
+| JTSJOR, JTSHIR, JTSQUR | Job openings, hires, and quits rates (JOLTS) | FRED / BLS |
+| CES0500000003, CPIAUCSL | Average hourly earnings and headline CPI | FRED / BLS |
+| ULCNFB | Unit labor costs, nonfarm business | FRED / BLS |
+| USGOOD, SRVPRD, USGOVT, MANEMP | Broad payroll aggregates for sector contributions | FRED / BLS |
+
+: All series fetched from the FRED CSV endpoints. Openings, hires, and quits rates are the BLS-published JOLTS rates. JOLTS series lag payrolls by about one month.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*
