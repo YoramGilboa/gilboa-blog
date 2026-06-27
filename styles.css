@@ -27,6 +27,18 @@
   }
 }
 
+/* ── Responsive figure images ──
+   Quarto renders chart images with fixed pixel width/height
+   attributes and without Bootstrap's .img-fluid class, so on
+   narrow viewports they overflow and clip at the right edge.
+   Replicate img-fluid for all content images so charts scale
+   down to the text column width. */
+
+#quarto-document-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ── Content spacing and typography ──
    Consistent spacing for headings, callouts, charts,
    and data tables across all posts. */
@@ -52,4 +64,12 @@ caption {
   font-size: 0.78rem;
   color: #94a3b8;
   font-weight: 500;
+}
+
+#quarto-document-content .figure-source {
+  margin-top: -1.2rem;
+  margin-bottom: 1rem;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-style: italic;
 }
