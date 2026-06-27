@@ -31,6 +31,10 @@ jobs:
       - name: Lint posts (deterministic guardrails)
         run: python tools/lint_post.py --all
 
+      - name: Configure authenticated Git remote for publish
+        run: |
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@9e48da27e184aa238fcb49f5db75469626d43adb
         with:
