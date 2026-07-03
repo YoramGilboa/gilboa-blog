@@ -4,6 +4,11 @@
 /.local-archive/
 /.quarto-local/
 
+# Secrets - never commit local keys. .env.example (no real keys) stays tracked.
+.env
+.env.*
+!.env.example
+
 # Python
 __pycache__/
 *.py[cod]

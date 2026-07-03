@@ -93,23 +93,23 @@ def add_preflight_checks(content: str, post_dir: Path, allow_draft: bool) -> tup
     final_review_path = post_dir / "stats" / "final_review_status.json"
     if not allow_draft:
         if not final_review_path.exists():
-            warnings.append(
+            issues.append(
                 "Final review status file is missing: stats\\final_review_status.json. "
-                "Run /blog-final-review and review before publishing."
+                "Run /blog-final-review and ensure status is PASS before publishing."
             )
         else:
             try:
                 payload = json.loads(final_review_path.read_text(encoding="utf-8"))
                 status = str(payload.get("status", "")).upper()
                 if status != "PASS":
-                    warnings.append(
+                    issues.append(
                         f"Final review status is '{status}' in stats\\final_review_status.json. "
-                        "Review before publishing."
+                        "Status must be PASS before publishing."
                     )
             except Exception:
-                warnings.append(
+                issues.append(
                     "Unable to parse stats\\final_review_status.json as valid JSON. "
-                    "Review final-review output before publishing."
+                    "Fix the file and ensure status is PASS before publishing."
                 )
 
     return issues, warnings

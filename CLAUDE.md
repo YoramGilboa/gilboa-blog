@@ -715,7 +715,7 @@ Before merging to `main` and pushing:
 - [ ] All charts display without errors
 - [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
 - [ ] Post passes `/blog-final-review` (accuracy, flow, and consistency)
-- [ ] `stats/final_review_status.json` reviewed; resolve any non-PASS warning before publishing
+- [ ] `stats/final_review_status.json` reviewed and `status` is `PASS`; any non-PASS status blocks publishing
 - [ ] **Homepage listing card checked**, not just the post page. View the post in
       the `index.qmd` listing and confirm the card shows a single, clean
       description line (title → categories → one description → date/author).
