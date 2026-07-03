@@ -5,7 +5,7 @@ author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization]
 description: "June payroll growth slowed sharply, unemployment dipped only because participation fell, and the combination raises the policy tradeoffs facing the Fed after a hawkish June dot plot."
 image: images/payroll-trend-june-2026.png
-draft: true
+draft: false
 toc: true
 toc-location: right
 code-fold: true
