@@ -21,7 +21,7 @@
 
 
 
-<div id="7d5156ab" class="cell" data-execution_count="2">
+<div id="a9e24cb5" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1474,33 +1474,64 @@ background-color: null;
 font-style: inherit;">"%Y"</span>))</span>
 <span id="cb4-37"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Use fixed axis ranges to keep scale interpretation stable over time.</span></span>
-<span id="cb4-38">ax.set_ylim(<span class="fl" style="color: #AD0000;
+font-style: inherit;"># Set the left-axis top to the next major tick above the series max to avoid clipping.</span></span>
+<span id="cb4-38">left_ymin <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2.0</span>)</span>
-<span id="cb4-39">ax.set_yticks(np.arange(<span class="fl" style="color: #AD0000;
+font-style: inherit;">0.5</span></span>
+<span id="cb4-39">left_tick_step <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2.1</span>, <span class="fl" style="color: #AD0000;
+font-style: inherit;">0.5</span></span>
+<span id="cb4-40">blue_max <span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">0.5</span>))</span>
-<span id="cb4-40">ax2.set_ylim(<span class="dv" style="color: #AD0000;
+font-style: inherit;">=</span> plot4[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openings_per_unemployed"</span>].<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>()</span>
+<span id="cb4-41">left_ymax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (np.floor(blue_max <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> left_tick_step) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> left_tick_step</span>
+<span id="cb4-42">left_ymax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">max</span>(left_ymax, left_ymin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> left_tick_step)</span>
+<span id="cb4-43">ax.set_ylim(left_ymin, left_ymax)</span>
+<span id="cb4-44">ax.set_yticks(np.arange(left_ymin, left_ymax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> left_tick_step <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, left_tick_step))</span>
+<span id="cb4-45">ax2.set_ylim(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">900</span>)</span>
-<span id="cb4-41">ax2.set_yticks(np.arange(<span class="dv" style="color: #AD0000;
+<span id="cb4-46">ax2.set_yticks(np.arange(<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">901</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">100</span>))</span>
-<span id="cb4-42"></span>
-<span id="cb4-43">date_range <span class="op" style="color: #5E5E5E;
+<span id="cb4-47"></span>
+<span id="cb4-48">date_range <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> plot4.index[<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1511,7 +1542,7 @@ background-color: null;
 font-style: inherit;">-</span> plot4.index[<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0</span>]</span>
-<span id="cb4-44">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
+<span id="cb4-49">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>plot4.index[<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -1524,9 +1555,9 @@ background-color: null;
 font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">0.08</span>)</span>
-<span id="cb4-45"></span>
-<span id="cb4-46">plt.tight_layout()</span>
-<span id="cb4-47">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+<span id="cb4-50"></span>
+<span id="cb4-51">plt.tight_layout()</span>
+<span id="cb4-52">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -10098,7 +10129,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout.">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." width="753" height="426">
@@ -10610,7 +10641,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="801" height="589">
@@ -11457,7 +11488,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-130">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -11933,7 +11964,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-66">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -12433,7 +12464,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average.">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." width="728" height="672">
@@ -22227,7 +22258,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb1-98">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028.">
+<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." width="682" height="428">
@@ -22688,7 +22719,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb2-78">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates.">
+<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-effr-sep-vintages-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." width="672" height="435">
@@ -23281,7 +23312,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb3-93">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026.">
+<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-forward-fan-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." width="682" height="428">
@@ -23858,7 +23889,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb4-109">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points.">
+<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-gap-waterfall-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." width="681" height="450">
@@ -24190,7 +24221,7 @@ font-style: inherit;">%Y"</span>))</span>
 <span id="cb5-45">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels.">
+<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-yields-vix-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." width="683" height="505">
