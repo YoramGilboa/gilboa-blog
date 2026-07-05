@@ -483,9 +483,14 @@ ax2.tick_params(axis="y", colors=COLORS["warning"])
 ax.set_title("Labor Demand Has Cooled Toward More Balanced Conditions", fontsize=12, fontweight="bold")
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-# Use fixed axis ranges to keep scale interpretation stable over time.
-ax.set_ylim(0.5, 2.0)
-ax.set_yticks(np.arange(0.5, 2.1, 0.5))
+# Set the left-axis top to the next major tick above the series max to avoid clipping.
+left_ymin = 0.5
+left_tick_step = 0.5
+blue_max = plot4["openings_per_unemployed"].max()
+left_ymax = (np.floor(blue_max / left_tick_step) + 1) * left_tick_step
+left_ymax = max(left_ymax, left_ymin + left_tick_step)
+ax.set_ylim(left_ymin, left_ymax)
+ax.set_yticks(np.arange(left_ymin, left_ymax + left_tick_step * 0.5, left_tick_step))
 ax2.set_ylim(100, 900)
 ax2.set_yticks(np.arange(100, 901, 100))
 
