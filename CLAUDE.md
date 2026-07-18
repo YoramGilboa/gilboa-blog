@@ -1,5 +1,9 @@
 # gilboa.blog — Claude guidance
 
+> Canonical onboarding and workflow guidance now lives in
+> `.github/copilot-instructions.md`. This file is retained as compatibility and
+> reference guidance.
+
 ## Project overview
 
 A Quarto-based data visualization blog hosted at **gilboa.blog** via GitHub Pages.
@@ -104,7 +108,7 @@ GitHub Actions deploys to gilboa.blog within ~2 minutes.
 Three layers enforce the rules in this file mechanically. All are driven by
 `tools/lint_post.py` (stdlib only), which checks **form, not truth** - it
 catches a stray `subtitle:` or an em dash, but cannot judge chart overlap
-(use `/blog-chart-review`) or whether a number is correct.
+(use `blog-chart-review`) or whether a number is correct.
 
 ```bash
 python tools/lint_post.py posts/SLUG/index.qmd   # one post (or a post dir)
@@ -131,8 +135,9 @@ commit / fails the deploy.
 # -RunPipeline runs the numbered scripts/ first; -SkipRender skips the render
 ```
 
-The `/blog-post-create`, `/blog-chart-review`, `/blog-data-validate`, and
-`/blog-final-review` skills live in `.claude/commands/`. `BLOG_AUTOMATION.md` and
+The `blog-post-create`, `blog-chart-review`, `blog-data-validate`, and
+`blog-final-review` skills live in `.claude/commands/` and are available via
+Copilot chat. `BLOG_AUTOMATION.md` and
 `BLOG_DEV_SETUP.md` describe a superseded 5-role automation experiment;
 those four skills are the active replacements.
 
@@ -206,7 +211,9 @@ paragraph, no preamble.
 
 ### Reproducing this analysis callout
 
-Include this immediately after the opening paragraph when the post uses a data pipeline:
+Choose the version that matches how the post is built.
+
+**Pattern A - scripted pipeline (`scripts/01_*.py`, `02_*.py`, `04_*.py`):**
 
 ```markdown
 ::: {.callout-note collapse="true"}
@@ -224,7 +231,21 @@ All data sourced from [Source Name](url).
 :::
 ```
 
-For posts with estimated or approximate data, use a data-caveat callout instead:
+**Pattern B - inline fetch and transform blocks inside `index.qmd` (common for FRED-only posts):**
+
+```markdown
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+This post fetches and transforms data in inline Python blocks in `index.qmd`.
+The full implementation is expandable in each chart section.
+
+Data is sourced from [FRED](https://fred.stlouisfed.org/) with a CSV fallback
+path when client libraries are unavailable.
+:::
+```
+
+For posts with estimated or approximate data, add a data-caveat callout:
 
 ```markdown
 ::: {.callout-note collapse="true"}
@@ -253,8 +274,8 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
-from adjustText import adjust_text
 from IPython.display import HTML
+# from adjustText import adjust_text  # only for 4+ overlapping end labels
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -287,7 +308,7 @@ COLORS = {
 }
 
 plt.rcParams.update({
-    "font.family":        "serif",
+    "font.family":        "Calibri",  # default house style; serif is acceptable when intentionally chosen
     "font.size":          10,
     "axes.spines.top":    False,
     "axes.spines.right":  False,
@@ -308,6 +329,26 @@ def fmt_chg(n):
     if isinstance(n, float):
         return f"{n:+.1f}"
     return f"{n:+,}"
+
+def annualized(series, months):
+    """Convert an m-month index change into compounded annualized percent."""
+    return ((series / series.shift(months)) ** (12 / months) - 1) * 100
+
+def label_endpoints(ax, entries, gap_frac=0.05):
+    """Stagger end labels to avoid overlap.
+    entries: [{"x": datetime, "y": float, "text": str, "color": str}, ...]
+    """
+    y0, y1 = ax.get_ylim()
+    gap = (y1 - y0) * gap_frac
+    ordered = sorted(entries, key=lambda e: e["y"])
+    ys = [e["y"] for e in ordered]
+    for i in range(1, len(ys)):
+        if ys[i] - ys[i - 1] < gap:
+            ys[i] = ys[i - 1] + gap
+    for e, y in zip(ordered, ys):
+        if abs(y - e["y"]) > 1e-9:
+            ax.plot([e["x"], e["x"]], [e["y"], y], color=COLORS["light"], linewidth=0.6, zorder=4)
+        ax.text(e["x"], y, f"  {e['text']}", fontsize=8.5, color=e["color"], va="center", fontweight="bold")
 ```
 
 Keep this palette consistent across all charts in a post. Add topic-specific
@@ -324,22 +365,40 @@ these saved PNGs.
 ### Key metrics cards
 
 Use an HTML grid immediately after the setup block when there are 3-5 headline
-numbers to surface. Always pull values from `stats/summary_stats.json`:
+numbers to surface. Always pull values from `stats/summary_stats.json`.
+Use fixed-height label rows so numeric values align cleanly across cards.
 
 ```python
 #| echo: false
 
+card_style = ("background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+              "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+              "align-items: center; min-height: 132px;")
+label_style = ("font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; "
+               "min-height: 2.5rem; display: flex; align-items: center; text-align: center;")
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    ("Label", f"{fmt_chg(stats['key_value'])}%", COLORS["primary"], stats["latest_month_short"]),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
 html = f"""
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem; margin: 1.5rem 0;">
-  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
-              padding: 1.25rem; text-align: center;">
-    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">{stats['key_value']}%</div>
-    <div style="font-size: 0.8rem; color: #64748b;">Label</div>
-  </div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
 </div>
-<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
-  Data as of {stats['latest_month']} | Source: [Source Name]
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  Latest data used: {stats['latest_month']} | Source: [Source Name]
 </p>
 """
 HTML(html)
@@ -617,6 +676,22 @@ approximate, or subject to methodological caveats. Use a bullet list.
 
 ## Python pipeline conventions
 
+### Data fetching patterns
+
+Use the simplest pattern that keeps the post reproducible and readable.
+
+**Pattern A - inline fetch in `index.qmd` (recommended for most FRED-only posts):**
+- fetch and transform in hidden Python chunks (`#| echo: false`)
+- include a CSV fallback when using FRED so the post still runs without extra setup
+- use when there is one data source and minimal preprocessing
+
+**Pattern B - numbered scripts in `posts/.../scripts/` (recommended for complex pipelines):**
+- use `01_fetch_data.py`, `02_clean_data.py`, `03_visualizations.py` (optional), `04_compute_stats.py`
+- use when combining multiple APIs/files or when preprocessing is substantial/reusable
+- keep `.qmd` focused on narrative and visualization, not heavy ETL
+
+The sections below document Pattern B in detail.
+
 When a post requires fetching or processing external data, organize scripts as:
 
 ```
@@ -662,7 +737,7 @@ quarto render posts/YYYY-MM-DD-slug/index.qmd
 must be computed from fetched data in `data/raw/` or `data/clean/`. If a value
 cannot be fetched programmatically (e.g., it exists only in a press release
 PDF), document it with a `# MANUAL:` comment and the source URL. Run
-`/blog-data-validate` before writing fetch scripts to confirm all series IDs
+`blog-data-validate` before writing fetch scripts to confirm all series IDs
 are valid.
 
 ---
@@ -690,6 +765,9 @@ git checkout -b post/YYYY-MM-DD-slug
 
 # ... write the post, render, commit ...
 
+# Release gate before merge (required)
+bash scripts/local_release_gate.sh posts/YYYY-MM-DD-slug/index.qmd
+
 # When ready to publish
 git checkout main
 git merge post/YYYY-MM-DD-slug
@@ -698,6 +776,12 @@ git push origin main
 ```
 
 Branch naming convention: `post/YYYY-MM-DD-slug` (matches the post folder name).
+
+### Why merge locally before pushing?
+
+The CI pipeline runs `python tools/lint_post.py --all` before publish. Running
+the local release gate before merging catches failures early and avoids blocked
+site deploys on `main`.
 
 ---
 
@@ -709,12 +793,12 @@ Before merging to `main` and pushing:
       the deterministic guardrail (also run by the pre-commit hook and the CI
       gate). It enforces the frontmatter, prose-style, and `# MANUAL:`-source
       rules mechanically so they do not depend on memory. It checks form, not
-      truth - it cannot judge chart overlap (use `/blog-chart-review`) or
+      truth - it cannot judge chart overlap (use `blog-chart-review`) or
       whether a value is correct.
 - [ ] All inline `{python}` values render correctly (`quarto preview`)
 - [ ] All charts display without errors
-- [ ] All charts pass `/blog-chart-review` (no label overlaps, no clipping, readable at 400px)
-- [ ] Post passes `/blog-final-review` (accuracy, flow, and consistency)
+- [ ] All charts pass `blog-chart-review` (no label overlaps, no clipping, readable at 400px)
+- [ ] Post passes `blog-final-review` (accuracy, flow, and consistency)
 - [ ] `stats/final_review_status.json` reviewed and `status` is `PASS`; any non-PASS status blocks publishing
 - [ ] **Homepage listing card checked**, not just the post page. View the post in
       the `index.qmd` listing and confirm the card shows a single, clean
@@ -735,4 +819,4 @@ Before merging to `main` and pushing:
 - [ ] Rendered HTML checked for raw `{python}` leaks, stale duplicate figure outputs in `_freeze`, and oversized figures that are being visibly downscaled by the browser
 - [ ] Post folder is moved out of `drafts/` into `posts/`
 - [ ] Social preview image saved to `images/` and referenced in `image:` frontmatter
-- [ ] All FRED/BEA series IDs validated via `/blog-data-validate`
+- [ ] All FRED/BEA series IDs validated via `blog-data-validate`
