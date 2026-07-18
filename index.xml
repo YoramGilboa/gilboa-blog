@@ -10,7 +10,1957 @@
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Economics, inflation, and labor market analysis through data visualization</description>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Sat, 11 Jul 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 18 Jul 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>June 2026 CPI: Energy Prices Plunge After Ceasefire, but Core and Shelter Pressures Linger</title>
+  <dc:creator>Yoram Gilboa</dc:creator>
+  <link>https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div id="8b925308" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Headline CPI YoY</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #2e5984;">3.5%</div><div style="font-size: 0.74rem; color: #64748b;">From 4.2%</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Monthly headline CPI</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #2e5984;">-0.4%</div><div style="font-size: 0.74rem; color: #64748b;">Jun 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Energy CPI MoM</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #cc7722;">-5.7%</div><div style="font-size: 0.74rem; color: #64748b;">Gasoline -9.7%</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Core CPI YoY</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #4a4a4a;">2.6%</div><div style="font-size: 0.74rem; color: #64748b;">Shelter 3.3%</div></div>
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  Latest CPI data: June 2026 | Source: BLS via FRED
+</p>
+</div>
+</div>
+<p>June inflation delivered immediate relief at the gas pump but did not settle the debate over underlying price pressure. Headline CPI fell <strong>-0.4%</strong> in June 2026, lowering its year-over-year rate to <strong>3.5%</strong> from 4.2% in May. Energy prices dropped -5.7%, including a -9.7% gasoline decline after the ceasefire-related commodity shock. Core CPI still stood <strong>2.6%</strong> above a year earlier, and shelter inflation remained 3.3%.</p>
+<p>The distinction between monthly and annual inflation is essential. June’s energy reversal subtracted approximately <strong>-0.4 percentage points</strong> from the monthly headline reading. Yet energy prices remained 15.5% above their year-earlier level because the earlier shock had not disappeared from the annual comparison. June therefore marks a sharp reversal in the latest flow of inflation, not the complete removal of energy from the inflation rate.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Energy accounted for most of June’s monthly CPI decline, led by a -9.7% gasoline drop.</li>
+<li>Headline inflation fell faster than core and shelter because energy is more volatile.</li>
+<li>Core, median, trimmed-mean, and sticky ex-shelter inflation remain clustered between 2.4% and 2.7%.</li>
+<li>Payroll growth of 57 thousand weakens the case for additional inflation insurance, but it does not by itself establish recession risk.</li>
+<li>With broad inflation still above 2% and the 3.8% SEP median near the current policy setting, June supports a hold at the next meeting; easing at the following meeting requires another soft inflation and labor combination.</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The complete pipeline is included with this post:</p>
+<ul>
+<li><code>01_fetch_data.py</code> downloads CPI, labor, Treasury, and FOMC projection series from FRED.</li>
+<li><code>02_clean_data.py</code> calculates monthly, yearly, momentum, and approximate contribution measures.</li>
+<li><code>04_compute_stats.py</code> writes every value used in the prose and metric cards to <code>stats/summary_stats.json</code>.</li>
+</ul>
+<p>The contribution estimates use rounded December 2025 CPI relative-importance shares from the <a href="https://www.bls.gov/cpi/tables/relative-importance/2025.htm">BLS relative-importance tables</a>. They are directional approximations rather than the official chained BLS decomposition.</p>
+</div>
+</div>
+</div>
+<section id="the-june-decline-was-concentrated-in-energy" class="level2">
+<h2 class="anchored" data-anchor-id="the-june-decline-was-concentrated-in-energy">1. The June decline was concentrated in energy</h2>
+<p>The contribution view uses the month-over-month horizon that matches June’s -0.4% change. Energy, food, core goods, and shelter use fixed relative-importance weights. Other services and residual absorbs the remaining services, interaction effects, and fixed-weight approximation error.</p>
+<p>Energy’s monthly contribution was deeply negative even though its year-over-year contribution remained positive. The practical takeaway is narrow but important: without the energy reversal, June would not have produced the same headline decline.</p>
+<div id="cell-fig-monthly-contributions" class="cell" data-fig-height="4.8" data-fig-width="8" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2025-01-01"</span>:, [</span>
+<span id="cb1-2">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_mom"</span>,</span>
+<span id="cb1-3">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_energy_mom_pp"</span>,</span>
+<span id="cb1-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_food_mom_pp"</span>,</span>
+<span id="cb1-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_core_goods_mom_pp"</span>,</span>
+<span id="cb1-6">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_shelter_mom_pp"</span>,</span>
+<span id="cb1-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_other_services_mom_pp"</span>,</span>
+<span id="cb1-8">]].dropna()</span>
+<span id="cb1-9"></span>
+<span id="cb1-10">components <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb1-11">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_energy_mom_pp"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>]),</span>
+<span id="cb1-12">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Food"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_food_mom_pp"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"food"</span>]),</span>
+<span id="cb1-13">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core goods"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_core_goods_mom_pp"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb1-14">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_shelter_mom_pp"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>]),</span>
+<span id="cb1-15">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Other services / residual"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_other_services_mom_pp"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb1-16">]</span>
+<span id="cb1-17"></span>
+<span id="cb1-18">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>))</span>
+<span id="cb1-19">positive_bottom <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(plot))</span>
+<span id="cb1-20">negative_bottom <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(plot))</span>
+<span id="cb1-21"></span>
+<span id="cb1-22"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, column, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> components:</span>
+<span id="cb1-23">    values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[column].to_numpy()</span>
+<span id="cb1-24">    positive <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.where(values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, values, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-25">    negative <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.where(values <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, values, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-26">    ax.bar(plot.index, positive, bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>positive_bottom, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>,</span>
+<span id="cb1-27">           color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>label)</span>
+<span id="cb1-28">    ax.bar(plot.index, negative, bottom<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>negative_bottom, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color)</span>
+<span id="cb1-29">    positive_bottom <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> positive</span>
+<span id="cb1-30">    negative_bottom <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> negative</span>
+<span id="cb1-31"></span>
+<span id="cb1-32">ax.plot(plot.index, plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_mom"</span>], color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>],</span>
+<span id="cb1-33">        linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"o"</span>, markersize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.5</span>, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Headline CPI MoM"</span>)</span>
+<span id="cb1-34">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb1-35"></span>
+<span id="cb1-36">latest_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb1-37">energy_value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"contrib_energy_mom_pp"</span>]</span>
+<span id="cb1-38">ax.annotate(</span>
+<span id="cb1-39">    <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Energy: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>energy_value<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:+.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> pp"</span>,</span>
+<span id="cb1-40">    xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(latest_date, energy_value),</span>
+<span id="cb1-41">    xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">82</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>),</span>
+<span id="cb1-42">    textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb1-43">    arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb1-44">    bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb1-45">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb1-46">    zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb1-47">)</span>
+<span id="cb1-48"></span>
+<span id="cb1-49">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Contribution to monthly CPI (percentage points)"</span>)</span>
+<span id="cb1-50">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb1-51">ax.legend(loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"upper left"</span>, fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, frameon<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, ncol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-52">ax.margins(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.15</span>)</span>
+<span id="cb1-53">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-monthly-contributions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-monthly-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index_files/figure-html/fig-monthly-contributions-output-1.png" width="758" height="453" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monthly-contributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Energy overwhelmed the other monthly components in June; without that reversal, headline CPI would not have fallen as sharply.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: <a href="https://fred.stlouisfed.org/">BLS CPI data via FRED</a>, with approximate fixed-weight contributions using BLS relative-importance shares.</p>
+</div>
+</section>
+<section id="headline-inflation-moved-faster-than-core-and-shelter" class="level2">
+<h2 class="anchored" data-anchor-id="headline-inflation-moved-faster-than-core-and-shelter">2. Headline inflation moved faster than core and shelter</h2>
+<p>Separating energy into its own panel keeps the slower-moving series visible. Headline CPI fell rapidly between May and June, but core eased only from 2.8% to 2.6%, and shelter remained at 3.3%. The June print improved the direction of travel; it did not show that broad inflation had already returned to a stable 2% pace.</p>
+<div id="cell-fig-yoy-trends" class="cell" data-fig-height="7" data-fig-width="8" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2019-01-01"</span>:].copy()</span>
+<span id="cb2-2">fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(</span>
+<span id="cb2-3">    <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>), sharex<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, height_ratios<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.4</span>]</span>
+<span id="cb2-4">)</span>
+<span id="cb2-5"></span>
+<span id="cb2-6">top_series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb2-7">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Headline"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"headline_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb2-8">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>]),</span>
+<span id="cb2-9">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shelter_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>]),</span>
+<span id="cb2-10">]</span>
+<span id="cb2-11">top_entries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb2-12"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, column, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> top_series:</span>
+<span id="cb2-13">    series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[column].dropna()</span>
+<span id="cb2-14">    ax1.plot(series.index, series, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>)</span>
+<span id="cb2-15">    ax1.scatter(series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb2-16">                edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb2-17">    top_entries.append({</span>
+<span id="cb2-18">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>: series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-19">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>: series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-20">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>series<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb2-21">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>: color,</span>
+<span id="cb2-22">    })</span>
+<span id="cb2-23"></span>
+<span id="cb2-24">ax1.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb2-25">ax1.text(plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>], <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.13</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">% r</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">eference"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>)</span>
+<span id="cb2-26">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change (%)"</span>)</span>
+<span id="cb2-27">ax1.margins(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>)</span>
+<span id="cb2-28">label_endpoints(ax1, top_entries)</span>
+<span id="cb2-29"></span>
+<span id="cb2-30">energy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_yoy"</span>].dropna()</span>
+<span id="cb2-31">ax2.plot(energy.index, energy, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>)</span>
+<span id="cb2-32">ax2.scatter(energy.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], energy.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>],</span>
+<span id="cb2-33">            edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb2-34">ax2.text(energy.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], energy.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-35">         <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  Energy </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>energy<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>],</span>
+<span id="cb2-36">         fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb2-37">ax2.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb2-38">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy YoY (%)"</span>)</span>
+<span id="cb2-39">ax2.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%Y"</span>))</span>
+<span id="cb2-40"></span>
+<span id="cb2-41">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb2-42">ax1.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>)</span>
+<span id="cb2-43">plt.tight_layout()</span>
+<span id="cb2-44">fig.savefig(IMG_DIR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"cpi-energy-reversal-dashboard.png"</span>,</span>
+<span id="cb2-45">            dpi<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, bbox_inches<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-yoy-trends" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-yoy-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index_files/figure-html/fig-yoy-trends-output-1.png" width="753" height="663" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-yoy-trends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Headline inflation responded immediately to cheaper energy, but slower core and shelter declines show why one favorable month is not enough for the Fed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: <a href="https://fred.stlouisfed.org/">BLS CPI data via FRED</a>.</p>
+</div>
+</section>
+<section id="broader-inflation-measures-are-clustered-above-2" class="level2">
+<h2 class="anchored" data-anchor-id="broader-inflation-measures-are-clustered-above-2">3. Broader inflation measures are clustered above 2%</h2>
+<p>The next test is whether June’s improvement extends beyond volatile categories. Median CPI, trimmed-mean CPI, and sticky CPI excluding food, energy, and shelter ranged from 2.4% to 2.7%, close to core CPI’s 2.6%. Their convergence is real progress, but the Fed still needs evidence that this range will move closer to 2%.</p>
+<div id="cell-fig-underlying-inflation" class="cell" data-fig-height="4.8" data-fig-width="8" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2023-01-01"</span>:].copy()</span>
+<span id="cb3-2">underlying <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb3-3">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core CPI"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>]),</span>
+<span id="cb3-4">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Median CPI"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"median_cpi_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb3-5">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Trimmed-mean CPI"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"trimmed_mean_cpi_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"purple"</span>]),</span>
+<span id="cb3-6">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sticky ex shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sticky_ex_shelter_yoy"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb3-7">]</span>
+<span id="cb3-8"></span>
+<span id="cb3-9">fig, ax <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>))</span>
+<span id="cb3-10">entries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb3-11"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, column, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> underlying:</span>
+<span id="cb3-12">    series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[column].dropna()</span>
+<span id="cb3-13">    ax.plot(series.index, series, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>)</span>
+<span id="cb3-14">    ax.scatter(series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb3-15">               edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb3-16">    entries.append({</span>
+<span id="cb3-17">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>: series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb3-18">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>: series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb3-19">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>series<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb3-20">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>: color,</span>
+<span id="cb3-21">    })</span>
+<span id="cb3-22"></span>
+<span id="cb3-23">ax.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb3-24">ax.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Year-over-year change (%)"</span>)</span>
+<span id="cb3-25">ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb3-26">ax.margins(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.14</span>)</span>
+<span id="cb3-27">label_endpoints(ax, entries)</span>
+<span id="cb3-28">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb3-29">ax.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.24</span>)</span>
+<span id="cb3-30">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-underlying-inflation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-underlying-inflation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index_files/figure-html/fig-underlying-inflation-output-1.png" width="759" height="453" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-underlying-inflation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Broad inflation measures now agree more closely, but their mid-2 percent cluster still sets a high bar for rapid policy easing.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: <a href="https://fred.stlouisfed.org/">Cleveland Fed and Atlanta Fed series via FRED</a>.</p>
+</div>
+</section>
+<section id="energy-momentum-reversed-faster-than-core-momentum" class="level2">
+<h2 class="anchored" data-anchor-id="energy-momentum-reversed-faster-than-core-momentum">4. Energy momentum reversed faster than core momentum</h2>
+<p>The three-month annualized view clarifies the timing. Energy momentum dropped sharply after its early-2026 spike, while core and shelter remained positive. That leads directly to labor: energy can normalize without weaker demand, but persistent service inflation is more likely to cool when hiring and wage pressure also soften.</p>
+<div id="cell-fig-momentum-divergence" class="cell" data-fig-height="4.9" data-fig-width="8" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2022-01-01"</span>:].copy()</span>
+<span id="cb4-2">fig, ax1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.9</span>))</span>
+<span id="cb4-3">ax2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ax1.twinx()</span>
+<span id="cb4-4"></span>
+<span id="cb4-5">energy <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"energy_ann3"</span>].dropna()</span>
+<span id="cb4-6">ax1.plot(energy.index, energy, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb4-7">ax1.scatter(energy.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], energy.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>],</span>
+<span id="cb4-8">            edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb4-9">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy 3m annualized (%)"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>])</span>
+<span id="cb4-10">ax1.tick_params(axis<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>, labelcolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>])</span>
+<span id="cb4-11">ax1.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"light"</span>], linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13">right_entries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb4-14"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, column, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [</span>
+<span id="cb4-15">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"core_ann3"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>]),</span>
+<span id="cb4-16">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Shelter"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"shelter_ann3"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>]),</span>
+<span id="cb4-17">]:</span>
+<span id="cb4-18">    series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[column].dropna()</span>
+<span id="cb4-19">    ax2.plot(series.index, series, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.9</span>)</span>
+<span id="cb4-20">    ax2.scatter(series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb4-21">                edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb4-22">    right_entries.append({</span>
+<span id="cb4-23">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>: series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb4-24">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>: series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb4-25">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>series<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb4-26">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>: color,</span>
+<span id="cb4-27">    })</span>
+<span id="cb4-28"></span>
+<span id="cb4-29">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Core / shelter 3m annualized (%)"</span>)</span>
+<span id="cb4-30">ax2.grid(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-31">ax1.set_ylim(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>)</span>
+<span id="cb4-32">ax2.set_ylim(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span>
+<span id="cb4-33">ax1.set_yticks([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">80</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>])</span>
+<span id="cb4-34">ax2.set_yticks([<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>])</span>
+<span id="cb4-35">label_endpoints(ax2, right_entries)</span>
+<span id="cb4-36"></span>
+<span id="cb4-37">ax1.annotate(</span>
+<span id="cb4-38">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Energy momentum reversal"</span>,</span>
+<span id="cb4-39">    xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(energy.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], energy.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]),</span>
+<span id="cb4-40">    xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">120</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>),</span>
+<span id="cb4-41">    textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb4-42">    arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb4-43">    bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb4-44">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb4-45">    zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,</span>
+<span id="cb4-46">)</span>
+<span id="cb4-47">ax1.text(energy.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], energy.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb4-48">         <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>energy<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"warning"</span>],</span>
+<span id="cb4-49">         fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb4-50">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb4-51">date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]</span>
+<span id="cb4-52">ax1.set_xlim(right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plot.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> date_range <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.16</span>)</span>
+<span id="cb4-53">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-momentum-divergence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-momentum-divergence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index_files/figure-html/fig-momentum-divergence-output-1.png" width="760" height="463" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-momentum-divergence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Energy momentum normalized first; positive core and shelter momentum means the remaining disinflation depends more on slower demand and labor costs.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: <a href="https://fred.stlouisfed.org/">BLS CPI data via FRED</a>, author’s annualized calculations.</p>
+</div>
+</section>
+<section id="softer-hiring-makes-the-inflation-mix-more-consequential" class="level2">
+<h2 class="anchored" data-anchor-id="softer-hiring-makes-the-inflation-mix-more-consequential">5. Softer hiring makes the inflation mix more consequential</h2>
+<p>Payrolls rose <strong>57 thousand</strong> in June 2026, and the three-month average slowed to 111 thousand. With unemployment at 4.2%, the labor market is cooling rather than collapsing. An energy-only CPI decline would offer the Fed limited comfort. Paired with softer hiring, it reduces the need to hold policy restrictive solely as inflation insurance.</p>
+<p>The rates panel explains why this is not yet a straightforward easing signal. The effective federal funds rate was 3.6%, versus two-year and ten-year Treasury yields of 4.2% and 4.6%. The June SEP placed the median end-2026 policy rate at <strong>3.8%</strong>, slightly above the current effective rate and well above the 3.1% longer-run estimate.</p>
+<div id="cell-fig-labor-policy-context" class="cell" data-fig-height="7" data-fig-width="8" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.loc[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2024-01-01"</span>:].copy()</span>
+<span id="cb5-2">fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>))</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">payroll <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"payroll_change_k"</span>].dropna()</span>
+<span id="cb5-5">bar_colors <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb5-6">    COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]</span>
+<span id="cb5-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> payroll</span>
+<span id="cb5-8">]</span>
+<span id="cb5-9">ax1.bar(payroll.index, payroll, width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>bar_colors, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.78</span>)</span>
+<span id="cb5-10">ax1.axhline(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"secondary"</span>], linestyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"--"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)</span>
+<span id="cb5-11">ax1.scatter(payroll.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], payroll.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>],</span>
+<span id="cb5-12">            edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb5-13">ax1.annotate(</span>
+<span id="cb5-14">    <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>payroll<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.0f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">k"</span>,</span>
+<span id="cb5-15">    xy<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(payroll.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], payroll.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]),</span>
+<span id="cb5-16">    xytext<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>),</span>
+<span id="cb5-17">    textcoords<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"offset points"</span>,</span>
+<span id="cb5-18">    arrowprops<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(arrowstyle<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-&gt;"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>], lw<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb5-19">    bbox<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>(facecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#fafafa"</span>, edgecolor<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"none"</span>, alpha<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, pad<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb5-20">    fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>,</span>
+<span id="cb5-21">)</span>
+<span id="cb5-22">ax1.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Monthly payroll change (thousands)"</span>)</span>
+<span id="cb5-23">ax1.margins(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.15</span>)</span>
+<span id="cb5-24">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb5-25">ax1.set_xlim(left<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-08-01"</span>))</span>
+<span id="cb5-26"></span>
+<span id="cb5-27">rate_series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb5-28">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Fed funds"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fedfunds"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"accent"</span>]),</span>
+<span id="cb5-29">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2-year Treasury"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dgs2"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"primary"</span>]),</span>
+<span id="cb5-30">    (<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"10-year Treasury"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"dgs10"</span>, COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"neutral"</span>]),</span>
+<span id="cb5-31">]</span>
+<span id="cb5-32">rate_entries <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb5-33"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> label, column, color <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> rate_series:</span>
+<span id="cb5-34">    series <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot[column].dropna()</span>
+<span id="cb5-35">    ax2.plot(series.index, series, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span>)</span>
+<span id="cb5-36">    ax2.scatter(series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>color,</span>
+<span id="cb5-37">                edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb5-38">    rate_entries.append({</span>
+<span id="cb5-39">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>: series.index[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb5-40">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>: series.iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb5-41">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>: <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>label<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>series<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>iloc[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.2f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb5-42">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"color"</span>: color,</span>
+<span id="cb5-43">    })</span>
+<span id="cb5-44"></span>
+<span id="cb5-45">sep_date <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2026-12-01"</span>)</span>
+<span id="cb5-46">sep_value <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> stats[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fomc_median_eoy_2026"</span>]</span>
+<span id="cb5-47">ax2.scatter(sep_date, sep_value, marker<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"D"</span>, s<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">48</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>],</span>
+<span id="cb5-48">            edgecolors<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, linewidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, zorder<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb5-49">ax2.text(sep_date, sep_value,</span>
+<span id="cb5-50">         <span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"  June SEP end-2026 </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>sep_value<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:.1f}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%"</span>,</span>
+<span id="cb5-51">         color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>COLORS[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fed_target"</span>], fontsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8.5</span>, fontweight<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, va<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"center"</span>)</span>
+<span id="cb5-52">ax2.set_ylabel(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rate (%)"</span>)</span>
+<span id="cb5-53">ax2.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%b</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">%Y"</span>))</span>
+<span id="cb5-54">ax2.margins(y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.12</span>)</span>
+<span id="cb5-55">label_endpoints(ax2, rate_entries)</span>
+<span id="cb5-56">ax2.set_xlim(left<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>plot.index[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], right<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>pd.Timestamp(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2027-03-01"</span>))</span>
+<span id="cb5-57">plt.tight_layout()</span></code></pre></div></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-labor-policy-context" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-labor-policy-context-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index_files/figure-html/fig-labor-policy-context-output-1.png" width="757" height="664" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-labor-policy-context-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Softer hiring reduces the need for additional inflation insurance, but Treasury yields and the 3.8 percent SEP median do not point to rapid easing.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: <a href="https://fred.stlouisfed.org/">BLS labor data and Treasury rates via FRED</a>; <a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm">Federal Reserve June 2026 Summary of Economic Projections</a>.</p>
+</div>
+</section>
+<section id="policy-implications-hold-first-reassess-next" class="level2">
+<h2 class="anchored" data-anchor-id="policy-implications-hold-first-reassess-next">Policy implications: hold first, reassess next</h2>
+<p>June shifts the Fed’s reaction function toward patience. Lower headline inflation reduces the urgency to tighten, while softer hiring raises the cost of overtightening. Yet broad inflation between 2.4% and 2.7%, with shelter at 3.3%, does not justify an immediate easing sequence.</p>
+<p><strong>At the next meeting, a hold is the cleaner baseline.</strong> It lets the Committee test whether June’s energy relief passes into core services without responding too aggressively to one volatile component. A hike would require renewed core or shelter acceleration; a cut would require clearer labor deterioration than the current data show.</p>
+<p><strong>At the following meeting, the decision becomes more conditional.</strong> Another subdued core print, continued shelter slowing, and payroll growth near or below its recent pace would make easing more defensible. If hiring stabilizes and underlying inflation remains near its current range, another hold would better match the June SEP.</p>
+<p>Market rates reinforce this cautious posture. The two-year yield at 4.2% sits above both the 3.6% effective rate and the 3.8% end-2026 SEP median. That gap does not signal confidence in rapid cuts. The 4.6% ten-year yield and 0.4 percentage-point positive curve also embed term premium and longer-run inflation uncertainty. Together, they suggest that bonds still require compensation for a restrictive and uncertain policy path.</p>
+</section>
+<section id="what-this-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-means">What this means</h2>
+<p><strong>For households:</strong> Lower gasoline and energy prices provide immediate cash-flow relief. The broader cost-of-living improvement will feel slower because shelter and service prices are still rising faster than 2%.</p>
+<p><strong>For investors:</strong> The energy reversal can lower near-term inflation breakevens and support short-duration bonds, but the two-year yield above the current policy rate limits the case for an aggressive duration extension. Longer-duration bonds need confirmation from core inflation and labor revisions. For equities, cheaper gasoline supports household cash flow and consumer-facing margins, while softer hiring argues against a broad cyclical-growth bet.</p>
+<p><strong>For policymakers:</strong> The dual mandate is becoming more balanced. Inflation is cooling but not finished, while weaker hiring raises the cost of staying restrictive for too long.</p>
+</section>
+<section id="what-to-watch-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-watch-next">What to watch next</h2>
+<ul>
+<li><strong>Core monthly inflation:</strong> another subdued reading would show that June was broader than energy.</li>
+<li><strong>Shelter momentum:</strong> sustained monthly readings near June’s 0.1% would strengthen the disinflation case.</li>
+<li><strong>Median and trimmed-mean CPI:</strong> movement closer to 2% would give the Fed more confidence than another gasoline decline.</li>
+<li><strong>Payroll revisions and unemployment:</strong> further deterioration would increase the weight on employment risks at the next one to two meetings.</li>
+<li><strong>The two-year Treasury yield:</strong> a sustained move toward or below the 3.8% SEP median would strengthen the easing signal; remaining near its current 4.2% level would favor a higher-for-longer interpretation.</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>June delivered genuine inflation relief, but its strongest force was also its most volatile. The policy significance comes from the combination: energy reversed, broad inflation continued to cool, and hiring softened. That mix supports patience at the next meeting and creates a clearer path toward easing later, provided the next reports confirm that core and shelter pressure is fading rather than pausing.</p>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
+<ul>
+<li>Monthly contribution estimates use fixed relative-importance weights and a residual category; they are not the official BLS chained decomposition.</li>
+<li>The timing of the energy reversal coincided with the post-ceasefire decline in gasoline and commodity prices, but the CPI data alone cannot establish causality.</li>
+<li>Treasury yields reflect several forces and are not substitutes for a futures-derived market-implied policy path.</li>
+<li>Payroll estimates are revised and may change in subsequent employment reports.</li>
+</ul>
+</section>
+</section>
+<section id="methodology-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-data">Methodology &amp; Data</h2>
+<table class="caption-top table">
+<caption>Data sources and series used in the analysis.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>Description</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CPIAUCSL, CPILFESL</td>
+<td>Headline and core CPI indexes</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>CPIENGSL, CUSR0000SETB01</td>
+<td>Energy and gasoline CPI indexes</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CUSR0000SAH1, CUSR0000SACL1E</td>
+<td>Shelter and core goods CPI indexes</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>MEDCPIM159SFRBCLE, TRMMEANCPIM159SFRBCLE</td>
+<td>Cleveland Fed median and trimmed-mean CPI</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>CRESTKCPIXSLTRM159SFRBATL</td>
+<td>Atlanta Fed sticky CPI excluding food, energy, and shelter</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>PAYEMS, UNRATE</td>
+<td>Payroll employment and unemployment</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="odd">
+<td>FEDFUNDS, DGS2, DGS10</td>
+<td>Policy and Treasury rates</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>FEDTARMD, FEDTARMDLR</td>
+<td>FOMC median projected and longer-run policy rates</td>
+<td><a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm">Federal Reserve</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Data current as of June 2026 CPI and labor data; Treasury data through July 16, 2026.</em></p>
+
+
+</section>
+
+ ]]></description>
+  <category>economics</category>
+  <category>inflation</category>
+  <category>energy</category>
+  <category>federal reserve</category>
+  <category>labor market</category>
+  <category>data visualization</category>
+  <guid>https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/</guid>
+  <pubDate>Sat, 18 Jul 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/images/cpi-energy-reversal-dashboard.png" medium="image" type="image/png" height="127" width="144"/>
+</item>
 <item>
   <title>Core Inflation Persistence: What the July 14 CPI Release Will Test in Services ex-Shelter, Goods, and Shelter</title>
   <dc:creator>Yoram Gilboa</dc:creator>
@@ -12312,7 +14262,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." data-fig-align="center">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." width="753" height="426">
@@ -12824,7 +14774,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="801" height="589">
@@ -13671,7 +15621,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-130">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -14147,7 +16097,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-66">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -14647,7 +16597,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." data-fig-align="center">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." width="728" height="672">
@@ -24441,7 +26391,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb1-98">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028.">
+<div id="fig-apr-sep-vs-market" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-apr-sep-vs-market-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028." width="682" height="428">
@@ -24902,7 +26852,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb2-78">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates.">
+<div id="fig-effr-sep-vintages" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-effr-sep-vintages-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-effr-sep-vintages-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Monthly effective federal funds rate with stepped SEP median midpoint projections at successive meeting dates." width="672" height="435">
@@ -25495,7 +27445,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb3-93">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026.">
+<div id="fig-forward-fan" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-forward-fan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-forward-fan-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Fan chart around SEP median midpoint path with futures-implied path and a small dissent marker at year-end 2026." width="682" height="428">
@@ -26072,7 +28022,7 @@ font-style: inherit;">8</span>)</span>
 <span id="cb4-109">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points.">
+<div id="fig-gap-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gap-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-gap-waterfall-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Waterfall chart walking from the SEP median midpoint to the market-implied midpoint, with each contributing bar labeled in percentage points." width="681" height="450">
@@ -26404,7 +28354,7 @@ font-style: inherit;">%Y"</span>))</span>
 <span id="cb5-45">plt.tight_layout()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels.">
+<div id="fig-yields-vix" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-yields-vix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/20260501 April FOMC decision/index_files/figure-html/fig-yields-vix-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels: 2s10s Treasury spread in basis points and VIX closing levels." width="683" height="505">
@@ -40254,1315 +42204,6 @@ Figure&nbsp;4: PPI typically leads CPI by 3 to 9 months. If the January PPI surg
   <category>data analysis</category>
   <guid>https://gilboa.blog/posts/2026-03-01-core-ppi-divergence/</guid>
   <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Visualizing Supreme Court Alliances</title>
-  <link>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In <em>Learning Resources, Inc.&nbsp;v. Trump</em> (consolidated with <em>Trump v. V.O.S. Selections, Inc.</em>), the Court struck down President Trump’s sweeping tariffs imposed under the International Emergency Economic Powers Act (IEEPA)<sup>1</sup> by a vote of <strong>6–3</strong>.</p>
-<p>Chief Justice Roberts delivered the principal opinion, holding that IEEPA does not authorize the President to impose tariffs. The opinion was joined in full by Justices Sotomayor, Kagan, and Jackson, with Gorsuch and Barrett joining in the judgment on the core holdings while filing separate concurrences. Kagan also wrote a concurrence (joined by Sotomayor and Jackson), and Jackson wrote separately as well. In dissent, Thomas wrote individually, while Kavanaugh authored a separate dissent joined by Thomas and Alito—all three arguing for a broader reading of executive power under the statute.</p>
-<p>What makes this case fascinating from a data perspective is the <strong>cross-ideological coalition</strong> it produced. The majority includes three justices appointed by Republican presidents (Roberts, Gorsuch, Barrett) alongside three appointed by Democratic presidents (Sotomayor, Kagan, Jackson). Meanwhile, the conservative bloc fractured: Thomas, Alito, and Kavanaugh dissented, but Gorsuch and Barrett broke away to join the majority.</p>
-<p>This post goes beyond the headlines. Using publicly available data from the <a href="https://www.scotusblog.com/statistics/">SCOTUSblog OT2024</a><sup>2</sup> Stat Pack, we’ll visualize Justice agreement patterns with a heatmap, a network graph, and bloc-frequency charts. The goal is to see whether this tariff ruling was a genuine surprise—or whether the data already hinted at the fault lines within the conservative supermajority.</p>
-</section>
-<section id="vote-breakdown" class="level2">
-<h2 class="anchored" data-anchor-id="vote-breakdown">1. Vote Breakdown</h2>
-<p>The following table shows each Justice, the President who appointed them, and how they voted in the tariff case:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Justice</th>
-<th>Appointed By</th>
-<th>Vote</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>John Roberts (CJ)</td>
-<td>G.W. Bush (R)</td>
-<td><strong>Majority</strong></td>
-<td>Principal opinion author</td>
-</tr>
-<tr class="even">
-<td>Sonia Sotomayor</td>
-<td>Obama (D)</td>
-<td><strong>Majority</strong></td>
-<td>Joined opinion; joined Kagan concurrence</td>
-</tr>
-<tr class="odd">
-<td>Elena Kagan</td>
-<td>Obama (D)</td>
-<td><strong>Majority</strong></td>
-<td>Concurrence (joined by Sotomayor, Jackson)</td>
-</tr>
-<tr class="even">
-<td>Neil Gorsuch</td>
-<td>Trump (R)</td>
-<td><strong>Majority</strong></td>
-<td>Joined in judgment; separate concurrence</td>
-</tr>
-<tr class="odd">
-<td>Amy Coney Barrett</td>
-<td>Trump (R)</td>
-<td><strong>Majority</strong></td>
-<td>Joined in judgment; separate concurrence</td>
-</tr>
-<tr class="even">
-<td>Ketanji Brown Jackson</td>
-<td>Biden (D)</td>
-<td><strong>Majority</strong></td>
-<td>Joined opinion; separate concurrence</td>
-</tr>
-<tr class="odd">
-<td>Clarence Thomas</td>
-<td>G.H.W. Bush (R)</td>
-<td><em>Dissent</em></td>
-<td>Solo dissent; joined Kavanaugh dissent</td>
-</tr>
-<tr class="even">
-<td>Samuel Alito</td>
-<td>G.W. Bush (R)</td>
-<td><em>Dissent</em></td>
-<td>Joined Kavanaugh dissent</td>
-</tr>
-<tr class="odd">
-<td>Brett Kavanaugh</td>
-<td>Trump (R)</td>
-<td><em>Dissent</em></td>
-<td>Dissent author (joined by Thomas, Alito)</td>
-</tr>
-</tbody>
-</table>
-<p>The opinion was notably splintered. Roberts delivered Parts I, II-A-1, and II-B as the principal opinion; Gorsuch and Barrett concurred in the judgment on the core holding but wrote separately. Thomas filed his own dissent, while Kavanaugh’s dissent (joined by Thomas and Alito) offered the broadest defense of executive tariff authority. The fracture is striking: of the six Republican-appointed justices, three voted to strike down the tariffs and three voted to uphold them. The Court did not address whether or how the federal government should refund tariffs already paid by importers, leaving that question to lower courts and the CBP process.</p>
-</section>
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">2. Data Sources</h2>
-<p>The visualizations below draw on the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Final Stat Pack for October Term 2024</a>, published June 27, 2025. That document provides pairwise agreement rates—the percentage of cases in which each pair of Justices voted together.</p>
-<p>Key data points from the Stat Pack:</p>
-<ul>
-<li><strong>Thomas &amp; Alito</strong>: agreed 97% of the time (highest conservative pair)</li>
-<li><strong>Jackson &amp; Sotomayor</strong>: agreed 94% of the time (highest liberal pair)</li>
-<li><strong>Roberts</strong> was in the majority 95% of the time</li>
-<li><strong>Kavanaugh</strong> was in the majority 92% of the time</li>
-<li><strong>Barrett</strong> was in the majority 89% of the time</li>
-<li><strong>Kagan</strong> was in the majority 83% of the time</li>
-</ul>
-<p>For context, OT2024 saw a 42% unanimity rate (down from 44% the prior term and 50% in OT2022), with ideological 6–3 splits occurring in roughly 9% of cases. This means the agreement-rate data reflects a term with moderate but real division.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Note on data
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>The pairwise agreement matrix used in the Python code below is an approximation assembled from the Stat Pack’s reported figures and inferred from majority-rate data and historical patterns. The full 9×9 matrix is not published in a single public table, so some values are estimates. If you need exact numbers, cross-check against the <a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">Stat Pack PDF</a> directly. Always cite the primary source and note this caveat in any downstream analysis.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="heatmap-pairwise-agreement-rates" class="level2">
-<h2 class="anchored" data-anchor-id="heatmap-pairwise-agreement-rates">3. Heatmap: Pairwise Agreement Rates</h2>
-<p>A heatmap is the most direct way to visualize how often each pair of Justices votes together. Warmer colors indicate higher agreement; cooler colors reveal ideological distance. The diagonal is always 100% (each Justice agrees with themselves).</p>
-<div id="cell-fig-heatmap" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">df <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> pd.DataFrame(agreement, index<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>justices, columns<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>justices)</span>
-<span id="cb1-2"></span>
-<span id="cb1-3">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7.5</span>))</span>
-<span id="cb1-4">sns.heatmap(</span>
-<span id="cb1-5">    df, annot<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, fmt<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"d"</span>, cmap<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"RdYlGn"</span>,</span>
-<span id="cb1-6">    vmin<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">40</span>, vmax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>, linewidths<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, linecolor<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>,</span>
-<span id="cb1-7">    square<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">True</span>, cbar_kws<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>{<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"label"</span>: <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Agreement %"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"shrink"</span>: <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.8</span>}, ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax,</span>
-<span id="cb1-8">)</span>
-<span id="cb1-9">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"SCOTUS OT2024 Pairwise Agreement Rates (approx.)"</span>,</span>
-<span id="cb1-10">             fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">14</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">16</span>)</span>
-<span id="cb1-11">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>)</span>
-<span id="cb1-12">ax.set_ylabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>)</span>
-<span id="cb1-13">ax.xaxis.tick_top()</span>
-<span id="cb1-14">ax.tick_params(axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>, rotation<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">45</span>)</span>
-<span id="cb1-15">ax.tick_params(axis<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"y"</span>, rotation<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>)</span>
-<span id="cb1-16">plt.tight_layout()</span>
-<span id="cb1-17">plt.show()</span></code></pre></div></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="fig-heatmap" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-heatmap-output-1.png" width="810" height="719" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Pairwise agreement heatmap for OT2024. Thomas–Alito form the tightest bloc (97%). The liberal wing clusters at 86–94%. Barrett and Roberts sit in a moderate-conservative band, closer to Kagan than to Thomas.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The heatmap immediately reveals the structural tension that made the tariff ruling possible: Barrett and Roberts have <em>higher</em> agreement with Kagan (~72–76%) than with Thomas (~70–72%). Gorsuch, meanwhile, is positioned between the conservative core and the center, explaining his alignment with the majority here.</p>
-</section>
-<section id="network-graph-judicial-alliances" class="level2">
-<h2 class="anchored" data-anchor-id="network-graph-judicial-alliances">4. Network Graph: Judicial Alliances</h2>
-<p>A network graph translates the agreement matrix into a spatial layout. Each Justice is a node; edges connect pairs who agree above a threshold. Thicker edges mean higher agreement. We’ll color nodes by their vote in the tariff case (green for majority, red for dissent) and use a spring layout so that closely-aligned justices gravitate together.</p>
-<div id="cell-fig-network" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">THRESHOLD <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">65</span></span>
-<span id="cb2-2">G <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> nx.Graph()</span>
-<span id="cb2-3"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> justices:</span>
-<span id="cb2-4">    G.add_node(j)</span>
-<span id="cb2-5"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(justices)):</span>
-<span id="cb2-6">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(i <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(justices)):</span>
-<span id="cb2-7">        pct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> agreement[i][j]</span>
-<span id="cb2-8">        <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> pct <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;=</span> THRESHOLD:</span>
-<span id="cb2-9">            G.add_edge(justices[i], justices[j], weight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>pct)</span>
-<span id="cb2-10"></span>
-<span id="cb2-11">node_colors <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#2ca02c"</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> tariff_majority[j] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#d62728"</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> G.nodes()]</span>
-<span id="cb2-12">edge_weights <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [G[u][v][<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"weight"</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> u, v <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> G.edges()]</span>
-<span id="cb2-13">edge_widths <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [(w <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> w <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> edge_weights]</span>
-<span id="cb2-14">pos <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> nx.spring_layout(G, seed<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">42</span>, k<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2.5</span>, weight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"weight"</span>, iterations<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>)</span>
-<span id="cb2-15"></span>
-<span id="cb2-16">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>))</span>
-<span id="cb2-17">ax.set_facecolor(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#fafafa"</span>)</span>
-<span id="cb2-18">nx.draw_networkx_edges(G, pos, ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax, width<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>edge_widths, alpha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, edge_color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#888"</span>)</span>
-<span id="cb2-19">nx.draw_networkx_nodes(G, pos, ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax, node_color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>node_colors, node_size<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2200</span>,</span>
-<span id="cb2-20">                       edgecolors<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#333"</span>, linewidths<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.5</span>)</span>
-<span id="cb2-21">nx.draw_networkx_labels(G, pos, ax<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>ax, font_size<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, font_weight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, font_color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>)</span>
-<span id="cb2-22"></span>
-<span id="cb2-23">legend_elements <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [</span>
-<span id="cb2-24">    Line2D([<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], marker<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"o"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"w"</span>, markerfacecolor<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#2ca02c"</span>,</span>
-<span id="cb2-25">           markersize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Majority (strike down)"</span>),</span>
-<span id="cb2-26">    Line2D([<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>], marker<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"o"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"w"</span>, markerfacecolor<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#d62728"</span>,</span>
-<span id="cb2-27">           markersize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>, label<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Dissent (uphold)"</span>),</span>
-<span id="cb2-28">]</span>
-<span id="cb2-29">ax.legend(handles<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>legend_elements, loc<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"upper left"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>)</span>
-<span id="cb2-30">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"SCOTUS OT2024 Agreement Network</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(edges </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\u2265</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">65% agreement; colored by tariff vote)"</span>,</span>
-<span id="cb2-31">             fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>)</span>
-<span id="cb2-32">ax.axis(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"off"</span>)</span>
-<span id="cb2-33">plt.tight_layout()</span>
-<span id="cb2-34">plt.show()</span></code></pre></div></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="fig-network" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-network-output-1.png" width="950" height="757" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Network graph of OT2024 alliances. Green = majority (strike down tariffs); Red = dissent (uphold). Edge thickness reflects agreement strength. Note how Roberts and Barrett bridge the liberal cluster and the conservative core.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The spatial layout makes the story clear. The liberal trio (Sotomayor, Jackson, Kagan) clusters tightly on one side, while Thomas and Alito form a near-inseparable pair on the other. Roberts and Barrett sit in between—structurally positioned as swing votes. Gorsuch, though closer to the conservative core, has enough independence to break away on separation-of-powers questions like this one.</p>
-</section>
-<section id="dissent-bloc-frequency" class="level2">
-<h2 class="anchored" data-anchor-id="dissent-bloc-frequency">5. Dissent Bloc Frequency</h2>
-<p>How often do different groups of Justices dissent together? This chart shows the most common dissenting blocs in OT2024 divided opinions, highlighting how the tariff dissent (Thomas–Alito–Kavanaugh) fits within broader patterns. (Bloc counts are derived from SCOTUSblog case summaries and are approximate; not all partial concurrences/dissents are captured.)</p>
-<div id="cell-fig-dissent-blocs" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">blocs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [</span>
-<span id="cb3-2">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Alito"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#d62728"</span>),</span>
-<span id="cb3-3">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Kavanaugh"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#e45756"</span>),</span>
-<span id="cb3-4">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Gorsuch"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#ff9896"</span>),</span>
-<span id="cb3-5">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sotomayor</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Jackson"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#2ca02c"</span>),</span>
-<span id="cb3-6">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sotomayor</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Kagan</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Jackson"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#98df8a"</span>),</span>
-<span id="cb3-7">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Gorsuch</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Kavanaugh"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#ffbb78"</span>),</span>
-<span id="cb3-8">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Gorsuch</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(solo)"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#aec7e8"</span>),</span>
-<span id="cb3-9">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(solo)"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#c5b0d5"</span>),</span>
-<span id="cb3-10">]</span>
-<span id="cb3-11"></span>
-<span id="cb3-12">labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb3-13">counts <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb3-14">colors <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb3-15"></span>
-<span id="cb3-16">order <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.argsort(counts)[::<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]</span>
-<span id="cb3-17">labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [labels[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb3-18">counts <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [counts[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb3-19">colors <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [colors[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb3-20"></span>
-<span id="cb3-21">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5.5</span>))</span>
-<span id="cb3-22">bars <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(labels)), counts, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>colors, edgecolor<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#333"</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>)</span>
-<span id="cb3-23">ax.set_yticks(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(labels)))</span>
-<span id="cb3-24">ax.set_yticklabels(labels, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>)</span>
-<span id="cb3-25">ax.invert_yaxis()</span>
-<span id="cb3-26">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Number of divided opinions"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">11</span>)</span>
-<span id="cb3-27">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Most Common Dissent Blocs </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\u2014</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> SCOTUS OT2024 (approx.)"</span>,</span>
-<span id="cb3-28">             fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>)</span>
-<span id="cb3-29"></span>
-<span id="cb3-30">tariff_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> labels.index(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Alito</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Kavanaugh"</span>)</span>
-<span id="cb3-31">ax.annotate(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Tariff dissent bloc"</span>, xy<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(counts[tariff_idx] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>, tariff_idx),</span>
-<span id="cb3-32">            fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#d62728"</span>, va<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"center"</span>)</span>
-<span id="cb3-33"></span>
-<span id="cb3-34"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> bar, count <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">zip</span>(bars, counts):</span>
-<span id="cb3-35">    ax.text(bar.get_width() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, bar.get_y() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb3-36">            <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>(count), va<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"center"</span>, ha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"right"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>)</span>
-<span id="cb3-37"></span>
-<span id="cb3-38">ax.spines[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"top"</span>].set_visible(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>)</span>
-<span id="cb3-39">ax.spines[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"right"</span>].set_visible(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>)</span>
-<span id="cb3-40">plt.tight_layout()</span>
-<span id="cb3-41">plt.show()</span></code></pre></div></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="fig-dissent-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-dissent-blocs-output-1.png" width="950" height="517" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dissent-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Frequency of dissent blocs in OT2024 divided opinions. The Thomas–Alito pair is the most common dissenting duo. The Thomas–Alito–Kavanaugh trio (the tariff dissent bloc) appears in approximately 8 divided cases.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The Thomas–Alito pair is the Court’s most durable dissenting duo, appearing in 12 divided opinions. Adding Kavanaugh (the tariff case configuration) accounts for 8 cases—making it one of the most frequent three-justice dissent blocs. Notably absent from this configuration are Gorsuch and Barrett, who trend more independently on executive-power and statutory-interpretation questions.</p>
-</section>
-<section id="majority-agreement-blocs" class="level2">
-<h2 class="anchored" data-anchor-id="majority-agreement-blocs">6. Majority Agreement Blocs</h2>
-<p>Dissent blocs tell only half the story. Which groups of Justices most frequently form the <em>core</em> of majority coalitions? This chart shows the most common majority-agreement blocs—groups that voted together on the winning side in OT2024 divided opinions. The tariff majority coalition (Roberts + Gorsuch + Barrett + liberal trio) is highlighted.</p>
-<div id="cell-fig-majority-blocs" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">blocs <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [</span>
-<span id="cb4-2">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"All 6 conservatives"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">14</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#1f77b4"</span>),</span>
-<span id="cb4-3">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Roberts + Kavanaugh</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Barrett"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">18</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#4a90d9"</span>),</span>
-<span id="cb4-4">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Roberts + Barrett</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Kagan"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">11</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#6baed6"</span>),</span>
-<span id="cb4-5">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Roberts + Gorsuch</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Barrett + liberals"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#2ca02c"</span>),</span>
-<span id="cb4-6">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"All 3 liberals</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Roberts"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#98df8a"</span>),</span>
-<span id="cb4-7">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Unanimous</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(all 9)"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">28</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#9467bd"</span>),</span>
-<span id="cb4-8">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Gorsuch + Thomas</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Alito + liberals"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#ff7f0e"</span>),</span>
-<span id="cb4-9">    (<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Barrett + Kavanaugh</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Roberts + liberals"</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#bcbd22"</span>),</span>
-<span id="cb4-10">]</span>
-<span id="cb4-11"></span>
-<span id="cb4-12">labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb4-13">counts <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb4-14">colors <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [b[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> b <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> blocs]</span>
-<span id="cb4-15"></span>
-<span id="cb4-16">order <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> np.argsort(counts)[::<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]</span>
-<span id="cb4-17">labels <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [labels[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb4-18">counts <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [counts[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb4-19">colors <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [colors[i] <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> order]</span>
-<span id="cb4-20"></span>
-<span id="cb4-21">fig, ax <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> plt.subplots(figsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5.5</span>))</span>
-<span id="cb4-22">bars <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> ax.barh(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(labels)), counts, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>colors, edgecolor<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#333"</span>, linewidth<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>)</span>
-<span id="cb4-23">ax.set_yticks(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">range</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">len</span>(labels)))</span>
-<span id="cb4-24">ax.set_yticklabels(labels, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>)</span>
-<span id="cb4-25">ax.invert_yaxis()</span>
-<span id="cb4-26">ax.set_xlabel(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Number of opinions"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">11</span>)</span>
-<span id="cb4-27">ax.set_title(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Most Common Majority Blocs </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\u2014</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> SCOTUS OT2024 (approx.)"</span>,</span>
-<span id="cb4-28">             fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">13</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, pad<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">12</span>)</span>
-<span id="cb4-29"></span>
-<span id="cb4-30">tariff_idx <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> labels.index(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Roberts + Gorsuch</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">+ Barrett + liberals"</span>)</span>
-<span id="cb4-31">ax.annotate(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\u2190</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> Tariff majority bloc"</span>, xy<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>(counts[tariff_idx] <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, tariff_idx),</span>
-<span id="cb4-32">            fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">9</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#2ca02c"</span>, va<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"center"</span>)</span>
-<span id="cb4-33"></span>
-<span id="cb4-34"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> bar, count <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">zip</span>(bars, counts):</span>
-<span id="cb4-35">    ax.text(bar.get_width() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, bar.get_y() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> bar.get_height() <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-36">            <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>(count), va<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"center"</span>, ha<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"right"</span>, fontsize<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, fontweight<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>, color<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>)</span>
-<span id="cb4-37"></span>
-<span id="cb4-38">ax.spines[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"top"</span>].set_visible(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>)</span>
-<span id="cb4-39">ax.spines[<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"right"</span>].set_visible(<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">False</span>)</span>
-<span id="cb4-40">plt.tight_layout()</span>
-<span id="cb4-41">plt.show()</span></code></pre></div></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="fig-majority-blocs" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-majority-blocs-output-1.png" width="950" height="517" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-majority-blocs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Frequency of majority agreement blocs in OT2024. Unanimous decisions dominate, followed by the Roberts–Kavanaugh–Barrett conservative-center trio. The tariff majority configuration (Roberts + Gorsuch + Barrett + all three liberals) appears in roughly 6 divided cases.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>The majority-bloc chart reveals that while the conservative six often vote together (14 non-unanimous cases), the Court’s most common configuration is unanimity (28 cases). The tariff-case coalition—Roberts, Gorsuch, and Barrett joining all three liberals—is rarer (about 6 cases) but not unprecedented. It emerges specifically on statutory-interpretation and separation-of-powers questions where textualism cuts against executive overreach.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">7. Conclusion</h2>
-<p>The data tell a consistent story: the 6–3 tariff ruling was not an anomaly but a reflection of <strong>structural fault lines</strong> within the conservative supermajority.</p>
-<ul>
-<li><strong>Thomas and Alito</strong> form the Court’s tightest voting bloc (97% agreement), and Kavanaugh is their most frequent third vote. This trio’s tariff dissent fits their overall pattern.</li>
-<li><strong>Roberts and Barrett</strong> occupy a centrist-conservative position with higher cross-ideological agreement, especially with Kagan. Their placement in the majority coalition was structurally predictable.</li>
-<li><strong>Gorsuch</strong> has a well-documented textualist streak on separation-of-powers questions. His vote to strike down IEEPA tariffs aligns with his broader jurisprudential profile, not just this case.</li>
-<li><strong>The liberal bloc</strong> (Sotomayor, Kagan, Jackson) votes cohesively in divided cases, making them a reliable foundation for any cross-ideological majority.</li>
-</ul>
-<section id="limitations" class="level3">
-<h3 class="anchored" data-anchor-id="limitations">Limitations</h3>
-<ul>
-<li>The pairwise agreement matrix is approximate. The full OT2024 matrix is assembled from reported Stat Pack highlights and estimates; individual cell values may differ from the official data by a few percentage points.</li>
-<li>Dissent and majority bloc counts are based on available case summaries and may not capture every nuance of partial concurrences and dissents.</li>
-<li>Agreement rates measure <em>outcome</em> alignment, not <em>reasoning</em> alignment. Two Justices can reach the same result for very different reasons.</li>
-</ul>
-<p>Despite these caveats, the visualizations offer a compelling lens on the Court’s internal dynamics. The tariff ruling wasn’t a bolt from the blue—it was the predictable product of a Court whose conservative wing is less monolithic than popular commentary suggests.</p>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">8. References</h2>
-<ol type="1">
-<li><a href="https://www.supremecourt.gov/opinions/25pdf/24-1287_4gcj.pdf">Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a> — Full opinion (PDF)</li>
-<li><a href="https://www.scotusblog.com/2026/02/supreme-court-strikes-down-tariffs/">SCOTUSblog: Supreme Court strikes down tariffs</a></li>
-<li><a href="https://www.scotusblog.com/wp-content/uploads/2025/06/SCOTUSblog_Statpack_OT24_Final_June_27.pdf">SCOTUSblog Stat Pack, OT2024 (Final, June 27, 2025)</a></li>
-<li><a href="https://www.scotusblog.com/statistics/">SCOTUSblog Statistics Hub</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Learning_Resources,_Inc._v._Trump">Wikipedia: Learning Resources, Inc.&nbsp;v. Trump</a></li>
-<li><a href="https://taxfoundation.org/blog/supreme-court-trump-tariffs-ruling/">Tax Foundation: Supreme Court Trump Tariffs Ruling Analysis</a></li>
-<li><a href="https://www.scotusblog.com/cases/case-files/trump-v-v-o-s-selections/">SCOTUSblog: Trump v. V.O.S. Selections case page</a></li>
-<li><a href="https://supreme.justia.com/cases/federal/us/607/24-1287/">Justia: Learning Resources, Inc.&nbsp;v. Trump, 607 U.S. ___ (2026)</a></li>
-</ol>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>IEEPA: the International Emergency Economic Powers Act, a 1977 federal law (50 U.S.C. §§ 1701–1708) that grants the President broad authority to regulate commerce during national emergencies arising from foreign threats.↩︎</p></li>
-<li id="fn2"><p>OT: October Term. The Supreme Court’s annual session begins on the first Monday in October. “OT2024” refers to the term that started in October 2024 and ended in June 2025.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>supreme court</category>
-  <category>data visualization</category>
-  <category>law</category>
-  <category>politics</category>
-  <guid>https://gilboa.blog/posts/2026-02-22-scotus-tariff-alliances/</guid>
-  <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
