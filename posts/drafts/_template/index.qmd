@@ -41,8 +41,12 @@ for folder in [RAW_DIR, CLEAN_DIR, IMG_DIR, STATS_DIR]:
 with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
     stats = json.load(f)
 
-# Adjust data loading per post:
+# Data loading pattern A (scripted pipeline writes cleaned CSVs):
 # df = pd.read_csv(CLEAN_DIR / "main.csv", index_col=0, parse_dates=True)
+#
+# Data loading pattern B (inline fetch/transform):
+# - fetch source series in hidden chunks below
+# - compute derived fields before the first chart block
 
 COLORS = {
     "primary":    "#2e5984",
@@ -77,23 +81,60 @@ def fmt_chg(n):
     if isinstance(n, float):
         return f"{n:+.1f}"
     return f"{n:+,}"
+
+def annualized(series, months):
+    """Convert an m-month index change to compounded annualized percent."""
+    return ((series / series.shift(months)) ** (12 / months) - 1) * 100
+
+def label_endpoints(ax, entries, gap_frac=0.05):
+    """Stagger endpoint labels to avoid overlap.
+    entries: [{"x": datetime, "y": float, "text": str, "color": str}, ...]
+    """
+    y0, y1 = ax.get_ylim()
+    gap = (y1 - y0) * gap_frac
+    ordered = sorted(entries, key=lambda e: e["y"])
+    ys = [e["y"] for e in ordered]
+    for i in range(1, len(ys)):
+        if ys[i] - ys[i - 1] < gap:
+            ys[i] = ys[i - 1] + gap
+    for e, y in zip(ordered, ys):
+        if abs(y - e["y"]) > 1e-9:
+            ax.plot([e["x"], e["x"]], [e["y"], y], color=COLORS["light"], linewidth=0.6, zorder=4)
+        ax.text(e["x"], y, f"  {e['text']}", fontsize=8.5, color=e["color"], va="center", fontweight="bold")
 ```
 
 ```{python}
 #| echo: false
 
 # Key metrics cards - adjust values and labels per post
+card_style = ("background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+              "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+              "align-items: center; min-height: 132px;")
+label_style = ("font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; "
+               "min-height: 2.5rem; display: flex; align-items: center; text-align: center;")
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    ("Label", f"{fmt_chg(stats['key_value'])}%", COLORS["primary"], stats.get("latest_month_short", stats["latest_month"])),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
 html = f"""
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem; margin: 1.5rem 0;">
-  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
-              padding: 1.25rem; text-align: center;">
-    <div style="font-size: 1.75rem; font-weight: 700; color: #2e5984;">{stats['key_value']}%</div>
-    <div style="font-size: 0.8rem; color: #64748b;">Label</div>
-  </div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
 </div>
-<p style="font-size: 0.75rem; color: #94a3b8; text-align: center; margin-top: -0.5rem;">
-  Data as of {stats['latest_month']} | Source: [Source Name]
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  Latest data used: {stats['latest_month']} | Source: [Source Name]
 </p>
 """
 HTML(html)
@@ -113,6 +154,15 @@ code block to see the full implementation. The complete data pipeline includes:
 
 All data sourced from [Source Name](https://example.com).
 :::
+
+<!-- For inline-fetch posts, replace the callout above with:
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+This post fetches and transforms data in inline Python blocks in `index.qmd`.
+Data is sourced from [FRED](https://fred.stlouisfed.org/) with a CSV fallback.
+:::
+-->
 
 ## 1. First Section
 

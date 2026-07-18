@@ -1,0 +1,555 @@
+---
+title: "June 2026 CPI: Energy Prices Plunge After Ceasefire, but Core and Shelter Pressures Linger"
+date: "2026-07-18"
+author: Yoram Gilboa
+categories: [economics, inflation, energy, federal reserve, labor market, data visualization]
+description: "June CPI fell as energy and gasoline prices reversed, while broader inflation measures and shelter showed a slower path back to 2 percent."
+image: images/cpi-energy-reversal-dashboard.png
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+df = pd.read_csv(DATA_DIR / "main.csv", index_col="date", parse_dates=True)
+fomc = pd.read_csv(DATA_DIR / "fomc_sep.csv", index_col="date", parse_dates=True)
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "food": "#9b6a44",
+    "purple": "#6f5a8a",
+    "soft": "#d9e6ef",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "axes.linewidth": 0.5,
+})
+
+def fmt(value):
+    if isinstance(value, float):
+        return f"{value:.1f}"
+    return f"{value:,}"
+
+def fmt_chg(value):
+    if abs(value) < 0.05:
+        value = 0.0
+    return f"{value:+.1f}"
+
+def label_endpoints(ax, entries, gap_frac=0.055):
+    y0, y1 = ax.get_ylim()
+    gap = (y1 - y0) * gap_frac
+    ordered = sorted(entries, key=lambda item: item["y"])
+    label_y = [item["y"] for item in ordered]
+    for index in range(1, len(label_y)):
+        if label_y[index] - label_y[index - 1] < gap:
+            label_y[index] = label_y[index - 1] + gap
+    for item, y_value in zip(ordered, label_y):
+        if abs(y_value - item["y"]) > 1e-9:
+            ax.plot(
+                [item["x"], item["x"]],
+                [item["y"], y_value],
+                color=COLORS["light"],
+                linewidth=0.7,
+                zorder=4,
+            )
+        ax.text(
+            item["x"],
+            y_value,
+            f"  {item['text']}",
+            color=item["color"],
+            fontsize=8.5,
+            fontweight="bold",
+            va="center",
+            zorder=5,
+        )
+```
+
+```{python}
+#| echo: false
+
+card_style = ("background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+              "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+              "align-items: center; min-height: 132px;")
+label_style = ("font-size: 0.78rem; color: #64748b; min-height: 2.5rem; "
+               "display: flex; align-items: center; text-align: center;")
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    ("Headline CPI YoY", f"{fmt(stats['headline_yoy'])}%", COLORS["primary"],
+     f"From {fmt(stats['prev_headline_yoy'])}%"),
+    ("Monthly headline CPI", f"{fmt_chg(stats['headline_mom'])}%", COLORS["primary"],
+     stats["latest_month_short"]),
+    ("Energy CPI MoM", f"{fmt_chg(stats['energy_mom'])}%", COLORS["warning"],
+     f"Gasoline {fmt_chg(stats['gasoline_mom'])}%"),
+    ("Core CPI YoY", f"{fmt(stats['core_yoy'])}%", COLORS["neutral"],
+     f"Shelter {fmt(stats['shelter_yoy'])}%"),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+HTML(f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  Latest CPI data: {stats['latest_month']} | Source: BLS via FRED
+</p>
+""")
+```
+
+June inflation delivered immediate relief at the gas pump but did not settle the debate over underlying price pressure. Headline CPI fell **`{python} fmt_chg(stats['headline_mom'])`%** in `{python} stats['latest_month']`, lowering its year-over-year rate to **`{python} fmt(stats['headline_yoy'])`%** from `{python} fmt(stats['prev_headline_yoy'])`% in May. Energy prices dropped `{python} fmt_chg(stats['energy_mom'])`%, including a `{python} fmt_chg(stats['gasoline_mom'])`% gasoline decline after the ceasefire-related commodity shock. Core CPI still stood **`{python} fmt(stats['core_yoy'])`%** above a year earlier, and shelter inflation remained `{python} fmt(stats['shelter_yoy'])`%.
+
+The distinction between monthly and annual inflation is essential. June's energy reversal subtracted approximately **`{python} fmt_chg(stats['energy_contrib_mom_pp'])` percentage points** from the monthly headline reading. Yet energy prices remained `{python} fmt(stats['energy_yoy'])`% above their year-earlier level because the earlier shock had not disappeared from the annual comparison. June therefore marks a sharp reversal in the latest flow of inflation, not the complete removal of energy from the inflation rate.
+
+::: {.callout-tip}
+## Key Takeaways
+
+- Energy accounted for most of June's monthly CPI decline, led by a `{python} fmt_chg(stats['gasoline_mom'])`% gasoline drop.
+- Headline inflation fell faster than core and shelter because energy is more volatile.
+- Core, median, trimmed-mean, and sticky ex-shelter inflation remain clustered between `{python} fmt(stats['sticky_ex_shelter_yoy'])`% and `{python} fmt(stats['median_cpi_yoy'])`%.
+- Payroll growth of `{python} fmt(stats['payroll_latest'])` thousand weakens the case for additional inflation insurance, but it does not by itself establish recession risk.
+- With broad inflation still above 2% and the `{python} fmt(stats['fomc_median_eoy_2026'])`% SEP median near the current policy setting, June supports a hold at the next meeting; easing at the following meeting requires another soft inflation and labor combination.
+:::
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The complete pipeline is included with this post:
+
+- `01_fetch_data.py` downloads CPI, labor, Treasury, and FOMC projection series from FRED.
+- `02_clean_data.py` calculates monthly, yearly, momentum, and approximate contribution measures.
+- `04_compute_stats.py` writes every value used in the prose and metric cards to `stats/summary_stats.json`.
+
+The contribution estimates use rounded December 2025 CPI relative-importance shares from the [BLS relative-importance tables](https://www.bls.gov/cpi/tables/relative-importance/2025.htm). They are directional approximations rather than the official chained BLS decomposition.
+:::
+
+## 1. The June decline was concentrated in energy
+
+The contribution view uses the month-over-month horizon that matches June's `{python} fmt_chg(stats['headline_mom'])`% change. Energy, food, core goods, and shelter use fixed relative-importance weights. Other services and residual absorbs the remaining services, interaction effects, and fixed-weight approximation error.
+
+Energy's monthly contribution was deeply negative even though its year-over-year contribution remained positive. The practical takeaway is narrow but important: without the energy reversal, June would not have produced the same headline decline.
+
+```{python}
+#| echo: true
+#| label: fig-monthly-contributions
+#| fig-cap: "Energy overwhelmed the other monthly components in June; without that reversal, headline CPI would not have fallen as sharply."
+#| fig-width: 8
+#| fig-height: 4.8
+
+plot = df.loc["2025-01-01":, [
+    "headline_mom",
+    "contrib_energy_mom_pp",
+    "contrib_food_mom_pp",
+    "contrib_core_goods_mom_pp",
+    "contrib_shelter_mom_pp",
+    "contrib_other_services_mom_pp",
+]].dropna()
+
+components = [
+    ("Energy", "contrib_energy_mom_pp", COLORS["warning"]),
+    ("Food", "contrib_food_mom_pp", COLORS["food"]),
+    ("Core goods", "contrib_core_goods_mom_pp", COLORS["primary"]),
+    ("Shelter", "contrib_shelter_mom_pp", COLORS["secondary"]),
+    ("Other services / residual", "contrib_other_services_mom_pp", COLORS["accent"]),
+]
+
+fig, ax = plt.subplots(figsize=(8, 4.8))
+positive_bottom = np.zeros(len(plot))
+negative_bottom = np.zeros(len(plot))
+
+for label, column, color in components:
+    values = plot[column].to_numpy()
+    positive = np.where(values > 0, values, 0)
+    negative = np.where(values < 0, values, 0)
+    ax.bar(plot.index, positive, bottom=positive_bottom, width=20,
+           color=color, label=label)
+    ax.bar(plot.index, negative, bottom=negative_bottom, width=20, color=color)
+    positive_bottom += positive
+    negative_bottom += negative
+
+ax.plot(plot.index, plot["headline_mom"], color=COLORS["neutral"],
+        linewidth=1.8, marker="o", markersize=3.5, label="Headline CPI MoM")
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+
+latest_date = plot.index[-1]
+energy_value = plot.iloc[-1]["contrib_energy_mom_pp"]
+ax.annotate(
+    f"Energy: {energy_value:+.2f} pp",
+    xy=(latest_date, energy_value),
+    xytext=(-82, -28),
+    textcoords="offset points",
+    arrowprops=dict(arrowstyle="->", color=COLORS["neutral"], lw=1),
+    bbox=dict(facecolor="#fafafa", edgecolor="none", alpha=0.9, pad=2),
+    fontsize=9,
+    zorder=5,
+)
+
+ax.set_ylabel("Contribution to monthly CPI (percentage points)")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.legend(loc="upper left", fontsize=8, frameon=False, ncol=2)
+ax.margins(y=0.15)
+plt.tight_layout()
+```
+
+::: {.figure-source}
+Source: [BLS CPI data via FRED](https://fred.stlouisfed.org/), with approximate fixed-weight contributions using BLS relative-importance shares.
+:::
+
+## 2. Headline inflation moved faster than core and shelter
+
+Separating energy into its own panel keeps the slower-moving series visible. Headline CPI fell rapidly between May and June, but core eased only from `{python} fmt(stats['prev_core_yoy'])`% to `{python} fmt(stats['core_yoy'])`%, and shelter remained at `{python} fmt(stats['shelter_yoy'])`%. The June print improved the direction of travel; it did not show that broad inflation had already returned to a stable 2% pace.
+
+```{python}
+#| echo: true
+#| label: fig-yoy-trends
+#| fig-cap: "Headline inflation responded immediately to cheaper energy, but slower core and shelter declines show why one favorable month is not enough for the Fed."
+#| fig-width: 8
+#| fig-height: 7
+
+plot = df.loc["2019-01-01":].copy()
+fig, (ax1, ax2) = plt.subplots(
+    2, 1, figsize=(8, 7), sharex=True, height_ratios=[2.2, 1.4]
+)
+
+top_series = [
+    ("Headline", "headline_yoy", COLORS["primary"]),
+    ("Core", "core_yoy", COLORS["neutral"]),
+    ("Shelter", "shelter_yoy", COLORS["secondary"]),
+]
+top_entries = []
+for label, column, color in top_series:
+    series = plot[column].dropna()
+    ax1.plot(series.index, series, color=color, linewidth=1.9)
+    ax1.scatter(series.index[-1], series.iloc[-1], s=40, color=color,
+                edgecolors="white", linewidth=0.8, zorder=5)
+    top_entries.append({
+        "x": series.index[-1],
+        "y": series.iloc[-1],
+        "text": f"{label} {series.iloc[-1]:.1f}%",
+        "color": color,
+    })
+
+ax1.axhline(2, color=COLORS["fed_target"], linestyle="--", linewidth=1, alpha=0.5)
+ax1.text(plot.index[2], 2.13, "2% reference", color=COLORS["fed_target"], fontsize=8)
+ax1.set_ylabel("Year-over-year change (%)")
+ax1.margins(y=0.12)
+label_endpoints(ax1, top_entries)
+
+energy = plot["energy_yoy"].dropna()
+ax2.plot(energy.index, energy, color=COLORS["warning"], linewidth=1.9)
+ax2.scatter(energy.index[-1], energy.iloc[-1], s=40, color=COLORS["warning"],
+            edgecolors="white", linewidth=0.8, zorder=5)
+ax2.text(energy.index[-1], energy.iloc[-1],
+         f"  Energy {energy.iloc[-1]:.1f}%", color=COLORS["warning"],
+         fontsize=8.5, fontweight="bold", va="center")
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.7)
+ax2.set_ylabel("Energy YoY (%)")
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+date_range = plot.index[-1] - plot.index[0]
+ax1.set_xlim(right=plot.index[-1] + date_range * 0.12)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "cpi-energy-reversal-dashboard.png",
+            dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS CPI data via FRED](https://fred.stlouisfed.org/).
+:::
+
+## 3. Broader inflation measures are clustered above 2%
+
+The next test is whether June's improvement extends beyond volatile categories. Median CPI, trimmed-mean CPI, and sticky CPI excluding food, energy, and shelter ranged from `{python} fmt(stats['sticky_ex_shelter_yoy'])`% to `{python} fmt(stats['median_cpi_yoy'])`%, close to core CPI's `{python} fmt(stats['core_yoy'])`%. Their convergence is real progress, but the Fed still needs evidence that this range will move closer to 2%.
+
+```{python}
+#| echo: true
+#| label: fig-underlying-inflation
+#| fig-cap: "Broad inflation measures now agree more closely, but their mid-2 percent cluster still sets a high bar for rapid policy easing."
+#| fig-width: 8
+#| fig-height: 4.8
+
+plot = df.loc["2023-01-01":].copy()
+underlying = [
+    ("Core CPI", "core_yoy", COLORS["neutral"]),
+    ("Median CPI", "median_cpi_yoy", COLORS["primary"]),
+    ("Trimmed-mean CPI", "trimmed_mean_cpi_yoy", COLORS["purple"]),
+    ("Sticky ex shelter", "sticky_ex_shelter_yoy", COLORS["accent"]),
+]
+
+fig, ax = plt.subplots(figsize=(8, 4.8))
+entries = []
+for label, column, color in underlying:
+    series = plot[column].dropna()
+    ax.plot(series.index, series, color=color, linewidth=1.9)
+    ax.scatter(series.index[-1], series.iloc[-1], s=40, color=color,
+               edgecolors="white", linewidth=0.8, zorder=5)
+    entries.append({
+        "x": series.index[-1],
+        "y": series.iloc[-1],
+        "text": f"{label} {series.iloc[-1]:.1f}%",
+        "color": color,
+    })
+
+ax.axhline(2, color=COLORS["fed_target"], linestyle="--", linewidth=1, alpha=0.5)
+ax.set_ylabel("Year-over-year change (%)")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.margins(y=0.14)
+label_endpoints(ax, entries)
+date_range = plot.index[-1] - plot.index[0]
+ax.set_xlim(right=plot.index[-1] + date_range * 0.24)
+plt.tight_layout()
+```
+
+::: {.figure-source}
+Source: [Cleveland Fed and Atlanta Fed series via FRED](https://fred.stlouisfed.org/).
+:::
+
+## 4. Energy momentum reversed faster than core momentum
+
+The three-month annualized view clarifies the timing. Energy momentum dropped sharply after its early-2026 spike, while core and shelter remained positive. That leads directly to labor: energy can normalize without weaker demand, but persistent service inflation is more likely to cool when hiring and wage pressure also soften.
+
+```{python}
+#| echo: true
+#| label: fig-momentum-divergence
+#| fig-cap: "Energy momentum normalized first; positive core and shelter momentum means the remaining disinflation depends more on slower demand and labor costs."
+#| fig-width: 8
+#| fig-height: 4.9
+
+plot = df.loc["2022-01-01":].copy()
+fig, ax1 = plt.subplots(figsize=(8, 4.9))
+ax2 = ax1.twinx()
+
+energy = plot["energy_ann3"].dropna()
+ax1.plot(energy.index, energy, color=COLORS["warning"], linewidth=2)
+ax1.scatter(energy.index[-1], energy.iloc[-1], s=40, color=COLORS["warning"],
+            edgecolors="white", linewidth=0.8, zorder=5)
+ax1.set_ylabel("Energy 3m annualized (%)", color=COLORS["warning"])
+ax1.tick_params(axis="y", labelcolor=COLORS["warning"])
+ax1.axhline(0, color=COLORS["light"], linewidth=0.8)
+
+right_entries = []
+for label, column, color in [
+    ("Core", "core_ann3", COLORS["neutral"]),
+    ("Shelter", "shelter_ann3", COLORS["secondary"]),
+]:
+    series = plot[column].dropna()
+    ax2.plot(series.index, series, color=color, linewidth=1.9)
+    ax2.scatter(series.index[-1], series.iloc[-1], s=40, color=color,
+                edgecolors="white", linewidth=0.8, zorder=5)
+    right_entries.append({
+        "x": series.index[-1],
+        "y": series.iloc[-1],
+        "text": f"{label} {series.iloc[-1]:.1f}%",
+        "color": color,
+    })
+
+ax2.set_ylabel("Core / shelter 3m annualized (%)")
+ax2.grid(False)
+ax1.set_ylim(-50, 120)
+ax2.set_ylim(1, 10)
+ax1.set_yticks([-40, 0, 40, 80, 120])
+ax2.set_yticks([2, 4, 6, 8, 10])
+label_endpoints(ax2, right_entries)
+
+ax1.annotate(
+    "Energy momentum reversal",
+    xy=(energy.index[-1], energy.iloc[-1]),
+    xytext=(-120, 32),
+    textcoords="offset points",
+    arrowprops=dict(arrowstyle="->", color=COLORS["neutral"], lw=1),
+    bbox=dict(facecolor="#fafafa", edgecolor="none", alpha=0.9, pad=2),
+    fontsize=9,
+    zorder=5,
+)
+ax1.text(energy.index[-1], energy.iloc[-1],
+         f"  {energy.iloc[-1]:.1f}%", color=COLORS["warning"],
+         fontsize=8.5, fontweight="bold", va="center")
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+date_range = plot.index[-1] - plot.index[0]
+ax1.set_xlim(right=plot.index[-1] + date_range * 0.16)
+plt.tight_layout()
+```
+
+::: {.figure-source}
+Source: [BLS CPI data via FRED](https://fred.stlouisfed.org/), author's annualized calculations.
+:::
+
+## 5. Softer hiring makes the inflation mix more consequential
+
+Payrolls rose **`{python} fmt(stats['payroll_latest'])` thousand** in `{python} stats['labor_month']`, and the three-month average slowed to `{python} fmt(stats['payroll_3mo_avg'])` thousand. With unemployment at `{python} fmt(stats['unrate_latest'])`%, the labor market is cooling rather than collapsing. An energy-only CPI decline would offer the Fed limited comfort. Paired with softer hiring, it reduces the need to hold policy restrictive solely as inflation insurance.
+
+The rates panel explains why this is not yet a straightforward easing signal. The effective federal funds rate was `{python} fmt(stats['fedfunds_latest'])`%, versus two-year and ten-year Treasury yields of `{python} fmt(stats['dgs2_latest'])`% and `{python} fmt(stats['dgs10_latest'])`%. The June SEP placed the median end-2026 policy rate at **`{python} fmt(stats['fomc_median_eoy_2026'])`%**, slightly above the current effective rate and well above the `{python} fmt(stats['fomc_longer_run'])`% longer-run estimate.
+
+```{python}
+#| echo: true
+#| label: fig-labor-policy-context
+#| fig-cap: "Softer hiring reduces the need for additional inflation insurance, but Treasury yields and the 3.8 percent SEP median do not point to rapid easing."
+#| fig-width: 8
+#| fig-height: 7
+
+plot = df.loc["2024-01-01":].copy()
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 7))
+
+payroll = plot["payroll_change_k"].dropna()
+bar_colors = [
+    COLORS["primary"] if value >= 0 else COLORS["accent"]
+    for value in payroll
+]
+ax1.bar(payroll.index, payroll, width=20, color=bar_colors, alpha=0.78)
+ax1.axhline(100, color=COLORS["secondary"], linestyle="--", linewidth=1, alpha=0.7)
+ax1.scatter(payroll.index[-1], payroll.iloc[-1], s=40, color=COLORS["primary"],
+            edgecolors="white", linewidth=0.8, zorder=5)
+ax1.annotate(
+    f"{payroll.iloc[-1]:.0f}k",
+    xy=(payroll.index[-1], payroll.iloc[-1]),
+    xytext=(-24, 24),
+    textcoords="offset points",
+    arrowprops=dict(arrowstyle="->", color=COLORS["neutral"], lw=1),
+    bbox=dict(facecolor="#fafafa", edgecolor="none", alpha=0.9, pad=2),
+    fontsize=9,
+)
+ax1.set_ylabel("Monthly payroll change (thousands)")
+ax1.margins(y=0.15)
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax1.set_xlim(left=plot.index[0], right=pd.Timestamp("2026-08-01"))
+
+rate_series = [
+    ("Fed funds", "fedfunds", COLORS["accent"]),
+    ("2-year Treasury", "dgs2", COLORS["primary"]),
+    ("10-year Treasury", "dgs10", COLORS["neutral"]),
+]
+rate_entries = []
+for label, column, color in rate_series:
+    series = plot[column].dropna()
+    ax2.plot(series.index, series, color=color, linewidth=1.8)
+    ax2.scatter(series.index[-1], series.iloc[-1], s=40, color=color,
+                edgecolors="white", linewidth=0.8, zorder=5)
+    rate_entries.append({
+        "x": series.index[-1],
+        "y": series.iloc[-1],
+        "text": f"{label} {series.iloc[-1]:.2f}%",
+        "color": color,
+    })
+
+sep_date = pd.Timestamp("2026-12-01")
+sep_value = stats["fomc_median_eoy_2026"]
+ax2.scatter(sep_date, sep_value, marker="D", s=48, color=COLORS["fed_target"],
+            edgecolors="white", linewidth=0.8, zorder=5)
+ax2.text(sep_date, sep_value,
+         f"  June SEP end-2026 {sep_value:.1f}%",
+         color=COLORS["fed_target"], fontsize=8.5, fontweight="bold", va="center")
+ax2.set_ylabel("Rate (%)")
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax2.margins(y=0.12)
+label_endpoints(ax2, rate_entries)
+ax2.set_xlim(left=plot.index[0], right=pd.Timestamp("2027-03-01"))
+plt.tight_layout()
+```
+
+::: {.figure-source}
+Source: [BLS labor data and Treasury rates via FRED](https://fred.stlouisfed.org/); [Federal Reserve June 2026 Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm).
+:::
+
+## Policy implications: hold first, reassess next
+
+June shifts the Fed's reaction function toward patience. Lower headline inflation reduces the urgency to tighten, while softer hiring raises the cost of overtightening. Yet broad inflation between `{python} fmt(stats['sticky_ex_shelter_yoy'])`% and `{python} fmt(stats['median_cpi_yoy'])`%, with shelter at `{python} fmt(stats['shelter_yoy'])`%, does not justify an immediate easing sequence.
+
+**At the next meeting, a hold is the cleaner baseline.** It lets the Committee test whether June's energy relief passes into core services without responding too aggressively to one volatile component. A hike would require renewed core or shelter acceleration; a cut would require clearer labor deterioration than the current data show.
+
+**At the following meeting, the decision becomes more conditional.** Another subdued core print, continued shelter slowing, and payroll growth near or below its recent pace would make easing more defensible. If hiring stabilizes and underlying inflation remains near its current range, another hold would better match the June SEP.
+
+Market rates reinforce this cautious posture. The two-year yield at `{python} fmt(stats['dgs2_latest'])`% sits above both the `{python} fmt(stats['fedfunds_latest'])`% effective rate and the `{python} fmt(stats['fomc_median_eoy_2026'])`% end-2026 SEP median. That gap does not signal confidence in rapid cuts. The `{python} fmt(stats['dgs10_latest'])`% ten-year yield and `{python} fmt(stats['curve_10y_2y'])` percentage-point positive curve also embed term premium and longer-run inflation uncertainty. Together, they suggest that bonds still require compensation for a restrictive and uncertain policy path.
+
+## What this means
+
+**For households:** Lower gasoline and energy prices provide immediate cash-flow relief. The broader cost-of-living improvement will feel slower because shelter and service prices are still rising faster than 2%.
+
+**For investors:** The energy reversal can lower near-term inflation breakevens and support short-duration bonds, but the two-year yield above the current policy rate limits the case for an aggressive duration extension. Longer-duration bonds need confirmation from core inflation and labor revisions. For equities, cheaper gasoline supports household cash flow and consumer-facing margins, while softer hiring argues against a broad cyclical-growth bet.
+
+**For policymakers:** The dual mandate is becoming more balanced. Inflation is cooling but not finished, while weaker hiring raises the cost of staying restrictive for too long.
+
+## What to watch next
+
+- **Core monthly inflation:** another subdued reading would show that June was broader than energy.
+- **Shelter momentum:** sustained monthly readings near June's `{python} fmt(stats['shelter_mom'])`% would strengthen the disinflation case.
+- **Median and trimmed-mean CPI:** movement closer to 2% would give the Fed more confidence than another gasoline decline.
+- **Payroll revisions and unemployment:** further deterioration would increase the weight on employment risks at the next one to two meetings.
+- **The two-year Treasury yield:** a sustained move toward or below the `{python} fmt(stats['fomc_median_eoy_2026'])`% SEP median would strengthen the easing signal; remaining near its current `{python} fmt(stats['dgs2_latest'])`% level would favor a higher-for-longer interpretation.
+
+## Conclusion
+
+June delivered genuine inflation relief, but its strongest force was also its most volatile. The policy significance comes from the combination: energy reversed, broad inflation continued to cool, and hiring softened. That mix supports patience at the next meeting and creates a clearer path toward easing later, provided the next reports confirm that core and shelter pressure is fading rather than pausing.
+
+### Limitations
+
+- Monthly contribution estimates use fixed relative-importance weights and a residual category; they are not the official BLS chained decomposition.
+- The timing of the energy reversal coincided with the post-ceasefire decline in gasoline and commodity prices, but the CPI data alone cannot establish causality.
+- Treasury yields reflect several forces and are not substitutes for a futures-derived market-implied policy path.
+- Payroll estimates are revised and may change in subsequent employment reports.
+
+## Methodology & Data
+
+| Series | Description | Source |
+|---|---|---|
+| CPIAUCSL, CPILFESL | Headline and core CPI indexes | [FRED](https://fred.stlouisfed.org/) |
+| CPIENGSL, CUSR0000SETB01 | Energy and gasoline CPI indexes | [FRED](https://fred.stlouisfed.org/) |
+| CUSR0000SAH1, CUSR0000SACL1E | Shelter and core goods CPI indexes | [FRED](https://fred.stlouisfed.org/) |
+| MEDCPIM159SFRBCLE, TRMMEANCPIM159SFRBCLE | Cleveland Fed median and trimmed-mean CPI | [FRED](https://fred.stlouisfed.org/) |
+| CRESTKCPIXSLTRM159SFRBATL | Atlanta Fed sticky CPI excluding food, energy, and shelter | [FRED](https://fred.stlouisfed.org/) |
+| PAYEMS, UNRATE | Payroll employment and unemployment | [FRED](https://fred.stlouisfed.org/) |
+| FEDFUNDS, DGS2, DGS10 | Policy and Treasury rates | [FRED](https://fred.stlouisfed.org/) |
+| FEDTARMD, FEDTARMDLR | FOMC median projected and longer-run policy rates | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm) |
+
+: Data sources and series used in the analysis.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`.*

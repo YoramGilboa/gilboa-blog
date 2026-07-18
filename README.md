@@ -2,6 +2,9 @@
 
 Quarto-based data visualization blog published at [gilboa.blog](https://gilboa.blog).
 This directory is the canonical Git repository for the site.
+For full editorial, chart, and pipeline standards, use
+[.github/copilot-instructions.md](./.github/copilot-instructions.md) as the
+canonical guide; this README is the quick-start.
 
 ## Repository Layout
 
@@ -40,28 +43,41 @@ Run the project preflight from the repository root:
 bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft
 ```
 
+PowerShell equivalent:
+
+```powershell
+.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft
+```
+
 To run numbered pipeline scripts before rendering:
 
 ```bash
 bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft --run-pipeline
 ```
 
+PowerShell equivalent:
+
+```powershell
+.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft -RunPipeline
+```
+
 The preflight checks for stale template headings, `draft: true`, `plt.show()`,
 wildcard imports, missing stats files when stats are referenced, ignored `_site/`,
 tracked `_freeze/`, and then renders the target post.
 
-After rendering, run visual and final editorial AI checks before human review:
+After rendering, run visual and final editorial checks before human review
+using the project Copilot skills:
 
 ```text
-/blog-chart-review posts/drafts/YYYY-MM-DD-slug
-/blog-final-review posts/drafts/YYYY-MM-DD-slug
+blog-chart-review posts/drafts/YYYY-MM-DD-slug
+blog-final-review posts/drafts/YYYY-MM-DD-slug
 ```
 
 ## Publish a Post
 
 1. Create and work on a local branch: `git checkout -b post/YYYY-MM-DD-slug`.
 2. Remove `draft: true` and move the folder from `posts\drafts\YYYY-MM-DD-slug` to `posts\YYYY-MM-DD-slug`.
-3. Run `/blog-final-review` and ensure `stats\final_review_status.json` has `"status": "PASS"`.
+3. Run `blog-final-review` and ensure `stats\final_review_status.json` has `"status": "PASS"`.
 4. Run the local release gate on the published post path:
 
 ```bash
@@ -69,7 +85,7 @@ bash scripts/local_release_gate.sh posts/YYYY-MM-DD-slug/index.qmd
 ```
 
 5. Commit changes on the post branch.
-6. Merge locally into `main` only after the gate passes.
+6. Merge locally into `main` only after the gate passes (prevents failed deploys on `main`).
 7. Push `main`; GitHub Actions publishes to `gh-pages`.
 
 ```bash
