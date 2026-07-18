@@ -31,6 +31,12 @@ jobs:
       - name: Lint posts (deterministic guardrails)
         run: python tools/lint_post.py --all
 
+      - name: Test repository tools
+        run: python -m unittest discover -s tests -v
+
+      - name: Audit repository hygiene
+        run: python tools/audit_repository.py
+
       - name: Configure authenticated Git remote for publish
         run: |
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"

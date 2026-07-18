@@ -2,9 +2,10 @@
 """
 lint_post.py - deterministic guardrails for gilboa.blog posts.
 
-Mechanical checks that enforce the form rules in CLAUDE.md so they do not
-depend on anyone remembering them. This is the engine behind the pre-commit
-hook (.githooks/pre-commit) and the CI gate (.github/workflows/publish.yml).
+Mechanical checks that enforce the form rules in the scoped Copilot post
+instructions so they do not depend on anyone remembering them. This is the
+engine behind the pre-commit hook (.githooks/pre-commit) and the CI gate
+(.github/workflows/publish.yml).
 
 It enforces FORM, not TRUTH: it can catch a stray `subtitle:` field or an
 em dash, but it cannot tell you whether a chart's labels overlap (use
@@ -134,7 +135,7 @@ def check_frontmatter(keys, post_dir: Path, findings, strict: bool):
                 f"`image: {img}` does not exist at {post_dir.name}/{img}. "
                 "Render the post so the figure is saved, or fix the path."))
 
-    # Categories: CLAUDE.md wants lowercase, space-separated (no hyphens).
+    # Post instructions require lowercase, space-separated categories.
     cats_raw = keys.get("categories", "")
     cats = re.findall(r"[A-Za-z][A-Za-z \-]*", cats_raw)
     for c in cats:
@@ -144,7 +145,7 @@ def check_frontmatter(keys, post_dir: Path, findings, strict: bool):
         if "-" in c:
             findings.append(Finding(
                 WARN, "category-hyphen",
-                f"category '{c}' uses a hyphen; CLAUDE.md wants lowercase, "
+                f"category '{c}' uses a hyphen; post instructions require lowercase, "
                 "space-separated labels (e.g. 'labor market')."))
         if c != c.lower():
             findings.append(Finding(
@@ -161,7 +162,7 @@ def check_prose(body: str, findings):
             findings.append(Finding(
                 ERROR, "unicode-dash",
                 f"line {n}: contains an em/en dash (— or –). "
-                "CLAUDE.md forbids these - use spaced hyphens, commas, or "
+                "Post instructions forbid these - use spaced hyphens, commas, or "
                 "restructured sentences."))
         if re.search(r"\w ?-- ?\w", line) or re.search(r"\w--\w", line):
             findings.append(Finding(

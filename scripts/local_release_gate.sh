@@ -14,13 +14,21 @@ fi
 
 python_bin="$repo_root/.venv/Scripts/python.exe"
 if [[ ! -x "$python_bin" ]]; then
-  python_bin="python"
+  if command -v python3 >/dev/null 2>&1; then
+    python_bin="python3"
+  else
+    python_bin="python"
+  fi
 fi
 
 post_input="$1"
 shift
 
-if [[ "$post_input" = /* ]] || [[ "$post_input" =~ ^[A-Za-z]:\\ ]]; then
+if [[ "$post_input" = /* ]]; then
+  resolved_post="$post_input"
+elif [[ "$post_input" =~ ^[A-Za-z]:\\ ]] && command -v wslpath >/dev/null 2>&1; then
+  resolved_post="$(wslpath -u "$post_input")"
+elif [[ "$post_input" =~ ^[A-Za-z]:\\ ]]; then
   resolved_post="$post_input"
 else
   resolved_post="$repo_root/$post_input"
@@ -31,11 +39,7 @@ if [[ ! -f "$resolved_post" ]]; then
   exit 1
 fi
 
-resolved_post="$(python - <<'PY' "$resolved_post"
-import os,sys
-print(os.path.abspath(sys.argv[1]))
-PY
-)"
+resolved_post="$(cd "$(dirname "$resolved_post")" && pwd -P)/$(basename "$resolved_post")"
 
 case "$resolved_post" in
   *"/posts/"*"/index.qmd") ;;
@@ -53,9 +57,19 @@ case "$resolved_post" in
 esac
 
 echo "Running strict post lint gate..."
-"$python_bin" "$repo_root/tools/lint_post.py" "$resolved_post"
+python_repo_root="$repo_root"
+python_post="$resolved_post"
+if [[ "$python_bin" == *.exe ]] && command -v wslpath >/dev/null 2>&1; then
+  python_repo_root="$(wslpath -w "$repo_root")"
+  python_post="$(wslpath -w "$resolved_post")"
+fi
+
+"$python_bin" "$python_repo_root/tools/lint_post.py" "$python_post"
+
+echo "Running repository hygiene audit..."
+"$python_bin" "$python_repo_root/tools/audit_repository.py"
 
 echo "Running preflight gate (final review PASS is required)..."
-"$python_bin" "$repo_root/tools/check_post.py" "$resolved_post" "$@"
+"$python_bin" "$python_repo_root/tools/check_post.py" "$python_post" "$@"
 
 echo "Local release gate passed for $resolved_post"

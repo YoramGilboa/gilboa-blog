@@ -14,6 +14,8 @@ canonical guide; this README is the quick-start.
 - `posts/drafts/_template/` - starting point for new posts
 - `_freeze/` - committed Quarto execution cache used by publishing
 - `_site/` - generated local output, ignored by Git
+- `.github/instructions/` - scoped post and pipeline guidance for Copilot
+- `.github/skills/` - tracked blog creation and review skills
 - `scripts/` - reusable project-level utilities
 
 ## Local Setup
@@ -22,6 +24,12 @@ canonical guide; this README is the quick-start.
 source .venv/Scripts/activate
 pip install -r requirements.txt
 git config core.hooksPath .githooks
+```
+
+Start the local site on the standard review port:
+
+```bash
+quarto preview --port 4200 --no-browser
 ```
 
 ## Create a Post
@@ -73,14 +81,33 @@ blog-chart-review posts/drafts/YYYY-MM-DD-slug
 blog-final-review posts/drafts/YYYY-MM-DD-slug
 ```
 
+## Repository Hygiene
+
+Check for orphan freeze entries, stale figure outputs, generated tracked files,
+nested repositories, and invalid new post slugs:
+
+```bash
+python tools/audit_repository.py
+```
+
+Preview safe removal of local Quarto output and Python caches:
+
+```bash
+python tools/clean_local.py
+python tools/clean_local.py --apply
+```
+
+The cleanup tool never removes `.venv`, `_freeze`, or post data.
+
 ## Publish a Post
 
 1. Create and work on a local branch: `git checkout -b post/YYYY-MM-DD-slug`.
 2. Remove `draft: true` and move the folder from `posts\drafts\YYYY-MM-DD-slug` to `posts\YYYY-MM-DD-slug`.
 3. Run `blog-final-review` and ensure `stats\final_review_status.json` has `"status": "PASS"`.
-4. Run the local release gate on the published post path:
+4. Run the repository audit and local release gate on the published post path:
 
 ```bash
+python tools/audit_repository.py
 bash scripts/local_release_gate.sh posts/YYYY-MM-DD-slug/index.qmd
 ```
 

@@ -18,19 +18,14 @@ __pycache__/
 venv/
 ENV/
 
-# IDE
+# IDE and agent-local state
 .vscode/
 .idea/
+.claude/
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Local tooling (skills, commands, automation docs)
-.claude/commands/
-BLOG_AUTOMATION.md
-BLOG_DEV_SETUP.md
-RESUME.md
 
 # Regenerable raw FRED single-series cache (jobs posts re-fetch live and CI
 # renders from the committed _freeze/). Matches only top-level data/*.csv, so

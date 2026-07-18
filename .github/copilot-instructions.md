@@ -1,93 +1,76 @@
-# gilboa.blog - Copilot instructions
+# gilboa.blog repository instructions
 
-This is the canonical instruction file for working on this repository with VS Code Copilot.
+This is the repository-wide operating model for GitHub Copilot. More specific
+rules are loaded from:
 
-## Quick operating model
+- `.github/instructions/posts.instructions.md` for post prose and charts
+- `.github/instructions/pipelines.instructions.md` for post data pipelines
+- `.github/skills/` for reusable creation and review workflows
 
-- Use one repo-root `.venv` only.
-- Commit `_freeze/`; never commit `_site/`.
-- Keep post assets together: `index.qmd`, `images/`, `stats/`, optional `scripts/`, and matching `_freeze/`.
-- Enforce quality with existing guardrails:
-  - `python tools/lint_post.py <post-dir>`
-  - pre-commit hook in `.githooks/pre-commit`
-  - CI gate in `.github/workflows/publish.yml`
+## Project
+
+gilboa.blog is a Quarto data-visualization site published to GitHub Pages.
+Posts combine QMD prose, Python, matplotlib or seaborn, and committed Quarto
+freeze output.
+
+## Repository rules
+
+- Use one Git repository and one root `.venv`.
+- Never create a repository or virtual environment inside a post.
+- Commit `_freeze/`; never commit `_site/` or local Quarto caches.
+- Commit each post's `index.qmd`, scripts, stats, images, required source or
+  cleaned data, and matching `_freeze/` entry.
+- Do not commit regenerable top-level FRED series caches under
+  `posts/*/data/*.csv`.
+- Do not modify unrelated published posts during new-post work.
+- Preserve published folder names because they are public URLs.
 
 ## Authoring workflow
 
-1. Copy `posts/drafts/_template/` to `posts/drafts/YYYY-MM-DD-slug/`.
-2. Draft with `draft: true`.
-3. Run preflight while drafting:
+1. Create branch `post/YYYY-MM-DD-slug`.
+2. Copy `posts/drafts/_template/` to `posts/drafts/YYYY-MM-DD-slug/`.
+3. Propose the section and chart plan before writing chart code.
+4. Draft with `draft: true`.
+5. Validate data series before building or changing a pipeline.
+6. Run preflight while drafting:
    - `bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft`
    - PowerShell: `.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft`
-4. Move to `posts/YYYY-MM-DD-slug/` when ready.
-5. Run local release gate before merge:
+7. Run `blog-chart-review`, then `blog-final-review`.
+8. After human approval, remove `draft: true`, move the post and freeze cache
+   to published paths, and rerender.
+9. Run the local release gate:
    - `bash scripts/local_release_gate.sh posts/YYYY-MM-DD-slug/index.qmd`
-6. Merge locally into `main` only after gate success, then push.
+10. Commit on the post branch, merge locally into `main`, and push only after
+    the release gate succeeds.
 
-## Data fetching patterns
+## Guardrails
 
-Choose one pattern per post based on complexity.
+- `python tools/lint_post.py <post-dir>` checks one post.
+- `python tools/lint_post.py --staged` is the pre-commit check.
+- `python tools/lint_post.py --all` is the CI lint gate.
+- `python tools/audit_repository.py` checks repository hygiene.
+- `scripts/check_post.*` runs per-post preflight and rendering.
+- `scripts/local_release_gate.sh` blocks publishing without a passing final
+  review artifact.
 
-### Pattern A - Inline fetch in `index.qmd` (default for simpler FRED-only posts)
-- Fetch and transform in hidden code chunks (`#| echo: false`).
-- Include FRED CSV fallback if client libraries are unavailable.
-- Best when preprocessing is small and post-specific.
+These tools check form and repository state. Visual quality and analytical
+truth still require the chart and final-review skills.
 
-### Pattern B - Scripted pipeline (for complex/multi-source posts)
-- Use `scripts/01_fetch_data.py`, `02_clean_data.py`, optional `03_visualizations.py`, `04_compute_stats.py`.
-- Keep `.qmd` focused on narrative and charting.
-- Best when transforms are heavier or reusable.
+## Skills
 
-## Required post conventions
+- `blog-post-create`: orchestrate a post from topic through human review
+- `blog-data-validate`: validate FRED and BEA identifiers and freshness
+- `blog-chart-review`: visual-only desktop and mobile chart QA
+- `blog-final-review`: non-visual accuracy, flow, and consistency gate
 
-- Frontmatter includes `title`, `date`, `author`, `categories`, `description`, `image`, `draft`, TOC and code-fold fields.
-- Do not use `subtitle:` in frontmatter.
-- No wildcard imports.
-- No em/en dashes in prose.
-- No hard-coded key figures in prose; use inline `{python}` values from stats.
+## Publishing requirements
 
-## Setup block conventions
+Before merging a post into `main`, confirm:
 
-- First code block is hidden setup (`#| echo: false`).
-- Standard helpers:
-  - `fmt(n)` and `fmt_chg(n)`
-  - `annualized(series, months)` for momentum transforms
-  - endpoint-label helper (for overlap-safe end labels)
-- Use semantic color keys in `COLORS` and reuse consistently across charts.
-
-## Metric cards and stats
-
-- Use responsive card grid immediately after setup when surfacing 3-5 headline numbers.
-- Pull card values from `stats/summary_stats.json`.
-- Keep a baseline stats set for reuse:
-  - `latest_month`
-  - `latest_month_short`
-  - `data_current_as_of`
-  - plus post-specific metrics used by prose/charts
-
-## Reproducibility callout
-
-Use a "Reproducing this analysis" callout immediately after opening paragraph:
-- Pattern A posts: describe inline fetch + transform approach and data sources.
-- Pattern B posts: list numbered scripts and source systems.
-
-## Review steps before publish
-
-- Lint: `python tools/lint_post.py <post-dir>`
-- Chart QA and final editorial QA via project Copilot skills.
-- Verify `stats/final_review_status.json` is `PASS` before release.
-- Confirm homepage card renders as expected (no duplicate description line).
-
-## Copilot skills in this repo
-
-Project skills are defined in `.claude/commands/` and can be invoked from Copilot chat:
-- `blog-post-create`
-- `blog-data-validate`
-- `blog-chart-review`
-- `blog-final-review`
-
-## Related files
-
-- Quick-start: `README.md`
-- Template: `posts/drafts/_template/index.qmd`
-- Legacy compatibility/reference guidance: `CLAUDE.md`
+- lint, repository audit, preflight, chart review, and final review pass;
+- `stats/final_review_status.json` contains `PASS`;
+- all inline values render and all chart captions have source lines;
+- the homepage card has one description and a valid preview image;
+- `_freeze/` has only current outputs for the post;
+- no unverified `# MANUAL:`, placeholder, or TODO value ships;
+- the data-currency note is accurate.
