@@ -46,7 +46,7 @@
 </div>
 </div>
 </div>
-<div id="cbf4e4d8" class="cell" data-execution_count="2">
+<div id="ddc360eb" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -419,7 +419,7 @@ font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
 <div id="fig-energy-upstream" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-energy-upstream-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-energy-upstream-output-1.png" width="789" height="686" class="figure-img">
+<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-energy-upstream-output-1.png" width="789" height="688" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-energy-upstream-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Producer and consumer energy inflation fell together in June, which makes the consumer relief look genuine rather than temporary.
@@ -697,7 +697,7 @@ font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
 <div id="fig-goods-mixed" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-goods-mixed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-goods-mixed-output-1.png" width="789" height="407" class="figure-img">
+<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-goods-mixed-output-1.png" width="790" height="408" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-goods-mixed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: June goods inflation was uneven: energy fell hard, foods moved differently, and goods less food and energy still rose.
@@ -951,7 +951,7 @@ font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
 <div id="fig-core-goods-compare" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-core-goods-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-core-goods-compare-output-1.png" width="789" height="446" class="figure-img">
+<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-core-goods-compare-output-1.png" width="789" height="448" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-core-goods-compare-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Producer-side core goods remained above consumer core goods, which is the kind of gap that can feed through to CPI with a lag.
@@ -1248,7 +1248,7 @@ font-style: inherit;">"tight"</span>)</span></code></pre></div></div>
 <div id="fig-pipeline-pressure" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pipeline-pressure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-pipeline-pressure-output-1.png" width="789" height="686" class="figure-img">
+<img src="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index_files/figure-html/fig-pipeline-pressure-output-1.png" width="788" height="688" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-pressure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: The Fed-watched pipeline measure slowed in June, but the year-over-year trend is still elevated and leaves room for future pass-through.
@@ -24533,7 +24533,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-80">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." data-fig-align="center">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." width="752" height="426">
@@ -25043,7 +25043,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-89">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="804" height="589">
@@ -25911,7 +25911,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-137">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -26399,7 +26399,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-70">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -26893,7 +26893,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." data-fig-align="center">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." width="752" height="656">
