@@ -104,19 +104,34 @@ The cleanup tool never removes `.venv`, `_freeze`, or post data.
 1. Create and work on a local branch: `git checkout -b post/YYYY-MM-DD-slug`.
 2. Remove `draft: true` and move the folder from `posts\drafts\YYYY-MM-DD-slug` to `posts\YYYY-MM-DD-slug`.
 3. Run `blog-final-review` and ensure `stats\final_review_status.json` has `"status": "PASS"`.
-4. Run the repository audit and local release gate on the published post path:
+4. Re-render so `_freeze/` is current: `quarto render posts/YYYY-MM-DD-slug/index.qmd --to html`
+   (HTML preview is under `_site/`; do not commit `_site/`.)
+5. Run the repository audit and local release gate on the published post path:
 
 ```bash
 python tools/audit_repository.py
+# Windows:
+.\scripts\check_post.ps1 posts\YYYY-MM-DD-slug\index.qmd
+# or bash:
 bash scripts/local_release_gate.sh posts/YYYY-MM-DD-slug/index.qmd
 ```
 
-5. Commit changes on the post branch.
-6. Merge locally into `main` only after the gate passes (prevents failed deploys on `main`).
-7. Push `main`; GitHub Actions publishes to `gh-pages`.
+6. Commit **only** the post folder and its freeze cache (leave unrelated dirty files alone).
+7. Merge locally into `main` only after the gate passes (prevents failed deploys on `main`).
+8. Push `main`; GitHub Actions publishes to `gh-pages`.
+9. Verify with GitHub CLI when available:
 
 ```bash
-git add posts/YYYY-MM-DD-slug _freeze
-git commit -m "Add post: post title"
-git push
+gh run list --workflow=publish.yml --limit 3
+gh run watch <run-id> --exit-status
 ```
+
+Live URL pattern: `https://gilboa.blog/posts/YYYY-MM-DD-slug/`
+
+```bash
+git add posts/YYYY-MM-DD-slug _freeze/posts/YYYY-MM-DD-slug
+git commit -m "Add post: post title"
+git push origin main
+```
+
+Chart house typeface is **Calibri** (see blog-viz-specialist / CLAUDE setup template).

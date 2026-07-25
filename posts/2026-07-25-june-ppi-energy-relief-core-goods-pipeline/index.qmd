@@ -52,7 +52,7 @@ COLORS = {
 }
 
 plt.rcParams.update({
-    "font.family": "serif",
+    "font.family": "Calibri",
     "font.size": 10,
     "axes.labelsize": 10,
     "axes.titlesize": 11,
