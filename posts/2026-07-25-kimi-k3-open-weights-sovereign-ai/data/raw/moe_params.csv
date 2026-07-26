@@ -1,0 +1,5 @@
+model,total_params_b,active_params_b,total_experts,active_experts
+DeepSeek-V3,671,37.0,,
+Kimi K2,1000,32.0,384.0,8.0
+DeepSeek V4 Pro,1600,49.0,,
+Kimi K3,2800,,896.0,16.0

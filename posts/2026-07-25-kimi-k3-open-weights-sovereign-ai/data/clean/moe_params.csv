@@ -1,0 +1,5 @@
+model,total_params_b,active_params_b,total_experts,active_experts,active_share_pct,expert_active_share_pct
+DeepSeek-V3,671,37.0,,,5.514157973174367,
+Kimi K2,1000,32.0,384.0,8.0,3.2,2.083333333333333
+DeepSeek V4 Pro,1600,49.0,,,3.0625,
+Kimi K3,2800,,896.0,16.0,,1.7857142857142856

@@ -1,0 +1,47 @@
+{
+  "moonshot_k3_blog": {
+    "title": "Kimi K3: Open Frontier Intelligence",
+    "url": "https://www.kimi.com/blog/kimi-k3",
+    "used_for": [
+      "2.8T parameters",
+      "896 experts / 16 active (MoE)",
+      "1M context",
+      "API launch 2026-07-16",
+      "weights target by 2026-07-27",
+      "API pricing $0.30 cache / $3 input / $15 output per MTok",
+      "BrowseComp 90.4 with 1M context (blog footnotes)"
+    ]
+  },
+  "artificial_analysis_k3": {
+    "title": "Kimi K3 achieves #3 in the Artificial Analysis Intelligence Index",
+    "url": "https://artificialanalysis.ai/articles/kimi-k3-achieves-3-in-the-artificial-analysis-intelligence-index-comparable-to-opus-4-8-and-gpt-5-5",
+    "used_for": [
+      "AA Intelligence Index: K3=57; peers cited in secondary write-ups",
+      "GDPval-AA v2 Elo: K3=1668, Fable 5=1760, Opus 4.8=1600",
+      "AA-Briefcase Elo: K3=1547",
+      "Cost per AA task: K3=$0.94, GPT-5.6 Sol=$1.04, Opus 4.8=$1.80, GLM-5.2=$0.32",
+      "Open peers: GLM-5.2 Index 51 (753B), DeepSeek V4 Pro Index 44 (1.6T)",
+      "Token efficiency: ~21% fewer output tokens vs K2.6"
+    ]
+  },
+  "model_releases": {
+    "title": "Public open-weight release announcements (compiled)",
+    "url": "multiple",
+    "used_for": [
+      "Llama 3.1 405B (Meta, 2024-07)",
+      "DeepSeek-V3 671B (2024-12)",
+      "Qwen2.5-72B dense reference (2024-09)",
+      "DeepSeek-R1 671B (2025-01)",
+      "Kimi K2 ~1T (2025-09)",
+      "DeepSeek-V3.2 685B (2025-12)",
+      "DeepSeek V4 Pro 1.6T (2026)",
+      "GLM-5.2 753B (2026)",
+      "Kimi K3 2.8T (2026-07)"
+    ]
+  },
+  "notes": [
+    "Intelligence Index point estimates for Fable 5 (~60), GPT-5.6 Sol (~59), Opus 4.8 (~56) come from Artificial Analysis coverage summarized in secondary technical write-ups aligned with the AA article.",
+    "Access-control scores in access_control.csv are a transparent ordinal rubric for teaching (0-3), not a published benchmark.",
+    "Active parameter counts for MoE models are approximate public figures; K3 active params use Moonshot's 16/896 expert activation narrative rather than an exact active-billion figure when not published."
+  ]
+}

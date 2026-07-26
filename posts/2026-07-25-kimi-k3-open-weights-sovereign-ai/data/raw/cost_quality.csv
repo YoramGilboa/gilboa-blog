@@ -1,0 +1,7 @@
+model,cost_usd,aa_index,access
+DeepSeek V4 Pro,0.04,44,open_weights
+GLM-5.2,0.32,51,open_weights
+Kimi K3,0.94,57,open_weights
+GPT-5.6 Sol,1.04,59,closed
+Claude Opus 4.8,1.8,56,closed
+Claude Fable 5,,60,closed

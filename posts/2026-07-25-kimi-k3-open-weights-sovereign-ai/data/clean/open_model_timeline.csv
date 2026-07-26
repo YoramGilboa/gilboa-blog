@@ -1,0 +1,10 @@
+date,model,lab,total_params_b,open_weight,total_params_t,label
+2024-07-23,Llama 3.1 405B,Meta,405,1,0.405,Llama 3.1 405B
+2024-09-19,Qwen2.5-72B,Alibaba,72,1,0.072,Qwen2.5-72B
+2024-12-26,DeepSeek-V3,DeepSeek,671,1,0.671,DeepSeek-V3
+2025-01-20,DeepSeek-R1,DeepSeek,671,1,0.671,DeepSeek-R1
+2025-09-02,Kimi K2,Moonshot,1000,1,1.0,Kimi K2
+2025-12-01,DeepSeek-V3.2,DeepSeek,685,1,0.685,DeepSeek-V3.2
+2026-04-15,DeepSeek V4 Pro,DeepSeek,1600,1,1.6,DeepSeek V4 Pro
+2026-06-01,GLM-5.2,Zhipu,753,1,0.753,GLM-5.2
+2026-07-16,Kimi K3,Moonshot,2800,1,2.8,Kimi K3
