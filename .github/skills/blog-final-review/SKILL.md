@@ -20,16 +20,21 @@ Evaluate:
 
 1. **Accuracy**
    - claims match computed values and direction;
-   - time references are consistent;
-   - conclusions do not overstate the evidence.
+   - time references are consistent (prose dates US `mm/dd/yyyy` when shown);
+   - conclusions do not overstate the evidence;
+   - composite indexes are not treated as winning every subtest when task-level
+     gaps exist in the post's data.
 2. **Flow**
    - opening, sections, transitions, and conclusion form a linear narrative;
    - adjacent sections are not repetitive;
-   - headline and body framing agree.
+   - headline and body framing agree;
+   - one-off posts include the deliberate-exception frame when required.
 3. **Consistency**
-   - caveats match methodology;
+   - caveats match methodology and "Note on data";
    - terminology and units are stable;
-   - audience implications follow from the analysis.
+   - audience implications follow from the analysis;
+   - no single-item bullet lists; no bare `{python}` expressions;
+   - underperformance peers shown when a "weaker" section exists.
 
 Apply only low-risk wording, transition, and terminology fixes directly. Do
 not auto-fix high-impact analytical issues; return FAIL with remediation.

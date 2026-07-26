@@ -19,13 +19,16 @@ This is a visual-only gate.
    gate as blocked rather than inferring visual quality from code alone.
 5. Check every chart for:
    - label overlap and clipping;
-   - legend or annotation occlusion;
+   - legend or annotation occlusion (move legend if it covers labels);
    - readable axes and dates;
    - one visible grid on dual-axis charts;
    - readable bar labels and color contrast;
    - endpoint dots and consistent direct-label style;
    - mobile legibility;
-   - fragility if values move.
+   - fragility if values move;
+   - frontier/record charts must not show confusing non-record scatter dots;
+   - dual-meaning series (e.g. total vs active params vs expert counts) clearly
+     labeled in caption and/or on-chart notes.
 6. Review the homepage listing card for one description, correct categories,
    date/author, and preview image.
 7. Confirm frontmatter has `description`, a real `image`, no `subtitle`, and

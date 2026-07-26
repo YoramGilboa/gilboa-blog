@@ -49,6 +49,25 @@ stats/summary_stats.json
 Common BEA tables include `T10102`, `T10101`, `T20100`, and `T20301`. Confirm
 table identity and freshness rather than relying on this short list.
 
+## Curated / non-FRED one-off posts
+
+Some posts (AI benchmarks, policy, court data) do not use FRED. Still use
+01 → 02 → 04:
+
+1. `01_fetch_data.py` writes curated raw CSVs under `data/raw/` and a
+   `data/raw/sources.json` (or equivalent) with URLs and what each figure is used
+   for.
+2. `02_clean_data.py` normalizes types and chart-ready columns; document any
+   non-macro formulas (e.g. teaching rubrics, Elo, composite indexes).
+3. `04_compute_stats.py` emits every prose/card key, including US-format date
+   strings when dates appear in prose (`mm/dd/yyyy`).
+4. Mark teaching rubrics and approximate benchmark point estimates in the post
+   "Note on data" callout and in pipeline logs.
+5. Never invent unpublished lab figures (e.g. MoE active-parameter totals).
+   Leave null and label charts honestly.
+
+Reference: `posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/scripts/`.
+
 ## Data and dependency policy
 
 - Add dependencies only to root `requirements.txt`.

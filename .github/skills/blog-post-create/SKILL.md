@@ -13,24 +13,33 @@ Coordinate the full post workflow without bypassing approval gates.
 1. Create `posts/drafts/YYYY-MM-DD-slug/` from the template.
 2. Create branch `post/YYYY-MM-DD-slug`.
 3. Propose:
-   - title and framing;
+   - title and framing (for non-macro one-offs: explicit "this blog is usually
+     macro viz; today is a deliberate exception" frame);
    - three to five headline metrics;
-   - two to five analytical sections;
-   - conclusion and audience framing.
+   - two to five analytical sections (one-offs may need more for multi-metric
+     comparison);
+   - conclusion with `### What it means for` audience lead-ins when multiple
+     reader groups matter.
 4. For each chart, list its `fig-` label, purpose, chart type, and required
-   FRED IDs, BEA tables, or files.
-5. Stop and obtain explicit chart-plan approval before chart implementation.
+   FRED IDs, BEA tables, curated files, or public benchmark sources.
+5. Flag composite metrics that need peer comparison and underperformance
+   subsections.
+6. Stop and obtain explicit chart-plan approval before chart implementation
+   unless the human already ordered full orchestration.
 
 ## 2. Data
 
-1. Invoke `blog-data-validate` for every proposed external series.
-2. Choose inline fetching only for simple, single-source work. Otherwise use:
+1. Invoke `blog-data-validate` for every proposed FRED/BEA series.
+2. For curated non-FRED posts, still use 01/02/04 and `data/raw/sources.json`
+   (see pipelines instructions).
+3. Choose inline fetching only for simple, single-source work. Otherwise use:
    - `scripts/01_fetch_data.py`
    - `scripts/02_clean_data.py`
    - optional `scripts/03_visualizations.py`
    - `scripts/04_compute_stats.py`
-3. Compute all prose and card values in `stats/summary_stats.json`.
-4. Run the pipeline and verify required keys and date coverage.
+4. Compute all prose and card values in `stats/summary_stats.json`.
+5. Format prose-facing calendar dates as US `mm/dd/yyyy` in stats when needed.
+6. Run the pipeline and verify required keys and date coverage.
 
 Follow `.github/instructions/pipelines.instructions.md`.
 
@@ -39,10 +48,12 @@ Follow `.github/instructions/pipelines.instructions.md`.
 Follow `.github/instructions/posts.instructions.md`:
 
 - complete frontmatter with `draft: true`;
-- hidden setup, responsive metric cards, and reproducibility callout;
+- hidden setup, opening then callouts then metric cards;
 - approved analytical sections and charts;
-- inline stats rather than hard-coded key values;
+- inline stats rather than hard-coded key values (every `{python}` backticked);
+- US dates in prose; sparse bold; no single-item bullet lists;
 - interpretive captions and standalone `.figure-source` lines;
+- dual-meaning chart series labeled; no non-record scatter under frontiers;
 - conclusion, audience implications, limitations, methodology, and data date.
 
 ## 4. Review

@@ -43,6 +43,13 @@ cp -r posts/drafts/_template posts/drafts/YYYY-MM-DD-slug
 Write the post in `posts\drafts\YYYY-MM-DD-slug\index.qmd`. Keep `draft: true`
 until it is ready to publish.
 
+House writing and chart rules (including deliberate non-macro one-offs, US
+`mm/dd/yyyy` dates in prose, sparse bold, no single-item bullets, composite
+metric caveats, frontier-chart hygiene) live in
+[.github/instructions/posts.instructions.md](./.github/instructions/posts.instructions.md).
+Pipeline rules for FRED and curated non-FRED sources live in
+[.github/instructions/pipelines.instructions.md](./.github/instructions/pipelines.instructions.md).
+
 ## Check and Render a Post
 
 Run the project preflight from the repository root:
@@ -134,4 +141,6 @@ git commit -m "Add post: post title"
 git push origin main
 ```
 
-Chart house typeface is **Calibri** (see blog-viz-specialist / CLAUDE setup template).
+Chart house typeface is **Calibri** (see blog-viz-specialist and the post setup
+template). Example one-off with curated benchmarks:
+`posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/`.
