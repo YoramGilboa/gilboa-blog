@@ -87,7 +87,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
@@ -152,15 +153,15 @@ window.Quarto = {
 
 <link rel="stylesheet" href="styles.css">
 <link rel="alternate" type="application/rss+xml" title="Yoram Gilboa" href="index.xml" data-external="1"><meta property="og:title" content="Yoram Gilboa">
-<meta property="og:image" content="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/images/ppi-energy-upstream.png">
+<meta property="og:image" content="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png">
 <meta property="og:site_name" content="Yoram Gilboa">
-<meta property="og:image:height" content="1033">
-<meta property="og:image:width" content="1183">
+<meta property="og:image:height" content="703">
+<meta property="og:image:width" content="1185">
 <meta name="twitter:title" content="Yoram Gilboa">
-<meta name="twitter:image" content="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/images/ppi-energy-upstream.png">
+<meta name="twitter:image" content="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png">
 <meta name="twitter:site" content="@gilboa">
-<meta name="twitter:image-height" content="1033">
-<meta name="twitter:image-width" content="1183">
+<meta name="twitter:image-height" content="703">
+<meta name="twitter:image-width" content="1185">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -234,7 +235,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div><div class="category" data-category="YWN0dWFyaWFs">actuarial <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YSUyMGFuYWx5c2lz">data analysis <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ZGF0YSUyMHZpc3VhbGl6YXRpb24=">data visualization <span class="quarto-category-count">(17)</span></div><div class="category" data-category="ZGF0YS12aXN1YWxpemF0aW9u">data-visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvbm9taWNz">economics <span class="quarto-category-count">(20)</span></div><div class="category" data-category="ZW5lcmd5">energy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ZmVkLXBvbGljeQ==">fed-policy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZmVkZXJhbCUyMHJlc2VydmU=">federal reserve <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Zm9tYw==">fomc <span class="quarto-category-count">(3)</span></div><div class="category" data-category="aW5mbGF0aW9u">inflation <span class="quarto-category-count">(12)</span></div><div class="category" data-category="aW5zdXJhbmNl">insurance <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QlMjByYXRlcw==">interest rates <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZS1vdXRsb29r">interest-rate-outlook <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZXM=">interest-rates <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQ=">labor market <span class="quarto-category-count">(7)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQlMjBicmVhZHRo">labor market breadth <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3ItbWFya2V0">labor-market <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGF3">law <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFya2V0cw==">markets <span class="quarto-category-count">(4)</span></div><div class="category" data-category="bWV0YQ==">meta <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cG9saXRpY3M=">politics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3VwcmVtZSUyMGNvdXJ0">supreme court <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVjaG5vbG9neQ==">technology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(3)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(26)</span></div><div class="category" data-category="YWN0dWFyaWFs">actuarial <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YSUyMGFuYWx5c2lz">data analysis <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ZGF0YSUyMHZpc3VhbGl6YXRpb24=">data visualization <span class="quarto-category-count">(18)</span></div><div class="category" data-category="ZGF0YS12aXN1YWxpemF0aW9u">data-visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvbm9taWNz">economics <span class="quarto-category-count">(21)</span></div><div class="category" data-category="ZW5lcmd5">energy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ZmVkLXBvbGljeQ==">fed-policy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZmVkZXJhbCUyMHJlc2VydmU=">federal reserve <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Zm9tYw==">fomc <span class="quarto-category-count">(3)</span></div><div class="category" data-category="aW5mbGF0aW9u">inflation <span class="quarto-category-count">(13)</span></div><div class="category" data-category="aW5zdXJhbmNl">insurance <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QlMjByYXRlcw==">interest rates <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZS1vdXRsb29r">interest-rate-outlook <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZXM=">interest-rates <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQ=">labor market <span class="quarto-category-count">(7)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQlMjBicmVhZHRo">labor market breadth <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3ItbWFya2V0">labor-market <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGF3">law <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFya2V0cw==">markets <span class="quarto-category-count">(4)</span></div><div class="category" data-category="bWV0YQ==">meta <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cG9saXRpY3M=">politics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3VwcmVtZSUyMGNvdXJ0">supreme court <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVjaG5vbG9neQ==">technology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(3)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -248,7 +249,46 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785075921272" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3730">
+<div class="quarto-post image-right" data-index="0" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1785369600000" data-listing-file-modified-sort="1785635192025" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="42" data-listing-word-count-sort="8245">
+<div class="thumbnail"><a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png" class="thumbnail-image">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">Q2 Growth Slowed to 1.5%, but Private Demand Was Stronger</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">
+<p>BEA’s advance estimate put Q2 real GDP at 1.5%, below consensus, while private demand accelerated and June core PCE stayed sticky above 3%.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">
+<div class="listing-date">
+Jul 30, 2026
+</div>
+<div class="listing-author">
+Yoram Gilboa
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785635192019" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3730">
 <div class="thumbnail"><a href="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/images/ppi-energy-upstream.png" class="thumbnail-image">
@@ -287,7 +327,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="dGVjaG5vbG9neSUyQ2RhdGElMjB2aXN1YWxpemF0aW9uJTJDbWFya2V0cw==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785075921275" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="34" data-listing-word-count-sort="6693">
+<div class="quarto-post image-right" data-index="2" data-categories="dGVjaG5vbG9neSUyQ2RhdGElMjB2aXN1YWxpemF0aW9uJTJDbWFya2V0cw==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785635192022" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="34" data-listing-word-count-sort="6693">
 <div class="thumbnail"><a href="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/images/open-param-timeline.png" class="thumbnail-image">
@@ -324,7 +364,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNsYWJvciUyMG1hcmtldCUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1784332800000" data-listing-file-modified-sort="1785075921270" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3400">
+<div class="quarto-post image-right" data-index="3" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNsYWJvciUyMG1hcmtldCUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1784332800000" data-listing-file-modified-sort="1785635192017" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3400">
 <div class="thumbnail"><a href="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/images/cpi-energy-reversal-dashboard.png" class="thumbnail-image">
@@ -367,7 +407,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1783728000000" data-listing-file-modified-sort="1785075921268" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6539">
+<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1783728000000" data-listing-file-modified-sort="1785635192015" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6539">
 <div class="thumbnail"><a href="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/images/core-inflation-persistence-dashboard.png" class="thumbnail-image">
@@ -406,7 +446,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1783036800000" data-listing-file-modified-sort="1785075921265" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4097">
+<div class="quarto-post image-right" data-index="5" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1783036800000" data-listing-file-modified-sort="1785635192012" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4097">
 <div class="thumbnail"><a href="./posts/2026-07-03-june-jobs-report-soft-labor-market/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-03-june-jobs-report-soft-labor-market/images/payroll-trend-june-2026.png" class="thumbnail-image">
@@ -445,7 +485,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="bGFib3IlMjBtYXJrZXQlMkNlY29ub21pY3MlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1782518400000" data-listing-file-modified-sort="1785075921263" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3591">
+<div class="quarto-post image-right" data-index="6" data-categories="bGFib3IlMjBtYXJrZXQlMkNlY29ub21pY3MlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1782518400000" data-listing-file-modified-sort="1785635192010" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3591">
 <div class="thumbnail"><a href="./posts/2026-06-27-june-labor-market-resilience-energy-shock/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-27-june-labor-market-resilience-energy-shock/images/june-2026-labor-market-dashboard.png" class="thumbnail-image">
@@ -482,7 +522,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNmb21jJTJDaW50ZXJlc3QlMjByYXRlcyUyQ2luZmxhdGlvbiUyQ2xhYm9yJTIwbWFya2V0" data-listing-date-sort="1781913600000" data-listing-file-modified-sort="1785075921262" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5562">
+<div class="quarto-post image-right" data-index="7" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNmb21jJTJDaW50ZXJlc3QlMjByYXRlcyUyQ2luZmxhdGlvbiUyQ2xhYm9yJTIwbWFya2V0" data-listing-date-sort="1781913600000" data-listing-file-modified-sort="1785635192009" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5562">
 <div class="thumbnail"><a href="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/images/june-2026-dot-plot-shift.png" class="thumbnail-image" alt="Strip-plot comparison of the March and June 2026 SEP dot distributions for the end-2026 federal funds rate, with medians and the current target-range midpoint highlighted.">
@@ -525,7 +565,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1781308800000" data-listing-file-modified-sort="1785075921260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4475">
+<div class="quarto-post image-right" data-index="8" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1781308800000" data-listing-file-modified-sort="1785635192007" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4475">
 <div class="thumbnail"><a href="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/images/may-2026-cpi-passthrough-dashboard.png" class="thumbnail-image">
@@ -566,7 +606,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNsYWJvciUyMG1hcmtldCUyMGJyZWFkdGglMkNkYXRhJTIwdmlzdWFsaXphdGlvbiUyQ2ZlZGVyYWwlMjByZXNlcnZl" data-listing-date-sort="1780704000000" data-listing-file-modified-sort="1785075921256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8661">
+<div class="quarto-post image-right" data-index="9" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNsYWJvciUyMG1hcmtldCUyMGJyZWFkdGglMkNkYXRhJTIwdmlzdWFsaXphdGlvbiUyQ2ZlZGVyYWwlMjByZXNlcnZl" data-listing-date-sort="1780704000000" data-listing-file-modified-sort="1785635192003" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8661">
 <div class="thumbnail"><a href="./posts/2026-06-06-may-2026-jobs-report-stabilization/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-06-may-2026-jobs-report-stabilization/images/may-2026-labor-dashboard.png" class="thumbnail-image" alt="Six-panel labor market dashboard showing payrolls, unemployment, JOLTS quits, initial claims, job openings, and CES vs ADP private payroll growth through May 2026.">
@@ -607,7 +647,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ21hcmtldHM=" data-listing-date-sort="1780012800000" data-listing-file-modified-sort="1785075921250" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4581">
+<div class="quarto-post image-right" data-index="10" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ21hcmtldHM=" data-listing-date-sort="1780012800000" data-listing-file-modified-sort="1785635191997" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4581">
 <div class="thumbnail"><a href="./posts/2026-05-29-q1-gdp-revision-consumer-ai/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-29-q1-gdp-revision-consumer-ai/images/gdp-contributions.png" class="thumbnail-image">
@@ -648,7 +688,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1779494400000" data-listing-file-modified-sort="1785075921247" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27" data-listing-word-count-sort="5345">
+<div class="quarto-post image-right" data-index="11" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1779494400000" data-listing-file-modified-sort="1785635191994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27" data-listing-word-count-sort="5345">
 <div class="thumbnail"><a href="./posts/2026-05-23-energy-shock-cpi-passthrough/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-23-energy-shock-cpi-passthrough/images/may-2026-inflation-dashboard.png" class="thumbnail-image">
@@ -689,7 +729,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1778544000000" data-listing-file-modified-sort="1785075921242" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3093">
+<div class="quarto-post image-right" data-index="12" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1778544000000" data-listing-file-modified-sort="1785635191989" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3093">
 <div class="thumbnail"><a href="./posts/2026-05-12-april-2026-cpi/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-05-12-april-2026-cpi/index_files/figure-html/fig-momentum-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -727,7 +767,7 @@ May 12, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="ZWNvbm9taWNzJTJDbGFib3ItbWFya2V0JTJDZGF0YS12aXN1YWxpemF0aW9uJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1778284800000" data-listing-file-modified-sort="1785075921239" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7419">
+<div class="quarto-post image-right" data-index="13" data-categories="ZWNvbm9taWNzJTJDbGFib3ItbWFya2V0JTJDZGF0YS12aXN1YWxpemF0aW9uJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1778284800000" data-listing-file-modified-sort="1785635191986" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7419">
 <div class="thumbnail"><a href="./posts/2026-05-09-april-jobs-report-labor-dashboard/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-09-april-jobs-report-labor-dashboard/images/april-2026-labor-dashboard.png" class="thumbnail-image">
@@ -766,7 +806,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNpbnRlcmVzdCUyMHJhdGVzJTJDZm9tYyUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1777593600000" data-listing-file-modified-sort="1785075921276" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7580">
+<div class="quarto-post image-right" data-index="14" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNpbnRlcmVzdCUyMHJhdGVzJTJDZm9tYyUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1777593600000" data-listing-file-modified-sort="1785635192026" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7580">
 <div class="thumbnail"><a href="./posts/20260501 April FOMC decision/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028."  class="thumbnail-image card-img"/></p>
@@ -807,7 +847,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="ZmVkLXBvbGljeSUyQ2ludGVyZXN0LXJhdGVzJTJDZm9tYyUyQ2ludGVyZXN0LXJhdGUtb3V0bG9vaw==" data-listing-date-sort="1777075200000" data-listing-file-modified-sort="1785075921234" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7438">
+<div class="quarto-post image-right" data-index="15" data-categories="ZmVkLXBvbGljeSUyQ2ludGVyZXN0LXJhdGVzJTJDZm9tYyUyQ2ludGVyZXN0LXJhdGUtb3V0bG9vaw==" data-listing-date-sort="1777075200000" data-listing-file-modified-sort="1785635191981" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7438">
 <div class="thumbnail"><a href="./posts/2026-04-25-fomc-preview/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-25-fomc-preview/index_files/figure-html/fig-rate-paths-output-1.png" alt="Line chart comparing the FOMC dot plot median path with shaded IQR against the market-implied federal funds rate path through 2028."  class="thumbnail-image card-img"/></p>
@@ -843,7 +883,7 @@ Apr 25, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1776470400000" data-listing-file-modified-sort="1785075921233" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3315">
+<div class="quarto-post image-right" data-index="16" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1776470400000" data-listing-file-modified-sort="1785635191980" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3315">
 <div class="thumbnail"><a href="./posts/2026-04-18-march-2026-cpi/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-18-march-2026-cpi/index_files/figure-html/fig-contributions-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -881,7 +921,7 @@ Apr 18, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNkYXRhJTIwYW5hbHlzaXMlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1775433600000" data-listing-file-modified-sort="1785075921232" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4651">
+<div class="quarto-post image-right" data-index="17" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNkYXRhJTIwYW5hbHlzaXMlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1775433600000" data-listing-file-modified-sort="1785635191979" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4651">
 <div class="thumbnail"><a href="./posts/2026-04-06-march-jobs-rebound/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-payroll-history-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -917,7 +957,7 @@ Apr 6, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYWJvciUyMG1hcmtldA==" data-listing-date-sort="1774742400000" data-listing-file-modified-sort="1785075921230" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3088">
+<div class="quarto-post image-right" data-index="18" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYWJvciUyMG1hcmtldA==" data-listing-date-sort="1774742400000" data-listing-file-modified-sort="1785635191978" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3088">
 <div class="thumbnail"><a href="./posts/2026-03-29-btos-and-unemployment/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-initial-claims-trend-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -953,7 +993,7 @@ Mar 29, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24=" data-listing-date-sort="1774137600000" data-listing-file-modified-sort="1785075921131" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3524">
+<div class="quarto-post image-right" data-index="19" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24=" data-listing-date-sort="1774137600000" data-listing-file-modified-sort="1785635191874" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3524">
 <div class="thumbnail"><a href="./posts/2026-03-22-btos-march/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-22-btos-march/index_files/figure-html/fig-national-trends-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -987,7 +1027,7 @@ Mar 22, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1773532800000" data-listing-file-modified-sort="1785075921029" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1907">
+<div class="quarto-post image-right" data-index="20" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1773532800000" data-listing-file-modified-sort="1785635191772" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1907">
 <div class="thumbnail"><a href="./posts/2026-03-15-divergence/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-15-divergence/index_files/figure-html/fig-sector-payrolls-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1021,7 +1061,7 @@ Mar 15, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMGFuYWx5c2lz" data-listing-date-sort="1772323200000" data-listing-file-modified-sort="1785075921029" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3321">
+<div class="quarto-post image-right" data-index="21" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMGFuYWx5c2lz" data-listing-date-sort="1772323200000" data-listing-file-modified-sort="1785635191772" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3321">
 <div class="thumbnail"><a href="./posts/2026-03-01-core-ppi-divergence/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-ppi-cpi-history-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1055,7 +1095,7 @@ Mar 1, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="c3VwcmVtZSUyMGNvdXJ0JTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYXclMkNwb2xpdGljcw==" data-listing-date-sort="1771718400000" data-listing-file-modified-sort="1785075921028" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2644">
+<div class="quarto-post image-right" data-index="22" data-categories="c3VwcmVtZSUyMGNvdXJ0JTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYXclMkNwb2xpdGljcw==" data-listing-date-sort="1771718400000" data-listing-file-modified-sort="1785635191771" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2644">
 <div class="thumbnail"><a href="./posts/2026-02-22-scotus-tariff-alliances/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-heatmap-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1091,7 +1131,7 @@ Feb 22, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1771200000000" data-listing-file-modified-sort="1785075921028" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3096">
+<div class="quarto-post image-right" data-index="23" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1771200000000" data-listing-file-modified-sort="1785635191771" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3096">
 <div class="thumbnail"><a href="./posts/2026-02-16-us-inflation-cooling/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-headline-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1125,7 +1165,7 @@ Feb 16, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="YWN0dWFyaWFsJTJDaW5mbGF0aW9uJTJDdmlzdWFsaXphdGlvbiUyQ2luc3VyYW5jZQ==" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785075921027" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="824">
+<div class="quarto-post image-right" data-index="24" data-categories="YWN0dWFyaWFsJTJDaW5mbGF0aW9uJTJDdmlzdWFsaXphdGlvbiUyQ2luc3VyYW5jZQ==" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785635191770" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="824">
 <div class="thumbnail"><a href="./posts/2025-02-01-pc-severity-cpi/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2025-02-01-pc-severity-cpi/index_files/figure-html/cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1161,10 +1201,10 @@ Feb 1, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-categories="bWV0YSUyQ3Zpc3VhbGl6YXRpb24lMkNweXRob24=" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785075921027" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
+<div class="quarto-post image-right" data-index="25" data-categories="bWV0YSUyQ3Zpc3VhbGl6YXRpb24lMkNweXRob24=" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785635191770" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
 <div class="thumbnail"><a href="./posts/2025-02-01-first-visualization/index.html" class="no-external">
 
-<p class="card-img-top"><img loading='lazy' src="posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
+<p class="card-img-top"><img loading='lazy' data-src="posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
 
 </a></div>
 <div class="body">
@@ -1197,6 +1237,9 @@ Feb 1, 2025
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
