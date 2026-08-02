@@ -1,0 +1,881 @@
+---
+title: "Q2 Growth Slowed to 1.5%, but Private Demand Was Stronger"
+date: "2026-07-30"
+author: Yoram Gilboa
+categories: [economics, inflation, data visualization, federal reserve]
+description: "BEA's advance estimate put Q2 real GDP at 1.5%, below consensus, while private demand accelerated and June core PCE stayed sticky above 3%."
+image: images/contribution-shift.png
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+from matplotlib.patches import Patch
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+df_q = pd.read_csv(CLEAN_DIR / "gdp_quarterly.csv", index_col="date", parse_dates=True).sort_index()
+df_m = pd.read_csv(CLEAN_DIR / "monthly_pce.csv", index_col="date", parse_dates=True).sort_index()
+df_shift = pd.read_csv(CLEAN_DIR / "contribution_shift.csv")
+df_bridge = pd.read_csv(CLEAN_DIR / "gdp_bridge.csv")
+df_private = pd.read_csv(CLEAN_DIR / "private_demand.csv")
+df_invest = pd.read_csv(CLEAN_DIR / "investment_mix.csv")
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value):
+    if isinstance(value, float):
+        return f"{value:.1f}"
+    return f"{value:,}"
+
+
+def fmt_chg(value):
+    if isinstance(value, float):
+        return f"{value:+.1f}"
+    return f"{value:+,}"
+
+
+def fmt2(value):
+    if isinstance(value, float):
+        return f"{value:.2f}"
+    return f"{value:,}"
+
+
+def fmt2_chg(value):
+    if isinstance(value, float):
+        return f"{value:+.2f}"
+    return f"{value:+,}"
+
+
+def label_endpoints(ax, entries, gap_frac=0.05):
+    # Stagger labels when latest values sit close together.
+    y0, y1 = ax.get_ylim()
+    gap = (y1 - y0) * gap_frac
+    ordered = sorted(entries, key=lambda item: item["y"])
+    label_y = [item["y"] for item in ordered]
+    for idx in range(1, len(label_y)):
+        if label_y[idx] - label_y[idx - 1] < gap:
+            label_y[idx] = label_y[idx - 1] + gap
+    for item, y_value in zip(ordered, label_y):
+        if abs(y_value - item["y"]) > 1e-9:
+            ax.plot(
+                [item["x"], item["x"]],
+                [item["y"], y_value],
+                color=COLORS["light"],
+                linewidth=0.7,
+                zorder=4,
+            )
+        ax.scatter(
+            item["x"],
+            item["y"],
+            s=40,
+            color=item["color"],
+            edgecolors="white",
+            linewidth=0.8,
+            zorder=5,
+        )
+        ax.text(
+            item["x"],
+            y_value,
+            f"  {item['text']}",
+            color=item["color"],
+            fontsize=8,
+            fontweight="bold",
+            va="center",
+            zorder=6,
+        )
+
+
+def extend_x_for_labels(ax, series_index, pad_frac=0.12):
+    x_start = series_index.min()
+    x_end = series_index.max()
+    x_pad = (x_end - x_start) * pad_frac
+    ax.set_xlim(x_start, x_end + x_pad)
+```
+
+The Bureau of Economic Analysis (BEA) released two linked prints on `{python} stats['release_date_us']`: the advance estimate of second-quarter GDP and the June personal income and outlays report. Real gross domestic product (GDP)^[Real GDP measures the inflation-adjusted value of goods and services produced in the United States. The advance estimate is the first of three BEA vintages for a quarter.] rose at a `{python} fmt(stats['gdp_growth_q2'])`% annualized rate in `{python} stats['latest_quarter']`, down from `{python} fmt(stats['gdp_growth_q1'])`% in Q1 and below the `{python} fmt(stats['gdp_growth_consensus'])`% consensus track. The softer headline is not the whole story. Real final sales to private domestic purchasers^[Private domestic final sales equal consumer spending plus private fixed investment. They strip out inventories, net exports, and government and are a cleaner read on private demand.] accelerated to `{python} fmt(stats['final_sales_private_q2'])`% from `{python} fmt(stats['final_sales_private_q1'])`% in Q1, opening a `{python} fmt(stats['demand_gap_q2'])` percentage-point gap between private demand and headline growth.
+
+That gap is the release's main interaction: consumer spending and equipment investment still supported demand, while inventories, net exports, and government subtracted enough to pull the total down. The same-day June personal consumption expenditures (PCE) price data add a second interaction across horizons. Headline PCE prices fell `{python} fmt_chg(stats['pce_mom_june'])`% month-over-month^[Month-over-month (m/m) is the change from one month to the next.], lowering the year-over-year rate to `{python} fmt(stats['pce_yoy_june'])`% from `{python} fmt(stats['pce_yoy_may'])`% in May. Core PCE, which excludes food and energy and is the Federal Reserve's preferred inflation gauge, rose `{python} fmt_chg(stats['core_pce_mom_june'])`% on the month and stood `{python} fmt(stats['core_pce_yoy_june'])`% above a year earlier. Monthly relief is real; a clear return of core prices to the 2% target is not.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Expand any chart block to see the full implementation. The complete data pipeline is:
+
+- `01_fetch_data.py` downloads quarterly GDP/investment series and monthly PCE, income, and labor series from [FRED](https://fred.stlouisfed.org/) (requires `FRED_API_KEY`).
+- `02_clean_data.py` computes SAAR growth rates and m/m, y/y, and three-month annualized PCE price changes, plus contribution-shift, bridge, and investment-mix tables. Canonical rate formulas are documented in that script.
+- `04_compute_stats.py` writes every prose and card value to `stats/summary_stats.json`. Release-day BEA contribution and detail figures are marked `# MANUAL:` with source URLs when FRED has not yet caught up.
+
+Run order from this post folder: `01`, then `02`, then `04`. Primary sources are the [BEA Q2 GDP advance estimate](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026) and [Personal Income and Outlays, June 2026](https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026).
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.6rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    (
+        "Q2 real GDP",
+        f"{fmt_chg(stats['gdp_growth_q2'])}%",
+        COLORS["primary"],
+        f"vs {fmt_chg(stats['gdp_growth_q1'])}% in Q1",
+    ),
+    (
+        "Private final sales",
+        f"{fmt_chg(stats['final_sales_private_q2'])}%",
+        COLORS["secondary"],
+        f"gap vs GDP {fmt_chg(stats['demand_gap_q2'])} pp",
+    ),
+    (
+        "Real consumer spending",
+        f"{fmt_chg(stats['pce_growth_q2'])}%",
+        COLORS["secondary"],
+        f"from {fmt_chg(stats['pce_growth_q1'])}% in Q1",
+    ),
+    (
+        "June core PCE YoY",
+        f"{fmt(stats['core_pce_yoy_june'])}%",
+        COLORS["warning"],
+        f"headline {fmt(stats['pce_yoy_june'])}%",
+    ),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+HTML(f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  BEA advance GDP and June PIO | {stats['release_date_us']} | SAAR rates unless noted
+</p>
+""")
+```
+
+## 1. Soft headline, firm private demand
+
+### What the four spending blocks are
+
+GDP is the value of everything produced in the United States in a period. BEA builds the growth rate from four major spending blocks that together add up to total demand for that output.
+
+Personal consumption expenditures, usually called PCE or simply consumer spending, are household purchases of goods and services: food, cars, rent, healthcare, streaming, restaurants, and the rest of the household basket. This is the largest block, typically about two thirds of GDP, so when consumers reaccelerate or stall the headline almost always moves with them.
+
+Gross private domestic investment, or GPDI, covers business and housing capital formation. That includes equipment, software and research and development (intellectual property), factories and other structures, home building, and the change in inventories. Inventories are goods sitting in warehouses and on shelves. When firms draw those stocks down, GPDI can look soft even if equipment spending is hot.
+
+Government spending in the GDP accounts is federal, state, and local consumption and investment, from defense and schools to infrastructure. In Q2, measured government growth was held down in part by Strategic Petroleum Reserve oil sales, which the accounts treat as a reduction in government consumption even though the oil itself shows up elsewhere in GDP.
+
+Net exports equal exports minus imports. Exports add to GDP because foreigners buy U.S. output. Imports subtract because some domestic spending is satisfied by foreign production rather than U.S. production. A wider trade deficit therefore pulls the growth rate down even when domestic demand is firm. The Q2 drag is not a black box: export growth slowed while imports, led by capital goods, stayed strong. That pattern fits a world of ongoing AI-related equipment demand and still-elevated trade barriers, which we unpack with the investment and trade detail below.
+
+A percentage point contribution answers a different question than a growth rate. Growth rates say how fast a sector expanded. Contributions say how many points of the overall GDP growth rate came from that sector. A small sector that grows very fast can still contribute less than a large sector that grows slowly.
+
+### Real GDP, nominal GDP, and SAAR
+
+When people say "GDP grew 1.5%," they almost always mean real GDP growth, not the unadjusted dollar total. Nominal GDP is current-dollar output: quantities times the prices people actually paid. If prices rise and quantities stay flat, nominal GDP still rises. Real GDP removes that pure price effect so the growth rate tracks the volume of goods and services. That is the measure used for business-cycle and Fed debates, because it answers whether the economy is producing more stuff rather than whether invoices simply got larger in dollars.
+
+BEA also reports the growth rate as a seasonally adjusted annual rate, or SAAR. Quarterly growth is first seasonally adjusted so Christmas retail or summer travel do not fake a boom or bust. Then the quarter-to-quarter change is scaled as if that same pace lasted a full year. A SAAR of 1.5% does not mean the economy is already 1.5% larger than a year ago. It means that if this quarter's pace continued for four quarters, growth would be about 1.5%. Year-over-year rates answer the trailing twelve-month question; SAAR answers how hot the latest quarter was.
+
+This post's headline numbers and contribution charts use real GDP at a SAAR unless a price index is discussed on purpose.
+
+### The Q1-to-Q2 shift
+
+The useful story is not only the Q2 levels, but the **shift from Q1 to Q2**. Consumer spending's contribution jumped from `{python} fmt2_chg(stats['pce_contribution_q1'])`pp to `{python} fmt2_chg(stats['pce_contribution_q2'])`pp (a `{python} fmt2_chg(stats['pce_contribution_delta'])`pp swing). Investment, government, and net exports all moved the other way: GPDI fell from `{python} fmt2_chg(stats['gpdi_contribution_q1'])`pp to `{python} fmt2_chg(stats['gpdi_contribution_q2'])`pp, government flipped from `{python} fmt2_chg(stats['govt_contribution_q1'])`pp to `{python} fmt2_chg(stats['govt_contribution_q2'])`pp after a `{python} fmt_chg(stats['govt_growth_q2'])`% decline, and net exports widened from `{python} fmt2_chg(stats['netex_contribution_q1'])`pp to `{python} fmt2_chg(stats['netex_contribution_q2'])`pp.
+
+That is why private demand can strengthen while headline real GDP slows. The household and fixed-investment core improved; inventories, trade, and government offsets worsened.
+
+```{python}
+#| echo: true
+#| label: fig-contribution-shift
+#| fig-cap: "From Q1 to Q2, consumer contributions surged while investment, government, and net exports all moved against the headline."
+
+# Grouped horizontal bars: Q1 vs Q2 contributions by major component.
+# Deltas are Q2 minus Q1. Formulas and MANUAL sources live in 02/04 scripts.
+plot = df_shift.sort_values("sort").reset_index(drop=True)
+labels = plot["component"].tolist()
+y = np.arange(len(labels))
+h = 0.34
+
+fig, ax = plt.subplots(figsize=(8.0, 4.8))
+ax.barh(
+    y + h / 2,
+    plot["q1_pp"],
+    height=h,
+    color=COLORS["light"],
+    edgecolor="white",
+    zorder=2,
+)
+ax.barh(
+    y - h / 2,
+    plot["q2_pp"],
+    height=h,
+    color=[COLORS["accent"] if v < 0 else COLORS["secondary"] for v in plot["q2_pp"]],
+    edgecolor="white",
+    zorder=3,
+)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax.set_yticks(y)
+ax.set_yticklabels(labels)
+ax.set_xlabel("Contribution to real GDP growth (percentage points)")
+
+# Only Q2 values next to bars; deltas live in a dedicated right column.
+x_min = min(plot["q1_pp"].min(), plot["q2_pp"].min())
+x_max = max(plot["q1_pp"].max(), plot["q2_pp"].max())
+for i, row in plot.iterrows():
+    q2 = float(row["q2_pp"])
+    delta = float(row["delta_pp"])
+    if q2 >= 0:
+        ax.text(q2 + 0.06, y[i] - h / 2, f"{q2:+.2f}", va="center", ha="left",
+                fontsize=8, color=COLORS["neutral"])
+    else:
+        ax.text(q2 - 0.06, y[i] - h / 2, f"{q2:+.2f}", va="center", ha="right",
+                fontsize=8, color=COLORS["neutral"])
+    ax.text(
+        x_max + 0.55,
+        y[i],
+        f"change {delta:+.2f} pp",
+        va="center",
+        ha="left",
+        fontsize=8,
+        color=COLORS["primary"] if delta > 0 else COLORS["accent"],
+        fontweight="bold",
+    )
+
+ax.set_xlim(x_min - 0.45, x_max + 1.55)
+# Legend in free upper-left space, away from delta column.
+ax.legend(
+    handles=[
+        Patch(facecolor=COLORS["light"], edgecolor="white", label="Q1 2026"),
+        Patch(facecolor=COLORS["secondary"], edgecolor="white", label="Q2 positive"),
+        Patch(facecolor=COLORS["accent"], edgecolor="white", label="Q2 negative"),
+    ],
+    loc="upper left",
+    frameon=False,
+    fontsize=8,
+)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "contribution-shift.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA GDP advance estimate, Q2 2026](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026); Q1 contributions from the Q1 third estimate context.
+:::
+
+The bridge chart below stacks the same arithmetic another way. Read it left to right: each green bar adds points of real GDP growth, each red bar subtracts, and the final blue bar is the **real GDP SAAR** that results. Gray connectors mark the running total from one step to the next, including the last step into Real GDP. Inventories are a memo inside investment (already inside the investment bar), not a fifth major addend.
+
+```{python}
+#| echo: true
+#| label: fig-gdp-bridge
+#| fig-cap: "Contribution bridge to Q2 real GDP (SAAR): consumer and investment lift the print; government and net exports drag. Gray connectors track the running total into the final real GDP bar."
+
+# Waterfall of Q2 flow contributions only (inventory is caption/prose memo).
+# Each floating bar is a contribution in percentage points; the final bar is
+# real GDP growth (SAAR), equal to the sum of the signed contributions.
+flows = df_bridge[df_bridge["kind"] == "flow"].copy()
+total_row = df_bridge[df_bridge["kind"] == "total"].iloc[0]
+memo = df_bridge[df_bridge["kind"] == "memo"]
+inv = float(memo.iloc[0]["value"]) if len(memo) else np.nan
+
+short_labels = {
+    "Consumer (PCE)": "Consumer",
+    "Investment (GPDI)": "Investment",
+    "Government": "Government",
+    "Net exports": "Net exports",
+    "Real GDP (SAAR)": "Real GDP",
+}
+steps = [short_labels.get(s, s) for s in list(flows["step"]) + [total_row["step"]]]
+values = list(flows["value"]) + [total_row["value"]]
+kinds = list(flows["kind"]) + ["total"]
+
+# starts[i] = height where bar i begins (running sum for flow steps).
+starts = []
+running = 0.0
+for val, kind in zip(values, kinds):
+    if kind == "total":
+        starts.append(0.0)
+    else:
+        starts.append(running)
+        running += val
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+x = np.arange(len(steps))
+bar_colors = []
+for val, kind in zip(values, kinds):
+    if kind == "total":
+        bar_colors.append(COLORS["primary"])
+    elif val >= 0:
+        bar_colors.append(COLORS["secondary"])
+    else:
+        bar_colors.append(COLORS["accent"])
+
+ax.bar(x, values, bottom=starts, color=bar_colors, edgecolor="white", width=0.62, zorder=3)
+
+# Gray connectors between every adjacent step, including Net exports -> Real GDP.
+# For flow-to-flow, connect at the running total after step i.
+# For flow-to-total, connect at that same final cumulative height to the top of Real GDP.
+n_flows = len(flows)
+for i in range(n_flows):
+    y_conn = starts[i] + values[i]
+    x0 = i + 0.31
+    x1 = i + 1 - 0.31
+    ax.plot([x0, x1], [y_conn, y_conn], color=COLORS["light"], linewidth=0.9, zorder=2)
+
+# Value labels sit outside segments; tiny bars get side labels.
+for i, (val, kind) in enumerate(zip(values, kinds)):
+    top = starts[i] + val
+    if kind == "total":
+        ax.text(i, val + 0.08, f"{val:.2f}%", ha="center", va="bottom",
+                fontsize=8, color=COLORS["neutral"], fontweight="bold")
+    elif abs(val) < 0.25:
+        ax.text(i + 0.38, starts[i] + val / 2, f"{val:+.2f}", ha="left", va="center",
+                fontsize=8, color=COLORS["neutral"])
+    elif val >= 0:
+        ax.text(i, top + 0.07, f"{val:+.2f}", ha="center", va="bottom",
+                fontsize=8, color=COLORS["neutral"])
+    else:
+        ax.text(i, top - 0.07, f"{val:+.2f}", ha="center", va="top",
+                fontsize=8, color=COLORS["neutral"])
+
+# Inventory note in open upper-left space (no arrow across bars).
+if not np.isnan(inv):
+    ax.text(
+        0.02, 0.98,
+        f"Note: inventories {inv:+.2f} pp are inside investment",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
+        fontsize=8,
+        color=COLORS["warning"],
+        bbox=dict(facecolor="#fafafa", edgecolor="none", alpha=0.95, pad=2.5),
+        zorder=6,
+    )
+
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax.set_xticks(x)
+ax.set_xticklabels(steps)
+ax.set_ylabel("Percentage points (real GDP SAAR contribution)")
+ax.set_xlim(-0.55, len(steps) - 0.45)
+y_hi = max(starts[i] + values[i] for i in range(len(values) - 1))
+ax.set_ylim(0, y_hi + 0.45)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-bridge.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA GDP advance estimate, Q2 2026](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026). Inventory is a memo inside GPDI, not an extra addend. Real GDP here is inflation-adjusted SAAR growth, not current-dollar GDP.
+:::
+
+### Real GDP versus private final sales
+
+Figure 3 compares two real, inflation-adjusted SAAR growth rates. It is not a real-versus-nominal chart. Real GDP is the complete accounting identity: consumer spending, investment including inventories, government, and net exports, with pure price changes already stripped out. Private final sales to private domestic purchasers, often shortened to private final sales, keep only consumer spending and private fixed investment. They leave out inventories, government, and net exports on purpose so the reader can see domestic private demand without those noisy offsets.
+
+Both bars answer how hot the quarter was at an annualized pace after inflation adjustment. The difference is scope. Real GDP is the official bottom line for the whole economy. Private final sales are a cleaner read of what households and business capital budgets did. When private final sales exceed real GDP, as in Q2, domestic private demand was stronger than the headline. The gap is inventory drawdowns, net export drag, and government, not fake real growth. When private final sales lag real GDP, closer to the Q1 pattern, headline growth was helped more by those non-private pieces.
+
+In Q2, private final sales rose to `{python} fmt(stats['final_sales_private_q2'])`% while real GDP was only `{python} fmt(stats['gdp_growth_q2'])`%, so the demand gap flipped to `{python} fmt_chg(stats['demand_gap_q2'])`pp. That inversion is what the next chart is built to show.
+
+```{python}
+#| echo: true
+#| label: fig-private-demand
+#| fig-cap: "Both series are real SAAR growth rates. In Q2, private final sales (domestic demand without inventories, trade, or government) jumped while complete real GDP slowed."
+
+# Side-by-side real GDP vs private final sales. Gap sits under x labels, not on bars.
+quarters = df_private["quarter"].tolist()
+gdp_vals = df_private["gdp_growth"].to_numpy()
+pfs_vals = df_private["private_final_sales"].to_numpy()
+gaps = df_private["demand_gap_pp"].to_numpy()
+x = np.arange(len(quarters))
+width = 0.34
+
+fig, ax = plt.subplots(figsize=(8.0, 4.4))
+b1 = ax.bar(x - width / 2, gdp_vals, width, color=COLORS["primary"], edgecolor="white",
+            label="Real GDP (complete)", zorder=2)
+b2 = ax.bar(x + width / 2, pfs_vals, width, color=COLORS["secondary"], edgecolor="white",
+            label="Private final sales", zorder=2)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+
+for bars in (b1, b2):
+    for bar in bars:
+        val = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            val + 0.10,
+            f"{val:+.1f}%",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            color=COLORS["neutral"],
+        )
+
+# Two-line x labels keep gap text away from value labels and legend.
+tick_labels = [
+    f"{q}\ngap {g:+.1f} pp" for q, g in zip(quarters, gaps)
+]
+ax.set_xticks(x)
+ax.set_xticklabels(tick_labels)
+ax.set_ylabel("Real growth, SAAR (%)")
+ax.set_ylim(0, max(gdp_vals.max(), pfs_vals.max()) + 0.85)
+ax.legend(loc="upper left", frameon=False, fontsize=8)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "private-demand.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA GDP advance estimate, Q2 2026](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026). Both series are real (inflation-adjusted) SAAR growth rates.
+:::
+
+## 2. Consumer rebound meets equipment strength
+
+### Two different "PCE" ideas
+
+"PCE" appears twice in macro data and the labels are easy to mix up. Real PCE spending is the inflation-adjusted volume of goods and services households buy. The PCE price index is how much consumer prices rose. This section is about spending, not prices. Real PCE is the consumer block inside GDP, again as a SAAR growth rate so Q2 is comparable to Q1. Prices return in Section 4.
+
+### What reaccelerated in Q2
+
+Real personal consumption expenditures grew `{python} fmt_chg(stats['pce_growth_q2'])`% annualized in Q2 after a soft `{python} fmt_chg(stats['pce_growth_q1'])`% in Q1. That is a clear reacceleration: households bought more goods and services at a faster annualized pace than in the prior quarter. BEA's technical notes point to both goods and services, not a single category spike. Within goods, prescription drugs and light trucks were important. Within services, food services, accommodations, and financial services led. Broad participation matters because a rebound driven by only one category is more fragile than a rebound spread across the basket.
+
+### Why equipment is the other engine
+
+Nonresidential equipment investment is business spending on machines, vehicles, computers, servers, and related capital goods. It is the closest high-frequency national-accounts window on the AI and data-center buildout, though it also includes non-tech equipment. Equipment investment grew `{python} fmt_chg(stats['equipment_growth_q2'])`% after `{python} fmt_chg(stats['equipment_growth_q1'])`%. That is still double-digit strength. The private-demand story is not consumers or businesses in isolation. It is consumers and businesses, running at different speeds.
+
+That equipment boom is also where frontier AI models and open-weight systems leave a footprint in the national accounts. Frontier closed models from the largest labs still drive huge, concentrated spending on high-end GPUs, networking gear, and power-dense data centers, because training and serving the biggest models is capital intensive. Open-weight and open-source large language models change the shape of demand without removing it. They lower the cost of deploying capable systems for many firms and governments, which spreads inference and fine-tuning workloads onto more operators, including cloud customers and on-prem clusters. The national accounts do not split equipment into "frontier" versus "open-weight" boxes, but both forces can lift information-processing and industrial equipment at once: a few hyperscalers racing at the frontier, and a wider set of adopters running cheaper open models at scale. Q2's still-hot equipment print is consistent with that dual channel. It does not tell us which channel won the quarter, only that capital goods demand remained far stronger than ordinary consumer growth.
+
+### The equipment-minus-PCE gap
+
+The lower panel of the next chart plots the equipment-minus-PCE gap in percentage points: equipment SAAR growth minus real PCE SAAR growth. A large positive gap means capital budgets are outrunning household spending growth. A gap near zero means the two engines are growing at similar paces. A negative gap means consumers are growing faster than equipment, which has been rare in the recent AI cycle. A wide positive gap does not mean consumers are weak. It means equipment is exceptionally strong relative to consumers. After Q2's consumer rebound, the gap is still large because equipment stayed near `{python} fmt(stats['equipment_growth_q2'])`% while PCE only climbed to `{python} fmt(stats['pce_growth_q2'])`%.
+
+```{python}
+#| echo: true
+#| label: fig-pce-vs-equipment
+#| fig-cap: "Top: real PCE and equipment investment growth (both SAAR). Bottom: equipment minus PCE. Consumers reaccelerated in Q2, but the gap stays wide because equipment remains much faster."
+
+# Dual panel: growth rates on top, equipment-minus-PCE gap on bottom.
+# Rate columns come from scripts/02_clean_data.py (SAAR formulas documented there).
+plot = df_q.loc["2021-01-01":"2026-04-01", ["pce_growth", "equipment_growth", "equip_minus_pce"]].dropna(how="any")
+
+fig, (ax1, ax2) = plt.subplots(
+    2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+
+ax1.plot(plot.index, plot["pce_growth"], color=COLORS["accent"], linewidth=1.9, zorder=3)
+ax1.plot(plot.index, plot["equipment_growth"], color=COLORS["secondary"], linewidth=1.9, zorder=3)
+ax1.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.6, zorder=1)
+ax1.set_ylabel("SAAR growth (%)")
+# Extra headroom so endpoint labels never clip the top spine area.
+ax1.set_ylim(plot[["pce_growth", "equipment_growth"]].min().min() - 2,
+             plot[["pce_growth", "equipment_growth"]].max().max() + 4)
+
+entries = [
+    {
+        "x": plot.index[-1],
+        "y": float(plot["pce_growth"].iloc[-1]),
+        "text": f"PCE {plot['pce_growth'].iloc[-1]:+.1f}%",
+        "color": COLORS["accent"],
+    },
+    {
+        "x": plot.index[-1],
+        "y": float(plot["equipment_growth"].iloc[-1]),
+        "text": f"Equipment {plot['equipment_growth'].iloc[-1]:+.1f}%",
+        "color": COLORS["secondary"],
+    },
+]
+label_endpoints(ax1, entries, gap_frac=0.10)
+extend_x_for_labels(ax1, plot.index, pad_frac=0.16)
+
+ax2.fill_between(
+    plot.index, plot["equip_minus_pce"], 0,
+    where=plot["equip_minus_pce"] >= 0,
+    color=COLORS["secondary"], alpha=0.18, interpolate=True,
+)
+ax2.fill_between(
+    plot.index, plot["equip_minus_pce"], 0,
+    where=plot["equip_minus_pce"] < 0,
+    color=COLORS["accent"], alpha=0.12, interpolate=True,
+)
+ax2.plot(plot.index, plot["equip_minus_pce"], color=COLORS["primary"], linewidth=1.7, zorder=3)
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax2.scatter(
+    plot.index[-1], plot["equip_minus_pce"].iloc[-1],
+    s=40, color=COLORS["primary"], edgecolors="white", linewidth=0.8, zorder=5,
+)
+gap_last = float(plot["equip_minus_pce"].iloc[-1])
+ax2.text(
+    plot.index[-1], gap_last,
+    f"  Gap {gap_last:+.1f} pp",
+    color=COLORS["primary"], fontsize=8, fontweight="bold", va="center",
+)
+ax2.set_ylabel("Equipment minus PCE (pp)")
+ax2.set_ylim(plot["equip_minus_pce"].min() - 2, plot["equip_minus_pce"].max() + 3)
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax2.xaxis.set_major_locator(mdates.YearLocator())
+extend_x_for_labels(ax2, plot.index, pad_frac=0.16)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "pce-vs-equipment.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [FRED](https://fred.stlouisfed.org/) series PCEC96 (real PCE) and Y033RC1Q027SBEA (nonresidential equipment), with Q2 2026 rates aligned to the BEA advance estimate. Both series are real SAAR growth rates.
+:::
+
+### Monthly check: June income and outlays
+
+The quarterly GDP tables give the SAAR story. The Personal Income and Outlays report gives the latest month. They should usually point the same direction; when they do, confidence rises.
+
+In `{python} stats['latest_month']`, real PCE spending rose `{python} fmt_chg(stats['real_pce_mom_june'])`% month-over-month. That is volume after stripping price changes. Nominal PCE rose `{python} fmt(stats['pce_change_bn'])` billion dollars (`{python} fmt_chg(stats['nominal_pce_mom_june'])`%), which is current-dollar spending before inflation adjustment. Services accounted for `{python} fmt(stats['pce_services_change_bn'])` billion of that nominal gain and goods for `{python} fmt(stats['pce_goods_change_bn'])` billion, so services still dominate the monthly lift. Personal income and disposable personal income each rose `{python} fmt_chg(stats['personal_income_mom_june'])`%. Disposable personal income is income after taxes, the cash households can spend or save. The personal saving rate stood at `{python} fmt(stats['saving_rate_june'])`% of disposable income, still low by post-pandemic standards. Low saving means households have less buffer if prices rise again or job growth slows.
+
+June lines up with the quarterly consumer rebound: real spending is up, income is up, and services lead. The soft spot is the thin saving cushion, not a collapse in outlays. Nominal PCE can rise because prices rose, because volumes rose, or both. Real PCE isolates the volume piece. The saving rate then asks how much of after-tax income households chose not to spend.
+
+## 3. Investment mix: AI-heavy equipment, weak structures, inventories drag
+
+### Investment is a bundle, not one number
+
+Section 1 treated GPDI as one contribution bar. Inside that bar sit very different behaviors, so a strong investment headline can hide weak housing or weak factories, and a soft investment contribution can hide booming equipment.
+
+Private nonresidential fixed investment, or PNFI, is business capital spending on equipment, structures, and intellectual property. It excludes homes and inventory swings. Equipment is machines, vehicles, computers, servers, and industrial gear. Intellectual property products cover software, research and development, and related intangibles. Structures are factories, offices, warehouses, and other nonresidential buildings. Residential investment is home building and related residential fixed investment. Inventory investment is the change in stockpiles; it already lives inside GPDI, not inside PNFI.
+
+Private nonresidential fixed investment rose `{python} fmt_chg(stats['pnfi_growth_q2'])`% annualized in Q2, down from `{python} fmt_chg(stats['pnfi_growth_q1'])`% but still solid. Equipment stayed near `{python} fmt_chg(stats['equipment_growth_q2'])`% after `{python} fmt_chg(stats['equipment_growth_q1'])`%, remaining the hot core of the cycle. Intellectual property products cooled to `{python} fmt_chg(stats['ip_products_growth_q2'])`% from `{python} fmt_chg(stats['ip_products_growth_q1'])`%, still positive but less extreme. Structures fell `{python} fmt_chg(stats['structures_growth_q2'])`% after `{python} fmt_chg(stats['structures_growth_q1'])`%, a tenth consecutive weak quarter, led on the BEA notes by manufacturing structures. Residential investment rose `{python} fmt_chg(stats['residential_growth_q2'])`%, its first gain in six quarters after `{python} fmt_chg(stats['residential_growth_q1'])`% in Q1. Read that as a split: AI-linked capital goods remain strong, traditional building is not, and housing finally stopped subtracting.
+
+That equipment strength is also the bridge to the AI industrial story. Frontier model labs still need dense clusters of top-tier accelerators to train and serve the largest closed systems. Open-weight and open-source models do not erase that demand; they often multiply deployment. Cheaper weights make it rational for more firms to stand up inference stacks, fine-tune locally, and buy mid-range as well as high-end hardware. The BEA equipment category cannot separate those motives, but the combination of hyperscale frontier buildouts and broader open-model adoption is a natural way to read why information-processing and industrial equipment stayed so firm while consumers only reaccelerated into the low single digits.
+
+### What inventory drawdowns actually mean
+
+GPDI contributed only `{python} fmt2_chg(stats['gpdi_contribution_q2'])`pp to real GDP even though equipment was hot, because inventories subtracted `{python} fmt2_chg(stats['inventory_contribution_q2'])`pp. Inventory investment is not "oil sales" and it is not the same as the Strategic Petroleum Reserve story. When private inventory investment falls, firms are adding less to stocks than before, or drawing stocks down. Measured GDP treats that as less production absorbed into inventories, so the investment contribution shrinks even if final sales are fine.
+
+BEA's advance technical notes are specific about where the Q2 inventory drag came from. The largest contributor to the decrease in private inventory investment was wholesale trade, based primarily on Census Bureau inventory book value data. That is distributors' warehouses and wholesale channels, not a direct statement that strategic oil stocks or a Middle East conflict emptied U.S. business inventories. The energy-war channel that does show up clearly in this release is government: higher sales of crude oil from the Strategic Petroleum Reserve reduce measured government consumption in the accounts. Those SPR sales are a government-line effect, not the wholesale inventory subtraction inside GPDI.
+
+Inventories can fall for healthy or unhealthy reasons. Firms may run stocks down because final demand is strong and goods are selling through, or because they over-ordered earlier and are correcting, or because they expect softer sales ahead. With real consumer spending reaccelerating and equipment still booming, the more natural reading is that final demand absorbed goods rather than that the economy suddenly stopped ordering. The clean check is whether real final sales stay firm while inventory contributions reverse; that is a job for the second estimate and the next few quarters, not a one-line Iran attribution.
+
+### Net exports: what dragged, and how tariffs fit
+
+Net exports subtracted `{python} fmt2_chg(stats['netex_contribution_q2'])`pp from real GDP growth in Q2, worse than the `{python} fmt2_chg(stats['netex_contribution_q1'])`pp drag in Q1. Exports grew `{python} fmt_chg(stats['exports_growth_q2'])`% while imports grew `{python} fmt_chg(stats['imports_growth_q2'])`%. Imports alone contributed `{python} fmt2_chg(stats['imports_contribution_q2'])`pp as a subtraction. On the export side, BEA pointed to goods strength led by petroleum and related products, partly offset by weaker services exports such as travel and some business services. On the import side, the increase was led by capital goods except automotive, especially telecommunications equipment, semiconductors and related devices, and industrial equipment. Those are exactly the categories that ride an AI and industrial capex wave.
+
+Tariffs enter this story as a price and timing distortion, not as a single switch that turns imports off. Higher tariffs on Chinese and other foreign electronics and industrial components raise the landed cost of many capital goods. In principle that can push firms to substitute toward domestic suppliers, delay projects, or pull imports forward before duties bite harder. In the Q2 accounts, imports of the very equipment categories tied to data centers and industrial modernization remained strong. That pattern is more consistent with capex demand that is still willing to pay for foreign gear, possibly after earlier front-loading and with incomplete substitution, than with a pure tariff collapse in import volumes. Tariffs can still widen the trade drag if they raise import prices while volumes stay firm, or if export competitiveness suffers through retaliation and a stronger dollar. What the advance estimate can show cleanly is composition: capital-goods imports and still-positive exports, with the arithmetic net still a large subtraction from GDP.
+
+So the net-export line is not a simple "America is not competitive this quarter" headline. It is the sum of an AI-era equipment import boom, softer services exports, and a tariff-and-dollar environment that has not yet replaced foreign capital goods with domestic ones at scale. Combined with wholesale inventory drawdowns, that is why complete real GDP can print only `{python} fmt(stats['gdp_growth_q2'])`% while private final sales run near `{python} fmt(stats['final_sales_private_q2'])`%.
+
+```{python}
+#| echo: true
+#| label: fig-investment-mix
+#| fig-cap: "Investment subcomponents, Q1 vs Q2 SAAR growth: equipment stays hot, IP cools, structures remain negative, and residential finally turns positive after a deep Q1 hole."
+
+# Grouped horizontal bars for investment subcomponent SAAR growth, Q1 vs Q2.
+# Values come from BEA component detail (MANUAL tables in 02/04).
+plot = df_invest.sort_values("sort").reset_index(drop=True)
+labels = plot["component"].tolist()
+y = np.arange(len(labels))
+h = 0.34
+
+fig, ax = plt.subplots(figsize=(8.0, 4.8))
+ax.barh(
+    y + h / 2, plot["q1"], height=h,
+    color=COLORS["light"], edgecolor="white", zorder=2,
+)
+q2_colors = [COLORS["accent"] if v < 0 else COLORS["secondary"] for v in plot["q2"]]
+ax.barh(
+    y - h / 2, plot["q2"], height=h,
+    color=q2_colors, edgecolor="white", zorder=3,
+)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax.set_yticks(y)
+ax.set_yticklabels(labels)
+ax.set_xlabel("Annualized quarterly growth (%)")
+
+x_max = max(plot["q1"].max(), plot["q2"].max())
+x_min = min(plot["q1"].min(), plot["q2"].min())
+pad = 0.45
+for i, row in plot.iterrows():
+    q1, q2 = float(row["q1"]), float(row["q2"])
+    ax.text(
+        q2 + (pad if q2 >= 0 else -pad), y[i] - h / 2,
+        f"{q2:+.1f}%", va="center", ha="left" if q2 >= 0 else "right",
+        fontsize=8, color=COLORS["neutral"],
+    )
+    ax.text(
+        q1 + (pad if q1 >= 0 else -pad), y[i] + h / 2,
+        f"{q1:+.1f}%", va="center", ha="left" if q1 >= 0 else "right",
+        fontsize=8, color=COLORS["neutral"],
+    )
+
+ax.set_xlim(x_min - 3.2, x_max + 3.8)
+ax.legend(
+    handles=[
+        Patch(facecolor=COLORS["light"], edgecolor="white", label="Q1 2026"),
+        Patch(facecolor=COLORS["secondary"], edgecolor="white", label="Q2 positive"),
+        Patch(facecolor=COLORS["accent"], edgecolor="white", label="Q2 negative"),
+    ],
+    loc="upper left",
+    frameon=False,
+    fontsize=8,
+)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "investment-mix.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA GDP advance estimate, Q2 2026](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026); Q1 component rates from the Q1 third-estimate context. All rates are real SAAR growth.
+:::
+
+### Putting Q2 on the recent growth path
+
+The next chart is only real GDP SAAR, the complete headline from Section 1. It answers a different question than the investment mix: not which capital goods moved, but where this quarter sits in the recent cycle. Values above zero mean the economy expanded that quarter at an annualized rate. Values below zero mean contraction, a fall in the volume of output. Large swings early in the window are post-pandemic volatility; the useful comparison for this post is the step from Q1 (`{python} fmt_chg(stats['gdp_growth_q1'])`%) to Q2 (`{python} fmt_chg(stats['gdp_growth_q2'])`%).
+
+Q2 is cooler than Q1, not a freefall. Combined with Section 1's private-final-sales gap, the path looks like headline cooling with private demand still alive, not a classic demand cliff.
+
+```{python}
+#| echo: true
+#| label: fig-gdp-growth-history
+#| fig-cap: "Real GDP SAAR since 2021: growth is still positive but uneven. Q2 cooled from Q1 after a weak late-2025 print."
+
+# Start in 2021 so the pandemic spike does not crush recent labels.
+# Column gdp_growth is real GDP percent change, SAAR (FRED A191RL1Q225SBEA + Q2 overlay).
+plot = df_q.loc["2021-01-01":"2026-04-01", "gdp_growth"].dropna()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.fill_between(plot.index, plot.values, 0, where=plot.values >= 0,
+                color=COLORS["primary"], alpha=0.10, interpolate=True)
+ax.fill_between(plot.index, plot.values, 0, where=plot.values < 0,
+                color=COLORS["accent"], alpha=0.10, interpolate=True)
+ax.plot(plot.index, plot.values, color=COLORS["primary"], linewidth=1.9, zorder=3)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8, alpha=0.6, zorder=1)
+
+# Only the latest point is marked; Q1 sits in a free zone above the line.
+ax.scatter(
+    plot.index[-1], plot.iloc[-1],
+    s=40, color=COLORS["primary"], edgecolors="white", linewidth=0.8, zorder=5,
+)
+ax.text(
+    plot.index[-1], plot.iloc[-1],
+    f"  Q2 {plot.iloc[-1]:+.1f}%",
+    color=COLORS["primary"], fontsize=8, fontweight="bold", va="center",
+)
+ax.annotate(
+    f"Q1 {plot.iloc[-2]:+.1f}%",
+    xy=(plot.index[-2], plot.iloc[-2]),
+    xytext=(plot.index[-2], plot.iloc[-2] + 2.2),
+    ha="center",
+    fontsize=8,
+    color=COLORS["neutral"],
+    arrowprops=dict(arrowstyle="->", color=COLORS["light"], lw=0.8),
+)
+extend_x_for_labels(ax, plot.index, pad_frac=0.14)
+ax.set_ylim(plot.min() - 1.5, plot.max() + 3.0)
+ax.set_ylabel("Real GDP growth, SAAR (%)")
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.xaxis.set_major_locator(mdates.YearLocator())
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-growth-history.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [FRED](https://fred.stlouisfed.org/) series A191RL1Q225SBEA (real GDP percent change, SAAR), with Q2 2026 set to the BEA advance estimate.
+:::
+
+## 4. June PCE: monthly relief vs quarterly heat
+
+This section switches from spending in Section 2 to prices. Same PCE family, different question: not whether households are buying more, but whether the prices they pay are still rising too fast.
+
+### Why the Fed prefers PCE prices over CPI
+
+The Fed watches the PCE price index more closely than the Consumer Price Index because PCE covers a broader set of consumer goods and services and updates its weights with actual spending shares, while CPI is built on an urban consumer basket with weights that move more slowly. CPI remains important for households and markets, but FOMC communication and the formal 2% goal are anchored on PCE. Headline PCE includes food and energy. Core PCE excludes food and energy to reduce noise from gasoline and grocery swings. Neither series is the whole truth alone. Headline is closer to what households feel at the pump; core is closer to underlying inflation for policy.
+
+### Stack the horizons before celebrating one month
+
+Inflation can look soft or hot depending on the window. Month-over-month answers what happened in the latest month: in June, headline PCE prices fell `{python} fmt_chg(stats['pce_mom_june'])`% and core rose `{python} fmt_chg(stats['core_pce_mom_june'])`%. Year-over-year asks how the latest month compares with a year earlier: headline cooled to `{python} fmt(stats['pce_yoy_june'])`% from `{python} fmt(stats['pce_yoy_may'])`% in May, while core eased only to `{python} fmt(stats['core_pce_yoy_june'])`% from `{python} fmt(stats['core_pce_yoy_may'])`%. The three-month annualized pace asks what would happen if the last three months kept running for a year; core is about `{python} fmt(stats['core_pce_ann3_june'])`% on that measure, softer than year-over-year but still above 2%. The quarterly SAAR from the GDP accounts asks how hot consumer prices were over the whole quarter: the PCE price index rose `{python} fmt(stats['pce_price_saar_q2'])`% annualized after `{python} fmt(stats['pce_price_saar_q1'])`% in Q1, and core PCE prices rose `{python} fmt(stats['core_pce_price_saar_q2'])`% after `{python} fmt(stats['core_pce_price_saar_q1'])`%. The price index for gross domestic purchases rose `{python} fmt(stats['gdp_price_index_q2'])`% annualized, a broader domestic price measure than consumer prices alone.
+
+June is friendliest at the monthly headline and still sticky at core year-over-year. The friendly pieces are the headline month-over-month decline, a modest core month-over-month print, and some cooling in headline year-over-year. The unfinished pieces are core year-over-year still in the low 3s, a quarterly PCE price SAAR far above 2%, and the simple fact that one month never rewrites a quarter. One friendly month does not cancel a hot quarter.
+
+```{python}
+#| echo: true
+#| label: fig-pce-inflation
+#| fig-cap: "Two horizons, two messages. Top: year-over-year headline and core PCE, with the Fed 2% line. Bottom: month-over-month, where June headline falls but core stays slightly positive."
+
+# Dual panel: YoY on top, MoM on bottom. Endpoint labels only (no legend).
+# Rate formulas live in scripts/02_clean_data.py; June values may be BEA overlays.
+plot = df_m.loc["2022-01-01":, ["pce_yoy", "core_pce_yoy", "pce_mom", "core_pce_mom"]].dropna()
+
+fig, (ax1, ax2) = plt.subplots(
+    2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+
+ax1.plot(plot.index, plot["pce_yoy"], color=COLORS["warning"], linewidth=1.8, zorder=2)
+ax1.plot(plot.index, plot["core_pce_yoy"], color=COLORS["primary"], linewidth=1.9, zorder=3)
+ax1.axhline(2.0, color=COLORS["fed_target"], linestyle="--", linewidth=1.0, alpha=0.5, zorder=1)
+# Target note on the left, clear of the rising 2026 lines.
+ax1.text(
+    plot.index[1], 2.18, "Fed 2% target",
+    color=COLORS["fed_target"], fontsize=8, alpha=0.85,
+)
+ax1.set_ylabel("Year-over-year (%)")
+ax1.set_ylim(1.7, plot[["pce_yoy", "core_pce_yoy"]].max().max() + 0.8)
+
+label_endpoints(
+    ax1,
+    [
+        {
+            "x": plot.index[-1],
+            "y": float(plot["pce_yoy"].iloc[-1]),
+            "text": f"Headline {plot['pce_yoy'].iloc[-1]:.1f}%",
+            "color": COLORS["warning"],
+        },
+        {
+            "x": plot.index[-1],
+            "y": float(plot["core_pce_yoy"].iloc[-1]),
+            "text": f"Core {plot['core_pce_yoy'].iloc[-1]:.1f}%",
+            "color": COLORS["primary"],
+        },
+    ],
+    gap_frac=0.10,
+)
+extend_x_for_labels(ax1, plot.index, pad_frac=0.16)
+
+ax2.plot(plot.index, plot["pce_mom"], color=COLORS["warning"], linewidth=1.6, zorder=2)
+ax2.plot(plot.index, plot["core_pce_mom"], color=COLORS["primary"], linewidth=1.7, zorder=3)
+ax2.axhline(0, color=COLORS["neutral"], linewidth=0.8, zorder=1)
+ax2.scatter(
+    plot.index[-1], plot["pce_mom"].iloc[-1],
+    s=40, color=COLORS["warning"], edgecolors="white", linewidth=0.8, zorder=5,
+)
+ax2.scatter(
+    plot.index[-1], plot["core_pce_mom"].iloc[-1],
+    s=40, color=COLORS["primary"], edgecolors="white", linewidth=0.8, zorder=5,
+)
+
+# Force vertical separation: core above, headline below the zero line.
+mom_h = float(plot["pce_mom"].iloc[-1])
+mom_c = float(plot["core_pce_mom"].iloc[-1])
+ax2.text(
+    plot.index[-1], mom_c + 0.08,
+    f"  Core {mom_c:+.1f}%",
+    color=COLORS["primary"], fontsize=8, fontweight="bold", va="bottom",
+)
+ax2.text(
+    plot.index[-1], mom_h - 0.08,
+    f"  Headline {mom_h:+.1f}%",
+    color=COLORS["warning"], fontsize=8, fontweight="bold", va="top",
+)
+ax2.set_ylabel("Month-over-month (%)")
+ax2.set_ylim(
+    min(plot[["pce_mom", "core_pce_mom"]].min().min(), -0.25) - 0.15,
+    plot[["pce_mom", "core_pce_mom"]].max().max() + 0.20,
+)
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=4))
+extend_x_for_labels(ax2, plot.index, pad_frac=0.16)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "pce-inflation.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [FRED](https://fred.stlouisfed.org/) series PCEPI (headline PCE prices) and PCEPILFE (core PCE prices); June 2026 rates aligned to the BEA Personal Income and Outlays release.
+:::
+
+How to read the dual panel is straightforward. On the top panel, distance above the dashed 2% line is how far inflation remains from the Fed's goal. Core stuck near `{python} fmt(stats['core_pce_yoy_june'])`% means underlying prices are still too high even after June's softer headline. On the bottom panel, June's headline dip shows short-run relief that is often energy-sensitive, while a still-slightly-positive core print means the non-food, non-energy basket did not fall with the headline. If both panels were soft for several months and quarterly SAAR cooled, the Fed would have a cleaner path to ease. That is not this print.
+
+## Conclusion
+
+### Pull the interactions together
+
+Q2 was a set of interactions, not a single number. On the growth side, complete real GDP slowed to `{python} fmt_chg(stats['gdp_growth_q2'])`% from `{python} fmt_chg(stats['gdp_growth_q1'])`%, missing the `{python} fmt(stats['gdp_growth_consensus'])`% consensus track, while private final sales accelerated to `{python} fmt_chg(stats['final_sales_private_q2'])`% and opened a `{python} fmt_chg(stats['demand_gap_q2'])`pp gap over the headline. Consumers rebounded, equipment stayed hot, structures stayed weak, residential finally turned up, and inventories plus net exports held the total down. The inventory drag was led by wholesale trade in the BEA notes, not by a direct oil-war inventory collapse, while the SPR oil-sales effect shows up mainly in government. The net-export drag reflects strong capital-goods imports and softer services exports in a tariff-heavy environment that has not yet displaced foreign equipment demand.
+
+On the price side, June headline PCE prices fell month-over-month and cooled year-over-year, but core PCE stayed sticky near `{python} fmt(stats['core_pce_yoy_june'])`% year-over-year with a still-positive monthly print, and the quarterly PCE price SAAR in the GDP accounts ran hot at `{python} fmt(stats['pce_price_saar_q2'])`% for headline and `{python} fmt(stats['core_pce_price_saar_q2'])`% for core. That mix argues against reading the dual release as either a clean growth scare or a clear inflation victory. Private demand is not collapsing; core disinflation is not finished.
+
+The AI capital story sits underneath the equipment and import lines rather than in a separate BEA table. Frontier closed models still pull concentrated spending into the densest GPU clusters. Open-weight and open-source systems lower the cost of capable AI and can spread inference and fine-tuning onto more balance sheets. Both channels can show up as equipment investment and capital-goods imports at the same time. Until the national accounts get better product detail, the honest claim is modest: Q2 looks like an economy still funding compute capacity faster than it is funding consumer goods growth, while trade arithmetic and inventory bookkeeping keep headline GDP softer than private final sales.
+
+### What it means for
+
+**For markets.** Soft headline GDP with a positive private-demand gap and firm equipment investment supports a hold-heavy path more than a rapid easing narrative. Watch the second estimate on `{python} stats['second_estimate_date_us']`: inventory and trade revisions can rewrite the headline without rewriting the demand story, and capital-goods import detail will show whether the AI-linked trade drag is still intensifying.
+
+**For the Fed.** The dual mandate needs both full employment and 2% inflation. Core PCE at `{python} fmt(stats['core_pce_yoy_june'])`% year-over-year, a still-positive core monthly print, and a `{python} fmt(stats['pce_price_saar_q2'])`% quarterly PCE price index keep the inflation side in view. One `{python} fmt_chg(stats['pce_mom_june'])`% monthly headline print is welcome; it is not yet a sustained core path to 2%. Soft GDP alone does not force cuts when private final sales are `{python} fmt(stats['final_sales_private_q2'])`%.
+
+**For households.** Real spending rose in June, so the volume of consumption improved. A `{python} fmt(stats['saving_rate_june'])`% saving rate still leaves little cushion. Headline price relief helps at the pump and in monthly bills; sticky core prices mean the broader cost-of-living backdrop is not fully normalized.
+
+### Watchlist
+
+The next checkpoints are concrete. The second GDP estimate and corporate profits arrive on `{python} stats['second_estimate_date_us']`, where inventory and trade revisions matter most. The next Personal Income and Outlays release should be read for both July PCE prices and real spending, because the policy signal needs both sides. It is also worth watching whether the equipment-minus-PCE gap narrows if consumers keep reaccelerating, whether inventory contributions reverse without private final sales cracking, and whether core month-over-month stays near zero long enough to pull year-over-year and quarterly SAAR down. On the AI side, the practical question is whether capital-goods imports and equipment investment stay elevated even as open-weight deployment spreads, or whether the next leg of the cycle cools once the densest frontier clusters are in place.
+
+### Limitations
+
+Advance GDP rests on incomplete source data and BEA assumptions for the third month of the quarter, so contributions can revise in the second and third estimates. Monthly PCE changes are seasonally adjusted and can reverse the next month. FRED historical series power the charts, while release-day contribution and component rates are aligned to BEA tables where public FRED vintages lag. The inventory memo in the bridge chart is already inside GPDI and is shown only for interpretation, not as a fifth major addend. Equipment is a proxy for AI-related capex, not a pure AI series; it includes non-tech machinery, and it does not separate frontier closed-model clusters from open-weight inference stacks. Tariff effects on net exports are inferred from composition and timing rather than from a single official "tariff contribution" line in the advance estimate.
+
+### Methodology and data
+
+| Item | Detail |
+|------|--------|
+| Real GDP growth | BEA advance estimate, real GDP SAAR, Q2 2026 |
+| Private final sales | BEA real final sales to private domestic purchasers (also real SAAR) |
+| Contributions / bridge | BEA component contributions to percent change in real GDP |
+| Investment mix | BEA equipment, IP products, structures, residential SAAR |
+| Monthly income and prices | BEA Personal Income and Outlays, June 2026 |
+| Historical chart series | FRED: A191RL1Q225SBEA, PCEC96, Y033RC1Q027SBEA, PCEPI, PCEPILFE |
+| Pipeline | `scripts/01_fetch_data.py` (download), `02_clean_data.py` (rates and tables), `04_compute_stats.py` (prose keys) |
+| Primary releases | [Q2 GDP advance](https://www.bea.gov/news/2026/gdp-advance-estimate-2nd-quarter-2026); [June PIO](https://www.bea.gov/news/2026/personal-income-and-outlays-june-2026) |
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*

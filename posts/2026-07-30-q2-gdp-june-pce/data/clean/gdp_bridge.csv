@@ -1,0 +1,7 @@
+step,value,kind,sort
+Consumer (PCE),2.12,flow,1
+Investment (GPDI),0.53,flow,2
+  Inventories (in GPDI),-0.67,memo,3
+Government,-0.14,flow,4
+Net exports,-1.01,flow,5
+Real GDP (SAAR),1.5,total,6
