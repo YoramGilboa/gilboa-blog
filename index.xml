@@ -9,8 +9,8 @@
 <link>https://gilboa.blog/</link>
 <atom:link href="https://gilboa.blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Economics, inflation, and labor market analysis through data visualization</description>
-<generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 07 Aug 2026 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Fri, 07 Aug 2026 04:00:00 GMT</lastBuildDate>
 <item>
   <title>July 2026 Jobs: Slow Growth, Narrow Gains</title>
   <dc:creator>Yoram Gilboa</dc:creator>
@@ -1720,7 +1720,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
   <category>data visualization</category>
   <category>inflation</category>
   <guid>https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/</guid>
-  <pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 07 Aug 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png" medium="image" type="image/png" height="86" width="144"/>
 </item>
 <item>
@@ -5046,7 +5046,7 @@ Figure&nbsp;7: Two horizons, two messages. Top: year-over-year headline and core
   <category>data visualization</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/</guid>
-  <pubDate>Thu, 30 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 30 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png" medium="image" type="image/png" height="85" width="144"/>
 </item>
 <item>
@@ -6427,7 +6427,7 @@ Figure&nbsp;4: The Fed-watched pipeline measure slowed in June, but the year-ove
   <category>data visualization</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/</guid>
-  <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 25 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/images/ppi-energy-upstream.png" medium="image" type="image/png" height="126" width="144"/>
 </item>
 <item>
@@ -8540,7 +8540,7 @@ Figure&nbsp;7: A simple teaching rubric: open weights and full open source expan
   <category>data visualization</category>
   <category>markets</category>
   <guid>https://gilboa.blog/posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/</guid>
-  <pubDate>Sat, 25 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 25 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/images/open-param-timeline.png" medium="image" type="image/png" height="82" width="144"/>
 </item>
 <item>
@@ -10490,7 +10490,7 @@ Figure&nbsp;5: Softer hiring reduces the need for additional inflation insurance
   <category>labor market</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/</guid>
-  <pubDate>Sat, 18 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 18 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/images/cpi-energy-reversal-dashboard.png" medium="image" type="image/png" height="127" width="144"/>
 </item>
 <item>
@@ -12673,7 +12673,7 @@ Figure&nbsp;5: Shelter vs core momentum composite heading into the July 14 relea
   <category>data visualization</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-07-11-core-inflation-persistence-services-goods-shelter/</guid>
-  <pubDate>Sat, 11 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 11 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-11-core-inflation-persistence-services-goods-shelter/images/core-inflation-persistence-dashboard.png" medium="image" type="image/png" height="155" width="144"/>
 </item>
 <item>
@@ -15491,7 +15491,7 @@ Figure&nbsp;6: Policy rates remain restrictive while recession probability and l
   <category>federal reserve</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-07-03-june-jobs-report-soft-labor-market/</guid>
-  <pubDate>Fri, 03 Jul 2026 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 03 Jul 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-07-03-june-jobs-report-soft-labor-market/images/payroll-trend-june-2026.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 <item>
@@ -16890,7 +16890,7 @@ Source: FRED/BLS (UNRATE).
   <category>economics</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/</guid>
-  <pubDate>Sat, 27 Jun 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 27 Jun 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/images/june-2026-labor-market-dashboard.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
@@ -19573,7 +19573,7 @@ Figure&nbsp;5: Effective federal funds rate and 2-year Treasury yield (a market 
   <category>inflation</category>
   <category>labor market</category>
   <guid>https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/</guid>
-  <pubDate>Sat, 20 Jun 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 20 Jun 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/images/june-2026-dot-plot-shift.png" medium="image" type="image/png" height="92" width="144"/>
 </item>
 <item>
@@ -21181,7 +21181,7 @@ Figure&nbsp;3: Top: approximate contributions to the May 2026 headline CPI rate;
 </section>
 <section id="the-labor-market-backdrop-real-wages-turn-negative" class="level2">
 <h2 class="anchored" data-anchor-id="the-labor-market-backdrop-real-wages-turn-negative">4. The labor market backdrop: real wages turn negative</h2>
-<p>Passthrough needs a transmission mechanism, and the most important one is wages. Here the May evidence points toward containment. The <a href="../../posts/2026-06-06-may-2026-jobs-report-stabilization/">May jobs report</a> showed payrolls up <strong>+172k</strong> with unemployment steady at 4.3%, a labor market stabilizing rather than overheating. Average hourly earnings rose +3.4% over the year, unchanged in pace for months. With headline inflation at +4.2%, that arithmetic has turned <strong>real wage growth negative</strong>: -0.7% year over year in May 2026.</p>
+<p>Passthrough needs a transmission mechanism, and the most important one is wages. Here the May evidence points toward containment. The <a href="../..\posts/2026-06-06-may-2026-jobs-report-stabilization/">May jobs report</a> showed payrolls up <strong>+172k</strong> with unemployment steady at 4.3%, a labor market stabilizing rather than overheating. Average hourly earnings rose +3.4% over the year, unchanged in pace for months. With headline inflation at +4.2%, that arithmetic has turned <strong>real wage growth negative</strong>: -0.7% year over year in May 2026.</p>
 <div id="cell-fig-wages-inflation" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -22269,7 +22269,7 @@ Figure&nbsp;5: Top: the March 2026 dot plot median path against the market-impli
   <category>federal reserve</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/</guid>
-  <pubDate>Sat, 13 Jun 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 13 Jun 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/images/may-2026-cpi-passthrough-dashboard.png" medium="image" type="image/png" height="145" width="144"/>
 </item>
 <item>
@@ -25301,7 +25301,7 @@ Figure&nbsp;5: Top: scatter of ADP vs.&nbsp;CES private monthly changes (last 24
   <category>data visualization</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/</guid>
-  <pubDate>Sat, 06 Jun 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 06 Jun 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/images/may-2026-labor-dashboard.png" medium="image" type="image/png" height="106" width="144"/>
 </item>
 <item>
@@ -27758,7 +27758,7 @@ Figure&nbsp;5: The COVID-era expansion has produced significantly faster cumulat
   <category>federal reserve</category>
   <category>markets</category>
   <guid>https://gilboa.blog/posts/2026-05-29-q1-gdp-revision-consumer-ai/</guid>
-  <pubDate>Fri, 29 May 2026 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 29 May 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-05-29-q1-gdp-revision-consumer-ai/images/gdp-contributions.png" medium="image" type="image/png" height="93" width="144"/>
 </item>
 <item>
@@ -27832,7 +27832,7 @@ Figure&nbsp;5: The COVID-era expansion has produced significantly faster cumulat
 </div>
 </div>
 <p>The May inflation setup is no longer just a question about whether gasoline is expensive. It is a question about whether expensive gasoline stays contained. The April CPI report put headline CPI at <strong>+3.8%</strong> year over year, energy at <strong>+17.9%</strong>, gasoline at <strong>+28.4%</strong>, and core CPI at <strong>+2.8%</strong>. That mix matters because energy can move headline inflation quickly, while core inflation tells us whether the shock is leaking into slower-moving prices. The next CPI release, scheduled for June 10, 2026, will arrive just before the June 16-17, 2026 FOMC meeting. That makes May a passthrough test: a gasoline shock is painful, but a gasoline shock that lifts services, goods, and expectations is harder for markets and policymakers to look through.</p>
-<p>The practical issue is timing. Energy prices can jump in days, but CPI is measured over a month and core categories often adjust with a delay. A retailer can absorb higher fuel and freight costs for a short period, but a longer shock starts to affect delivery fees, shelf prices, travel costs, and contract negotiations. That is why this update focuses less on whether April was a bad report and more on what May must prove. If gasoline cools and core remains steady, the inflation impulse looks contained. If gasoline stays hot while core services firm again, the story shifts from volatility to persistence. See also: <a href="../../posts/2026-05-12-april-2026-cpi/">April 2026 CPI post</a>.</p>
+<p>The practical issue is timing. Energy prices can jump in days, but CPI is measured over a month and core categories often adjust with a delay. A retailer can absorb higher fuel and freight costs for a short period, but a longer shock starts to affect delivery fees, shelf prices, travel costs, and contract negotiations. That is why this update focuses less on whether April was a bad report and more on what May must prove. If gasoline cools and core remains steady, the inflation impulse looks contained. If gasoline stays hot while core services firm again, the story shifts from volatility to persistence. See also: <a href="../..\posts/2026-05-12-april-2026-cpi/">April 2026 CPI post</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -30047,7 +30047,7 @@ Figure&nbsp;5: May CPI scenarios frame the risk before the June CPI release and 
   <category>federal reserve</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-05-23-energy-shock-cpi-passthrough/</guid>
-  <pubDate>Sat, 23 May 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 23 May 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-05-23-energy-shock-cpi-passthrough/images/may-2026-inflation-dashboard.png" medium="image" type="image/png" height="91" width="144"/>
 </item>
 <item>
@@ -31160,7 +31160,7 @@ Figure&nbsp;3: Selected April 2026 non-energy CPI components. Shelter and severa
   <category>markets</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-05-12-april-2026-cpi/</guid>
-  <pubDate>Tue, 12 May 2026 00:00:00 GMT</pubDate>
+  <pubDate>Tue, 12 May 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>April 2026 Jobs Report: Soft Payrolls Follow March Rebound - What the Full Labor Dashboard Reveals</title>
@@ -34210,7 +34210,7 @@ Figure&nbsp;5: Top panel: scatter of ADP private vs.&nbsp;CES private monthly ch
   <category>data-visualization</category>
   <category>visualization</category>
   <guid>https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/</guid>
-  <pubDate>Sat, 09 May 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 09 May 2026 04:00:00 GMT</pubDate>
   <media:content url="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/images/april-2026-labor-dashboard.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
@@ -36964,7 +36964,7 @@ Figure&nbsp;5: Upper panel: 2s10s Treasury spread (10-year minus 2-year Treasury
   <category>fomc</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/20260501 April FOMC decision/</guid>
-  <pubDate>Fri, 01 May 2026 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 01 May 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>April 2026 Federal Open Market Committee (FOMC) Preview: Dot Plot and Market Rate Paths Reshuffled by CPI</title>
@@ -39875,7 +39875,7 @@ Figure&nbsp;5: 2s10s Treasury yield spread, measured as the 10-year Treasury yie
   <category>fomc</category>
   <category>interest-rate-outlook</category>
   <guid>https://gilboa.blog/posts/2026-04-25-fomc-preview/</guid>
-  <pubDate>Sat, 25 Apr 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 25 Apr 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>March 2026 CPI: Energy Shock, Core Stability</title>
@@ -40476,7 +40476,7 @@ Figure&nbsp;1: Waterfall contribution to the March 2026 +0.9pp MoM headline CPI 
 <section id="component-deep-dive" class="level2">
 <h2 class="anchored" data-anchor-id="component-deep-dive">2. Component Deep Dive</h2>
 <p>The energy surge was historic on two fronts. Energy rose +10.9% MoM, the largest monthly increase since September 2005. Gasoline rose +21.2% MoM, the largest single-month increase since that series was first published in 1967. That one component contributed an estimated +0.68 percentage points, roughly 75% of the total headline move. Fuel oil surged +30.7%, the largest jump since February 2000. Electricity was more modest at +0.8% MoM (+4.6% YoY).</p>
-<p>Shelter continued its slow grind: +0.3% MoM and +3.0% YoY. It remains the largest single core contributor, but it is not reaccelerating. That is consistent with the deceleration trend tracked in the <a href="../../posts/2026-02-16-us-inflation-cooling/">February inflation post</a>.</p>
+<p>Shelter continued its slow grind: +0.3% MoM and +3.0% YoY. It remains the largest single core contributor, but it is not reaccelerating. That is consistent with the deceleration trend tracked in the <a href="../..\posts/2026-02-16-us-inflation-cooling/">February inflation post</a>.</p>
 <p>Food was flat overall (0.0% MoM) with groceries declining (-0.2%). The notable non-energy index moves were mixed: apparel rose +1.0%, while used cars (-0.4%), medical care (-0.2%), and personal care (-0.5%) declined. Airline fares rose +2.7%, but that is better read as a possible energy pass-through channel than as independent core pressure. Transportation services often react to fuel costs with a lag, so the next one to three months matter more than the March airfare move by itself.</p>
 <section id="chart-2-the-longer-trend---energy-noise-vs.-core-signal" class="level3">
 <h3 class="anchored" data-anchor-id="chart-2-the-longer-trend---energy-noise-vs.-core-signal">Chart 2: The Longer Trend - Energy Noise vs.&nbsp;Core Signal</h3>
@@ -41214,9 +41214,9 @@ Figure&nbsp;3: Month-over-month percent change for selected non-energy CPI index
 <section id="what-it-means-for-the-fed-consumers-and-markets" class="level2">
 <h2 class="anchored" data-anchor-id="what-it-means-for-the-fed-consumers-and-markets">3. What It Means for the Fed, Consumers, and Markets</h2>
 <p>The Fed does not target gasoline prices directly, but it cannot ignore a headline CPI shock this large. The policy question is whether the energy move stays contained or bleeds into inflation expectations and service prices.</p>
-<p><strong>For the Fed:</strong> Core CPI rose only +0.2% in March, the same pace as February. Shelter is still cooling, food was flat, and several core components declined. That supports the view that the underlying inflation trend has not reset higher. The caution is that headline inflation moved from +2.4% to +3.3% in one month, and gasoline prices are highly visible. With the <a href="../../posts/2026-04-06-march-jobs-rebound/">March jobs rebound</a> reducing labor-market urgency, the practical read is patience, not panic: this print should push rate-cut odds later into 2026, or toward fewer cuts, unless April reverses the energy shock. It does not argue for a new tightening cycle on its own.</p>
+<p><strong>For the Fed:</strong> Core CPI rose only +0.2% in March, the same pace as February. Shelter is still cooling, food was flat, and several core components declined. That supports the view that the underlying inflation trend has not reset higher. The caution is that headline inflation moved from +2.4% to +3.3% in one month, and gasoline prices are highly visible. With the <a href="../..\posts/2026-04-06-march-jobs-rebound/">March jobs rebound</a> reducing labor-market urgency, the practical read is patience, not panic: this print should push rate-cut odds later into 2026, or toward fewer cuts, unless April reverses the energy shock. It does not argue for a new tightening cycle on its own.</p>
 <p><strong>For consumers:</strong> This was a gasoline shock first. Food overall was unchanged, food at home declined, and core services did not break higher. That matters for household budgets: the pain is immediate at the pump, but it is not yet a broad-based increase in the entire consumption basket. If gasoline remains elevated, the second-round pressure would show up through commuting costs, air travel, shipping costs, and eventually some goods prices.</p>
-<p><strong>For markets:</strong> The headline number is enough to reprice rate-cut expectations, especially when paired with the <a href="../../posts/2026-04-06-march-jobs-rebound/">March jobs rebound</a>. A stable labor market gives the Fed less reason to look through a fresh inflation shock quickly. The market-positive part is that the core trend remains contained. Core CPI at +2.6% YoY is still above target, but the monthly pace did not accelerate.</p>
+<p><strong>For markets:</strong> The headline number is enough to reprice rate-cut expectations, especially when paired with the <a href="../..\posts/2026-04-06-march-jobs-rebound/">March jobs rebound</a>. A stable labor market gives the Fed less reason to look through a fresh inflation shock quickly. The market-positive part is that the core trend remains contained. Core CPI at +2.6% YoY is still above target, but the monthly pace did not accelerate.</p>
 <p><strong>Near term:</strong> Expect April to be the key test. One large monthly gasoline move does not automatically create a new inflation regime. It does, however, make the next print more important. The April CPI release is scheduled for May 12, 2026.</p>
 <p><strong>Risk case:</strong> If energy volatility is sustained by a supply shock rather than a one-time adjustment, the pass-through to transportation services and shipping-sensitive goods could take two to three months to appear. That is what to watch in the May and June data.</p>
 </section>
@@ -41285,7 +41285,7 @@ Figure&nbsp;3: Month-over-month percent change for selected non-energy CPI index
   <category>markets</category>
   <category>federal reserve</category>
   <guid>https://gilboa.blog/posts/2026-04-18-march-2026-cpi/</guid>
-  <pubDate>Sat, 18 Apr 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 18 Apr 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Visualizing the March 2026 Jobs Rebound: What the Claims Data Already Told Us</title>
@@ -41296,9 +41296,9 @@ Figure&nbsp;3: Month-over-month percent change for selected non-energy CPI index
 
 
 
-<p>The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>, low initial jobless claims and the <a href="../../posts/2026-03-22-btos-march/">BTOS</a> pointed to a labor market slowing without breaking: hiring caution after temporary drags from weather and strikes, but no broad layoffs. The March 2026 Employment Situation report confirms that cleaner interpretation.</p>
+<p>The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a>, low initial jobless claims and the <a href="../..\posts/2026-03-22-btos-march/">BTOS</a> pointed to a labor market slowing without breaking: hiring caution after temporary drags from weather and strikes, but no broad layoffs. The March 2026 Employment Situation report confirms that cleaner interpretation.</p>
 <p>Nonfarm payroll employment rose by <strong>178,000</strong> in March, well above the consensus expectation of roughly +59,000, following a revised -133,000 in February. The unemployment rate edged down to <strong>4.3%</strong> from 4.4%, though the decline largely reflected a reduction in the labor force rather than a surge in hiring. As the claims data previewed, layoffs were never the story - hiring had simply paused amid temporary factors. March shows that pause easing.</p>
-<p>This post closes the loop on the series: from the February miss and <a href="../../posts/2026-03-15-divergence/">divergence signals</a>, through the <a href="../../posts/2026-03-29-btos-and-unemployment/">pre-report claims and BTOS read</a>, to today’s rebound numbers. As always, we break it down with clear visuals, sector details, and full Python code for reproducibility.</p>
+<p>This post closes the loop on the series: from the February miss and <a href="../..\posts/2026-03-15-divergence/">divergence signals</a>, through the <a href="../..\posts/2026-03-29-btos-and-unemployment/">pre-report claims and BTOS read</a>, to today’s rebound numbers. As always, we break it down with clear visuals, sector details, and full Python code for reproducibility.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -41364,7 +41364,7 @@ Figure&nbsp;3: Month-over-month percent change for selected non-energy CPI index
 </div>
 <section id="headline-numbers-revisions" class="level2">
 <h2 class="anchored" data-anchor-id="headline-numbers-revisions">1. Headline Numbers &amp; Revisions</h2>
-<p>The March print of <strong>+178,000</strong> net new nonfarm payroll jobs is the clearest possible validation of the pre-report read. The <a href="../../posts/2026-03-29-btos-and-unemployment/">claims data from March 29</a> showed initial jobless claims at 215,000 and continuing claims at a near two-year low of 1,819,000. The 4-week moving average for initial claims stood at a steady 219,000, comfortably below the post-2023 average. Nothing in that data was consistent with a second consecutive payroll miss - and none materialized.</p>
+<p>The March print of <strong>+178,000</strong> net new nonfarm payroll jobs is the clearest possible validation of the pre-report read. The <a href="../..\posts/2026-03-29-btos-and-unemployment/">claims data from March 29</a> showed initial jobless claims at 215,000 and continuing claims at a near two-year low of 1,819,000. The 4-week moving average for initial claims stood at a steady 219,000, comfortably below the post-2023 average. Nothing in that data was consistent with a second consecutive payroll miss - and none materialized.</p>
 <p>The revision picture is more nuanced. February was revised further down to -133,000, while January was revised up to +160,000. The net effect is a 3-month average of roughly <strong>+68,000</strong> - an honest number that reflects how much the February anomaly depressed the trend. The underlying pace of job creation in a healthy month, as March illustrates, sits considerably higher.</p>
 <div id="cell-fig-payroll-history" class="cell" data-execution_count="3">
 <details class="code-fold">
@@ -41868,7 +41868,7 @@ Figure&nbsp;1: Monthly nonfarm payroll changes over the past 18 months, with 3-m
 </div>
 </div>
 </div>
-<p>The chart tells the complete story of what this series has looked like over the past year and a half. Payroll growth was running above +180,000 per month for much of 2025. The late-2025 slowdown visible in the 3-month MA was a deceleration, not a break. February’s -133,000 was the break - and it was temporary. As the <a href="../../posts/2026-03-15-divergence/">March 15 divergence analysis</a> and <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 claims post</a> both documented, three identifiable factors converged: weather-related disruptions that suppressed construction and outdoor work during the survey reference week, the ambulatory services strike that mechanically removed health care workers from the payroll count, and a late-January claims spike that coincided exactly with the February survey window and then reversed within two weeks. None of those three factors were durable. March’s rebound restores the narrative of a labor market that is normalizing at a moderate pace - not collapsing.</p>
+<p>The chart tells the complete story of what this series has looked like over the past year and a half. Payroll growth was running above +180,000 per month for much of 2025. The late-2025 slowdown visible in the 3-month MA was a deceleration, not a break. February’s -133,000 was the break - and it was temporary. As the <a href="../..\posts/2026-03-15-divergence/">March 15 divergence analysis</a> and <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 claims post</a> both documented, three identifiable factors converged: weather-related disruptions that suppressed construction and outdoor work during the survey reference week, the ambulatory services strike that mechanically removed health care workers from the payroll count, and a late-January claims spike that coincided exactly with the February survey window and then reversed within two weeks. None of those three factors were durable. March’s rebound restores the narrative of a labor market that is normalizing at a moderate pace - not collapsing.</p>
 </section>
 <section id="sector-breakdown-where-the-jobs-came-from" class="level2">
 <h2 class="anchored" data-anchor-id="sector-breakdown-where-the-jobs-came-from">2. Sector Breakdown: Where the Jobs Came From</h2>
@@ -43120,9 +43120,9 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 </section>
 <section id="connecting-the-dots" class="level2">
 <h2 class="anchored" data-anchor-id="connecting-the-dots">5. Connecting the Dots</h2>
-<p>The cleaner interpretation that the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a> offered has held up in full. Three points deserve emphasis.</p>
+<p>The cleaner interpretation that the <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a> offered has held up in full. Three points deserve emphasis.</p>
 <p><strong>Breadth with a soft average.</strong> March’s gain of +178,000 nonfarm payroll jobs looks strong in isolation, but the 3-month average of roughly +68,000 jobs per month tells a more complete story. That average is dragged down by February’s -133,000 - but it also reflects genuine moderation in the underlying trend. The pace of hiring seen through much of 2024, which regularly exceeded 200,000 jobs added per month, is not what March 2026 looks like once you strip out the strike rebound. The labor market is growing, but at a more modest pace.</p>
-<p><strong>Temporary factors vs.&nbsp;underlying dynamics.</strong> The February miss had three identifiable temporary components: weather-related disruptions in construction and outdoor work, the ambulatory services strike that depressed health care, and a late-January claims spike that coincided with the survey reference period. All three have reversed in March. None of them signaled a structural deterioration, which is what the <a href="../../posts/2026-03-22-btos-march/">BTOS data from March 22</a> reinforced: businesses reported hiring caution, not hiring collapse. The BTOS employees index below 50 was telling us that fewer firms were adding headcount, not that firms were cutting.</p>
+<p><strong>Temporary factors vs.&nbsp;underlying dynamics.</strong> The February miss had three identifiable temporary components: weather-related disruptions in construction and outdoor work, the ambulatory services strike that depressed health care, and a late-January claims spike that coincided with the survey reference period. All three have reversed in March. None of them signaled a structural deterioration, which is what the <a href="../..\posts/2026-03-22-btos-march/">BTOS data from March 22</a> reinforced: businesses reported hiring caution, not hiring collapse. The BTOS employees index below 50 was telling us that fewer firms were adding headcount, not that firms were cutting.</p>
 <p><strong>No evidence of accelerating layoffs.</strong> This is the most important signal and the one the claims data communicated most clearly. Continuing claims at 1,819,000 represented a near two-year low. Workers who lose their jobs are finding new ones at a pace inconsistent with deteriorating labor market conditions. The normalization after the February anomaly is exactly what the claims trajectory suggested.</p>
 </section>
 <section id="what-it-means" class="level2">
@@ -43140,7 +43140,7 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 <p>The March report validates the framework offered in the pre-report analysis. The labor market is slowing through reduced hiring pace, not through layoffs. The 3-month average tells a moderate story; the claims data tells a stable one. There is no recession signal here.</p>
 </div>
 </div>
-<p><strong>For the Fed:</strong> A March gain of +178,000 nonfarm payroll jobs combined with an unemployment rate of 4.3% and claims at 219,000 leaves the Fed with no labor-market rationale for emergency easing. The labor side of the dual mandate looks stable. Rate decisions will be driven by the inflation side of the ledger - where the <a href="../../posts/2026-03-22-btos-march/">BTOS’s elevated input price expectations</a> remain the more relevant data point. A patient approach is supported; urgency is not.</p>
+<p><strong>For the Fed:</strong> A March gain of +178,000 nonfarm payroll jobs combined with an unemployment rate of 4.3% and claims at 219,000 leaves the Fed with no labor-market rationale for emergency easing. The labor side of the dual mandate looks stable. Rate decisions will be driven by the inflation side of the ledger - where the <a href="../..\posts/2026-03-22-btos-march/">BTOS’s elevated input price expectations</a> remain the more relevant data point. A patient approach is supported; urgency is not.</p>
 <p><strong>For workers:</strong> Re-employment momentum is returning. The continuing claims trajectory confirms that displaced workers are cycling back into jobs at a healthy pace. The risk remains what it has been throughout this series: a hiring freeze that limits new openings even as existing jobs stay secure. In short, existing jobs feel secure; new opportunities remain the constraint. The BTOS future employees index above 50 suggests businesses expect to open those hiring pipelines again - but the timing depends on demand clarity that the broader economic picture has not yet delivered.</p>
 <p><strong>For markets:</strong> The soft-landing case is reinforced. February’s miss was the noise; March is the signal. The 3-month average of roughly +68,000 jobs per month is not exciting, but it is consistent with an economy that is normalizing rather than contracting. Rate-cut expectations anchored further out are consistent with this read. A second miss would have raised harder questions about structural shifts that weekly data cannot resolve; instead, we return to the slower-moving story of gradual deceleration.</p>
 </section>
@@ -43194,12 +43194,12 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 <li>Nonfarm payroll figures are subject to revision in subsequent months. The January and February figures used here reflect the revisions published in the April 3 release; further revisions are possible.</li>
 <li>The March health care gain (+89,900) includes a mechanical rebound from the ambulatory services strike that concluded in late February. The underlying organic health care hiring pace is lower than the headline contribution suggests.</li>
 <li>The unemployment rate decline to 4.3% reflects both genuine re-employment and a reduction in the measured labor force. The two effects cannot be fully disaggregated from the household survey headline alone.</li>
-<li>The initial claims series used in the overlay chart (Section 4) uses monthly averages of the weekly 4-week moving average, an approximation for alignment with monthly payroll data. The underlying weekly series is available in the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>.</li>
+<li>The initial claims series used in the overlay chart (Section 4) uses monthly averages of the weekly 4-week moving average, an approximation for alignment with monthly payroll data. The underlying weekly series is available in the <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a>.</li>
 <li>Seasonal adjustment factors in both the payroll and claims series can introduce distortions around year-end and federal holiday periods, which may partially explain the late-January/February volatility.</li>
 <li>The consensus estimate of roughly +59,000 represents a composite of forecasts published before the April 3 release and may not reflect the exact median of all surveyed economists.</li>
 </ul>
 <hr>
-<p><em>Data current as of April 3, 2026. BLS Employment Situation release dated April 3, 2026. See also: <a href="../../posts/2026-03-29-btos-and-unemployment/">What Claims Data Tells Us Before the April Jobs Report</a> (March 29, 2026) and <a href="../../posts/2026-03-22-btos-march/">Visualizing the March 2026 BTOS</a> (March 22, 2026).</em></p>
+<p><em>Data current as of April 3, 2026. BLS Employment Situation release dated April 3, 2026. See also: <a href="../..\posts/2026-03-29-btos-and-unemployment/">What Claims Data Tells Us Before the April Jobs Report</a> (March 29, 2026) and <a href="../..\posts/2026-03-22-btos-march/">Visualizing the March 2026 BTOS</a> (March 22, 2026).</em></p>
 
 
 </section>
@@ -43211,7 +43211,7 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
   <category>data analysis</category>
   <category>data visualization</category>
   <guid>https://gilboa.blog/posts/2026-04-06-march-jobs-rebound/</guid>
-  <pubDate>Mon, 06 Apr 2026 00:00:00 GMT</pubDate>
+  <pubDate>Mon, 06 Apr 2026 04:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What Claims Data Tells Us Before the April Jobs Report</title>
@@ -43223,7 +43223,7 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 
 
 <p>The March employment situation report drops on April 3, 2026, and the question on everyone’s mind is whether February’s payroll miss was a blip or the start of something worse. Weekly unemployment claims, the closest thing to a real-time pulse on the labor market, offer the clearest preview we have. Initial claims for the week ending March 21 came in at <strong>210,000</strong>, with continuing claims falling to <strong>1,819,000</strong>, the lowest level since May 25, 2024. The 4-week moving average for initial claims sits at <strong>210,500</strong>, comfortably below the 223,149 average since 2023. The signal heading into Friday is unambiguous: whatever is happening in the labor market, it is not layoffs.</p>
-<p>For context on the employer sentiment side of this story, the <a href="../../posts/2026-03-22-btos-march/">March 22 BTOS analysis</a> showed businesses pulling back on hiring while holding steady on overall performance. That framing still holds. This post focuses on what the claims data adds to that picture.</p>
+<p>For context on the employer sentiment side of this story, the <a href="../..\posts/2026-03-22-btos-march/">March 22 BTOS analysis</a> showed businesses pulling back on hiring while holding steady on overall performance. That framing still holds. This post focuses on what the claims data adds to that picture.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -44846,7 +44846,7 @@ Figure&nbsp;4: Ratio of continuing claims to initial claims (4-week MAs) since 2
 </div>
 </div>
 <p><strong>For the Fed:</strong> Claims at 210,000 and an insured unemployment rate of 1.2% leave no room to argue that the labor market is deteriorating. The February payroll miss increasingly looks like an anomaly, not a trend break. If March payrolls rebound, the Fed’s case for holding rates steady strengthens further. Any rate action will be driven by the inflation side, not the labor side.</p>
-<p><strong>For workers:</strong> The continuing claims data is the most encouraging signal. At 1,819,000, displaced workers are finding re-employment faster than at any point since mid-2024. The risk is not layoffs but the hiring freeze documented in the <a href="../../posts/2026-03-22-btos-march/">BTOS data</a>: fewer new openings even as existing jobs remain secure.</p>
+<p><strong>For workers:</strong> The continuing claims data is the most encouraging signal. At 1,819,000, displaced workers are finding re-employment faster than at any point since mid-2024. The risk is not layoffs but the hiring freeze documented in the <a href="../..\posts/2026-03-22-btos-march/">BTOS data</a>: fewer new openings even as existing jobs remain secure.</p>
 <p><strong>For markets:</strong> A strong March payroll number, supported by the claims trend, would reinforce the soft-landing narrative and likely push rate-cut expectations further out. A second miss, given the claims backdrop, would raise questions about structural shifts in the labor market that weekly data cannot capture.</p>
 </section>
 <section id="methodology-data" class="level2">
@@ -44886,7 +44886,7 @@ Figure&nbsp;4: Ratio of continuing claims to initial claims (4-week MAs) since 2
 <li>Seasonal adjustment factors can introduce distortions around holidays and year-end, which may partially explain the late-January spike.</li>
 <li>The insured unemployment rate covers only the fraction of the labor force eligible for and receiving UI benefits, making it structurally lower than the headline unemployment rate (U-3).</li>
 <li>Weekly claims data can be revised in subsequent weeks. The figures used here are advance estimates from the March 26 release.</li>
-<li>This post references the Census Bureau’s Business Trends and Outlook Survey (BTOS) via the <a href="../../posts/2026-03-22-btos-march/">March 22 analysis</a>. BTOS is an experimental data product with a unit response rate of approximately 10-15%, which introduces potential nonresponse bias. Larger, more established businesses tend to respond at higher rates, meaning the survey may underrepresent smaller firms, startups, and businesses in sectors with less administrative capacity. The Census Bureau publishes unit response rates (URR) with each release and applies weighting adjustments to mitigate known biases, but readers should interpret BTOS diffusion indexes as directional signals from a particular slice of the business population rather than precise measurements of economy-wide conditions.</li>
+<li>This post references the Census Bureau’s Business Trends and Outlook Survey (BTOS) via the <a href="../..\posts/2026-03-22-btos-march/">March 22 analysis</a>. BTOS is an experimental data product with a unit response rate of approximately 10-15%, which introduces potential nonresponse bias. Larger, more established businesses tend to respond at higher rates, meaning the survey may underrepresent smaller firms, startups, and businesses in sectors with less administrative capacity. The Census Bureau publishes unit response rates (URR) with each release and applies weighting adjustments to mitigate known biases, but readers should interpret BTOS diffusion indexes as directional signals from a particular slice of the business population rather than precise measurements of economy-wide conditions.</li>
 </ul>
 <hr>
 <p><em>Data current as of March 26, 2026. Claims data through week ending March 21, 2026. The April employment situation report is scheduled for April 3, 2026.</em></p>
@@ -44901,7 +44901,7 @@ Figure&nbsp;4: Ratio of continuing claims to initial claims (4-week MAs) since 2
   <category>data visualization</category>
   <category>labor market</category>
   <guid>https://gilboa.blog/posts/2026-03-29-btos-and-unemployment/</guid>
-  <pubDate>Sun, 29 Mar 2026 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 29 Mar 2026 04:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

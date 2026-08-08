@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,16 +10,10 @@
 
 <title>Visualizing the March 2026 Jobs Rebound: What the Claims Data Already Told Us – Yoram Gilboa</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -75,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-ec54346cb34782964686aa0321214b89.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ac33baa41684ff03931d69dfd17a9fd3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -112,7 +107,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
+
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -237,9 +235,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>, low initial jobless claims and the <a href="../../posts/2026-03-22-btos-march/">BTOS</a> pointed to a labor market slowing without breaking: hiring caution after temporary drags from weather and strikes, but no broad layoffs. The March 2026 Employment Situation report confirms that cleaner interpretation.</p>
+<p>The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a>, low initial jobless claims and the <a href="../..\posts/2026-03-22-btos-march/">BTOS</a> pointed to a labor market slowing without breaking: hiring caution after temporary drags from weather and strikes, but no broad layoffs. The March 2026 Employment Situation report confirms that cleaner interpretation.</p>
 <p>Nonfarm payroll employment rose by <strong>178,000</strong> in March, well above the consensus expectation of roughly +59,000, following a revised -133,000 in February. The unemployment rate edged down to <strong>4.3%</strong> from 4.4%, though the decline largely reflected a reduction in the labor force rather than a surge in hiring. As the claims data previewed, layoffs were never the story - hiring had simply paused amid temporary factors. March shows that pause easing.</p>
-<p>This post closes the loop on the series: from the February miss and <a href="../../posts/2026-03-15-divergence/">divergence signals</a>, through the <a href="../../posts/2026-03-29-btos-and-unemployment/">pre-report claims and BTOS read</a>, to today’s rebound numbers. As always, we break it down with clear visuals, sector details, and full Python code for reproducibility.</p>
+<p>This post closes the loop on the series: from the February miss and <a href="../..\posts/2026-03-15-divergence/">divergence signals</a>, through the <a href="../..\posts/2026-03-29-btos-and-unemployment/">pre-report claims and BTOS read</a>, to today’s rebound numbers. As always, we break it down with clear visuals, sector details, and full Python code for reproducibility.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -305,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="headline-numbers-revisions" class="level2">
 <h2 class="anchored" data-anchor-id="headline-numbers-revisions">1. Headline Numbers &amp; Revisions</h2>
-<p>The March print of <strong>+178,000</strong> net new nonfarm payroll jobs is the clearest possible validation of the pre-report read. The <a href="../../posts/2026-03-29-btos-and-unemployment/">claims data from March 29</a> showed initial jobless claims at 215,000 and continuing claims at a near two-year low of 1,819,000. The 4-week moving average for initial claims stood at a steady 219,000, comfortably below the post-2023 average. Nothing in that data was consistent with a second consecutive payroll miss - and none materialized.</p>
+<p>The March print of <strong>+178,000</strong> net new nonfarm payroll jobs is the clearest possible validation of the pre-report read. The <a href="../..\posts/2026-03-29-btos-and-unemployment/">claims data from March 29</a> showed initial jobless claims at 215,000 and continuing claims at a near two-year low of 1,819,000. The 4-week moving average for initial claims stood at a steady 219,000, comfortably below the post-2023 average. Nothing in that data was consistent with a second consecutive payroll miss - and none materialized.</p>
 <p>The revision picture is more nuanced. February was revised further down to -133,000, while January was revised up to +160,000. The net effect is a 3-month average of roughly <strong>+68,000</strong> - an honest number that reflects how much the February anomaly depressed the trend. The underlying pace of job creation in a healthy month, as March illustrates, sits considerably higher.</p>
 <div id="cell-fig-payroll-history" class="cell" data-execution_count="3">
 <details class="code-fold">
@@ -389,7 +387,7 @@ Figure&nbsp;1: Monthly nonfarm payroll changes over the past 18 months, with 3-m
 </div>
 </div>
 </div>
-<p>The chart tells the complete story of what this series has looked like over the past year and a half. Payroll growth was running above +180,000 per month for much of 2025. The late-2025 slowdown visible in the 3-month MA was a deceleration, not a break. February’s -133,000 was the break - and it was temporary. As the <a href="../../posts/2026-03-15-divergence/">March 15 divergence analysis</a> and <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 claims post</a> both documented, three identifiable factors converged: weather-related disruptions that suppressed construction and outdoor work during the survey reference week, the ambulatory services strike that mechanically removed health care workers from the payroll count, and a late-January claims spike that coincided exactly with the February survey window and then reversed within two weeks. None of those three factors were durable. March’s rebound restores the narrative of a labor market that is normalizing at a moderate pace - not collapsing.</p>
+<p>The chart tells the complete story of what this series has looked like over the past year and a half. Payroll growth was running above +180,000 per month for much of 2025. The late-2025 slowdown visible in the 3-month MA was a deceleration, not a break. February’s -133,000 was the break - and it was temporary. As the <a href="../..\posts/2026-03-15-divergence/">March 15 divergence analysis</a> and <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 claims post</a> both documented, three identifiable factors converged: weather-related disruptions that suppressed construction and outdoor work during the survey reference week, the ambulatory services strike that mechanically removed health care workers from the payroll count, and a late-January claims spike that coincided exactly with the February survey window and then reversed within two weeks. None of those three factors were durable. March’s rebound restores the narrative of a labor market that is normalizing at a moderate pace - not collapsing.</p>
 </section>
 <section id="sector-breakdown-where-the-jobs-came-from" class="level2">
 <h2 class="anchored" data-anchor-id="sector-breakdown-where-the-jobs-came-from">2. Sector Breakdown: Where the Jobs Came From</h2>
@@ -638,9 +636,9 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 </section>
 <section id="connecting-the-dots" class="level2">
 <h2 class="anchored" data-anchor-id="connecting-the-dots">5. Connecting the Dots</h2>
-<p>The cleaner interpretation that the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a> offered has held up in full. Three points deserve emphasis.</p>
+<p>The cleaner interpretation that the <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a> offered has held up in full. Three points deserve emphasis.</p>
 <p><strong>Breadth with a soft average.</strong> March’s gain of +178,000 nonfarm payroll jobs looks strong in isolation, but the 3-month average of roughly +68,000 jobs per month tells a more complete story. That average is dragged down by February’s -133,000 - but it also reflects genuine moderation in the underlying trend. The pace of hiring seen through much of 2024, which regularly exceeded 200,000 jobs added per month, is not what March 2026 looks like once you strip out the strike rebound. The labor market is growing, but at a more modest pace.</p>
-<p><strong>Temporary factors vs.&nbsp;underlying dynamics.</strong> The February miss had three identifiable temporary components: weather-related disruptions in construction and outdoor work, the ambulatory services strike that depressed health care, and a late-January claims spike that coincided with the survey reference period. All three have reversed in March. None of them signaled a structural deterioration, which is what the <a href="../../posts/2026-03-22-btos-march/">BTOS data from March 22</a> reinforced: businesses reported hiring caution, not hiring collapse. The BTOS employees index below 50 was telling us that fewer firms were adding headcount, not that firms were cutting.</p>
+<p><strong>Temporary factors vs.&nbsp;underlying dynamics.</strong> The February miss had three identifiable temporary components: weather-related disruptions in construction and outdoor work, the ambulatory services strike that depressed health care, and a late-January claims spike that coincided with the survey reference period. All three have reversed in March. None of them signaled a structural deterioration, which is what the <a href="../..\posts/2026-03-22-btos-march/">BTOS data from March 22</a> reinforced: businesses reported hiring caution, not hiring collapse. The BTOS employees index below 50 was telling us that fewer firms were adding headcount, not that firms were cutting.</p>
 <p><strong>No evidence of accelerating layoffs.</strong> This is the most important signal and the one the claims data communicated most clearly. Continuing claims at 1,819,000 represented a near two-year low. Workers who lose their jobs are finding new ones at a pace inconsistent with deteriorating labor market conditions. The normalization after the February anomaly is exactly what the claims trajectory suggested.</p>
 </section>
 <section id="what-it-means" class="level2">
@@ -658,7 +656,7 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 <p>The March report validates the framework offered in the pre-report analysis. The labor market is slowing through reduced hiring pace, not through layoffs. The 3-month average tells a moderate story; the claims data tells a stable one. There is no recession signal here.</p>
 </div>
 </div>
-<p><strong>For the Fed:</strong> A March gain of +178,000 nonfarm payroll jobs combined with an unemployment rate of 4.3% and claims at 219,000 leaves the Fed with no labor-market rationale for emergency easing. The labor side of the dual mandate looks stable. Rate decisions will be driven by the inflation side of the ledger - where the <a href="../../posts/2026-03-22-btos-march/">BTOS’s elevated input price expectations</a> remain the more relevant data point. A patient approach is supported; urgency is not.</p>
+<p><strong>For the Fed:</strong> A March gain of +178,000 nonfarm payroll jobs combined with an unemployment rate of 4.3% and claims at 219,000 leaves the Fed with no labor-market rationale for emergency easing. The labor side of the dual mandate looks stable. Rate decisions will be driven by the inflation side of the ledger - where the <a href="../..\posts/2026-03-22-btos-march/">BTOS’s elevated input price expectations</a> remain the more relevant data point. A patient approach is supported; urgency is not.</p>
 <p><strong>For workers:</strong> Re-employment momentum is returning. The continuing claims trajectory confirms that displaced workers are cycling back into jobs at a healthy pace. The risk remains what it has been throughout this series: a hiring freeze that limits new openings even as existing jobs stay secure. In short, existing jobs feel secure; new opportunities remain the constraint. The BTOS future employees index above 50 suggests businesses expect to open those hiring pipelines again - but the timing depends on demand clarity that the broader economic picture has not yet delivered.</p>
 <p><strong>For markets:</strong> The soft-landing case is reinforced. February’s miss was the noise; March is the signal. The 3-month average of roughly +68,000 jobs per month is not exciting, but it is consistent with an economy that is normalizing rather than contracting. Rate-cut expectations anchored further out are consistent with this read. A second miss would have raised harder questions about structural shifts that weekly data cannot resolve; instead, we return to the slower-moving story of gradual deceleration.</p>
 </section>
@@ -712,12 +710,12 @@ Figure&nbsp;4: Initial claims 4-week moving average (left axis, inverted) alongs
 <li>Nonfarm payroll figures are subject to revision in subsequent months. The January and February figures used here reflect the revisions published in the April 3 release; further revisions are possible.</li>
 <li>The March health care gain (+89,900) includes a mechanical rebound from the ambulatory services strike that concluded in late February. The underlying organic health care hiring pace is lower than the headline contribution suggests.</li>
 <li>The unemployment rate decline to 4.3% reflects both genuine re-employment and a reduction in the measured labor force. The two effects cannot be fully disaggregated from the household survey headline alone.</li>
-<li>The initial claims series used in the overlay chart (Section 4) uses monthly averages of the weekly 4-week moving average, an approximation for alignment with monthly payroll data. The underlying weekly series is available in the <a href="../../posts/2026-03-29-btos-and-unemployment/">March 29 post</a>.</li>
+<li>The initial claims series used in the overlay chart (Section 4) uses monthly averages of the weekly 4-week moving average, an approximation for alignment with monthly payroll data. The underlying weekly series is available in the <a href="../..\posts/2026-03-29-btos-and-unemployment/">March 29 post</a>.</li>
 <li>Seasonal adjustment factors in both the payroll and claims series can introduce distortions around year-end and federal holiday periods, which may partially explain the late-January/February volatility.</li>
 <li>The consensus estimate of roughly +59,000 represents a composite of forecasts published before the April 3 release and may not reflect the exact median of all surveyed economists.</li>
 </ul>
 <hr>
-<p><em>Data current as of April 3, 2026. BLS Employment Situation release dated April 3, 2026. See also: <a href="../../posts/2026-03-29-btos-and-unemployment/">What Claims Data Tells Us Before the April Jobs Report</a> (March 29, 2026) and <a href="../../posts/2026-03-22-btos-march/">Visualizing the March 2026 BTOS</a> (March 22, 2026).</em></p>
+<p><em>Data current as of April 3, 2026. BLS Employment Situation release dated April 3, 2026. See also: <a href="../..\posts/2026-03-29-btos-and-unemployment/">What Claims Data Tells Us Before the April Jobs Report</a> (March 29, 2026) and <a href="../..\posts/2026-03-22-btos-march/">Visualizing the March 2026 BTOS</a> (March 22, 2026).</em></p>
 
 
 </section>
