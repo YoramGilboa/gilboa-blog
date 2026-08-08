@@ -1,0 +1,35 @@
+{
+  "retrieved_on": "2026-08-08",
+  "fred": {
+    "url": "https://fred.stlouisfed.org/",
+    "series": {
+      "PAYEMS": "All employees, total nonfarm",
+      "USPRIV": "All employees, total private",
+      "ADPMNUSNERSA": "ADP total private payroll employment",
+      "ADPMINDEDHLTNERSA": "ADP education and health services employment",
+      "USEHS": "BLS private education and health services employment",
+      "CES6561000001": "BLS private educational services employment",
+      "CES6562000001": "BLS health care and social assistance employment",
+      "CES6562000101": "BLS health care employment",
+      "CES6562400001": "BLS social assistance employment",
+      "UNRATE": "Unemployment rate",
+      "CIVPART": "Labor force participation rate",
+      "ICSA": "Initial unemployment claims",
+      "CES0500000003": "Average hourly earnings, total private"
+    }
+  },
+  "adp_national_employment_report": {
+    "url": "https://adpemploymentreport.com/",
+    "archive": "https://adpemploymentreport.com/artifacts/us_ner/20260805/ADP_NER_history.zip"
+  },
+  "adp_pay_insights": {
+    "url": "https://payinsights.adp.com/",
+    "archive": "https://payinsights.adp.com/artifacts/us_wage/20260805/ADP_PAY_history.zip"
+  },
+  "bls_employment_situation": {
+    "url": "https://www.bls.gov/news.release/empsit.nr0.htm"
+  },
+  "fomc_statement": {
+    "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm"
+  }
+}

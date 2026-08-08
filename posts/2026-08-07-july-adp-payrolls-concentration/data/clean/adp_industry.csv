@@ -1,0 +1,1991 @@
+date,category,employment_k,monthly_change_k
+2010-01-01,Construction,5241.0,
+2010-02-01,Construction,5228.0,-13.0
+2010-03-01,Construction,5216.0,-12.0
+2010-04-01,Construction,5195.0,-21.0
+2010-05-01,Construction,5184.0,-11.0
+2010-06-01,Construction,5181.0,-3.0
+2010-07-01,Construction,5179.0,-2.0
+2010-08-01,Construction,5171.0,-8.0
+2010-09-01,Construction,5156.0,-15.0
+2010-10-01,Construction,5148.0,-8.0
+2010-11-01,Construction,5144.0,-4.0
+2010-12-01,Construction,5139.0,-5.0
+2011-01-01,Construction,5135.0,-4.0
+2011-02-01,Construction,5135.0,0.0
+2011-03-01,Construction,5139.0,4.0
+2011-04-01,Construction,5148.0,9.0
+2011-05-01,Construction,5161.0,13.0
+2011-06-01,Construction,5181.0,20.0
+2011-07-01,Construction,5194.0,13.0
+2011-08-01,Construction,5201.0,7.0
+2011-09-01,Construction,5213.0,12.0
+2011-10-01,Construction,5223.0,10.0
+2011-11-01,Construction,5232.0,9.0
+2011-12-01,Construction,5254.0,22.0
+2012-01-01,Construction,5269.0,15.0
+2012-02-01,Construction,5280.0,11.0
+2012-03-01,Construction,5289.0,9.0
+2012-04-01,Construction,5298.0,9.0
+2012-05-01,Construction,5300.0,2.0
+2012-06-01,Construction,5291.0,-9.0
+2012-07-01,Construction,5287.0,-4.0
+2012-08-01,Construction,5304.0,17.0
+2012-09-01,Construction,5321.0,17.0
+2012-10-01,Construction,5338.0,17.0
+2012-11-01,Construction,5367.0,29.0
+2012-12-01,Construction,5392.0,25.0
+2013-01-01,Construction,5414.0,22.0
+2013-02-01,Construction,5439.0,25.0
+2013-03-01,Construction,5463.0,24.0
+2013-04-01,Construction,5486.0,23.0
+2013-05-01,Construction,5517.0,31.0
+2013-06-01,Construction,5543.0,26.0
+2013-07-01,Construction,5567.0,24.0
+2013-08-01,Construction,5586.0,19.0
+2013-09-01,Construction,5600.0,14.0
+2013-10-01,Construction,5616.0,16.0
+2013-11-01,Construction,5644.0,28.0
+2013-12-01,Construction,5666.0,22.0
+2014-01-01,Construction,5687.0,21.0
+2014-02-01,Construction,5705.0,18.0
+2014-03-01,Construction,5722.0,17.0
+2014-04-01,Construction,5740.0,18.0
+2014-05-01,Construction,5770.0,30.0
+2014-06-01,Construction,5803.0,33.0
+2014-07-01,Construction,5835.0,32.0
+2014-08-01,Construction,5860.0,25.0
+2014-09-01,Construction,5878.0,18.0
+2014-10-01,Construction,5908.0,30.0
+2014-11-01,Construction,5936.0,28.0
+2014-12-01,Construction,5953.0,17.0
+2015-01-01,Construction,5972.0,19.0
+2015-02-01,Construction,5991.0,19.0
+2015-03-01,Construction,6016.0,25.0
+2015-04-01,Construction,6045.0,29.0
+2015-05-01,Construction,6076.0,31.0
+2015-06-01,Construction,6113.0,37.0
+2015-07-01,Construction,6157.0,44.0
+2015-08-01,Construction,6183.0,26.0
+2015-09-01,Construction,6206.0,23.0
+2015-10-01,Construction,6239.0,33.0
+2015-11-01,Construction,6262.0,23.0
+2015-12-01,Construction,6280.0,18.0
+2016-01-01,Construction,6304.0,24.0
+2016-02-01,Construction,6328.0,24.0
+2016-03-01,Construction,6351.0,23.0
+2016-04-01,Construction,6380.0,29.0
+2016-05-01,Construction,6403.0,23.0
+2016-06-01,Construction,6423.0,20.0
+2016-07-01,Construction,6438.0,15.0
+2016-08-01,Construction,6458.0,20.0
+2016-09-01,Construction,6486.0,28.0
+2016-10-01,Construction,6496.0,10.0
+2016-11-01,Construction,6502.0,6.0
+2016-12-01,Construction,6517.0,15.0
+2017-01-01,Construction,6541.0,24.0
+2017-02-01,Construction,6574.0,33.0
+2017-03-01,Construction,6599.0,25.0
+2017-04-01,Construction,6622.0,23.0
+2017-05-01,Construction,6640.0,18.0
+2017-06-01,Construction,6668.0,28.0
+2017-07-01,Construction,6694.0,26.0
+2017-08-01,Construction,6720.0,26.0
+2017-09-01,Construction,6740.0,20.0
+2017-10-01,Construction,6755.0,15.0
+2017-11-01,Construction,6780.0,25.0
+2017-12-01,Construction,6805.0,25.0
+2018-01-01,Construction,6828.0,23.0
+2018-02-01,Construction,6859.0,31.0
+2018-03-01,Construction,6886.0,27.0
+2018-04-01,Construction,6918.0,32.0
+2018-05-01,Construction,6946.0,28.0
+2018-06-01,Construction,6983.0,37.0
+2018-07-01,Construction,7013.0,30.0
+2018-08-01,Construction,7043.0,30.0
+2018-09-01,Construction,7060.0,17.0
+2018-10-01,Construction,7077.0,17.0
+2018-11-01,Construction,7098.0,21.0
+2018-12-01,Construction,7115.0,17.0
+2019-01-01,Construction,7129.0,14.0
+2019-02-01,Construction,7140.0,11.0
+2019-03-01,Construction,7147.0,7.0
+2019-04-01,Construction,7157.0,10.0
+2019-05-01,Construction,7176.0,19.0
+2019-06-01,Construction,7190.0,14.0
+2019-07-01,Construction,7197.0,7.0
+2019-08-01,Construction,7206.0,9.0
+2019-09-01,Construction,7214.0,8.0
+2019-10-01,Construction,7224.0,10.0
+2019-11-01,Construction,7237.0,13.0
+2019-12-01,Construction,7251.0,14.0
+2020-01-01,Construction,7258.0,7.0
+2020-02-01,Construction,7265.0,7.0
+2020-03-01,Construction,7272.0,7.0
+2020-04-01,Construction,7168.0,-104.0
+2020-05-01,Construction,7035.0,-133.0
+2020-06-01,Construction,6934.0,-101.0
+2020-07-01,Construction,6928.0,-6.0
+2020-08-01,Construction,6928.0,0.0
+2020-09-01,Construction,6926.0,-2.0
+2020-10-01,Construction,6939.0,13.0
+2020-11-01,Construction,6982.0,43.0
+2020-12-01,Construction,7033.0,51.0
+2021-01-01,Construction,7076.0,43.0
+2021-02-01,Construction,7097.0,21.0
+2021-03-01,Construction,7120.0,23.0
+2021-04-01,Construction,7151.0,31.0
+2021-05-01,Construction,7174.0,23.0
+2021-06-01,Construction,7196.0,22.0
+2021-07-01,Construction,7224.0,28.0
+2021-08-01,Construction,7237.0,13.0
+2021-09-01,Construction,7248.0,11.0
+2021-10-01,Construction,7262.0,14.0
+2021-11-01,Construction,7284.0,22.0
+2021-12-01,Construction,7313.0,29.0
+2022-01-01,Construction,7325.0,12.0
+2022-02-01,Construction,7347.0,22.0
+2022-03-01,Construction,7384.0,37.0
+2022-04-01,Construction,7436.0,52.0
+2022-05-01,Construction,7472.0,36.0
+2022-06-01,Construction,7515.0,43.0
+2022-07-01,Construction,7547.0,32.0
+2022-08-01,Construction,7574.0,27.0
+2022-09-01,Construction,7599.0,25.0
+2022-10-01,Construction,7618.0,19.0
+2022-11-01,Construction,7631.0,13.0
+2022-12-01,Construction,7645.0,14.0
+2023-01-01,Construction,7659.0,14.0
+2023-02-01,Construction,7670.0,11.0
+2023-03-01,Construction,7677.0,7.0
+2023-04-01,Construction,7691.0,14.0
+2023-05-01,Construction,7706.0,15.0
+2023-06-01,Construction,7727.0,21.0
+2023-07-01,Construction,7743.0,16.0
+2023-08-01,Construction,7761.0,18.0
+2023-09-01,Construction,7773.0,12.0
+2023-10-01,Construction,7780.0,7.0
+2023-11-01,Construction,7793.0,13.0
+2023-12-01,Construction,7811.0,18.0
+2024-01-01,Construction,7834.0,23.0
+2024-02-01,Construction,7853.0,19.0
+2024-03-01,Construction,7859.0,6.0
+2024-04-01,Construction,7864.0,5.0
+2024-05-01,Construction,7879.0,15.0
+2024-06-01,Construction,7896.0,17.0
+2024-07-01,Construction,7915.0,19.0
+2024-08-01,Construction,7925.0,10.0
+2024-09-01,Construction,7928.0,3.0
+2024-10-01,Construction,7935.0,7.0
+2024-11-01,Construction,7947.0,12.0
+2024-12-01,Construction,7963.0,16.0
+2025-01-01,Construction,7972.0,9.0
+2025-02-01,Construction,7990.0,18.0
+2025-03-01,Construction,8000.0,10.0
+2025-04-01,Construction,8015.0,15.0
+2025-05-01,Construction,8022.0,7.0
+2025-06-01,Construction,8028.0,6.0
+2025-07-01,Construction,8029.0,1.0
+2025-08-01,Construction,8023.0,-6.0
+2025-09-01,Construction,8016.0,-7.0
+2025-10-01,Construction,8013.0,-3.0
+2025-11-01,Construction,8007.0,-6.0
+2025-12-01,Construction,8006.0,-1.0
+2026-01-01,Construction,8015.0,9.0
+2026-02-01,Construction,8034.0,19.0
+2026-03-01,Construction,8066.0,32.0
+2026-04-01,Construction,8077.0,11.0
+2026-05-01,Construction,8085.0,8.0
+2026-06-01,Construction,8087.0,2.0
+2026-07-01,Construction,8088.0,1.0
+2010-01-01,Education and health services,18594.0,
+2010-02-01,Education and health services,18591.0,-3.0
+2010-03-01,Education and health services,18606.0,15.0
+2010-04-01,Education and health services,18637.0,31.0
+2010-05-01,Education and health services,18664.0,27.0
+2010-06-01,Education and health services,18684.0,20.0
+2010-07-01,Education and health services,18697.0,13.0
+2010-08-01,Education and health services,18708.0,11.0
+2010-09-01,Education and health services,18739.0,31.0
+2010-10-01,Education and health services,18777.0,38.0
+2010-11-01,Education and health services,18814.0,37.0
+2010-12-01,Education and health services,18859.0,45.0
+2011-01-01,Education and health services,18894.0,35.0
+2011-02-01,Education and health services,18931.0,37.0
+2011-03-01,Education and health services,18962.0,31.0
+2011-04-01,Education and health services,18995.0,33.0
+2011-05-01,Education and health services,19013.0,18.0
+2011-06-01,Education and health services,19026.0,13.0
+2011-07-01,Education and health services,19050.0,24.0
+2011-08-01,Education and health services,19094.0,44.0
+2011-09-01,Education and health services,19143.0,49.0
+2011-10-01,Education and health services,19168.0,25.0
+2011-11-01,Education and health services,19192.0,24.0
+2011-12-01,Education and health services,19241.0,49.0
+2012-01-01,Education and health services,19289.0,48.0
+2012-02-01,Education and health services,19344.0,55.0
+2012-03-01,Education and health services,19378.0,34.0
+2012-04-01,Education and health services,19414.0,36.0
+2012-05-01,Education and health services,19459.0,45.0
+2012-06-01,Education and health services,19535.0,76.0
+2012-07-01,Education and health services,19599.0,64.0
+2012-08-01,Education and health services,19668.0,69.0
+2012-09-01,Education and health services,19726.0,58.0
+2012-10-01,Education and health services,19793.0,67.0
+2012-11-01,Education and health services,19882.0,89.0
+2012-12-01,Education and health services,19946.0,64.0
+2013-01-01,Education and health services,20010.0,64.0
+2013-02-01,Education and health services,20091.0,81.0
+2013-03-01,Education and health services,20145.0,54.0
+2013-04-01,Education and health services,20184.0,39.0
+2013-05-01,Education and health services,20209.0,25.0
+2013-06-01,Education and health services,20217.0,8.0
+2013-07-01,Education and health services,20227.0,10.0
+2013-08-01,Education and health services,20241.0,14.0
+2013-09-01,Education and health services,20254.0,13.0
+2013-10-01,Education and health services,20271.0,17.0
+2013-11-01,Education and health services,20308.0,37.0
+2013-12-01,Education and health services,20360.0,52.0
+2014-01-01,Education and health services,20417.0,57.0
+2014-02-01,Education and health services,20444.0,27.0
+2014-03-01,Education and health services,20472.0,28.0
+2014-04-01,Education and health services,20492.0,20.0
+2014-05-01,Education and health services,20508.0,16.0
+2014-06-01,Education and health services,20529.0,21.0
+2014-07-01,Education and health services,20557.0,28.0
+2014-08-01,Education and health services,20604.0,47.0
+2014-09-01,Education and health services,20639.0,35.0
+2014-10-01,Education and health services,20685.0,46.0
+2014-11-01,Education and health services,20725.0,40.0
+2014-12-01,Education and health services,20778.0,53.0
+2015-01-01,Education and health services,20854.0,76.0
+2015-02-01,Education and health services,20895.0,41.0
+2015-03-01,Education and health services,20925.0,30.0
+2015-04-01,Education and health services,20961.0,36.0
+2015-05-01,Education and health services,21002.0,41.0
+2015-06-01,Education and health services,21049.0,47.0
+2015-07-01,Education and health services,21113.0,64.0
+2015-08-01,Education and health services,21173.0,60.0
+2015-09-01,Education and health services,21245.0,72.0
+2015-10-01,Education and health services,21336.0,91.0
+2015-11-01,Education and health services,21391.0,55.0
+2015-12-01,Education and health services,21419.0,28.0
+2016-01-01,Education and health services,21436.0,17.0
+2016-02-01,Education and health services,21453.0,17.0
+2016-03-01,Education and health services,21487.0,34.0
+2016-04-01,Education and health services,21535.0,48.0
+2016-05-01,Education and health services,21567.0,32.0
+2016-06-01,Education and health services,21595.0,28.0
+2016-07-01,Education and health services,21611.0,16.0
+2016-08-01,Education and health services,21625.0,14.0
+2016-09-01,Education and health services,21653.0,28.0
+2016-10-01,Education and health services,21696.0,43.0
+2016-11-01,Education and health services,21751.0,55.0
+2016-12-01,Education and health services,21831.0,80.0
+2017-01-01,Education and health services,21899.0,68.0
+2017-02-01,Education and health services,21987.0,88.0
+2017-03-01,Education and health services,22040.0,53.0
+2017-04-01,Education and health services,22086.0,46.0
+2017-05-01,Education and health services,22129.0,43.0
+2017-06-01,Education and health services,22189.0,60.0
+2017-07-01,Education and health services,22242.0,53.0
+2017-08-01,Education and health services,22290.0,48.0
+2017-09-01,Education and health services,22341.0,51.0
+2017-10-01,Education and health services,22369.0,28.0
+2017-11-01,Education and health services,22394.0,25.0
+2017-12-01,Education and health services,22418.0,24.0
+2018-01-01,Education and health services,22444.0,26.0
+2018-02-01,Education and health services,22488.0,44.0
+2018-03-01,Education and health services,22527.0,39.0
+2018-04-01,Education and health services,22582.0,55.0
+2018-05-01,Education and health services,22631.0,49.0
+2018-06-01,Education and health services,22693.0,62.0
+2018-07-01,Education and health services,22745.0,52.0
+2018-08-01,Education and health services,22805.0,60.0
+2018-09-01,Education and health services,22841.0,36.0
+2018-10-01,Education and health services,22864.0,23.0
+2018-11-01,Education and health services,22890.0,26.0
+2018-12-01,Education and health services,22917.0,27.0
+2019-01-01,Education and health services,22943.0,26.0
+2019-02-01,Education and health services,22980.0,37.0
+2019-03-01,Education and health services,23017.0,37.0
+2019-04-01,Education and health services,23065.0,48.0
+2019-05-01,Education and health services,23113.0,48.0
+2019-06-01,Education and health services,23139.0,26.0
+2019-07-01,Education and health services,23160.0,21.0
+2019-08-01,Education and health services,23187.0,27.0
+2019-09-01,Education and health services,23213.0,26.0
+2019-10-01,Education and health services,23242.0,29.0
+2019-11-01,Education and health services,23285.0,43.0
+2019-12-01,Education and health services,23328.0,43.0
+2020-01-01,Education and health services,23378.0,50.0
+2020-02-01,Education and health services,23413.0,35.0
+2020-03-01,Education and health services,23435.0,22.0
+2020-04-01,Education and health services,23162.0,-273.0
+2020-05-01,Education and health services,22800.0,-362.0
+2020-06-01,Education and health services,22479.0,-321.0
+2020-07-01,Education and health services,22354.0,-125.0
+2020-08-01,Education and health services,22293.0,-61.0
+2020-09-01,Education and health services,22284.0,-9.0
+2020-10-01,Education and health services,22343.0,59.0
+2020-11-01,Education and health services,22413.0,70.0
+2020-12-01,Education and health services,22493.0,80.0
+2021-01-01,Education and health services,22557.0,64.0
+2021-02-01,Education and health services,22578.0,21.0
+2021-03-01,Education and health services,22604.0,26.0
+2021-04-01,Education and health services,22644.0,40.0
+2021-05-01,Education and health services,22665.0,21.0
+2021-06-01,Education and health services,22684.0,19.0
+2021-07-01,Education and health services,22711.0,27.0
+2021-08-01,Education and health services,22730.0,19.0
+2021-09-01,Education and health services,22784.0,54.0
+2021-10-01,Education and health services,22850.0,66.0
+2021-11-01,Education and health services,22912.0,62.0
+2021-12-01,Education and health services,22967.0,55.0
+2022-01-01,Education and health services,22993.0,26.0
+2022-02-01,Education and health services,23022.0,29.0
+2022-03-01,Education and health services,23073.0,51.0
+2022-04-01,Education and health services,23146.0,73.0
+2022-05-01,Education and health services,23212.0,66.0
+2022-06-01,Education and health services,23302.0,90.0
+2022-07-01,Education and health services,23382.0,80.0
+2022-08-01,Education and health services,23455.0,73.0
+2022-09-01,Education and health services,23561.0,106.0
+2022-10-01,Education and health services,23678.0,117.0
+2022-11-01,Education and health services,23795.0,117.0
+2022-12-01,Education and health services,23887.0,92.0
+2023-01-01,Education and health services,23936.0,49.0
+2023-02-01,Education and health services,24001.0,65.0
+2023-03-01,Education and health services,24064.0,63.0
+2023-04-01,Education and health services,24136.0,72.0
+2023-05-01,Education and health services,24211.0,75.0
+2023-06-01,Education and health services,24301.0,90.0
+2023-07-01,Education and health services,24379.0,78.0
+2023-08-01,Education and health services,24469.0,90.0
+2023-09-01,Education and health services,24565.0,96.0
+2023-10-01,Education and health services,24628.0,63.0
+2023-11-01,Education and health services,24705.0,77.0
+2023-12-01,Education and health services,24785.0,80.0
+2024-01-01,Education and health services,24878.0,93.0
+2024-02-01,Education and health services,25000.0,122.0
+2024-03-01,Education and health services,25079.0,79.0
+2024-04-01,Education and health services,25143.0,64.0
+2024-05-01,Education and health services,25211.0,68.0
+2024-06-01,Education and health services,25272.0,61.0
+2024-07-01,Education and health services,25334.0,62.0
+2024-08-01,Education and health services,25411.0,77.0
+2024-09-01,Education and health services,25472.0,61.0
+2024-10-01,Education and health services,25542.0,70.0
+2024-11-01,Education and health services,25629.0,87.0
+2024-12-01,Education and health services,25692.0,63.0
+2025-01-01,Education and health services,25751.0,59.0
+2025-02-01,Education and health services,25798.0,47.0
+2025-03-01,Education and health services,25860.0,62.0
+2025-04-01,Education and health services,25933.0,73.0
+2025-05-01,Education and health services,26014.0,81.0
+2025-06-01,Education and health services,26065.0,51.0
+2025-07-01,Education and health services,26088.0,23.0
+2025-08-01,Education and health services,26120.0,32.0
+2025-09-01,Education and health services,26164.0,44.0
+2025-10-01,Education and health services,26235.0,71.0
+2025-11-01,Education and health services,26294.0,59.0
+2025-12-01,Education and health services,26334.0,40.0
+2026-01-01,Education and health services,26384.0,50.0
+2026-02-01,Education and health services,26443.0,59.0
+2026-03-01,Education and health services,26496.0,53.0
+2026-04-01,Education and health services,26557.0,61.0
+2026-05-01,Education and health services,26614.0,57.0
+2026-06-01,Education and health services,26662.0,48.0
+2026-07-01,Education and health services,26698.0,36.0
+2010-01-01,Financial activities,7420.0,
+2010-02-01,Financial activities,7406.0,-14.0
+2010-03-01,Financial activities,7398.0,-8.0
+2010-04-01,Financial activities,7387.0,-11.0
+2010-05-01,Financial activities,7378.0,-9.0
+2010-06-01,Financial activities,7367.0,-11.0
+2010-07-01,Financial activities,7353.0,-14.0
+2010-08-01,Financial activities,7348.0,-5.0
+2010-09-01,Financial activities,7347.0,-1.0
+2010-10-01,Financial activities,7351.0,4.0
+2010-11-01,Financial activities,7354.0,3.0
+2010-12-01,Financial activities,7359.0,5.0
+2011-01-01,Financial activities,7363.0,4.0
+2011-02-01,Financial activities,7368.0,5.0
+2011-03-01,Financial activities,7366.0,-2.0
+2011-04-01,Financial activities,7368.0,2.0
+2011-05-01,Financial activities,7373.0,5.0
+2011-06-01,Financial activities,7380.0,7.0
+2011-07-01,Financial activities,7387.0,7.0
+2011-08-01,Financial activities,7395.0,8.0
+2011-09-01,Financial activities,7402.0,7.0
+2011-10-01,Financial activities,7403.0,1.0
+2011-11-01,Financial activities,7406.0,3.0
+2011-12-01,Financial activities,7416.0,10.0
+2012-01-01,Financial activities,7423.0,7.0
+2012-02-01,Financial activities,7429.0,6.0
+2012-03-01,Financial activities,7437.0,8.0
+2012-04-01,Financial activities,7440.0,3.0
+2012-05-01,Financial activities,7444.0,4.0
+2012-06-01,Financial activities,7453.0,9.0
+2012-07-01,Financial activities,7461.0,8.0
+2012-08-01,Financial activities,7467.0,6.0
+2012-09-01,Financial activities,7471.0,4.0
+2012-10-01,Financial activities,7478.0,7.0
+2012-11-01,Financial activities,7491.0,13.0
+2012-12-01,Financial activities,7506.0,15.0
+2013-01-01,Financial activities,7521.0,15.0
+2013-02-01,Financial activities,7539.0,18.0
+2013-03-01,Financial activities,7549.0,10.0
+2013-04-01,Financial activities,7551.0,2.0
+2013-05-01,Financial activities,7549.0,-2.0
+2013-06-01,Financial activities,7554.0,5.0
+2013-07-01,Financial activities,7562.0,8.0
+2013-08-01,Financial activities,7568.0,6.0
+2013-09-01,Financial activities,7567.0,-1.0
+2013-10-01,Financial activities,7566.0,-1.0
+2013-11-01,Financial activities,7567.0,1.0
+2013-12-01,Financial activities,7574.0,7.0
+2014-01-01,Financial activities,7585.0,11.0
+2014-02-01,Financial activities,7593.0,8.0
+2014-03-01,Financial activities,7595.0,2.0
+2014-04-01,Financial activities,7602.0,7.0
+2014-05-01,Financial activities,7622.0,20.0
+2014-06-01,Financial activities,7641.0,19.0
+2014-07-01,Financial activities,7657.0,16.0
+2014-08-01,Financial activities,7673.0,16.0
+2014-09-01,Financial activities,7684.0,11.0
+2014-10-01,Financial activities,7690.0,6.0
+2014-11-01,Financial activities,7693.0,3.0
+2014-12-01,Financial activities,7700.0,7.0
+2015-01-01,Financial activities,7712.0,12.0
+2015-02-01,Financial activities,7719.0,7.0
+2015-03-01,Financial activities,7726.0,7.0
+2015-04-01,Financial activities,7737.0,11.0
+2015-05-01,Financial activities,7743.0,6.0
+2015-06-01,Financial activities,7750.0,7.0
+2015-07-01,Financial activities,7762.0,12.0
+2015-08-01,Financial activities,7771.0,9.0
+2015-09-01,Financial activities,7775.0,4.0
+2015-10-01,Financial activities,7784.0,9.0
+2015-11-01,Financial activities,7794.0,10.0
+2015-12-01,Financial activities,7804.0,10.0
+2016-01-01,Financial activities,7821.0,17.0
+2016-02-01,Financial activities,7838.0,17.0
+2016-03-01,Financial activities,7853.0,15.0
+2016-04-01,Financial activities,7865.0,12.0
+2016-05-01,Financial activities,7876.0,11.0
+2016-06-01,Financial activities,7892.0,16.0
+2016-07-01,Financial activities,7910.0,18.0
+2016-08-01,Financial activities,7927.0,17.0
+2016-09-01,Financial activities,7947.0,20.0
+2016-10-01,Financial activities,7958.0,11.0
+2016-11-01,Financial activities,7969.0,11.0
+2016-12-01,Financial activities,7979.0,10.0
+2017-01-01,Financial activities,7980.0,1.0
+2017-02-01,Financial activities,7987.0,7.0
+2017-03-01,Financial activities,7999.0,12.0
+2017-04-01,Financial activities,8013.0,14.0
+2017-05-01,Financial activities,8023.0,10.0
+2017-06-01,Financial activities,8035.0,12.0
+2017-07-01,Financial activities,8044.0,9.0
+2017-08-01,Financial activities,8051.0,7.0
+2017-09-01,Financial activities,8054.0,3.0
+2017-10-01,Financial activities,8058.0,4.0
+2017-11-01,Financial activities,8065.0,7.0
+2017-12-01,Financial activities,8063.0,-2.0
+2018-01-01,Financial activities,8071.0,8.0
+2018-02-01,Financial activities,8092.0,21.0
+2018-03-01,Financial activities,8108.0,16.0
+2018-04-01,Financial activities,8116.0,8.0
+2018-05-01,Financial activities,8126.0,10.0
+2018-06-01,Financial activities,8141.0,15.0
+2018-07-01,Financial activities,8151.0,10.0
+2018-08-01,Financial activities,8160.0,9.0
+2018-09-01,Financial activities,8170.0,10.0
+2018-10-01,Financial activities,8180.0,10.0
+2018-11-01,Financial activities,8186.0,6.0
+2018-12-01,Financial activities,8191.0,5.0
+2019-01-01,Financial activities,8193.0,2.0
+2019-02-01,Financial activities,8197.0,4.0
+2019-03-01,Financial activities,8205.0,8.0
+2019-04-01,Financial activities,8218.0,13.0
+2019-05-01,Financial activities,8231.0,13.0
+2019-06-01,Financial activities,8237.0,6.0
+2019-07-01,Financial activities,8239.0,2.0
+2019-08-01,Financial activities,8247.0,8.0
+2019-09-01,Financial activities,8248.0,1.0
+2019-10-01,Financial activities,8248.0,0.0
+2019-11-01,Financial activities,8250.0,2.0
+2019-12-01,Financial activities,8266.0,16.0
+2020-01-01,Financial activities,8280.0,14.0
+2020-02-01,Financial activities,8302.0,22.0
+2020-03-01,Financial activities,8318.0,16.0
+2020-04-01,Financial activities,8231.0,-87.0
+2020-05-01,Financial activities,8089.0,-142.0
+2020-06-01,Financial activities,7979.0,-110.0
+2020-07-01,Financial activities,7762.0,-217.0
+2020-08-01,Financial activities,7755.0,-7.0
+2020-09-01,Financial activities,8046.0,291.0
+2020-10-01,Financial activities,7973.0,-73.0
+2020-11-01,Financial activities,7971.0,-2.0
+2020-12-01,Financial activities,8041.0,70.0
+2021-01-01,Financial activities,8117.0,76.0
+2021-02-01,Financial activities,8166.0,49.0
+2021-03-01,Financial activities,8213.0,47.0
+2021-04-01,Financial activities,8263.0,50.0
+2021-05-01,Financial activities,8282.0,19.0
+2021-06-01,Financial activities,8295.0,13.0
+2021-07-01,Financial activities,8315.0,20.0
+2021-08-01,Financial activities,8331.0,16.0
+2021-09-01,Financial activities,8356.0,25.0
+2021-10-01,Financial activities,8379.0,23.0
+2021-11-01,Financial activities,8405.0,26.0
+2021-12-01,Financial activities,8441.0,36.0
+2022-01-01,Financial activities,8460.0,19.0
+2022-02-01,Financial activities,8473.0,13.0
+2022-03-01,Financial activities,8484.0,11.0
+2022-04-01,Financial activities,8494.0,10.0
+2022-05-01,Financial activities,8505.0,11.0
+2022-06-01,Financial activities,8536.0,31.0
+2022-07-01,Financial activities,8574.0,38.0
+2022-08-01,Financial activities,8602.0,28.0
+2022-09-01,Financial activities,8622.0,20.0
+2022-10-01,Financial activities,8631.0,9.0
+2022-11-01,Financial activities,8626.0,-5.0
+2022-12-01,Financial activities,8611.0,-15.0
+2023-01-01,Financial activities,8604.0,-7.0
+2023-02-01,Financial activities,8610.0,6.0
+2023-03-01,Financial activities,8621.0,11.0
+2023-04-01,Financial activities,8635.0,14.0
+2023-05-01,Financial activities,8648.0,13.0
+2023-06-01,Financial activities,8665.0,17.0
+2023-07-01,Financial activities,8675.0,10.0
+2023-08-01,Financial activities,8677.0,2.0
+2023-09-01,Financial activities,8675.0,-2.0
+2023-10-01,Financial activities,8678.0,3.0
+2023-11-01,Financial activities,8684.0,6.0
+2023-12-01,Financial activities,8685.0,1.0
+2024-01-01,Financial activities,8691.0,6.0
+2024-02-01,Financial activities,8698.0,7.0
+2024-03-01,Financial activities,8700.0,2.0
+2024-04-01,Financial activities,8697.0,-3.0
+2024-05-01,Financial activities,8693.0,-4.0
+2024-06-01,Financial activities,8689.0,-4.0
+2024-07-01,Financial activities,8681.0,-8.0
+2024-08-01,Financial activities,8669.0,-12.0
+2024-09-01,Financial activities,8664.0,-5.0
+2024-10-01,Financial activities,8665.0,1.0
+2024-11-01,Financial activities,8678.0,13.0
+2024-12-01,Financial activities,8689.0,11.0
+2025-01-01,Financial activities,8695.0,6.0
+2025-02-01,Financial activities,8698.0,3.0
+2025-03-01,Financial activities,8694.0,-4.0
+2025-04-01,Financial activities,8685.0,-9.0
+2025-05-01,Financial activities,8669.0,-16.0
+2025-06-01,Financial activities,8675.0,6.0
+2025-07-01,Financial activities,8688.0,13.0
+2025-08-01,Financial activities,8691.0,3.0
+2025-09-01,Financial activities,8672.0,-19.0
+2025-10-01,Financial activities,8657.0,-15.0
+2025-11-01,Financial activities,8665.0,8.0
+2025-12-01,Financial activities,8683.0,18.0
+2026-01-01,Financial activities,8696.0,13.0
+2026-02-01,Financial activities,8698.0,2.0
+2026-03-01,Financial activities,8702.0,4.0
+2026-04-01,Financial activities,8711.0,9.0
+2026-05-01,Financial activities,8718.0,7.0
+2026-06-01,Financial activities,8729.0,11.0
+2026-07-01,Financial activities,8739.0,10.0
+2010-01-01,Information,2728.0,
+2010-02-01,Information,2723.0,-5.0
+2010-03-01,Information,2719.0,-4.0
+2010-04-01,Information,2710.0,-9.0
+2010-05-01,Information,2703.0,-7.0
+2010-06-01,Information,2697.0,-6.0
+2010-07-01,Information,2691.0,-6.0
+2010-08-01,Information,2688.0,-3.0
+2010-09-01,Information,2685.0,-3.0
+2010-10-01,Information,2682.0,-3.0
+2010-11-01,Information,2679.0,-3.0
+2010-12-01,Information,2675.0,-4.0
+2011-01-01,Information,2671.0,-4.0
+2011-02-01,Information,2668.0,-3.0
+2011-03-01,Information,2668.0,0.0
+2011-04-01,Information,2670.0,2.0
+2011-05-01,Information,2673.0,3.0
+2011-06-01,Information,2676.0,3.0
+2011-07-01,Information,2679.0,3.0
+2011-08-01,Information,2681.0,2.0
+2011-09-01,Information,2683.0,2.0
+2011-10-01,Information,2686.0,3.0
+2011-11-01,Information,2687.0,1.0
+2011-12-01,Information,2688.0,1.0
+2012-01-01,Information,2689.0,1.0
+2012-02-01,Information,2687.0,-2.0
+2012-03-01,Information,2682.0,-5.0
+2012-04-01,Information,2679.0,-3.0
+2012-05-01,Information,2680.0,1.0
+2012-06-01,Information,2682.0,2.0
+2012-07-01,Information,2681.0,-1.0
+2012-08-01,Information,2681.0,0.0
+2012-09-01,Information,2682.0,1.0
+2012-10-01,Information,2682.0,0.0
+2012-11-01,Information,2683.0,1.0
+2012-12-01,Information,2683.0,0.0
+2013-01-01,Information,2685.0,2.0
+2013-02-01,Information,2687.0,2.0
+2013-03-01,Information,2691.0,4.0
+2013-04-01,Information,2699.0,8.0
+2013-05-01,Information,2708.0,9.0
+2013-06-01,Information,2708.0,0.0
+2013-07-01,Information,2704.0,-4.0
+2013-08-01,Information,2701.0,-3.0
+2013-09-01,Information,2695.0,-6.0
+2013-10-01,Information,2686.0,-9.0
+2013-11-01,Information,2680.0,-6.0
+2013-12-01,Information,2679.0,-1.0
+2014-01-01,Information,2689.0,10.0
+2014-02-01,Information,2702.0,13.0
+2014-03-01,Information,2716.0,14.0
+2014-04-01,Information,2720.0,4.0
+2014-05-01,Information,2719.0,-1.0
+2014-06-01,Information,2718.0,-1.0
+2014-07-01,Information,2719.0,1.0
+2014-08-01,Information,2721.0,2.0
+2014-09-01,Information,2721.0,0.0
+2014-10-01,Information,2725.0,4.0
+2014-11-01,Information,2732.0,7.0
+2014-12-01,Information,2739.0,7.0
+2015-01-01,Information,2741.0,2.0
+2015-02-01,Information,2737.0,-4.0
+2015-03-01,Information,2730.0,-7.0
+2015-04-01,Information,2729.0,-1.0
+2015-05-01,Information,2731.0,2.0
+2015-06-01,Information,2738.0,7.0
+2015-07-01,Information,2749.0,11.0
+2015-08-01,Information,2757.0,8.0
+2015-09-01,Information,2754.0,-3.0
+2015-10-01,Information,2750.0,-4.0
+2015-11-01,Information,2750.0,0.0
+2015-12-01,Information,2755.0,5.0
+2016-01-01,Information,2760.0,5.0
+2016-02-01,Information,2766.0,6.0
+2016-03-01,Information,2770.0,4.0
+2016-04-01,Information,2772.0,2.0
+2016-05-01,Information,2773.0,1.0
+2016-06-01,Information,2775.0,2.0
+2016-07-01,Information,2777.0,2.0
+2016-08-01,Information,2777.0,0.0
+2016-09-01,Information,2782.0,5.0
+2016-10-01,Information,2786.0,4.0
+2016-11-01,Information,2788.0,2.0
+2016-12-01,Information,2787.0,-1.0
+2017-01-01,Information,2781.0,-6.0
+2017-02-01,Information,2777.0,-4.0
+2017-03-01,Information,2779.0,2.0
+2017-04-01,Information,2778.0,-1.0
+2017-05-01,Information,2773.0,-5.0
+2017-06-01,Information,2756.0,-17.0
+2017-07-01,Information,2752.0,-4.0
+2017-08-01,Information,2756.0,4.0
+2017-09-01,Information,2767.0,11.0
+2017-10-01,Information,2774.0,7.0
+2017-11-01,Information,2783.0,9.0
+2017-12-01,Information,2792.0,9.0
+2018-01-01,Information,2803.0,11.0
+2018-02-01,Information,2814.0,11.0
+2018-03-01,Information,2816.0,2.0
+2018-04-01,Information,2812.0,-4.0
+2018-05-01,Information,2794.0,-18.0
+2018-06-01,Information,2777.0,-17.0
+2018-07-01,Information,2772.0,-5.0
+2018-08-01,Information,2772.0,0.0
+2018-09-01,Information,2774.0,2.0
+2018-10-01,Information,2779.0,5.0
+2018-11-01,Information,2782.0,3.0
+2018-12-01,Information,2784.0,2.0
+2019-01-01,Information,2792.0,8.0
+2019-02-01,Information,2806.0,14.0
+2019-03-01,Information,2819.0,13.0
+2019-04-01,Information,2831.0,12.0
+2019-05-01,Information,2852.0,21.0
+2019-06-01,Information,2869.0,17.0
+2019-07-01,Information,2878.0,9.0
+2019-08-01,Information,2878.0,0.0
+2019-09-01,Information,2871.0,-7.0
+2019-10-01,Information,2860.0,-11.0
+2019-11-01,Information,2855.0,-5.0
+2019-12-01,Information,2863.0,8.0
+2020-01-01,Information,2872.0,9.0
+2020-02-01,Information,2875.0,3.0
+2020-03-01,Information,2877.0,2.0
+2020-04-01,Information,2837.0,-40.0
+2020-05-01,Information,2766.0,-71.0
+2020-06-01,Information,2703.0,-63.0
+2020-07-01,Information,2690.0,-13.0
+2020-08-01,Information,2697.0,7.0
+2020-09-01,Information,2699.0,2.0
+2020-10-01,Information,2704.0,5.0
+2020-11-01,Information,2713.0,9.0
+2020-12-01,Information,2730.0,17.0
+2021-01-01,Information,2743.0,13.0
+2021-02-01,Information,2749.0,6.0
+2021-03-01,Information,2754.0,5.0
+2021-04-01,Information,2758.0,4.0
+2021-05-01,Information,2763.0,5.0
+2021-06-01,Information,2771.0,8.0
+2021-07-01,Information,2787.0,16.0
+2021-08-01,Information,2801.0,14.0
+2021-09-01,Information,2827.0,26.0
+2021-10-01,Information,2856.0,29.0
+2021-11-01,Information,2888.0,32.0
+2021-12-01,Information,2920.0,32.0
+2022-01-01,Information,2939.0,19.0
+2022-02-01,Information,2954.0,15.0
+2022-03-01,Information,2975.0,21.0
+2022-04-01,Information,3003.0,28.0
+2022-05-01,Information,3024.0,21.0
+2022-06-01,Information,3036.0,12.0
+2022-07-01,Information,3038.0,2.0
+2022-08-01,Information,3032.0,-6.0
+2022-09-01,Information,3038.0,6.0
+2022-10-01,Information,3041.0,3.0
+2022-11-01,Information,3044.0,3.0
+2022-12-01,Information,3049.0,5.0
+2023-01-01,Information,3054.0,5.0
+2023-02-01,Information,3054.0,0.0
+2023-03-01,Information,3049.0,-5.0
+2023-04-01,Information,3035.0,-14.0
+2023-05-01,Information,3019.0,-16.0
+2023-06-01,Information,2993.0,-26.0
+2023-07-01,Information,2979.0,-14.0
+2023-08-01,Information,2972.0,-7.0
+2023-09-01,Information,2964.0,-8.0
+2023-10-01,Information,2962.0,-2.0
+2023-11-01,Information,2963.0,1.0
+2023-12-01,Information,2964.0,1.0
+2024-01-01,Information,2974.0,10.0
+2024-02-01,Information,2996.0,22.0
+2024-03-01,Information,3011.0,15.0
+2024-04-01,Information,3010.0,-1.0
+2024-05-01,Information,2996.0,-14.0
+2024-06-01,Information,2970.0,-26.0
+2024-07-01,Information,2933.0,-37.0
+2024-08-01,Information,2885.0,-48.0
+2024-09-01,Information,2862.0,-23.0
+2024-10-01,Information,2845.0,-17.0
+2024-11-01,Information,2835.0,-10.0
+2024-12-01,Information,2842.0,7.0
+2025-01-01,Information,2850.0,8.0
+2025-02-01,Information,2845.0,-5.0
+2025-03-01,Information,2831.0,-14.0
+2025-04-01,Information,2814.0,-17.0
+2025-05-01,Information,2798.0,-16.0
+2025-06-01,Information,2794.0,-4.0
+2025-07-01,Information,2802.0,8.0
+2025-08-01,Information,2817.0,15.0
+2025-09-01,Information,2807.0,-10.0
+2025-10-01,Information,2823.0,16.0
+2025-11-01,Information,2813.0,-10.0
+2025-12-01,Information,2802.0,-11.0
+2026-01-01,Information,2798.0,-4.0
+2026-02-01,Information,2809.0,11.0
+2026-03-01,Information,2823.0,14.0
+2026-04-01,Information,2826.0,3.0
+2026-05-01,Information,2817.0,-9.0
+2026-06-01,Information,2824.0,7.0
+2026-07-01,Information,2829.0,5.0
+2010-01-01,Leisure and hospitality,12585.0,
+2010-02-01,Leisure and hospitality,12593.0,8.0
+2010-03-01,Leisure and hospitality,12605.0,12.0
+2010-04-01,Leisure and hospitality,12612.0,7.0
+2010-05-01,Leisure and hospitality,12614.0,2.0
+2010-06-01,Leisure and hospitality,12615.0,1.0
+2010-07-01,Leisure and hospitality,12616.0,1.0
+2010-08-01,Leisure and hospitality,12629.0,13.0
+2010-09-01,Leisure and hospitality,12649.0,20.0
+2010-10-01,Leisure and hospitality,12672.0,23.0
+2010-11-01,Leisure and hospitality,12700.0,28.0
+2010-12-01,Leisure and hospitality,12743.0,43.0
+2011-01-01,Leisure and hospitality,12771.0,28.0
+2011-02-01,Leisure and hospitality,12803.0,32.0
+2011-03-01,Leisure and hospitality,12832.0,29.0
+2011-04-01,Leisure and hospitality,12863.0,31.0
+2011-05-01,Leisure and hospitality,12890.0,27.0
+2011-06-01,Leisure and hospitality,12936.0,46.0
+2011-07-01,Leisure and hospitality,12984.0,48.0
+2011-08-01,Leisure and hospitality,13030.0,46.0
+2011-09-01,Leisure and hospitality,13076.0,46.0
+2011-10-01,Leisure and hospitality,13104.0,28.0
+2011-11-01,Leisure and hospitality,13134.0,30.0
+2011-12-01,Leisure and hospitality,13191.0,57.0
+2012-01-01,Leisure and hospitality,13238.0,47.0
+2012-02-01,Leisure and hospitality,13281.0,43.0
+2012-03-01,Leisure and hospitality,13320.0,39.0
+2012-04-01,Leisure and hospitality,13366.0,46.0
+2012-05-01,Leisure and hospitality,13414.0,48.0
+2012-06-01,Leisure and hospitality,13463.0,49.0
+2012-07-01,Leisure and hospitality,13491.0,28.0
+2012-08-01,Leisure and hospitality,13517.0,26.0
+2012-09-01,Leisure and hospitality,13547.0,30.0
+2012-10-01,Leisure and hospitality,13584.0,37.0
+2012-11-01,Leisure and hospitality,13633.0,49.0
+2012-12-01,Leisure and hospitality,13667.0,34.0
+2013-01-01,Leisure and hospitality,13691.0,24.0
+2013-02-01,Leisure and hospitality,13712.0,21.0
+2013-03-01,Leisure and hospitality,13730.0,18.0
+2013-04-01,Leisure and hospitality,13764.0,34.0
+2013-05-01,Leisure and hospitality,13812.0,48.0
+2013-06-01,Leisure and hospitality,13858.0,46.0
+2013-07-01,Leisure and hospitality,13911.0,53.0
+2013-08-01,Leisure and hospitality,13975.0,64.0
+2013-09-01,Leisure and hospitality,14012.0,37.0
+2013-10-01,Leisure and hospitality,14031.0,19.0
+2013-11-01,Leisure and hospitality,14047.0,16.0
+2013-12-01,Leisure and hospitality,14077.0,30.0
+2014-01-01,Leisure and hospitality,14113.0,36.0
+2014-02-01,Leisure and hospitality,14143.0,30.0
+2014-03-01,Leisure and hospitality,14177.0,34.0
+2014-04-01,Leisure and hospitality,14217.0,40.0
+2014-05-01,Leisure and hospitality,14273.0,56.0
+2014-06-01,Leisure and hospitality,14326.0,53.0
+2014-07-01,Leisure and hospitality,14381.0,55.0
+2014-08-01,Leisure and hospitality,14438.0,57.0
+2014-09-01,Leisure and hospitality,14473.0,35.0
+2014-10-01,Leisure and hospitality,14518.0,45.0
+2014-11-01,Leisure and hospitality,14529.0,11.0
+2014-12-01,Leisure and hospitality,14525.0,-4.0
+2015-01-01,Leisure and hospitality,14544.0,19.0
+2015-02-01,Leisure and hospitality,14583.0,39.0
+2015-03-01,Leisure and hospitality,14614.0,31.0
+2015-04-01,Leisure and hospitality,14634.0,20.0
+2015-05-01,Leisure and hospitality,14644.0,10.0
+2015-06-01,Leisure and hospitality,14664.0,20.0
+2015-07-01,Leisure and hospitality,14700.0,36.0
+2015-08-01,Leisure and hospitality,14728.0,28.0
+2015-09-01,Leisure and hospitality,14760.0,32.0
+2015-10-01,Leisure and hospitality,14812.0,52.0
+2015-11-01,Leisure and hospitality,14870.0,58.0
+2015-12-01,Leisure and hospitality,14923.0,53.0
+2016-01-01,Leisure and hospitality,14986.0,63.0
+2016-02-01,Leisure and hospitality,15025.0,39.0
+2016-03-01,Leisure and hospitality,15065.0,40.0
+2016-04-01,Leisure and hospitality,15098.0,33.0
+2016-05-01,Leisure and hospitality,15122.0,24.0
+2016-06-01,Leisure and hospitality,15164.0,42.0
+2016-07-01,Leisure and hospitality,15206.0,42.0
+2016-08-01,Leisure and hospitality,15241.0,35.0
+2016-09-01,Leisure and hospitality,15273.0,32.0
+2016-10-01,Leisure and hospitality,15299.0,26.0
+2016-11-01,Leisure and hospitality,15348.0,49.0
+2016-12-01,Leisure and hospitality,15421.0,73.0
+2017-01-01,Leisure and hospitality,15475.0,54.0
+2017-02-01,Leisure and hospitality,15506.0,31.0
+2017-03-01,Leisure and hospitality,15521.0,15.0
+2017-04-01,Leisure and hospitality,15548.0,27.0
+2017-05-01,Leisure and hospitality,15574.0,26.0
+2017-06-01,Leisure and hospitality,15603.0,29.0
+2017-07-01,Leisure and hospitality,15626.0,23.0
+2017-08-01,Leisure and hospitality,15662.0,36.0
+2017-09-01,Leisure and hospitality,15706.0,44.0
+2017-10-01,Leisure and hospitality,15732.0,26.0
+2017-11-01,Leisure and hospitality,15751.0,19.0
+2017-12-01,Leisure and hospitality,15770.0,19.0
+2018-01-01,Leisure and hospitality,15786.0,16.0
+2018-02-01,Leisure and hospitality,15812.0,26.0
+2018-03-01,Leisure and hospitality,15822.0,10.0
+2018-04-01,Leisure and hospitality,15838.0,16.0
+2018-05-01,Leisure and hospitality,15862.0,24.0
+2018-06-01,Leisure and hospitality,15926.0,64.0
+2018-07-01,Leisure and hospitality,15988.0,62.0
+2018-08-01,Leisure and hospitality,16050.0,62.0
+2018-09-01,Leisure and hospitality,16077.0,27.0
+2018-10-01,Leisure and hospitality,16099.0,22.0
+2018-11-01,Leisure and hospitality,16116.0,17.0
+2018-12-01,Leisure and hospitality,16121.0,5.0
+2019-01-01,Leisure and hospitality,16114.0,-7.0
+2019-02-01,Leisure and hospitality,16114.0,0.0
+2019-03-01,Leisure and hospitality,16112.0,-2.0
+2019-04-01,Leisure and hospitality,16113.0,1.0
+2019-05-01,Leisure and hospitality,16103.0,-10.0
+2019-06-01,Leisure and hospitality,16084.0,-19.0
+2019-07-01,Leisure and hospitality,16054.0,-30.0
+2019-08-01,Leisure and hospitality,15989.0,-65.0
+2019-09-01,Leisure and hospitality,15934.0,-55.0
+2019-10-01,Leisure and hospitality,15883.0,-51.0
+2019-11-01,Leisure and hospitality,15821.0,-62.0
+2019-12-01,Leisure and hospitality,15787.0,-34.0
+2020-01-01,Leisure and hospitality,15756.0,-31.0
+2020-02-01,Leisure and hospitality,15721.0,-35.0
+2020-03-01,Leisure and hospitality,15667.0,-54.0
+2020-04-01,Leisure and hospitality,15512.0,-155.0
+2020-05-01,Leisure and hospitality,15345.0,-167.0
+2020-06-01,Leisure and hospitality,15133.0,-212.0
+2020-07-01,Leisure and hospitality,14840.0,-293.0
+2020-08-01,Leisure and hospitality,14612.0,-228.0
+2020-09-01,Leisure and hospitality,14412.0,-200.0
+2020-10-01,Leisure and hospitality,14179.0,-233.0
+2020-11-01,Leisure and hospitality,14000.0,-179.0
+2020-12-01,Leisure and hospitality,13779.0,-221.0
+2021-01-01,Leisure and hospitality,13446.0,-333.0
+2021-02-01,Leisure and hospitality,13187.0,-259.0
+2021-03-01,Leisure and hospitality,13008.0,-179.0
+2021-04-01,Leisure and hospitality,13038.0,30.0
+2021-05-01,Leisure and hospitality,13225.0,187.0
+2021-06-01,Leisure and hospitality,13486.0,261.0
+2021-07-01,Leisure and hospitality,13791.0,305.0
+2021-08-01,Leisure and hospitality,14037.0,246.0
+2021-09-01,Leisure and hospitality,14303.0,266.0
+2021-10-01,Leisure and hospitality,14460.0,157.0
+2021-11-01,Leisure and hospitality,14584.0,124.0
+2021-12-01,Leisure and hospitality,14709.0,125.0
+2022-01-01,Leisure and hospitality,14791.0,82.0
+2022-02-01,Leisure and hospitality,14864.0,73.0
+2022-03-01,Leisure and hospitality,14944.0,80.0
+2022-04-01,Leisure and hospitality,15106.0,162.0
+2022-05-01,Leisure and hospitality,15247.0,141.0
+2022-06-01,Leisure and hospitality,15415.0,168.0
+2022-07-01,Leisure and hospitality,15519.0,104.0
+2022-08-01,Leisure and hospitality,15589.0,70.0
+2022-09-01,Leisure and hospitality,15641.0,52.0
+2022-10-01,Leisure and hospitality,15686.0,45.0
+2022-11-01,Leisure and hospitality,15738.0,52.0
+2022-12-01,Leisure and hospitality,15816.0,78.0
+2023-01-01,Leisure and hospitality,15902.0,86.0
+2023-02-01,Leisure and hospitality,15996.0,94.0
+2023-03-01,Leisure and hospitality,16028.0,32.0
+2023-04-01,Leisure and hospitality,16044.0,16.0
+2023-05-01,Leisure and hospitality,16063.0,19.0
+2023-06-01,Leisure and hospitality,16086.0,23.0
+2023-07-01,Leisure and hospitality,16073.0,-13.0
+2023-08-01,Leisure and hospitality,16034.0,-39.0
+2023-09-01,Leisure and hospitality,15985.0,-49.0
+2023-10-01,Leisure and hospitality,15960.0,-25.0
+2023-11-01,Leisure and hospitality,15943.0,-17.0
+2023-12-01,Leisure and hospitality,15967.0,24.0
+2024-01-01,Leisure and hospitality,16018.0,51.0
+2024-02-01,Leisure and hospitality,16098.0,80.0
+2024-03-01,Leisure and hospitality,16162.0,64.0
+2024-04-01,Leisure and hospitality,16217.0,55.0
+2024-05-01,Leisure and hospitality,16267.0,50.0
+2024-06-01,Leisure and hospitality,16280.0,13.0
+2024-07-01,Leisure and hospitality,16273.0,-7.0
+2024-08-01,Leisure and hospitality,16243.0,-30.0
+2024-09-01,Leisure and hospitality,16223.0,-20.0
+2024-10-01,Leisure and hospitality,16215.0,-8.0
+2024-11-01,Leisure and hospitality,16205.0,-10.0
+2024-12-01,Leisure and hospitality,16220.0,15.0
+2025-01-01,Leisure and hospitality,16247.0,27.0
+2025-02-01,Leisure and hospitality,16267.0,20.0
+2025-03-01,Leisure and hospitality,16280.0,13.0
+2025-04-01,Leisure and hospitality,16308.0,28.0
+2025-05-01,Leisure and hospitality,16323.0,15.0
+2025-06-01,Leisure and hospitality,16321.0,-2.0
+2025-07-01,Leisure and hospitality,16366.0,45.0
+2025-08-01,Leisure and hospitality,16406.0,40.0
+2025-09-01,Leisure and hospitality,16399.0,-7.0
+2025-10-01,Leisure and hospitality,16366.0,-33.0
+2025-11-01,Leisure and hospitality,16361.0,-5.0
+2025-12-01,Leisure and hospitality,16379.0,18.0
+2026-01-01,Leisure and hospitality,16383.0,4.0
+2026-02-01,Leisure and hospitality,16384.0,1.0
+2026-03-01,Leisure and hospitality,16390.0,6.0
+2026-04-01,Leisure and hospitality,16394.0,4.0
+2026-05-01,Leisure and hospitality,16402.0,8.0
+2026-06-01,Leisure and hospitality,16404.0,2.0
+2026-07-01,Leisure and hospitality,16393.0,-11.0
+2010-01-01,Manufacturing,11393.0,
+2010-02-01,Manufacturing,11381.0,-12.0
+2010-03-01,Manufacturing,11376.0,-5.0
+2010-04-01,Manufacturing,11365.0,-11.0
+2010-05-01,Manufacturing,11361.0,-4.0
+2010-06-01,Manufacturing,11366.0,5.0
+2010-07-01,Manufacturing,11382.0,16.0
+2010-08-01,Manufacturing,11400.0,18.0
+2010-09-01,Manufacturing,11426.0,26.0
+2010-10-01,Manufacturing,11446.0,20.0
+2010-11-01,Manufacturing,11465.0,19.0
+2010-12-01,Manufacturing,11495.0,30.0
+2011-01-01,Manufacturing,11521.0,26.0
+2011-02-01,Manufacturing,11546.0,25.0
+2011-03-01,Manufacturing,11563.0,17.0
+2011-04-01,Manufacturing,11580.0,17.0
+2011-05-01,Manufacturing,11590.0,10.0
+2011-06-01,Manufacturing,11608.0,18.0
+2011-07-01,Manufacturing,11628.0,20.0
+2011-08-01,Manufacturing,11648.0,20.0
+2011-09-01,Manufacturing,11667.0,19.0
+2011-10-01,Manufacturing,11682.0,15.0
+2011-11-01,Manufacturing,11702.0,20.0
+2011-12-01,Manufacturing,11731.0,29.0
+2012-01-01,Manufacturing,11752.0,21.0
+2012-02-01,Manufacturing,11772.0,20.0
+2012-03-01,Manufacturing,11790.0,18.0
+2012-04-01,Manufacturing,11814.0,24.0
+2012-05-01,Manufacturing,11834.0,20.0
+2012-06-01,Manufacturing,11848.0,14.0
+2012-07-01,Manufacturing,11857.0,9.0
+2012-08-01,Manufacturing,11869.0,12.0
+2012-09-01,Manufacturing,11877.0,8.0
+2012-10-01,Manufacturing,11887.0,10.0
+2012-11-01,Manufacturing,11898.0,11.0
+2012-12-01,Manufacturing,11904.0,6.0
+2013-01-01,Manufacturing,11911.0,7.0
+2013-02-01,Manufacturing,11923.0,12.0
+2013-03-01,Manufacturing,11929.0,6.0
+2013-04-01,Manufacturing,11932.0,3.0
+2013-05-01,Manufacturing,11939.0,7.0
+2013-06-01,Manufacturing,11948.0,9.0
+2013-07-01,Manufacturing,11957.0,9.0
+2013-08-01,Manufacturing,11969.0,12.0
+2013-09-01,Manufacturing,11978.0,9.0
+2013-10-01,Manufacturing,11986.0,8.0
+2013-11-01,Manufacturing,11996.0,10.0
+2013-12-01,Manufacturing,12011.0,15.0
+2014-01-01,Manufacturing,12030.0,19.0
+2014-02-01,Manufacturing,12044.0,14.0
+2014-03-01,Manufacturing,12053.0,9.0
+2014-04-01,Manufacturing,12057.0,4.0
+2014-05-01,Manufacturing,12061.0,4.0
+2014-06-01,Manufacturing,12070.0,9.0
+2014-07-01,Manufacturing,12083.0,13.0
+2014-08-01,Manufacturing,12104.0,21.0
+2014-09-01,Manufacturing,12120.0,16.0
+2014-10-01,Manufacturing,12139.0,19.0
+2014-11-01,Manufacturing,12159.0,20.0
+2014-12-01,Manufacturing,12184.0,25.0
+2015-01-01,Manufacturing,12215.0,31.0
+2015-02-01,Manufacturing,12228.0,13.0
+2015-03-01,Manufacturing,12235.0,7.0
+2015-04-01,Manufacturing,12235.0,0.0
+2015-05-01,Manufacturing,12233.0,-2.0
+2015-06-01,Manufacturing,12233.0,0.0
+2015-07-01,Manufacturing,12242.0,9.0
+2015-08-01,Manufacturing,12249.0,7.0
+2015-09-01,Manufacturing,12247.0,-2.0
+2015-10-01,Manufacturing,12243.0,-4.0
+2015-11-01,Manufacturing,12243.0,0.0
+2015-12-01,Manufacturing,12248.0,5.0
+2016-01-01,Manufacturing,12254.0,6.0
+2016-02-01,Manufacturing,12259.0,5.0
+2016-03-01,Manufacturing,12262.0,3.0
+2016-04-01,Manufacturing,12265.0,3.0
+2016-05-01,Manufacturing,12267.0,2.0
+2016-06-01,Manufacturing,12273.0,6.0
+2016-07-01,Manufacturing,12280.0,7.0
+2016-08-01,Manufacturing,12281.0,1.0
+2016-09-01,Manufacturing,12282.0,1.0
+2016-10-01,Manufacturing,12284.0,2.0
+2016-11-01,Manufacturing,12290.0,6.0
+2016-12-01,Manufacturing,12303.0,13.0
+2017-01-01,Manufacturing,12313.0,10.0
+2017-02-01,Manufacturing,12324.0,11.0
+2017-03-01,Manufacturing,12324.0,0.0
+2017-04-01,Manufacturing,12331.0,7.0
+2017-05-01,Manufacturing,12338.0,7.0
+2017-06-01,Manufacturing,12357.0,19.0
+2017-07-01,Manufacturing,12370.0,13.0
+2017-08-01,Manufacturing,12382.0,12.0
+2017-09-01,Manufacturing,12396.0,14.0
+2017-10-01,Manufacturing,12407.0,11.0
+2017-11-01,Manufacturing,12427.0,20.0
+2017-12-01,Manufacturing,12441.0,14.0
+2018-01-01,Manufacturing,12456.0,15.0
+2018-02-01,Manufacturing,12483.0,27.0
+2018-03-01,Manufacturing,12511.0,28.0
+2018-04-01,Manufacturing,12534.0,23.0
+2018-05-01,Manufacturing,12552.0,18.0
+2018-06-01,Manufacturing,12575.0,23.0
+2018-07-01,Manufacturing,12598.0,23.0
+2018-08-01,Manufacturing,12626.0,28.0
+2018-09-01,Manufacturing,12642.0,16.0
+2018-10-01,Manufacturing,12659.0,17.0
+2018-11-01,Manufacturing,12685.0,26.0
+2018-12-01,Manufacturing,12708.0,23.0
+2019-01-01,Manufacturing,12725.0,17.0
+2019-02-01,Manufacturing,12743.0,18.0
+2019-03-01,Manufacturing,12755.0,12.0
+2019-04-01,Manufacturing,12764.0,9.0
+2019-05-01,Manufacturing,12775.0,11.0
+2019-06-01,Manufacturing,12780.0,5.0
+2019-07-01,Manufacturing,12783.0,3.0
+2019-08-01,Manufacturing,12778.0,-5.0
+2019-09-01,Manufacturing,12773.0,-5.0
+2019-10-01,Manufacturing,12760.0,-13.0
+2019-11-01,Manufacturing,12744.0,-16.0
+2019-12-01,Manufacturing,12735.0,-9.0
+2020-01-01,Manufacturing,12724.0,-11.0
+2020-02-01,Manufacturing,12707.0,-17.0
+2020-03-01,Manufacturing,12686.0,-21.0
+2020-04-01,Manufacturing,12478.0,-208.0
+2020-05-01,Manufacturing,12188.0,-290.0
+2020-06-01,Manufacturing,11950.0,-238.0
+2020-07-01,Manufacturing,11898.0,-52.0
+2020-08-01,Manufacturing,11899.0,1.0
+2020-09-01,Manufacturing,11896.0,-3.0
+2020-10-01,Manufacturing,11921.0,25.0
+2020-11-01,Manufacturing,11970.0,49.0
+2020-12-01,Manufacturing,12034.0,64.0
+2021-01-01,Manufacturing,12100.0,66.0
+2021-02-01,Manufacturing,12138.0,38.0
+2021-03-01,Manufacturing,12173.0,35.0
+2021-04-01,Manufacturing,12193.0,20.0
+2021-05-01,Manufacturing,12192.0,-1.0
+2021-06-01,Manufacturing,12200.0,8.0
+2021-07-01,Manufacturing,12243.0,43.0
+2021-08-01,Manufacturing,12277.0,34.0
+2021-09-01,Manufacturing,12320.0,43.0
+2021-10-01,Manufacturing,12366.0,46.0
+2021-11-01,Manufacturing,12426.0,60.0
+2021-12-01,Manufacturing,12509.0,83.0
+2022-01-01,Manufacturing,12554.0,45.0
+2022-02-01,Manufacturing,12585.0,31.0
+2022-03-01,Manufacturing,12617.0,32.0
+2022-04-01,Manufacturing,12653.0,36.0
+2022-05-01,Manufacturing,12683.0,30.0
+2022-06-01,Manufacturing,12736.0,53.0
+2022-07-01,Manufacturing,12788.0,52.0
+2022-08-01,Manufacturing,12823.0,35.0
+2022-09-01,Manufacturing,12842.0,19.0
+2022-10-01,Manufacturing,12855.0,13.0
+2022-11-01,Manufacturing,12865.0,10.0
+2022-12-01,Manufacturing,12874.0,9.0
+2023-01-01,Manufacturing,12879.0,5.0
+2023-02-01,Manufacturing,12886.0,7.0
+2023-03-01,Manufacturing,12885.0,-1.0
+2023-04-01,Manufacturing,12884.0,-1.0
+2023-05-01,Manufacturing,12881.0,-3.0
+2023-06-01,Manufacturing,12878.0,-3.0
+2023-07-01,Manufacturing,12879.0,1.0
+2023-08-01,Manufacturing,12882.0,3.0
+2023-09-01,Manufacturing,12876.0,-6.0
+2023-10-01,Manufacturing,12865.0,-11.0
+2023-11-01,Manufacturing,12840.0,-25.0
+2023-12-01,Manufacturing,12822.0,-18.0
+2024-01-01,Manufacturing,12822.0,0.0
+2024-02-01,Manufacturing,12835.0,13.0
+2024-03-01,Manufacturing,12840.0,5.0
+2024-04-01,Manufacturing,12834.0,-6.0
+2024-05-01,Manufacturing,12806.0,-28.0
+2024-06-01,Manufacturing,12775.0,-31.0
+2024-07-01,Manufacturing,12748.0,-27.0
+2024-08-01,Manufacturing,12733.0,-15.0
+2024-09-01,Manufacturing,12724.0,-9.0
+2024-10-01,Manufacturing,12707.0,-17.0
+2024-11-01,Manufacturing,12685.0,-22.0
+2024-12-01,Manufacturing,12668.0,-17.0
+2025-01-01,Manufacturing,12642.0,-26.0
+2025-02-01,Manufacturing,12627.0,-15.0
+2025-03-01,Manufacturing,12617.0,-10.0
+2025-04-01,Manufacturing,12610.0,-7.0
+2025-05-01,Manufacturing,12584.0,-26.0
+2025-06-01,Manufacturing,12561.0,-23.0
+2025-07-01,Manufacturing,12538.0,-23.0
+2025-08-01,Manufacturing,12520.0,-18.0
+2025-09-01,Manufacturing,12508.0,-12.0
+2025-10-01,Manufacturing,12506.0,-2.0
+2025-11-01,Manufacturing,12498.0,-8.0
+2025-12-01,Manufacturing,12491.0,-7.0
+2026-01-01,Manufacturing,12483.0,-8.0
+2026-02-01,Manufacturing,12478.0,-5.0
+2026-03-01,Manufacturing,12466.0,-12.0
+2026-04-01,Manufacturing,12465.0,-1.0
+2026-05-01,Manufacturing,12468.0,3.0
+2026-06-01,Manufacturing,12473.0,5.0
+2026-07-01,Manufacturing,12475.0,2.0
+2010-01-01,Natural resources and mining,1623.0,
+2010-02-01,Natural resources and mining,1627.0,4.0
+2010-03-01,Natural resources and mining,1629.0,2.0
+2010-04-01,Natural resources and mining,1626.0,-3.0
+2010-05-01,Natural resources and mining,1623.0,-3.0
+2010-06-01,Natural resources and mining,1619.0,-4.0
+2010-07-01,Natural resources and mining,1614.0,-5.0
+2010-08-01,Natural resources and mining,1616.0,2.0
+2010-09-01,Natural resources and mining,1624.0,8.0
+2010-10-01,Natural resources and mining,1636.0,12.0
+2010-11-01,Natural resources and mining,1644.0,8.0
+2010-12-01,Natural resources and mining,1658.0,14.0
+2011-01-01,Natural resources and mining,1668.0,10.0
+2011-02-01,Natural resources and mining,1677.0,9.0
+2011-03-01,Natural resources and mining,1685.0,8.0
+2011-04-01,Natural resources and mining,1701.0,16.0
+2011-05-01,Natural resources and mining,1717.0,16.0
+2011-06-01,Natural resources and mining,1733.0,16.0
+2011-07-01,Natural resources and mining,1743.0,10.0
+2011-08-01,Natural resources and mining,1751.0,8.0
+2011-09-01,Natural resources and mining,1761.0,10.0
+2011-10-01,Natural resources and mining,1771.0,10.0
+2011-11-01,Natural resources and mining,1785.0,14.0
+2011-12-01,Natural resources and mining,1799.0,14.0
+2012-01-01,Natural resources and mining,1810.0,11.0
+2012-02-01,Natural resources and mining,1827.0,17.0
+2012-03-01,Natural resources and mining,1845.0,18.0
+2012-04-01,Natural resources and mining,1860.0,15.0
+2012-05-01,Natural resources and mining,1874.0,14.0
+2012-06-01,Natural resources and mining,1892.0,18.0
+2012-07-01,Natural resources and mining,1910.0,18.0
+2012-08-01,Natural resources and mining,1927.0,17.0
+2012-09-01,Natural resources and mining,1933.0,6.0
+2012-10-01,Natural resources and mining,1933.0,0.0
+2012-11-01,Natural resources and mining,1932.0,-1.0
+2012-12-01,Natural resources and mining,1928.0,-4.0
+2013-01-01,Natural resources and mining,1923.0,-5.0
+2013-02-01,Natural resources and mining,1919.0,-4.0
+2013-03-01,Natural resources and mining,1912.0,-7.0
+2013-04-01,Natural resources and mining,1901.0,-11.0
+2013-05-01,Natural resources and mining,1891.0,-10.0
+2013-06-01,Natural resources and mining,1893.0,2.0
+2013-07-01,Natural resources and mining,1894.0,1.0
+2013-08-01,Natural resources and mining,1898.0,4.0
+2013-09-01,Natural resources and mining,1896.0,-2.0
+2013-10-01,Natural resources and mining,1894.0,-2.0
+2013-11-01,Natural resources and mining,1895.0,1.0
+2013-12-01,Natural resources and mining,1900.0,5.0
+2014-01-01,Natural resources and mining,1909.0,9.0
+2014-02-01,Natural resources and mining,1917.0,8.0
+2014-03-01,Natural resources and mining,1923.0,6.0
+2014-04-01,Natural resources and mining,1926.0,3.0
+2014-05-01,Natural resources and mining,1923.0,-3.0
+2014-06-01,Natural resources and mining,1917.0,-6.0
+2014-07-01,Natural resources and mining,1915.0,-2.0
+2014-08-01,Natural resources and mining,1916.0,1.0
+2014-09-01,Natural resources and mining,1921.0,5.0
+2014-10-01,Natural resources and mining,1932.0,11.0
+2014-11-01,Natural resources and mining,1941.0,9.0
+2014-12-01,Natural resources and mining,1949.0,8.0
+2015-01-01,Natural resources and mining,1955.0,6.0
+2015-02-01,Natural resources and mining,1955.0,0.0
+2015-03-01,Natural resources and mining,1946.0,-9.0
+2015-04-01,Natural resources and mining,1925.0,-21.0
+2015-05-01,Natural resources and mining,1905.0,-20.0
+2015-06-01,Natural resources and mining,1893.0,-12.0
+2015-07-01,Natural resources and mining,1881.0,-12.0
+2015-08-01,Natural resources and mining,1866.0,-15.0
+2015-09-01,Natural resources and mining,1853.0,-13.0
+2015-10-01,Natural resources and mining,1837.0,-16.0
+2015-11-01,Natural resources and mining,1822.0,-15.0
+2015-12-01,Natural resources and mining,1808.0,-14.0
+2016-01-01,Natural resources and mining,1799.0,-9.0
+2016-02-01,Natural resources and mining,1791.0,-8.0
+2016-03-01,Natural resources and mining,1779.0,-12.0
+2016-04-01,Natural resources and mining,1769.0,-10.0
+2016-05-01,Natural resources and mining,1764.0,-5.0
+2016-06-01,Natural resources and mining,1759.0,-5.0
+2016-07-01,Natural resources and mining,1753.0,-6.0
+2016-08-01,Natural resources and mining,1742.0,-11.0
+2016-09-01,Natural resources and mining,1735.0,-7.0
+2016-10-01,Natural resources and mining,1735.0,0.0
+2016-11-01,Natural resources and mining,1736.0,1.0
+2016-12-01,Natural resources and mining,1731.0,-5.0
+2017-01-01,Natural resources and mining,1727.0,-4.0
+2017-02-01,Natural resources and mining,1734.0,7.0
+2017-03-01,Natural resources and mining,1742.0,8.0
+2017-04-01,Natural resources and mining,1752.0,10.0
+2017-05-01,Natural resources and mining,1760.0,8.0
+2017-06-01,Natural resources and mining,1765.0,5.0
+2017-07-01,Natural resources and mining,1766.0,1.0
+2017-08-01,Natural resources and mining,1774.0,8.0
+2017-09-01,Natural resources and mining,1778.0,4.0
+2017-10-01,Natural resources and mining,1780.0,2.0
+2017-11-01,Natural resources and mining,1784.0,4.0
+2017-12-01,Natural resources and mining,1791.0,7.0
+2018-01-01,Natural resources and mining,1795.0,4.0
+2018-02-01,Natural resources and mining,1795.0,0.0
+2018-03-01,Natural resources and mining,1796.0,1.0
+2018-04-01,Natural resources and mining,1801.0,5.0
+2018-05-01,Natural resources and mining,1808.0,7.0
+2018-06-01,Natural resources and mining,1809.0,1.0
+2018-07-01,Natural resources and mining,1810.0,1.0
+2018-08-01,Natural resources and mining,1816.0,6.0
+2018-09-01,Natural resources and mining,1822.0,6.0
+2018-10-01,Natural resources and mining,1823.0,1.0
+2018-11-01,Natural resources and mining,1815.0,-8.0
+2018-12-01,Natural resources and mining,1813.0,-2.0
+2019-01-01,Natural resources and mining,1814.0,1.0
+2019-02-01,Natural resources and mining,1812.0,-2.0
+2019-03-01,Natural resources and mining,1814.0,2.0
+2019-04-01,Natural resources and mining,1817.0,3.0
+2019-05-01,Natural resources and mining,1822.0,5.0
+2019-06-01,Natural resources and mining,1824.0,2.0
+2019-07-01,Natural resources and mining,1825.0,1.0
+2019-08-01,Natural resources and mining,1830.0,5.0
+2019-09-01,Natural resources and mining,1831.0,1.0
+2019-10-01,Natural resources and mining,1834.0,3.0
+2019-11-01,Natural resources and mining,1836.0,2.0
+2019-12-01,Natural resources and mining,1830.0,-6.0
+2020-01-01,Natural resources and mining,1815.0,-15.0
+2020-02-01,Natural resources and mining,1802.0,-13.0
+2020-03-01,Natural resources and mining,1789.0,-13.0
+2020-04-01,Natural resources and mining,1762.0,-27.0
+2020-05-01,Natural resources and mining,1734.0,-28.0
+2020-06-01,Natural resources and mining,1711.0,-23.0
+2020-07-01,Natural resources and mining,1693.0,-18.0
+2020-08-01,Natural resources and mining,1680.0,-13.0
+2020-09-01,Natural resources and mining,1672.0,-8.0
+2020-10-01,Natural resources and mining,1667.0,-5.0
+2020-11-01,Natural resources and mining,1667.0,0.0
+2020-12-01,Natural resources and mining,1667.0,0.0
+2021-01-01,Natural resources and mining,1663.0,-4.0
+2021-02-01,Natural resources and mining,1657.0,-6.0
+2021-03-01,Natural resources and mining,1650.0,-7.0
+2021-04-01,Natural resources and mining,1648.0,-2.0
+2021-05-01,Natural resources and mining,1653.0,5.0
+2021-06-01,Natural resources and mining,1664.0,11.0
+2021-07-01,Natural resources and mining,1675.0,11.0
+2021-08-01,Natural resources and mining,1678.0,3.0
+2021-09-01,Natural resources and mining,1685.0,7.0
+2021-10-01,Natural resources and mining,1691.0,6.0
+2021-11-01,Natural resources and mining,1684.0,-7.0
+2021-12-01,Natural resources and mining,1671.0,-13.0
+2022-01-01,Natural resources and mining,1663.0,-8.0
+2022-02-01,Natural resources and mining,1665.0,2.0
+2022-03-01,Natural resources and mining,1670.0,5.0
+2022-04-01,Natural resources and mining,1686.0,16.0
+2022-05-01,Natural resources and mining,1706.0,20.0
+2022-06-01,Natural resources and mining,1727.0,21.0
+2022-07-01,Natural resources and mining,1735.0,8.0
+2022-08-01,Natural resources and mining,1737.0,2.0
+2022-09-01,Natural resources and mining,1742.0,5.0
+2022-10-01,Natural resources and mining,1746.0,4.0
+2022-11-01,Natural resources and mining,1751.0,5.0
+2022-12-01,Natural resources and mining,1739.0,-12.0
+2023-01-01,Natural resources and mining,1725.0,-14.0
+2023-02-01,Natural resources and mining,1717.0,-8.0
+2023-03-01,Natural resources and mining,1717.0,0.0
+2023-04-01,Natural resources and mining,1713.0,-4.0
+2023-05-01,Natural resources and mining,1710.0,-3.0
+2023-06-01,Natural resources and mining,1717.0,7.0
+2023-07-01,Natural resources and mining,1727.0,10.0
+2023-08-01,Natural resources and mining,1730.0,3.0
+2023-09-01,Natural resources and mining,1733.0,3.0
+2023-10-01,Natural resources and mining,1735.0,2.0
+2023-11-01,Natural resources and mining,1741.0,6.0
+2023-12-01,Natural resources and mining,1739.0,-2.0
+2024-01-01,Natural resources and mining,1735.0,-4.0
+2024-02-01,Natural resources and mining,1726.0,-9.0
+2024-03-01,Natural resources and mining,1721.0,-5.0
+2024-04-01,Natural resources and mining,1714.0,-7.0
+2024-05-01,Natural resources and mining,1707.0,-7.0
+2024-06-01,Natural resources and mining,1707.0,0.0
+2024-07-01,Natural resources and mining,1707.0,0.0
+2024-08-01,Natural resources and mining,1696.0,-11.0
+2024-09-01,Natural resources and mining,1681.0,-15.0
+2024-10-01,Natural resources and mining,1665.0,-16.0
+2024-11-01,Natural resources and mining,1649.0,-16.0
+2024-12-01,Natural resources and mining,1640.0,-9.0
+2025-01-01,Natural resources and mining,1636.0,-4.0
+2025-02-01,Natural resources and mining,1640.0,4.0
+2025-03-01,Natural resources and mining,1645.0,5.0
+2025-04-01,Natural resources and mining,1656.0,11.0
+2025-05-01,Natural resources and mining,1667.0,11.0
+2025-06-01,Natural resources and mining,1672.0,5.0
+2025-07-01,Natural resources and mining,1678.0,6.0
+2025-08-01,Natural resources and mining,1662.0,-16.0
+2025-09-01,Natural resources and mining,1644.0,-18.0
+2025-10-01,Natural resources and mining,1615.0,-29.0
+2025-11-01,Natural resources and mining,1621.0,6.0
+2025-12-01,Natural resources and mining,1625.0,4.0
+2026-01-01,Natural resources and mining,1624.0,-1.0
+2026-02-01,Natural resources and mining,1626.0,2.0
+2026-03-01,Natural resources and mining,1639.0,13.0
+2026-04-01,Natural resources and mining,1643.0,4.0
+2026-05-01,Natural resources and mining,1640.0,-3.0
+2026-06-01,Natural resources and mining,1635.0,-5.0
+2026-07-01,Natural resources and mining,1629.0,-6.0
+2010-01-01,Other services,4331.0,
+2010-02-01,Other services,4317.0,-14.0
+2010-03-01,Other services,4310.0,-7.0
+2010-04-01,Other services,4311.0,1.0
+2010-05-01,Other services,4317.0,6.0
+2010-06-01,Other services,4323.0,6.0
+2010-07-01,Other services,4329.0,6.0
+2010-08-01,Other services,4335.0,6.0
+2010-09-01,Other services,4337.0,2.0
+2010-10-01,Other services,4338.0,1.0
+2010-11-01,Other services,4341.0,3.0
+2010-12-01,Other services,4347.0,6.0
+2011-01-01,Other services,4351.0,4.0
+2011-02-01,Other services,4354.0,3.0
+2011-03-01,Other services,4355.0,1.0
+2011-04-01,Other services,4362.0,7.0
+2011-05-01,Other services,4373.0,11.0
+2011-06-01,Other services,4393.0,20.0
+2011-07-01,Other services,4407.0,14.0
+2011-08-01,Other services,4416.0,9.0
+2011-09-01,Other services,4424.0,8.0
+2011-10-01,Other services,4432.0,8.0
+2011-11-01,Other services,4441.0,9.0
+2011-12-01,Other services,4460.0,19.0
+2012-01-01,Other services,4477.0,17.0
+2012-02-01,Other services,4491.0,14.0
+2012-03-01,Other services,4496.0,5.0
+2012-04-01,Other services,4485.0,-11.0
+2012-05-01,Other services,4464.0,-21.0
+2012-06-01,Other services,4428.0,-36.0
+2012-07-01,Other services,4399.0,-29.0
+2012-08-01,Other services,4359.0,-40.0
+2012-09-01,Other services,4330.0,-29.0
+2012-10-01,Other services,4301.0,-29.0
+2012-11-01,Other services,4265.0,-36.0
+2012-12-01,Other services,4233.0,-32.0
+2013-01-01,Other services,4201.0,-32.0
+2013-02-01,Other services,4162.0,-39.0
+2013-03-01,Other services,4134.0,-28.0
+2013-04-01,Other services,4120.0,-14.0
+2013-05-01,Other services,4122.0,2.0
+2013-06-01,Other services,4131.0,9.0
+2013-07-01,Other services,4138.0,7.0
+2013-08-01,Other services,4147.0,9.0
+2013-09-01,Other services,4152.0,5.0
+2013-10-01,Other services,4152.0,0.0
+2013-11-01,Other services,4155.0,3.0
+2013-12-01,Other services,4164.0,9.0
+2014-01-01,Other services,4173.0,9.0
+2014-02-01,Other services,4174.0,1.0
+2014-03-01,Other services,4176.0,2.0
+2014-04-01,Other services,4181.0,5.0
+2014-05-01,Other services,4185.0,4.0
+2014-06-01,Other services,4191.0,6.0
+2014-07-01,Other services,4197.0,6.0
+2014-08-01,Other services,4202.0,5.0
+2014-09-01,Other services,4205.0,3.0
+2014-10-01,Other services,4207.0,2.0
+2014-11-01,Other services,4208.0,1.0
+2014-12-01,Other services,4210.0,2.0
+2015-01-01,Other services,4221.0,11.0
+2015-02-01,Other services,4231.0,10.0
+2015-03-01,Other services,4240.0,9.0
+2015-04-01,Other services,4247.0,7.0
+2015-05-01,Other services,4249.0,2.0
+2015-06-01,Other services,4248.0,-1.0
+2015-07-01,Other services,4243.0,-5.0
+2015-08-01,Other services,4240.0,-3.0
+2015-09-01,Other services,4242.0,2.0
+2015-10-01,Other services,4254.0,12.0
+2015-11-01,Other services,4264.0,10.0
+2015-12-01,Other services,4277.0,13.0
+2016-01-01,Other services,4296.0,19.0
+2016-02-01,Other services,4312.0,16.0
+2016-03-01,Other services,4322.0,10.0
+2016-04-01,Other services,4334.0,12.0
+2016-05-01,Other services,4339.0,5.0
+2016-06-01,Other services,4346.0,7.0
+2016-07-01,Other services,4350.0,4.0
+2016-08-01,Other services,4356.0,6.0
+2016-09-01,Other services,4362.0,6.0
+2016-10-01,Other services,4369.0,7.0
+2016-11-01,Other services,4369.0,0.0
+2016-12-01,Other services,4368.0,-1.0
+2017-01-01,Other services,4369.0,1.0
+2017-02-01,Other services,4381.0,12.0
+2017-03-01,Other services,4388.0,7.0
+2017-04-01,Other services,4393.0,5.0
+2017-05-01,Other services,4396.0,3.0
+2017-06-01,Other services,4399.0,3.0
+2017-07-01,Other services,4404.0,5.0
+2017-08-01,Other services,4411.0,7.0
+2017-09-01,Other services,4415.0,4.0
+2017-10-01,Other services,4414.0,-1.0
+2017-11-01,Other services,4415.0,1.0
+2017-12-01,Other services,4417.0,2.0
+2018-01-01,Other services,4420.0,3.0
+2018-02-01,Other services,4427.0,7.0
+2018-03-01,Other services,4436.0,9.0
+2018-04-01,Other services,4444.0,8.0
+2018-05-01,Other services,4454.0,10.0
+2018-06-01,Other services,4468.0,14.0
+2018-07-01,Other services,4476.0,8.0
+2018-08-01,Other services,4478.0,2.0
+2018-09-01,Other services,4478.0,0.0
+2018-10-01,Other services,4480.0,2.0
+2018-11-01,Other services,4487.0,7.0
+2018-12-01,Other services,4490.0,3.0
+2019-01-01,Other services,4492.0,2.0
+2019-02-01,Other services,4496.0,4.0
+2019-03-01,Other services,4499.0,3.0
+2019-04-01,Other services,4501.0,2.0
+2019-05-01,Other services,4499.0,-2.0
+2019-06-01,Other services,4497.0,-2.0
+2019-07-01,Other services,4496.0,-1.0
+2019-08-01,Other services,4494.0,-2.0
+2019-09-01,Other services,4489.0,-5.0
+2019-10-01,Other services,4479.0,-10.0
+2019-11-01,Other services,4471.0,-8.0
+2019-12-01,Other services,4468.0,-3.0
+2020-01-01,Other services,4462.0,-6.0
+2020-02-01,Other services,4457.0,-5.0
+2020-03-01,Other services,4447.0,-10.0
+2020-04-01,Other services,4343.0,-104.0
+2020-05-01,Other services,4211.0,-132.0
+2020-06-01,Other services,4102.0,-109.0
+2020-07-01,Other services,4058.0,-44.0
+2020-08-01,Other services,4029.0,-29.0
+2020-09-01,Other services,4016.0,-13.0
+2020-10-01,Other services,3997.0,-19.0
+2020-11-01,Other services,3990.0,-7.0
+2020-12-01,Other services,3995.0,5.0
+2021-01-01,Other services,4007.0,12.0
+2021-02-01,Other services,4009.0,2.0
+2021-03-01,Other services,4010.0,1.0
+2021-04-01,Other services,4021.0,11.0
+2021-05-01,Other services,4032.0,11.0
+2021-06-01,Other services,4047.0,15.0
+2021-07-01,Other services,4066.0,19.0
+2021-08-01,Other services,4081.0,15.0
+2021-09-01,Other services,4105.0,24.0
+2021-10-01,Other services,4129.0,24.0
+2021-11-01,Other services,4158.0,29.0
+2021-12-01,Other services,4200.0,42.0
+2022-01-01,Other services,4227.0,27.0
+2022-02-01,Other services,4250.0,23.0
+2022-03-01,Other services,4274.0,24.0
+2022-04-01,Other services,4308.0,34.0
+2022-05-01,Other services,4332.0,24.0
+2022-06-01,Other services,4362.0,30.0
+2022-07-01,Other services,4387.0,25.0
+2022-08-01,Other services,4403.0,16.0
+2022-09-01,Other services,4417.0,14.0
+2022-10-01,Other services,4431.0,14.0
+2022-11-01,Other services,4447.0,16.0
+2022-12-01,Other services,4456.0,9.0
+2023-01-01,Other services,4462.0,6.0
+2023-02-01,Other services,4478.0,16.0
+2023-03-01,Other services,4495.0,17.0
+2023-04-01,Other services,4504.0,9.0
+2023-05-01,Other services,4509.0,5.0
+2023-06-01,Other services,4519.0,10.0
+2023-07-01,Other services,4537.0,18.0
+2023-08-01,Other services,4553.0,16.0
+2023-09-01,Other services,4552.0,-1.0
+2023-10-01,Other services,4548.0,-4.0
+2023-11-01,Other services,4553.0,5.0
+2023-12-01,Other services,4560.0,7.0
+2024-01-01,Other services,4567.0,7.0
+2024-02-01,Other services,4579.0,12.0
+2024-03-01,Other services,4588.0,9.0
+2024-04-01,Other services,4592.0,4.0
+2024-05-01,Other services,4594.0,2.0
+2024-06-01,Other services,4602.0,8.0
+2024-07-01,Other services,4609.0,7.0
+2024-08-01,Other services,4614.0,5.0
+2024-09-01,Other services,4607.0,-7.0
+2024-10-01,Other services,4601.0,-6.0
+2024-11-01,Other services,4618.0,17.0
+2024-12-01,Other services,4634.0,16.0
+2025-01-01,Other services,4634.0,0.0
+2025-02-01,Other services,4626.0,-8.0
+2025-03-01,Other services,4617.0,-9.0
+2025-04-01,Other services,4609.0,-8.0
+2025-05-01,Other services,4607.0,-2.0
+2025-06-01,Other services,4616.0,9.0
+2025-07-01,Other services,4624.0,8.0
+2025-08-01,Other services,4637.0,13.0
+2025-09-01,Other services,4690.0,53.0
+2025-10-01,Other services,4754.0,64.0
+2025-11-01,Other services,4707.0,-47.0
+2025-12-01,Other services,4686.0,-21.0
+2026-01-01,Other services,4673.0,-13.0
+2026-02-01,Other services,4679.0,6.0
+2026-03-01,Other services,4682.0,3.0
+2026-04-01,Other services,4681.0,-1.0
+2026-05-01,Other services,4685.0,4.0
+2026-06-01,Other services,4692.0,7.0
+2026-07-01,Other services,4698.0,6.0
+2010-01-01,Professional and business services,16238.0,
+2010-02-01,Professional and business services,16276.0,38.0
+2010-03-01,Professional and business services,16308.0,32.0
+2010-04-01,Professional and business services,16372.0,64.0
+2010-05-01,Professional and business services,16447.0,75.0
+2010-06-01,Professional and business services,16523.0,76.0
+2010-07-01,Professional and business services,16600.0,77.0
+2010-08-01,Professional and business services,16657.0,57.0
+2010-09-01,Professional and business services,16746.0,89.0
+2010-10-01,Professional and business services,16781.0,35.0
+2010-11-01,Professional and business services,16800.0,19.0
+2010-12-01,Professional and business services,16809.0,9.0
+2011-01-01,Professional and business services,16844.0,35.0
+2011-02-01,Professional and business services,16872.0,28.0
+2011-03-01,Professional and business services,16912.0,40.0
+2011-04-01,Professional and business services,16965.0,53.0
+2011-05-01,Professional and business services,17006.0,41.0
+2011-06-01,Professional and business services,17073.0,67.0
+2011-07-01,Professional and business services,17136.0,63.0
+2011-08-01,Professional and business services,17201.0,65.0
+2011-09-01,Professional and business services,17256.0,55.0
+2011-10-01,Professional and business services,17286.0,30.0
+2011-11-01,Professional and business services,17306.0,20.0
+2011-12-01,Professional and business services,17374.0,68.0
+2012-01-01,Professional and business services,17414.0,40.0
+2012-02-01,Professional and business services,17475.0,61.0
+2012-03-01,Professional and business services,17523.0,48.0
+2012-04-01,Professional and business services,17571.0,48.0
+2012-05-01,Professional and business services,17615.0,44.0
+2012-06-01,Professional and business services,17652.0,37.0
+2012-07-01,Professional and business services,17674.0,22.0
+2012-08-01,Professional and business services,17692.0,18.0
+2012-09-01,Professional and business services,17711.0,19.0
+2012-10-01,Professional and business services,17774.0,63.0
+2012-11-01,Professional and business services,17879.0,105.0
+2012-12-01,Professional and business services,17953.0,74.0
+2013-01-01,Professional and business services,18014.0,61.0
+2013-02-01,Professional and business services,18083.0,69.0
+2013-03-01,Professional and business services,18117.0,34.0
+2013-04-01,Professional and business services,18159.0,42.0
+2013-05-01,Professional and business services,18207.0,48.0
+2013-06-01,Professional and business services,18235.0,28.0
+2013-07-01,Professional and business services,18254.0,19.0
+2013-08-01,Professional and business services,18290.0,36.0
+2013-09-01,Professional and business services,18315.0,25.0
+2013-10-01,Professional and business services,18369.0,54.0
+2013-11-01,Professional and business services,18433.0,64.0
+2013-12-01,Professional and business services,18484.0,51.0
+2014-01-01,Professional and business services,18538.0,54.0
+2014-02-01,Professional and business services,18578.0,40.0
+2014-03-01,Professional and business services,18619.0,41.0
+2014-04-01,Professional and business services,18665.0,46.0
+2014-05-01,Professional and business services,18727.0,62.0
+2014-06-01,Professional and business services,18788.0,61.0
+2014-07-01,Professional and business services,18849.0,61.0
+2014-08-01,Professional and business services,18918.0,69.0
+2014-09-01,Professional and business services,18969.0,51.0
+2014-10-01,Professional and business services,19022.0,53.0
+2014-11-01,Professional and business services,19055.0,33.0
+2014-12-01,Professional and business services,19090.0,35.0
+2015-01-01,Professional and business services,19154.0,64.0
+2015-02-01,Professional and business services,19194.0,40.0
+2015-03-01,Professional and business services,19216.0,22.0
+2015-04-01,Professional and business services,19241.0,25.0
+2015-05-01,Professional and business services,19270.0,29.0
+2015-06-01,Professional and business services,19319.0,49.0
+2015-07-01,Professional and business services,19382.0,63.0
+2015-08-01,Professional and business services,19426.0,44.0
+2015-09-01,Professional and business services,19468.0,42.0
+2015-10-01,Professional and business services,19511.0,43.0
+2015-11-01,Professional and business services,19548.0,37.0
+2015-12-01,Professional and business services,19561.0,13.0
+2016-01-01,Professional and business services,19556.0,-5.0
+2016-02-01,Professional and business services,19571.0,15.0
+2016-03-01,Professional and business services,19621.0,50.0
+2016-04-01,Professional and business services,19668.0,47.0
+2016-05-01,Professional and business services,19694.0,26.0
+2016-06-01,Professional and business services,19738.0,44.0
+2016-07-01,Professional and business services,19784.0,46.0
+2016-08-01,Professional and business services,19834.0,50.0
+2016-09-01,Professional and business services,19896.0,62.0
+2016-10-01,Professional and business services,19945.0,49.0
+2016-11-01,Professional and business services,19989.0,44.0
+2016-12-01,Professional and business services,20019.0,30.0
+2017-01-01,Professional and business services,20016.0,-3.0
+2017-02-01,Professional and business services,20016.0,0.0
+2017-03-01,Professional and business services,20012.0,-4.0
+2017-04-01,Professional and business services,20028.0,16.0
+2017-05-01,Professional and business services,20061.0,33.0
+2017-06-01,Professional and business services,20112.0,51.0
+2017-07-01,Professional and business services,20149.0,37.0
+2017-08-01,Professional and business services,20166.0,17.0
+2017-09-01,Professional and business services,20190.0,24.0
+2017-10-01,Professional and business services,20210.0,20.0
+2017-11-01,Professional and business services,20252.0,42.0
+2017-12-01,Professional and business services,20324.0,72.0
+2018-01-01,Professional and business services,20418.0,94.0
+2018-02-01,Professional and business services,20489.0,71.0
+2018-03-01,Professional and business services,20507.0,18.0
+2018-04-01,Professional and business services,20534.0,27.0
+2018-05-01,Professional and business services,20573.0,39.0
+2018-06-01,Professional and business services,20612.0,39.0
+2018-07-01,Professional and business services,20648.0,36.0
+2018-08-01,Professional and business services,20681.0,33.0
+2018-09-01,Professional and business services,20683.0,2.0
+2018-10-01,Professional and business services,20695.0,12.0
+2018-11-01,Professional and business services,20752.0,57.0
+2018-12-01,Professional and business services,20804.0,52.0
+2019-01-01,Professional and business services,20839.0,35.0
+2019-02-01,Professional and business services,20875.0,36.0
+2019-03-01,Professional and business services,20885.0,10.0
+2019-04-01,Professional and business services,20899.0,14.0
+2019-05-01,Professional and business services,20940.0,41.0
+2019-06-01,Professional and business services,20964.0,24.0
+2019-07-01,Professional and business services,20968.0,4.0
+2019-08-01,Professional and business services,20993.0,25.0
+2019-09-01,Professional and business services,21035.0,42.0
+2019-10-01,Professional and business services,21079.0,44.0
+2019-11-01,Professional and business services,21096.0,17.0
+2019-12-01,Professional and business services,21104.0,8.0
+2020-01-01,Professional and business services,21090.0,-14.0
+2020-02-01,Professional and business services,21069.0,-21.0
+2020-03-01,Professional and business services,21019.0,-50.0
+2020-04-01,Professional and business services,20687.0,-332.0
+2020-05-01,Professional and business services,20216.0,-471.0
+2020-06-01,Professional and business services,19814.0,-402.0
+2020-07-01,Professional and business services,19682.0,-132.0
+2020-08-01,Professional and business services,19683.0,1.0
+2020-09-01,Professional and business services,19739.0,56.0
+2020-10-01,Professional and business services,19878.0,139.0
+2020-11-01,Professional and business services,20021.0,143.0
+2020-12-01,Professional and business services,20166.0,145.0
+2021-01-01,Professional and business services,20331.0,165.0
+2021-02-01,Professional and business services,20455.0,124.0
+2021-03-01,Professional and business services,20604.0,149.0
+2021-04-01,Professional and business services,20743.0,139.0
+2021-05-01,Professional and business services,20817.0,74.0
+2021-06-01,Professional and business services,20898.0,81.0
+2021-07-01,Professional and business services,21018.0,120.0
+2021-08-01,Professional and business services,21099.0,81.0
+2021-09-01,Professional and business services,21224.0,125.0
+2021-10-01,Professional and business services,21381.0,157.0
+2021-11-01,Professional and business services,21568.0,187.0
+2021-12-01,Professional and business services,21745.0,177.0
+2022-01-01,Professional and business services,21816.0,71.0
+2022-02-01,Professional and business services,21897.0,81.0
+2022-03-01,Professional and business services,22021.0,124.0
+2022-04-01,Professional and business services,22161.0,140.0
+2022-05-01,Professional and business services,22249.0,88.0
+2022-06-01,Professional and business services,22386.0,137.0
+2022-07-01,Professional and business services,22490.0,104.0
+2022-08-01,Professional and business services,22561.0,71.0
+2022-09-01,Professional and business services,22631.0,70.0
+2022-10-01,Professional and business services,22694.0,63.0
+2022-11-01,Professional and business services,22731.0,37.0
+2022-12-01,Professional and business services,22726.0,-5.0
+2023-01-01,Professional and business services,22723.0,-3.0
+2023-02-01,Professional and business services,22685.0,-38.0
+2023-03-01,Professional and business services,22623.0,-62.0
+2023-04-01,Professional and business services,22560.0,-63.0
+2023-05-01,Professional and business services,22535.0,-25.0
+2023-06-01,Professional and business services,22515.0,-20.0
+2023-07-01,Professional and business services,22508.0,-7.0
+2023-08-01,Professional and business services,22504.0,-4.0
+2023-09-01,Professional and business services,22471.0,-33.0
+2023-10-01,Professional and business services,22422.0,-49.0
+2023-11-01,Professional and business services,22373.0,-49.0
+2023-12-01,Professional and business services,22386.0,13.0
+2024-01-01,Professional and business services,22423.0,37.0
+2024-02-01,Professional and business services,22457.0,34.0
+2024-03-01,Professional and business services,22464.0,7.0
+2024-04-01,Professional and business services,22452.0,-12.0
+2024-05-01,Professional and business services,22423.0,-29.0
+2024-06-01,Professional and business services,22376.0,-47.0
+2024-07-01,Professional and business services,22333.0,-43.0
+2024-08-01,Professional and business services,22274.0,-59.0
+2024-09-01,Professional and business services,22249.0,-25.0
+2024-10-01,Professional and business services,22260.0,11.0
+2024-11-01,Professional and business services,22310.0,50.0
+2024-12-01,Professional and business services,22345.0,35.0
+2025-01-01,Professional and business services,22293.0,-52.0
+2025-02-01,Professional and business services,22255.0,-38.0
+2025-03-01,Professional and business services,22241.0,-14.0
+2025-04-01,Professional and business services,22261.0,20.0
+2025-05-01,Professional and business services,22245.0,-16.0
+2025-06-01,Professional and business services,22203.0,-42.0
+2025-07-01,Professional and business services,22164.0,-39.0
+2025-08-01,Professional and business services,22140.0,-24.0
+2025-09-01,Professional and business services,22239.0,99.0
+2025-10-01,Professional and business services,22264.0,25.0
+2025-11-01,Professional and business services,22304.0,40.0
+2025-12-01,Professional and business services,22296.0,-8.0
+2026-01-01,Professional and business services,22241.0,-55.0
+2026-02-01,Professional and business services,22213.0,-28.0
+2026-03-01,Professional and business services,22215.0,2.0
+2026-04-01,Professional and business services,22208.0,-7.0
+2026-05-01,Professional and business services,22219.0,11.0
+2026-06-01,Professional and business services,22222.0,3.0
+2026-07-01,Professional and business services,22231.0,9.0
+2010-01-01,"Trade, transportation, and utilities",24111.0,
+2010-02-01,"Trade, transportation, and utilities",24082.0,-29.0
+2010-03-01,"Trade, transportation, and utilities",24057.0,-25.0
+2010-04-01,"Trade, transportation, and utilities",24042.0,-15.0
+2010-05-01,"Trade, transportation, and utilities",24046.0,4.0
+2010-06-01,"Trade, transportation, and utilities",24061.0,15.0
+2010-07-01,"Trade, transportation, and utilities",24087.0,26.0
+2010-08-01,"Trade, transportation, and utilities",24092.0,5.0
+2010-09-01,"Trade, transportation, and utilities",24092.0,0.0
+2010-10-01,"Trade, transportation, and utilities",24095.0,3.0
+2010-11-01,"Trade, transportation, and utilities",24112.0,17.0
+2010-12-01,"Trade, transportation, and utilities",24152.0,40.0
+2011-01-01,"Trade, transportation, and utilities",24196.0,44.0
+2011-02-01,"Trade, transportation, and utilities",24246.0,50.0
+2011-03-01,"Trade, transportation, and utilities",24289.0,43.0
+2011-04-01,"Trade, transportation, and utilities",24340.0,51.0
+2011-05-01,"Trade, transportation, and utilities",24380.0,40.0
+2011-06-01,"Trade, transportation, and utilities",24423.0,43.0
+2011-07-01,"Trade, transportation, and utilities",24454.0,31.0
+2011-08-01,"Trade, transportation, and utilities",24486.0,32.0
+2011-09-01,"Trade, transportation, and utilities",24519.0,33.0
+2011-10-01,"Trade, transportation, and utilities",24541.0,22.0
+2011-11-01,"Trade, transportation, and utilities",24591.0,50.0
+2011-12-01,"Trade, transportation, and utilities",24671.0,80.0
+2012-01-01,"Trade, transportation, and utilities",24709.0,38.0
+2012-02-01,"Trade, transportation, and utilities",24750.0,41.0
+2012-03-01,"Trade, transportation, and utilities",24797.0,47.0
+2012-04-01,"Trade, transportation, and utilities",24825.0,28.0
+2012-05-01,"Trade, transportation, and utilities",24834.0,9.0
+2012-06-01,"Trade, transportation, and utilities",24829.0,-5.0
+2012-07-01,"Trade, transportation, and utilities",24823.0,-6.0
+2012-08-01,"Trade, transportation, and utilities",24832.0,9.0
+2012-09-01,"Trade, transportation, and utilities",24847.0,15.0
+2012-10-01,"Trade, transportation, and utilities",24874.0,27.0
+2012-11-01,"Trade, transportation, and utilities",24942.0,68.0
+2012-12-01,"Trade, transportation, and utilities",25010.0,68.0
+2013-01-01,"Trade, transportation, and utilities",25057.0,47.0
+2013-02-01,"Trade, transportation, and utilities",25068.0,11.0
+2013-03-01,"Trade, transportation, and utilities",25084.0,16.0
+2013-04-01,"Trade, transportation, and utilities",25115.0,31.0
+2013-05-01,"Trade, transportation, and utilities",25153.0,38.0
+2013-06-01,"Trade, transportation, and utilities",25195.0,42.0
+2013-07-01,"Trade, transportation, and utilities",25248.0,53.0
+2013-08-01,"Trade, transportation, and utilities",25323.0,75.0
+2013-09-01,"Trade, transportation, and utilities",25381.0,58.0
+2013-10-01,"Trade, transportation, and utilities",25453.0,72.0
+2013-11-01,"Trade, transportation, and utilities",25531.0,78.0
+2013-12-01,"Trade, transportation, and utilities",25620.0,89.0
+2014-01-01,"Trade, transportation, and utilities",25642.0,22.0
+2014-02-01,"Trade, transportation, and utilities",25598.0,-44.0
+2014-03-01,"Trade, transportation, and utilities",25552.0,-46.0
+2014-04-01,"Trade, transportation, and utilities",25554.0,2.0
+2014-05-01,"Trade, transportation, and utilities",25581.0,27.0
+2014-06-01,"Trade, transportation, and utilities",25627.0,46.0
+2014-07-01,"Trade, transportation, and utilities",25688.0,61.0
+2014-08-01,"Trade, transportation, and utilities",25752.0,64.0
+2014-09-01,"Trade, transportation, and utilities",25781.0,29.0
+2014-10-01,"Trade, transportation, and utilities",25815.0,34.0
+2014-11-01,"Trade, transportation, and utilities",25840.0,25.0
+2014-12-01,"Trade, transportation, and utilities",25873.0,33.0
+2015-01-01,"Trade, transportation, and utilities",25905.0,32.0
+2015-02-01,"Trade, transportation, and utilities",25994.0,89.0
+2015-03-01,"Trade, transportation, and utilities",26082.0,88.0
+2015-04-01,"Trade, transportation, and utilities",26178.0,96.0
+2015-05-01,"Trade, transportation, and utilities",26246.0,68.0
+2015-06-01,"Trade, transportation, and utilities",26303.0,57.0
+2015-07-01,"Trade, transportation, and utilities",26375.0,72.0
+2015-08-01,"Trade, transportation, and utilities",26419.0,44.0
+2015-09-01,"Trade, transportation, and utilities",26453.0,34.0
+2015-10-01,"Trade, transportation, and utilities",26476.0,23.0
+2015-11-01,"Trade, transportation, and utilities",26503.0,27.0
+2015-12-01,"Trade, transportation, and utilities",26533.0,30.0
+2016-01-01,"Trade, transportation, and utilities",26534.0,1.0
+2016-02-01,"Trade, transportation, and utilities",26526.0,-8.0
+2016-03-01,"Trade, transportation, and utilities",26534.0,8.0
+2016-04-01,"Trade, transportation, and utilities",26567.0,33.0
+2016-05-01,"Trade, transportation, and utilities",26570.0,3.0
+2016-06-01,"Trade, transportation, and utilities",26546.0,-24.0
+2016-07-01,"Trade, transportation, and utilities",26532.0,-14.0
+2016-08-01,"Trade, transportation, and utilities",26549.0,17.0
+2016-09-01,"Trade, transportation, and utilities",26586.0,37.0
+2016-10-01,"Trade, transportation, and utilities",26639.0,53.0
+2016-11-01,"Trade, transportation, and utilities",26718.0,79.0
+2016-12-01,"Trade, transportation, and utilities",26831.0,113.0
+2017-01-01,"Trade, transportation, and utilities",26879.0,48.0
+2017-02-01,"Trade, transportation, and utilities",26871.0,-8.0
+2017-03-01,"Trade, transportation, and utilities",26857.0,-14.0
+2017-04-01,"Trade, transportation, and utilities",26849.0,-8.0
+2017-05-01,"Trade, transportation, and utilities",26862.0,13.0
+2017-06-01,"Trade, transportation, and utilities",26894.0,32.0
+2017-07-01,"Trade, transportation, and utilities",26920.0,26.0
+2017-08-01,"Trade, transportation, and utilities",26936.0,16.0
+2017-09-01,"Trade, transportation, and utilities",26933.0,-3.0
+2017-10-01,"Trade, transportation, and utilities",26932.0,-1.0
+2017-11-01,"Trade, transportation, and utilities",26959.0,27.0
+2017-12-01,"Trade, transportation, and utilities",26968.0,9.0
+2018-01-01,"Trade, transportation, and utilities",26974.0,6.0
+2018-02-01,"Trade, transportation, and utilities",26997.0,23.0
+2018-03-01,"Trade, transportation, and utilities",27023.0,26.0
+2018-04-01,"Trade, transportation, and utilities",27028.0,5.0
+2018-05-01,"Trade, transportation, and utilities",27015.0,-13.0
+2018-06-01,"Trade, transportation, and utilities",26984.0,-31.0
+2018-07-01,"Trade, transportation, and utilities",26949.0,-35.0
+2018-08-01,"Trade, transportation, and utilities",26892.0,-57.0
+2018-09-01,"Trade, transportation, and utilities",26854.0,-38.0
+2018-10-01,"Trade, transportation, and utilities",26853.0,-1.0
+2018-11-01,"Trade, transportation, and utilities",26908.0,55.0
+2018-12-01,"Trade, transportation, and utilities",26947.0,39.0
+2019-01-01,"Trade, transportation, and utilities",27066.0,119.0
+2019-02-01,"Trade, transportation, and utilities",27173.0,107.0
+2019-03-01,"Trade, transportation, and utilities",27185.0,12.0
+2019-04-01,"Trade, transportation, and utilities",27166.0,-19.0
+2019-05-01,"Trade, transportation, and utilities",27162.0,-4.0
+2019-06-01,"Trade, transportation, and utilities",27181.0,19.0
+2019-07-01,"Trade, transportation, and utilities",27240.0,59.0
+2019-08-01,"Trade, transportation, and utilities",27337.0,97.0
+2019-09-01,"Trade, transportation, and utilities",27382.0,45.0
+2019-10-01,"Trade, transportation, and utilities",27420.0,38.0
+2019-11-01,"Trade, transportation, and utilities",27488.0,68.0
+2019-12-01,"Trade, transportation, and utilities",27532.0,44.0
+2020-01-01,"Trade, transportation, and utilities",27461.0,-71.0
+2020-02-01,"Trade, transportation, and utilities",27359.0,-102.0
+2020-03-01,"Trade, transportation, and utilities",27272.0,-87.0
+2020-04-01,"Trade, transportation, and utilities",27147.0,-125.0
+2020-05-01,"Trade, transportation, and utilities",27113.0,-34.0
+2020-06-01,"Trade, transportation, and utilities",27152.0,39.0
+2020-07-01,"Trade, transportation, and utilities",27211.0,59.0
+2020-08-01,"Trade, transportation, and utilities",27182.0,-29.0
+2020-09-01,"Trade, transportation, and utilities",27289.0,107.0
+2020-10-01,"Trade, transportation, and utilities",27595.0,306.0
+2020-11-01,"Trade, transportation, and utilities",27696.0,101.0
+2020-12-01,"Trade, transportation, and utilities",27673.0,-23.0
+2021-01-01,"Trade, transportation, and utilities",27489.0,-184.0
+2021-02-01,"Trade, transportation, and utilities",27293.0,-196.0
+2021-03-01,"Trade, transportation, and utilities",27126.0,-167.0
+2021-04-01,"Trade, transportation, and utilities",26849.0,-277.0
+2021-05-01,"Trade, transportation, and utilities",26577.0,-272.0
+2021-06-01,"Trade, transportation, and utilities",26350.0,-227.0
+2021-07-01,"Trade, transportation, and utilities",26335.0,-15.0
+2021-08-01,"Trade, transportation, and utilities",26489.0,154.0
+2021-09-01,"Trade, transportation, and utilities",26624.0,135.0
+2021-10-01,"Trade, transportation, and utilities",26780.0,156.0
+2021-11-01,"Trade, transportation, and utilities",27105.0,325.0
+2021-12-01,"Trade, transportation, and utilities",27486.0,381.0
+2022-01-01,"Trade, transportation, and utilities",27663.0,177.0
+2022-02-01,"Trade, transportation, and utilities",27958.0,295.0
+2022-03-01,"Trade, transportation, and utilities",28171.0,213.0
+2022-04-01,"Trade, transportation, and utilities",28305.0,134.0
+2022-05-01,"Trade, transportation, and utilities",28171.0,-134.0
+2022-06-01,"Trade, transportation, and utilities",28124.0,-47.0
+2022-07-01,"Trade, transportation, and utilities",28088.0,-36.0
+2022-08-01,"Trade, transportation, and utilities",28136.0,48.0
+2022-09-01,"Trade, transportation, and utilities",28159.0,23.0
+2022-10-01,"Trade, transportation, and utilities",28123.0,-36.0
+2022-11-01,"Trade, transportation, and utilities",28144.0,21.0
+2022-12-01,"Trade, transportation, and utilities",28161.0,17.0
+2023-01-01,"Trade, transportation, and utilities",28205.0,44.0
+2023-02-01,"Trade, transportation, and utilities",28202.0,-3.0
+2023-03-01,"Trade, transportation, and utilities",28216.0,14.0
+2023-04-01,"Trade, transportation, and utilities",28264.0,48.0
+2023-05-01,"Trade, transportation, and utilities",28546.0,282.0
+2023-06-01,"Trade, transportation, and utilities",28909.0,363.0
+2023-07-01,"Trade, transportation, and utilities",29080.0,171.0
+2023-08-01,"Trade, transportation, and utilities",29112.0,32.0
+2023-09-01,"Trade, transportation, and utilities",29140.0,28.0
+2023-10-01,"Trade, transportation, and utilities",29127.0,-13.0
+2023-11-01,"Trade, transportation, and utilities",29215.0,88.0
+2023-12-01,"Trade, transportation, and utilities",29371.0,156.0
+2024-01-01,"Trade, transportation, and utilities",29388.0,17.0
+2024-02-01,"Trade, transportation, and utilities",28981.0,-407.0
+2024-03-01,"Trade, transportation, and utilities",28697.0,-284.0
+2024-04-01,"Trade, transportation, and utilities",28642.0,-55.0
+2024-05-01,"Trade, transportation, and utilities",28791.0,149.0
+2024-06-01,"Trade, transportation, and utilities",28902.0,111.0
+2024-07-01,"Trade, transportation, and utilities",29057.0,155.0
+2024-08-01,"Trade, transportation, and utilities",29185.0,128.0
+2024-09-01,"Trade, transportation, and utilities",29205.0,20.0
+2024-10-01,"Trade, transportation, and utilities",29168.0,-37.0
+2024-11-01,"Trade, transportation, and utilities",29149.0,-19.0
+2024-12-01,"Trade, transportation, and utilities",29168.0,19.0
+2025-01-01,"Trade, transportation, and utilities",29282.0,114.0
+2025-02-01,"Trade, transportation, and utilities",29270.0,-12.0
+2025-03-01,"Trade, transportation, and utilities",29176.0,-94.0
+2025-04-01,"Trade, transportation, and utilities",29046.0,-130.0
+2025-05-01,"Trade, transportation, and utilities",28987.0,-59.0
+2025-06-01,"Trade, transportation, and utilities",28978.0,-9.0
+2025-07-01,"Trade, transportation, and utilities",29014.0,36.0
+2025-08-01,"Trade, transportation, and utilities",29024.0,10.0
+2025-09-01,"Trade, transportation, and utilities",28988.0,-36.0
+2025-10-01,"Trade, transportation, and utilities",28915.0,-73.0
+2025-11-01,"Trade, transportation, and utilities",28951.0,36.0
+2025-12-01,"Trade, transportation, and utilities",28957.0,6.0
+2026-01-01,"Trade, transportation, and utilities",28973.0,16.0
+2026-02-01,"Trade, transportation, and utilities",28972.0,-1.0
+2026-03-01,"Trade, transportation, and utilities",28918.0,-54.0
+2026-04-01,"Trade, transportation, and utilities",28940.0,22.0
+2026-05-01,"Trade, transportation, and utilities",28976.0,36.0
+2026-06-01,"Trade, transportation, and utilities",28991.0,15.0
+2026-07-01,"Trade, transportation, and utilities",28983.0,-8.0
