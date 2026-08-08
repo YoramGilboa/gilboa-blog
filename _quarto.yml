@@ -13,7 +13,7 @@ project:
 website:
   title: "Yoram Gilboa"
   site-url: "https://gilboa.blog"
-  description: "Economics, inflation, and labor market analysis through data visualization"
+  description: "Data-driven analysis of US inflation, jobs, GDP, and Fed policy. Clear charts and commentary on CPI, PCE, FOMC, and labor market trends."
   # gone: draft:true pages are empty/unlinked (safer than unlinked, which still publishes full HTML).
   draft-mode: gone
   favicon: favicon.png
