@@ -13,7 +13,6 @@ from pathlib import Path
 
 
 VALID_POST_SLUG = re.compile(r"^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*$")
-LEGACY_POST_PATHS = {"posts/20260501 April FOMC decision"}
 FORBIDDEN_TRACKED_PARTS = {
     ".claude",
     ".idea",
@@ -135,7 +134,7 @@ def audit_repository(
         )
 
     for source in sorted(sources):
-        if source in LEGACY_POST_PATHS or source.startswith("posts/drafts/"):
+        if source.startswith("posts/drafts/"):
             continue
         slug = Path(source).name
         if not VALID_POST_SLUG.fullmatch(slug):

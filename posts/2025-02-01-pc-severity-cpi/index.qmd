@@ -1,7 +1,9 @@
 ---
 title: "P&C Severity CPI: A Claims-Weighted Inflation Index"
 date: "2025-02-01"
-categories: [actuarial, inflation, visualization, insurance]
+categories: [economics, inflation, visualization, insurance]
+description: "A claims-weighted inflation index that reweights BLS CPI components to better track P&C insurance severity costs than CPI-U."
+image: images/pc-severity-cpi.png
 ---
 
 ## The Problem with CPI-U for Insurance

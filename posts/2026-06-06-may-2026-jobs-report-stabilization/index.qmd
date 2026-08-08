@@ -832,7 +832,7 @@ For rate markets, May is one input among several arriving into the **`{python} s
 
 Two practical observations for positioning. First, a payroll print above consensus does not, on its own, derail an easing path: if real wage growth and unit labor costs remain contained (panel 4), the inflation side of the mandate remains the binding constraint, not the labor side. The committee can still describe the labor market as "in better balance" and proceed with a measured-cut framework. Second, the **2-year vs. 10-year Treasury spread** continues to embed both policy expectations and term premia, and a labor report that stabilizes without overheating is consistent with the dot-plot path of measured cuts later this year. The cross-checks in section 5 - ADP directionally consistent with CES and four-week claims contained - support reading May as a stabilization print rather than a re-acceleration that would trouble the inflation outlook, with the caveat that the sectoral concentration documented in section 3 is the single most important thing the committee will want to see broaden before leaning into a stronger labor narrative.
 
-For a deeper dive on the April FOMC decision and the dot-plot framework, see the companion post on the [April FOMC decision](https://gilboa.blog/posts/20260501%20April%20FOMC%20decision/).
+For a deeper dive on the April FOMC decision and the dot-plot framework, see the companion post on the [April FOMC decision](https://gilboa.blog/posts/2026-05-01-april-fomc-decision/).
 
 ## 7. What it means
 

@@ -1,12 +1,21 @@
 project:
   type: website
   output-dir: _site
+  # Rewrite sitemap locs to clean URLs after Quarto emit (see tools/seo_post_render.py).
+  post-render:
+    - tools/seo_post_render.py
+  # Never ship draft work-in-progress under /posts/drafts/ to production builds.
+  # Local draft preview: `quarto render posts/drafts/<slug>/index.qmd`
+  render:
+    - "*.qmd"
+    - "!posts/drafts/**"
 
 website:
   title: "Yoram Gilboa"
   site-url: "https://gilboa.blog"
   description: "Economics, inflation, and labor market analysis through data visualization"
-  draft-mode: unlinked
+  # gone: draft:true pages are empty/unlinked (safer than unlinked, which still publishes full HTML).
+  draft-mode: gone
   favicon: favicon.png
   open-graph: true
   twitter-card:
@@ -46,6 +55,9 @@ format:
     code-fold: false
     code-tools: false
     code-copy: true
+    # Self-referencing canonical to clean URLs (posts: .../slug/, home: /, about: /about.html).
+    # Requires website.site-url above. Does not change on-disk filenames.
+    canonical-url: true
 
 execute:
   freeze: auto

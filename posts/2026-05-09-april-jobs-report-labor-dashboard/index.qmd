@@ -2,7 +2,7 @@
 title: "April 2026 Jobs Report: Soft Payrolls Follow March Rebound - What the Full Labor Dashboard Reveals"
 date: 2026-05-09
 author: Yoram Gilboa
-categories: ["economics", "labor-market", "data-visualization", "visualization"]
+categories: ["economics", "labor market", "data visualization", "visualization"]
 description: "April 2026 jobs report shows +115k payrolls and 4.3% unemployment. Full dashboard analysis of revisions, sectors, wages, JOLTS, claims, and implications for the Fed and markets."
 image: images/april-2026-labor-dashboard.png
 toc: true
@@ -838,7 +838,7 @@ For rate markets, April is one input among several arriving into the **`{python}
 
 Two practical observations for positioning. First, a soft payroll month does not automatically imply softer core services inflation one-for-one: rents and insurance categories move on different dynamics than payrolls, which is one reason the May 12 CPI print will matter on its own merits. Second, the **2-year vs. 10-year Treasury spread** continues to embed both policy expectations and term premia, and a labor report that cools without collapsing is the configuration most consistent with the dot-plot path of measured cuts later this year. The cross-checks in section 5 - ADP tracking CES and four-week claims contained - support reading April as a soft single-month print rather than a turn.
 
-For a deeper dive on the same FOMC window from a markets-versus-dot-plot angle, see the companion post on the [April FOMC decision](https://gilboa.blog/posts/20260501%20April%20FOMC%20decision/).
+For a deeper dive on the same FOMC window from a markets-versus-dot-plot angle, see the companion post on the [April FOMC decision](https://gilboa.blog/posts/2026-05-01-april-fomc-decision/).
 
 ## 7. What it means
 

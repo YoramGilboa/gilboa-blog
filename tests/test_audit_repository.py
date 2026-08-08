@@ -75,9 +75,10 @@ class AuditRepositoryTests(unittest.TestCase):
         findings = audit_repository(self.root, tracked)
         self.assertIn("tracked-generated", {finding.code for finding in findings})
 
-    def test_legacy_post_path_is_allowed(self):
+    def test_invalid_post_slug_is_reported(self):
         tracked = self.add_post("posts/20260501 April FOMC decision")
-        self.assertEqual(audit_repository(self.root, tracked), [])
+        findings = audit_repository(self.root, tracked)
+        self.assertIn("invalid-post-slug", {finding.code for finding in findings})
 
 
 if __name__ == "__main__":
