@@ -1,1 +1,6 @@
+# Block draft paths if they ever appear on the live host.
+# Published posts live under /posts/YYYY-MM-DD-slug/ and remain crawlable.
+User-agent: *
+Disallow: /posts/drafts/
+
 Sitemap: https://gilboa.blog/sitemap.xml
