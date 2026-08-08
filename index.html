@@ -86,10 +86,10 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       page: 25,
     pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -153,22 +153,24 @@ window.Quarto = {
 
 <link rel="stylesheet" href="styles.css">
 <link rel="alternate" type="application/rss+xml" title="Yoram Gilboa" href="index.xml" data-external="1"><meta property="og:title" content="Yoram Gilboa">
-<meta property="og:image" content="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png">
+<meta property="og:image" content="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png">
 <meta property="og:site_name" content="Yoram Gilboa">
-<meta property="og:image:height" content="703">
-<meta property="og:image:width" content="1185">
+<meta property="og:image:alt" content="Monthly ADP private payroll changes and their three-month average through July 2026">
+<meta property="og:image:height" content="847">
+<meta property="og:image:width" content="1414">
 <meta name="twitter:title" content="Yoram Gilboa">
-<meta name="twitter:image" content="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png">
+<meta name="twitter:image" content="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png">
 <meta name="twitter:site" content="@gilboa">
-<meta name="twitter:image-height" content="703">
-<meta name="twitter:image-width" content="1185">
+<meta name="twitter:image:alt" content="Monthly ADP private payroll changes and their three-month average through July 2026">
+<meta name="twitter:image-height" content="847">
+<meta name="twitter:image-width" content="1414">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -214,42 +216,80 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Yoram Gilboa</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(26)</span></div><div class="category" data-category="YWN0dWFyaWFs">actuarial <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YSUyMGFuYWx5c2lz">data analysis <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ZGF0YSUyMHZpc3VhbGl6YXRpb24=">data visualization <span class="quarto-category-count">(18)</span></div><div class="category" data-category="ZGF0YS12aXN1YWxpemF0aW9u">data-visualization <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZWNvbm9taWNz">economics <span class="quarto-category-count">(21)</span></div><div class="category" data-category="ZW5lcmd5">energy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="ZmVkLXBvbGljeQ==">fed-policy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZmVkZXJhbCUyMHJlc2VydmU=">federal reserve <span class="quarto-category-count">(13)</span></div><div class="category" data-category="Zm9tYw==">fomc <span class="quarto-category-count">(3)</span></div><div class="category" data-category="aW5mbGF0aW9u">inflation <span class="quarto-category-count">(13)</span></div><div class="category" data-category="aW5zdXJhbmNl">insurance <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QlMjByYXRlcw==">interest rates <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZS1vdXRsb29r">interest-rate-outlook <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aW50ZXJlc3QtcmF0ZXM=">interest-rates <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQ=">labor market <span class="quarto-category-count">(7)</span></div><div class="category" data-category="bGFib3IlMjBtYXJrZXQlMjBicmVhZHRo">labor market breadth <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGFib3ItbWFya2V0">labor-market <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGF3">law <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFya2V0cw==">markets <span class="quarto-category-count">(4)</span></div><div class="category" data-category="bWV0YQ==">meta <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cG9saXRpY3M=">politics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3VwcmVtZSUyMGNvdXJ0">supreme court <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGVjaG5vbG9neQ==">technology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dmlzdWFsaXphdGlvbg==">visualization <span class="quarto-category-count">(3)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Yoram Gilboa</h1>
+</div>
 
 
 
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<header class="home-masthead">
+<p class="home-kicker">
+Independent economic analysis
+</p>
+<h1>
+Yoram Gilboa
+</h1>
+<p class="home-dek">
+Data-led analysis of inflation, the labor market, and Federal Reserve policy.
+</p>
+</header>
 
 
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1785369600000" data-listing-file-modified-sort="1785635192025" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="42" data-listing-word-count-sort="8245">
+<div class="quarto-post image-right" data-index="0" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ2RhdGElMjB2aXN1YWxpemF0aW9uJTJDaW5mbGF0aW9u" data-listing-date-sort="1786060800000" data-listing-file-modified-sort="1786202198943" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3386">
+<div class="thumbnail"><a href="./posts/2026-08-07-july-adp-payrolls-concentration/index.html" class="no-external">
+
+<img loading="lazy" src="./posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png" class="thumbnail-image" alt="Monthly ADP private payroll changes and their three-month average through July 2026">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/2026-08-07-july-adp-payrolls-concentration/index.html" class="no-external">July 2026 Jobs: Slow Growth, Narrow Gains</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/2026-08-07-july-adp-payrolls-concentration/index.html" class="no-external"></a>
+</div>
+<div class="delink listing-description"><a href="./posts/2026-08-07-july-adp-payrolls-concentration/index.html" class="no-external">
+<p>ADP private payrolls rose just 44,000 in July, with 82% of the gain in education and health services. The BLS report then showed total payrolls falling 23,000 as earlier gains were revised lower.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/2026-08-07-july-adp-payrolls-concentration/index.html" class="no-external">
+<div class="listing-date">
+Aug 7, 2026
+</div>
+<div class="listing-author">
+Yoram Gilboa
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1785369600000" data-listing-file-modified-sort="1786202198935" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="42" data-listing-word-count-sort="8245">
 <div class="thumbnail"><a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png" class="thumbnail-image">
@@ -261,17 +301,6 @@ window.Quarto = {
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-30-q2-gdp-june-pce/index.html" class="no-external">
 <p>BEA’s advance estimate put Q2 real GDP at 1.5%, below consensus, while private demand accelerated and June core PCE stayed sticky above 3%.</p>
@@ -288,7 +317,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785635192019" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3730">
+<div class="quarto-post image-right" data-index="2" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1786202198930" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3730">
 <div class="thumbnail"><a href="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/images/ppi-energy-upstream.png" class="thumbnail-image">
@@ -300,17 +329,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/index.html" class="no-external">
 <p>June PPI showed that the energy relief seen in CPI also arrived upstream, but core goods and pipeline pressure stayed firm.</p>
@@ -327,7 +345,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="dGVjaG5vbG9neSUyQ2RhdGElMjB2aXN1YWxpemF0aW9uJTJDbWFya2V0cw==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1785635192022" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="34" data-listing-word-count-sort="6693">
+<div class="quarto-post image-right" data-index="3" data-categories="dGVjaG5vbG9neSUyQ2RhdGElMjB2aXN1YWxpemF0aW9uJTJDbWFya2V0cw==" data-listing-date-sort="1784937600000" data-listing-file-modified-sort="1786202198932" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="34" data-listing-word-count-sort="6693">
 <div class="thumbnail"><a href="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/images/open-param-timeline.png" class="thumbnail-image">
@@ -339,15 +357,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('dGVjaG5vbG9neQ=='); return false;">technology</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWFya2V0cw=='); return false;">markets</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/index.html" class="no-external">
 <p>Moonshot AI’s Kimi K3 pushes open-weight models toward the closed frontier. What that means for open source, distillation, business strategy, regulation, and sovereign AI.</p>
@@ -364,7 +373,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNsYWJvciUyMG1hcmtldCUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1784332800000" data-listing-file-modified-sort="1785635192017" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3400">
+<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNsYWJvciUyMG1hcmtldCUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1784332800000" data-listing-file-modified-sort="1786202198929" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3400">
 <div class="thumbnail"><a href="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/images/cpi-energy-reversal-dashboard.png" class="thumbnail-image">
@@ -376,21 +385,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZW5lcmd5'); return false;">energy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/index.html" class="no-external">
 <p>June CPI fell as energy and gasoline prices reversed, while broader inflation measures and shelter showed a slower path back to 2 percent.</p>
@@ -407,7 +401,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1783728000000" data-listing-file-modified-sort="1785635192015" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6539">
+<div class="quarto-post image-right" data-index="5" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZQ==" data-listing-date-sort="1783728000000" data-listing-file-modified-sort="1786202198928" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="33" data-listing-word-count-sort="6539">
 <div class="thumbnail"><a href="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/images/core-inflation-persistence-dashboard.png" class="thumbnail-image">
@@ -419,17 +413,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-11-core-inflation-persistence-services-goods-shelter/index.html" class="no-external">
 <p>Ahead of the July 14 CPI release, the key test is whether services ex-shelter momentum remains firm while goods disinflation and shelter deceleration continue to offset core persistence.</p>
@@ -446,7 +429,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1783036800000" data-listing-file-modified-sort="1785635192012" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4097">
+<div class="quarto-post image-right" data-index="6" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1783036800000" data-listing-file-modified-sort="1786202198925" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="21" data-listing-word-count-sort="4097">
 <div class="thumbnail"><a href="./posts/2026-07-03-june-jobs-report-soft-labor-market/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-07-03-june-jobs-report-soft-labor-market/images/payroll-trend-june-2026.png" class="thumbnail-image">
@@ -458,17 +441,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-07-03-june-jobs-report-soft-labor-market/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-07-03-june-jobs-report-soft-labor-market/index.html" class="no-external">
 <p>June payroll growth slowed sharply, unemployment dipped only because participation fell, and the combination raises the policy tradeoffs facing the Fed after a hawkish June dot plot.</p>
@@ -485,7 +457,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="bGFib3IlMjBtYXJrZXQlMkNlY29ub21pY3MlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1782518400000" data-listing-file-modified-sort="1785635192010" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3591">
+<div class="quarto-post image-right" data-index="7" data-categories="bGFib3IlMjBtYXJrZXQlMkNlY29ub21pY3MlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1782518400000" data-listing-file-modified-sort="1786202198922" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3591">
 <div class="thumbnail"><a href="./posts/2026-06-27-june-labor-market-resilience-energy-shock/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-27-june-labor-market-resilience-energy-shock/images/june-2026-labor-market-dashboard.png" class="thumbnail-image">
@@ -497,15 +469,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-06-27-june-labor-market-resilience-energy-shock/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-06-27-june-labor-market-resilience-energy-shock/index.html" class="no-external">
 <p>A June 2026 labor market dashboard using May payrolls, April JOLTS, and weekly claims to separate headline resilience from slower hiring-flow signals.</p>
@@ -522,7 +485,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNmb21jJTJDaW50ZXJlc3QlMjByYXRlcyUyQ2luZmxhdGlvbiUyQ2xhYm9yJTIwbWFya2V0" data-listing-date-sort="1781913600000" data-listing-file-modified-sort="1785635192009" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5562">
+<div class="quarto-post image-right" data-index="8" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNmb21jJTJDaW50ZXJlc3QlMjByYXRlcyUyQ2luZmxhdGlvbiUyQ2xhYm9yJTIwbWFya2V0" data-listing-date-sort="1781913600000" data-listing-file-modified-sort="1786202198922" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5562">
 <div class="thumbnail"><a href="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/images/june-2026-dot-plot-shift.png" class="thumbnail-image" alt="Strip-plot comparison of the March and June 2026 SEP dot distributions for the end-2026 federal funds rate, with medians and the current target-range midpoint highlighted.">
@@ -534,21 +497,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Zm9tYw=='); return false;">fomc</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW50ZXJlc3QlMjByYXRlcw=='); return false;">interest rates</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/index.html" class="no-external">
 <p>The June 17 FOMC held the federal funds rate at 3.50-3.75%, but the median end-2026 dot jumped 40 basis points to 3.8% and nine participants now project at least one hike. A read of the SEP, the data behind it, and the gap to market pricing.</p>
@@ -565,7 +513,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1781308800000" data-listing-file-modified-sort="1785635192007" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4475">
+<div class="quarto-post image-right" data-index="9" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1781308800000" data-listing-file-modified-sort="1786202198920" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4475">
 <div class="thumbnail"><a href="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/images/may-2026-cpi-passthrough-dashboard.png" class="thumbnail-image">
@@ -577,19 +525,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZW5lcmd5'); return false;">energy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/index.html" class="no-external">
 <p>May 2026 CPI put headline inflation at +4.2% with energy up +23.0% and gasoline up +40.5%, while core held at +2.8% and core momentum cooled. A passthrough check before the June FOMC.</p>
@@ -606,7 +541,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNsYWJvciUyMG1hcmtldCUyMGJyZWFkdGglMkNkYXRhJTIwdmlzdWFsaXphdGlvbiUyQ2ZlZGVyYWwlMjByZXNlcnZl" data-listing-date-sort="1780704000000" data-listing-file-modified-sort="1785635192003" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8661">
+<div class="quarto-post image-right" data-index="10" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNsYWJvciUyMG1hcmtldCUyMGJyZWFkdGglMkNkYXRhJTIwdmlzdWFsaXphdGlvbiUyQ2ZlZGVyYWwlMjByZXNlcnZl" data-listing-date-sort="1780704000000" data-listing-file-modified-sort="1786202198917" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="44" data-listing-word-count-sort="8661">
 <div class="thumbnail"><a href="./posts/2026-06-06-may-2026-jobs-report-stabilization/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-06-06-may-2026-jobs-report-stabilization/images/may-2026-labor-dashboard.png" class="thumbnail-image" alt="Six-panel labor market dashboard showing payrolls, unemployment, JOLTS quits, initial claims, job openings, and CES vs ADP private payroll growth through May 2026.">
@@ -618,19 +553,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-06-06-may-2026-jobs-report-stabilization/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQlMjBicmVhZHRo'); return false;">labor market breadth</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-06-06-may-2026-jobs-report-stabilization/index.html" class="no-external">
 <p>May 2026 payrolls printed +172k, well above the +80k consensus but within sampling error, with gains concentrated in three acyclical sectors (health care, government, leisure). Full dashboard analysis of the trend, sectors, wages, JOLTS, claims, and implications for the June FOMC.</p>
@@ -647,7 +569,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ21hcmtldHM=" data-listing-date-sort="1780012800000" data-listing-file-modified-sort="1785635191997" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4581">
+<div class="quarto-post image-right" data-index="11" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNmZWRlcmFsJTIwcmVzZXJ2ZSUyQ21hcmtldHM=" data-listing-date-sort="1780012800000" data-listing-file-modified-sort="1786202198911" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4581">
 <div class="thumbnail"><a href="./posts/2026-05-29-q1-gdp-revision-consumer-ai/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-29-q1-gdp-revision-consumer-ai/images/gdp-contributions.png" class="thumbnail-image">
@@ -659,19 +581,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-05-29-q1-gdp-revision-consumer-ai/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWFya2V0cw=='); return false;">markets</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-05-29-q1-gdp-revision-consumer-ai/index.html" class="no-external">
 <p>The BEA’s second estimate revised Q1 2026 GDP growth down to 1.6% from 2.0%, revealing a consumer spending deceleration offset by the strongest equipment investment quarter since 2021.</p>
@@ -688,7 +597,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1779494400000" data-listing-file-modified-sort="1785635191994" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27" data-listing-word-count-sort="5345">
+<div class="quarto-post image-right" data-index="12" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZW5lcmd5JTJDZmVkZXJhbCUyMHJlc2VydmUlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1779494400000" data-listing-file-modified-sort="1786202198909" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27" data-listing-word-count-sort="5345">
 <div class="thumbnail"><a href="./posts/2026-05-23-energy-shock-cpi-passthrough/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-23-energy-shock-cpi-passthrough/images/may-2026-inflation-dashboard.png" class="thumbnail-image">
@@ -700,19 +609,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-05-23-energy-shock-cpi-passthrough/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZW5lcmd5'); return false;">energy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-05-23-energy-shock-cpi-passthrough/index.html" class="no-external">
 <p>April 2026 CPI showed a +3.8% headline rate, energy up +17.9% year over year, gasoline up +28.4%, and core CPI at +2.8%. The May setup is a passthrough test.</p>
@@ -729,7 +625,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1778544000000" data-listing-file-modified-sort="1785635191989" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3093">
+<div class="quarto-post image-right" data-index="13" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1778544000000" data-listing-file-modified-sort="1786202198904" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3093">
 <div class="thumbnail"><a href="./posts/2026-05-12-april-2026-cpi/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-05-12-april-2026-cpi/index_files/figure-html/fig-momentum-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -741,19 +637,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-05-12-april-2026-cpi/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWFya2V0cw=='); return false;">markets</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-05-12-april-2026-cpi/index.html" class="no-external">
 The release still begins with gasoline, but the audience that should pay closest attention is anyone pricing the path of inflation persistence. The April CPI report is not…<strong></strong><strong></strong><strong></strong><strong></strong><strong></strong>
@@ -767,7 +650,7 @@ May 12, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="ZWNvbm9taWNzJTJDbGFib3ItbWFya2V0JTJDZGF0YS12aXN1YWxpemF0aW9uJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1778284800000" data-listing-file-modified-sort="1785635191986" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7419">
+<div class="quarto-post image-right" data-index="14" data-categories="ZWNvbm9taWNzJTJDbGFib3ItbWFya2V0JTJDZGF0YS12aXN1YWxpemF0aW9uJTJDdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1778284800000" data-listing-file-modified-sort="1786202198902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7419">
 <div class="thumbnail"><a href="./posts/2026-05-09-april-jobs-report-labor-dashboard/index.html" class="no-external">
 
 <img loading="lazy" src="./posts/2026-05-09-april-jobs-report-labor-dashboard/images/april-2026-labor-dashboard.png" class="thumbnail-image">
@@ -779,17 +662,6 @@ May 12, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-05-09-april-jobs-report-labor-dashboard/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3ItbWFya2V0'); return false;">labor-market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS12aXN1YWxpemF0aW9u'); return false;">data-visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('dmlzdWFsaXphdGlvbg=='); return false;">visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-05-09-april-jobs-report-labor-dashboard/index.html" class="no-external">
 <p>April 2026 jobs report shows +115k payrolls and 4.3% unemployment. Full dashboard analysis of revisions, sectors, wages, JOLTS, claims, and implications for the Fed and markets.</p>
@@ -806,7 +678,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNpbnRlcmVzdCUyMHJhdGVzJTJDZm9tYyUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1777593600000" data-listing-file-modified-sort="1785635192026" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7580">
+<div class="quarto-post image-right" data-index="15" data-categories="ZWNvbm9taWNzJTJDZmVkZXJhbCUyMHJlc2VydmUlMkNpbnRlcmVzdCUyMHJhdGVzJTJDZm9tYyUyQ2RhdGElMjB2aXN1YWxpemF0aW9u" data-listing-date-sort="1777593600000" data-listing-file-modified-sort="1786202198944" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7580">
 <div class="thumbnail"><a href="./posts/20260501 April FOMC decision/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/20260501 April FOMC decision/index_files/figure-html/fig-apr-sep-vs-market-output-1.png" alt="Line chart of SEP median midpoint path with year-end 2026 interquartile range shaded, versus an interpolated federal funds futures path through 2028."  class="thumbnail-image card-img"/></p>
@@ -818,19 +690,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/20260501 April FOMC decision/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW50ZXJlc3QlMjByYXRlcw=='); return false;">interest rates</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Zm9tYw=='); return false;">fomc</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/20260501 April FOMC decision/index.html" class="no-external">
 The Federal Open Market Committee held the federal funds target range at <strong>3.50-3.75%</strong> on April 29, 2026 and recorded <strong>2 dissents</strong> favoring a 25 bp cut. The Summary of Economic…<strong></strong><strong></strong><strong></strong>
@@ -847,7 +706,7 @@ Yoram Gilboa
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="ZmVkLXBvbGljeSUyQ2ludGVyZXN0LXJhdGVzJTJDZm9tYyUyQ2ludGVyZXN0LXJhdGUtb3V0bG9vaw==" data-listing-date-sort="1777075200000" data-listing-file-modified-sort="1785635191981" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7438">
+<div class="quarto-post image-right" data-index="16" data-categories="ZmVkLXBvbGljeSUyQ2ludGVyZXN0LXJhdGVzJTJDZm9tYyUyQ2ludGVyZXN0LXJhdGUtb3V0bG9vaw==" data-listing-date-sort="1777075200000" data-listing-file-modified-sort="1786202198896" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="38" data-listing-word-count-sort="7438">
 <div class="thumbnail"><a href="./posts/2026-04-25-fomc-preview/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-25-fomc-preview/index_files/figure-html/fig-rate-paths-output-1.png" alt="Line chart comparing the FOMC dot plot median path with shaded IQR against the market-implied federal funds rate path through 2028."  class="thumbnail-image card-img"/></p>
@@ -859,17 +718,6 @@ Yoram Gilboa
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-04-25-fomc-preview/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkLXBvbGljeQ=='); return false;">fed-policy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW50ZXJlc3QtcmF0ZXM='); return false;">interest-rates</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Zm9tYw=='); return false;">fomc</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW50ZXJlc3QtcmF0ZS1vdXRsb29r'); return false;">interest-rate-outlook</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-04-25-fomc-preview/index.html" class="no-external">
 The Federal Open Market Committee meets April 28-29, 2026 with the rate outlook at its most contested point since the cutting cycle began. For investors tracking the April…
@@ -883,7 +731,7 @@ Apr 25, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1776470400000" data-listing-file-modified-sort="1785635191980" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3315">
+<div class="quarto-post image-right" data-index="17" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNtYXJrZXRzJTJDZmVkZXJhbCUyMHJlc2VydmU=" data-listing-date-sort="1776470400000" data-listing-file-modified-sort="1786202198896" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3315">
 <div class="thumbnail"><a href="./posts/2026-04-18-march-2026-cpi/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-18-march-2026-cpi/index_files/figure-html/fig-contributions-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -895,19 +743,6 @@ Apr 25, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-04-18-march-2026-cpi/index.html" class="no-external">Gasoline drove the biggest monthly jump since 2022, but core stayed steady. What it means for rates, wallets, and markets.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWFya2V0cw=='); return false;">markets</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZmVkZXJhbCUyMHJlc2VydmU='); return false;">federal reserve</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-04-18-march-2026-cpi/index.html" class="no-external">
 <p>Gasoline drove March 2026 CPI sharply higher, but core inflation stayed steady. What the report means for Fed policy, consumers, and markets.</p>
@@ -921,7 +756,7 @@ Apr 18, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNkYXRhJTIwYW5hbHlzaXMlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1775433600000" data-listing-file-modified-sort="1785635191979" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4651">
+<div class="quarto-post image-right" data-index="18" data-categories="ZWNvbm9taWNzJTJDbGFib3IlMjBtYXJrZXQlMkNkYXRhJTIwYW5hbHlzaXMlMkNkYXRhJTIwdmlzdWFsaXphdGlvbg==" data-listing-date-sort="1775433600000" data-listing-file-modified-sort="1786202198895" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4651">
 <div class="thumbnail"><a href="./posts/2026-04-06-march-jobs-rebound/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-04-06-march-jobs-rebound/index_files/figure-html/fig-payroll-history-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -933,17 +768,6 @@ Apr 18, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-04-06-march-jobs-rebound/index.html" class="no-external">What the claims data already told us - and how the March Employment Situation confirmed it.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-04-06-march-jobs-rebound/index.html" class="no-external">
 The signal heading into the April 3 release was unambiguous - and it played out exactly as the data previewed. In my March 29 post, low initial jobless claims and the BTOS po…
@@ -957,7 +781,7 @@ Apr 6, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYWJvciUyMG1hcmtldA==" data-listing-date-sort="1774742400000" data-listing-file-modified-sort="1785635191978" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3088">
+<div class="quarto-post image-right" data-index="19" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYWJvciUyMG1hcmtldA==" data-listing-date-sort="1774742400000" data-listing-file-modified-sort="1786202198894" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3088">
 <div class="thumbnail"><a href="./posts/2026-03-29-btos-and-unemployment/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-29-btos-and-unemployment/index_files/figure-html/fig-initial-claims-trend-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -969,17 +793,6 @@ Apr 6, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-03-29-btos-and-unemployment/index.html" class="no-external">Initial and continuing claims paint a clear picture heading into April 3: layoffs are not the problem.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGFib3IlMjBtYXJrZXQ='); return false;">labor market</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-03-29-btos-and-unemployment/index.html" class="no-external">
 The March employment situation report drops on April 3, 2026, and the question on everyone’s mind is whether February’s payroll miss was a blip or the start of something…<strong></strong><strong></strong><strong></strong>
@@ -993,7 +806,7 @@ Mar 29, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24=" data-listing-date-sort="1774137600000" data-listing-file-modified-sort="1785635191874" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3524">
+<div class="quarto-post image-right" data-index="20" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDZGF0YSUyMHZpc3VhbGl6YXRpb24=" data-listing-date-sort="1774137600000" data-listing-file-modified-sort="1786202198794" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3524">
 <div class="thumbnail"><a href="./posts/2026-03-22-btos-march/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-22-btos-march/index_files/figure-html/fig-national-trends-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1005,15 +818,6 @@ Mar 29, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-03-22-btos-march/index.html" class="no-external">The business survey tells the same story as the jobs miss, from the employer’s side of the table.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-03-22-btos-march/index.html" class="no-external">
 Two weeks after the February payroll miss, the Census Bureau’s Business Trends and Outlook Survey<sup>1</sup> (BTOS) offers the view from the other side of the hiring decision. The…<strong></strong><strong></strong><strong></strong>
@@ -1027,7 +831,7 @@ Mar 22, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1773532800000" data-listing-file-modified-sort="1785635191772" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1907">
+<div class="quarto-post image-right" data-index="21" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1773532800000" data-listing-file-modified-sort="1786202198688" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1907">
 <div class="thumbnail"><a href="./posts/2026-03-15-divergence/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-15-divergence/index_files/figure-html/fig-sector-payrolls-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1039,15 +843,6 @@ Mar 22, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-03-15-divergence/index.html" class="no-external">Weak payrolls, low claims, and sticky inflation paint a picture of uneven cooling, not collapse.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-03-15-divergence/index.html" class="no-external">
 Last week delivered three economic releases that, at the headline level, seemed to contradict each other. Nonfarm payrolls fell by <strong>-92,000</strong> in February 2026. Initial jobless…<strong></strong><strong></strong>
@@ -1061,7 +856,7 @@ Mar 15, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMGFuYWx5c2lz" data-listing-date-sort="1772323200000" data-listing-file-modified-sort="1785635191772" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3321">
+<div class="quarto-post image-right" data-index="22" data-categories="ZWNvbm9taWNzJTJDaW5mbGF0aW9uJTJDZGF0YSUyMGFuYWx5c2lz" data-listing-date-sort="1772323200000" data-listing-file-modified-sort="1786202198688" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3321">
 <div class="thumbnail"><a href="./posts/2026-03-01-core-ppi-divergence/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-03-01-core-ppi-divergence/index_files/figure-html/fig-ppi-cpi-history-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1073,15 +868,6 @@ Mar 15, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-03-01-core-ppi-divergence/index.html" class="no-external">PPI and CPI told two very different stories in January 2026. One calmed the markets. The other blindsided them.</a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-03-01-core-ppi-divergence/index.html" class="no-external">
 On February 13, 2026, the Consumer Price Index for January landed soft: headline +0.2% month-over-month<sup>1</sup> (below the +0.3% consensus), core +0.3% (in line), headline…<strong></strong><strong></strong>
@@ -1095,7 +881,7 @@ Mar 1, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="c3VwcmVtZSUyMGNvdXJ0JTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYXclMkNwb2xpdGljcw==" data-listing-date-sort="1771718400000" data-listing-file-modified-sort="1785635191771" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2644">
+<div class="quarto-post image-right" data-index="23" data-categories="c3VwcmVtZSUyMGNvdXJ0JTJDZGF0YSUyMHZpc3VhbGl6YXRpb24lMkNsYXclMkNwb2xpdGljcw==" data-listing-date-sort="1771718400000" data-listing-file-modified-sort="1786202198687" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2644">
 <div class="thumbnail"><a href="./posts/2026-02-22-scotus-tariff-alliances/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-02-22-scotus-tariff-alliances/index_files/figure-html/fig-heatmap-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1107,17 +893,6 @@ Mar 1, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-02-22-scotus-tariff-alliances/index.html" class="no-external">The IEEPA Tariff Ruling and Justice Voting Patterns in <em>Learning Resources, Inc.&nbsp;v. Trump</em></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('c3VwcmVtZSUyMGNvdXJ0'); return false;">supreme court</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMHZpc3VhbGl6YXRpb24='); return false;">data visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGF3'); return false;">law</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cG9saXRpY3M='); return false;">politics</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-02-22-scotus-tariff-alliances/index.html" class="no-external">
 On February 20, 2026, the Supreme Court delivered one of its most consequential rulings in years. In <em>Learning Resources, Inc.&nbsp;v. Trump</em> (consolidated with <em>Trump v. V.O.S.…</em><sup></sup><strong></strong>
@@ -1131,7 +906,7 @@ Feb 22, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1771200000000" data-listing-file-modified-sort="1785635191771" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3096">
+<div class="quarto-post image-right" data-index="24" data-categories="ZWNvbm9taWNzJTJDZGF0YSUyMGFuYWx5c2lzJTJDaW5mbGF0aW9u" data-listing-date-sort="1771200000000" data-listing-file-modified-sort="1786202198687" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3096">
 <div class="thumbnail"><a href="./posts/2026-02-16-us-inflation-cooling/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' src="posts/2026-02-16-us-inflation-cooling/index_files/figure-html/fig-headline-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1143,15 +918,6 @@ Feb 22, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2026-02-16-us-inflation-cooling/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZWNvbm9taWNz'); return false;">economics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YSUyMGFuYWx5c2lz'); return false;">data analysis</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2026-02-16-us-inflation-cooling/index.html" class="no-external">
 US consumer prices rose 2.8% year-over-year in January 2026, down from 3.0% in December, the lowest reading since July 2025. Core CPI ticked up to 2.9%. But the real story…
@@ -1165,10 +931,10 @@ Feb 16, 2026
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-categories="YWN0dWFyaWFsJTJDaW5mbGF0aW9uJTJDdmlzdWFsaXphdGlvbiUyQ2luc3VyYW5jZQ==" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785635191770" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="824">
+<div class="quarto-post image-right" data-index="25" data-categories="YWN0dWFyaWFsJTJDaW5mbGF0aW9uJTJDdmlzdWFsaXphdGlvbiUyQ2luc3VyYW5jZQ==" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1786202198687" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="824">
 <div class="thumbnail"><a href="./posts/2025-02-01-pc-severity-cpi/index.html" class="no-external">
 
-<p class="card-img-top"><img loading='lazy' src="posts/2025-02-01-pc-severity-cpi/index_files/figure-html/cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
+<p class="card-img-top"><img loading='lazy' data-src="posts/2025-02-01-pc-severity-cpi/index_files/figure-html/cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
 
 </a></div>
 <div class="body">
@@ -1177,17 +943,6 @@ Feb 16, 2026
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2025-02-01-pc-severity-cpi/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YWN0dWFyaWFs'); return false;">actuarial</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5mbGF0aW9u'); return false;">inflation</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('dmlzdWFsaXphdGlvbg=='); return false;">visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('aW5zdXJhbmNl'); return false;">insurance</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2025-02-01-pc-severity-cpi/index.html" class="no-external">
 The standard Consumer Price Index (CPI-U) is designed to measure inflation for typical household consumption. But for Property &amp; Casualty insurance actuaries, it…
@@ -1201,7 +956,7 @@ Feb 1, 2025
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="25" data-categories="bWV0YSUyQ3Zpc3VhbGl6YXRpb24lMkNweXRob24=" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1785635191770" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
+<div class="quarto-post image-right" data-index="26" data-categories="bWV0YSUyQ3Zpc3VhbGl6YXRpb24lMkNweXRob24=" data-listing-date-sort="1738368000000" data-listing-file-modified-sort="1786202198687" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="92">
 <div class="thumbnail"><a href="./posts/2025-02-01-first-visualization/index.html" class="no-external">
 
 <p class="card-img-top"><img loading='lazy' data-src="posts/2025-02-01-first-visualization/index_files/figure-html/cell-2-output-1.png"  class="thumbnail-image card-img"/></p>
@@ -1213,15 +968,6 @@ Feb 1, 2025
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/2025-02-01-first-visualization/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWV0YQ=='); return false;">meta</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('dmlzdWFsaXphdGlvbg=='); return false;">visualization</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
 </div>
 <div class="delink listing-description"><a href="./posts/2025-02-01-first-visualization/index.html" class="no-external">
 This is my first post on my new Quarto-based blog. I’ll be sharing data visualizations and predictive modeling work here.
