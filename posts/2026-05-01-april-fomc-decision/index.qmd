@@ -1,8 +1,10 @@
-﻿---
+---
 title: "April 2026 FOMC: Dissents, Dots & a Widening Wedge"
 author: "Yoram Gilboa"
 date: "2026-05-01"
 categories: [economics, federal reserve, interest rates, fomc, data visualization]
+description: "April 2026 FOMC: rate hold, dissents, and a wider gap between the SEP dots and market-implied paths."
+image: images/april-2026-fomc-dashboard.png
 toc: true
 toc-location: right
 code-fold: true
