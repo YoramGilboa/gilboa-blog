@@ -5,17 +5,11 @@ listing:
   feed: true
   sort: "date desc"
   type: default
-  categories: false
+  categories: true
   sort-ui: false
   filter-ui: false
 page-layout: full
-title-block-banner: false
+title-block-banner: true
 ---
-
-<header class="home-masthead">
-<p class="home-kicker">Independent economic analysis</p>
-<h1>Yoram Gilboa</h1>
-<p class="home-dek">Data-led analysis of inflation, the labor market, and Federal Reserve policy.</p>
-</header>
 
 
