@@ -1421,7 +1421,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
   <media:content url="https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/images/cpi-headline-core-yoy.png" medium="image" type="image/png" height="88" width="144"/>
 </item>
 <item>
-  <title>July 2026 Jobs: Slow Growth, Narrow Gains</title>
+  <title>July 2026 Jobs: Only 44k ADP Gains, Heavily Concentrated</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/</link>
   <description><![CDATA[ 
@@ -1470,7 +1470,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 </div>
 </div>
 </div>
-<div id="6aca5a48" class="cell" data-execution_count="2">
+<div id="fe7cf911" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.3rem 0;"><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP private payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #2e5984;">+44k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP education and health share</div><div style="font-size: 1.55rem; font-weight: 700; color: #007c91;">82%</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">BLS total payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #9b3a32;">-23k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">Initial claims, four-week average</div><div style="font-size: 1.55rem; font-weight: 700; color: #4f7c63;">199k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div></div>
 </div>
@@ -3133,7 +3133,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
   <media:content url="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png" medium="image" type="image/png" height="86" width="144"/>
 </item>
 <item>
-  <title>Q2 Growth Slowed to 1.5%, but Private Demand Was Stronger</title>
+  <title>Q2 GDP Slowed to 1.5% – But Private Demand Was Actually Stronger</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/</link>
   <description><![CDATA[ 
@@ -3166,7 +3166,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
 </div>
 </div>
 </div>
-<div id="50cb07b4" class="cell" data-execution_count="2">
+<div id="fe7cfae0" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -33065,7 +33065,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-80">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." data-fig-align="center">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, March 2026 (revised +185k) and April 2026 (+115k) highlighted in an upper-right callout." width="752" height="426">
@@ -33575,7 +33575,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-89">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="804" height="589">
@@ -34443,7 +34443,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-137">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of April 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="754" height="704">
@@ -34931,7 +34931,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-70">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through April 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -35425,7 +35425,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." data-fig-align="center">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-05-09-april-jobs-report-labor-dashboard/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Top: scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line. Bottom: bars of monthly payroll change with the four-week claims average overlaid on a secondary axis." width="752" height="656">
