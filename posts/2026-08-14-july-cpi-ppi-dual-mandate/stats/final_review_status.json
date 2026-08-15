@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-08-15T00:35:17Z",
+  "reviewer": "blog-final-review",
+  "notes": "Accuracy, flow, and consistency pass after correcting real-pay interpretation, clarifying target measures, removing unreproducible FedWatch probabilities, and passing all four desktop/mobile chart checks plus the listing-card review."
+}
