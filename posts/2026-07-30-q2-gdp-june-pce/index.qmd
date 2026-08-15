@@ -1,14 +1,18 @@
 ---
-title: "Q2 Growth Slowed to 1.5%, but Private Demand Was Stronger"
+title: "Q2 GDP Slowed to 1.5% – But Private Demand Was Actually Stronger"
+pagetitle: "Q2 GDP Slowed to 1.5% – But Private Demand Was Actually Stronger"
 date: "2026-07-30"
 author: Yoram Gilboa
 categories: [economics, inflation, data visualization, federal reserve]
-description: "BEA's advance estimate put Q2 real GDP at 1.5%, below consensus, while private demand accelerated and June core PCE stayed sticky above 3%."
+description: "BEA’s advance estimate shows Q2 growth cooled to 1.5%, yet private domestic demand held up better than the headline. Full breakdown of the GDP and June PCE reports."
 image: images/contribution-shift.png
 toc: true
 toc-location: right
 code-fold: true
 code-summary: "Show code"
+format:
+  html:
+    title-prefix: ""
 ---
 
 ```{python}
