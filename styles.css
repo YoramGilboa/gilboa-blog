@@ -1,18 +1,41 @@
-/* ── Responsive title metadata layout ──
-   Renders author and date side-by-side on desktop,
-   stacked on mobile. Applied site-wide so individual
-   posts do not need inline <style> blocks. */
+/* Quiet editorial chrome. Chart PNGs and post qmd COLORS are unchanged. */
+
+:root {
+  --paper: #f7f4ee;
+  --ink: #1c1917;
+  --muted: #5c564e;
+  --hairline: #ddd6c8;
+  --navy: #2e4a62;
+  --serif: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ── Title metadata ── */
 
 .quarto-title-meta {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
   column-gap: 2rem;
+  font-size: 0.88rem;
+  color: var(--muted);
 }
 
 .quarto-title-meta > div:nth-child(2) {
   justify-self: end;
   text-align: right;
+}
+
+.quarto-title-meta-heading {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -27,42 +50,87 @@
   }
 }
 
-/* ── Responsive figure images ──
-   Quarto renders chart images with fixed pixel width/height
-   attributes and without Bootstrap's .img-fluid class, so on
-   narrow viewports they overflow and clip at the right edge.
-   Replicate img-fluid for all content images so charts scale
-   down to the text column width. */
+/* ── Post titles ── */
+
+#title-block-header .title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.85rem, 3.4vw, 2.55rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+#title-block-header .description {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-top: 0.65rem;
+  max-width: 42rem;
+}
+
+#title-block-header .quarto-categories {
+  margin-top: 0.9rem;
+}
+
+#title-block-header .quarto-category {
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+}
+
+.quarto-title-banner {
+  background: var(--paper) !important;
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+/* ── Content measure and type ── */
 
 #quarto-document-content img {
   max-width: 100%;
   height: auto;
 }
 
-/* ── Content spacing and typography ──
-   Consistent spacing for headings, callouts, charts,
-   and data tables across all posts. */
+#quarto-document-content .quarto-title-block { margin-bottom: 1.75rem; }
+#quarto-document-content .callout {
+  border-radius: 0;
+  border: 1px solid var(--hairline);
+  background: #f3efe6;
+}
+#quarto-document-content .grid { margin: 1.25rem 0; }
+#quarto-document-content figure.quarto-float { margin: 2rem 0; }
+#quarto-document-content h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  margin-top: 2.4rem;
+  font-size: 1.45rem;
+}
+
+#quarto-document-content p,
+#quarto-document-content li {
+  line-height: 1.65;
+}
+
+#quarto-document-content table {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 1.5rem;
+}
 
 .table-caption,
 caption {
   text-align: left;
 }
 
-#quarto-document-content .quarto-title-block { margin-bottom: 1.5rem; }
-#quarto-document-content .callout { border-radius: 8px; }
-#quarto-document-content .grid { margin: 1.25rem 0; }
-#quarto-document-content figure.quarto-float { margin: 1.75rem 0; }
-#quarto-document-content h2 { margin-top: 2.25rem; }
-
-#quarto-document-content table {
-  font-size: 0.82rem;
-  color: #64748b;
-  margin-top: 1.5rem;
-}
-
 #quarto-document-content caption {
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--muted);
   font-weight: 500;
 }
 
@@ -70,6 +138,97 @@ caption {
   margin-top: -1.2rem;
   margin-bottom: 1rem;
   font-size: 0.72rem;
-  color: #94a3b8;
+  color: var(--muted);
   font-style: italic;
+}
+
+#TOC {
+  font-size: 0.82rem;
+}
+
+#TOC .toc-title,
+#toc-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+/* ── Homepage masthead ── */
+
+body.layout-full #title-block-header .title {
+  font-size: clamp(2.2rem, 5vw, 3.1rem);
+}
+
+body.layout-full #quarto-document-content > p:first-of-type {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--muted);
+  max-width: 36rem;
+  margin-bottom: 2rem;
+}
+
+/* ── Listing ── */
+
+.quarto-listing-category-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.quarto-listing-category .category {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.quarto-post {
+  border-bottom: 1px solid var(--hairline);
+  padding: 1.35rem 0 !important;
+}
+
+.listing-title a {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.28rem;
+  line-height: 1.3;
+  color: var(--ink) !important;
+  text-decoration: none;
+}
+
+.listing-title a:hover {
+  color: var(--navy) !important;
+}
+
+.listing-description,
+.listing-description p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.listing-category {
+  border: 1px solid var(--hairline) !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.listing-date,
+.listing-author {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.thumbnail-image {
+  border: 1px solid var(--hairline);
+}
+
+@media (max-width: 768px) {
+  .listing-title a {
+    font-size: 1.12rem;
+  }
 }

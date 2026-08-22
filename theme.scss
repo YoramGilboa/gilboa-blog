@@ -1,58 +1,82 @@
 /*-- scss:defaults --*/
 
-// Local Cosmo-derived theme. This preserves the existing palette while avoiding
-// any remote font import at build or runtime.
-
-$theme: "cosmo" !default;
+// Quiet editorial theme. Local system fonts only (no remote import).
 
 $white: #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #868e96 !default;
-$gray-700: #495057 !default;
-$gray-800: #373a3c !default;
-$gray-900: #212529 !default;
+$paper: #f7f4ee !default;
+$ink: #1c1917 !default;
+$muted: #5c564e !default;
+$hairline: #ddd6c8 !default;
+$navy: #2e4a62 !default;
+
+$gray-100: #f7f4ee !default;
+$gray-200: #ebe4d8 !default;
+$gray-300: #ddd6c8 !default;
+$gray-400: #c4bdb0 !default;
+$gray-500: #8a8378 !default;
+$gray-600: #5c564e !default;
+$gray-700: #3f3a35 !default;
+$gray-800: #1c1917 !default;
+$gray-900: #141210 !default;
 $black: #000 !default;
 
-$blue: #2780e3 !default;
-$indigo: #6610f2 !default;
-$purple: #613d7c !default;
-$pink: #e83e8c !default;
-$red: #ff0039 !default;
-$orange: #f0ad4e !default;
-$yellow: #ff7518 !default;
-$green: #3fb618 !default;
-$teal: #20c997 !default;
-$cyan: #9954bb !default;
+$blue: $navy !default;
+$indigo: #3d4454 !default;
+$purple: #5a4a62 !default;
+$pink: #8b4a5a !default;
+$red: #8b3a32 !default;
+$orange: #cc7722 !default;
+$yellow: #c4a35a !default;
+$green: #4f7c63 !default;
+$teal: #3d6b5c !default;
+$cyan: #4a6a7c !default;
 
-$primary: $blue !default;
-$secondary: $gray-800 !default;
+$primary: $navy !default;
+$secondary: $ink !default;
 $success: $green !default;
 $info: $cyan !default;
-$warning: $yellow !default;
+$warning: $orange !default;
 $danger: $red !default;
-$light: $gray-100 !default;
-$dark: $gray-800 !default;
+$light: $paper !default;
+$dark: $ink !default;
 
-$min-contrast-ratio: 2.6 !default;
+$min-contrast-ratio: 3 !default;
 $enable-rounded: false !default;
-$body-color: $gray-800 !default;
+$body-bg: $paper !default;
+$body-color: $ink !default;
+$link-color: $navy !default;
+$link-hover-color: $ink !default;
+
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 	"Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
 	"Segoe UI Symbol" !default;
-$headings-font-weight: 400 !default;
-$navbar-dark-hover-color: rgba($white, 1) !default;
-$navbar-light-hover-color: rgba($black, 0.9) !default;
+$headings-font-family: Charter, "Iowan Old Style", "Palatino Linotype", Palatino,
+	Georgia, "Times New Roman", serif !default;
+$headings-font-weight: 600 !default;
+$headings-color: $ink !default;
+$font-size-base: 1.05rem !default;
+
+$navbar-bg: $paper !default;
+$navbar-fg: $ink !default;
+$navbar-hl: $navy !default;
+$navbar-dark-hover-color: $ink !default;
+$navbar-light-hover-color: $navy !default;
+
 $alert-border-width: 0 !default;
 $progress-height: 0.5rem !default;
+$border-color: $hairline !default;
 
 /*-- scss:rules --*/
 
 body {
 	-webkit-font-smoothing: antialiased;
+	background-color: $paper;
+	color: $ink;
+}
+
+h1, h2, h3, h4, .navbar-title, .listing-title, #title-block-header .title {
+	font-family: $headings-font-family;
+	letter-spacing: -0.015em;
 }
 
 .badge {
@@ -68,4 +92,45 @@ body {
 		font-size: 8px;
 		line-height: 8px;
 	}
+}
+
+nav.navbar {
+	background-color: $paper !important;
+	border-bottom: 1px solid $hairline;
+	padding-top: 0.65rem;
+	padding-bottom: 0.65rem;
+	--bs-navbar-color: #{$muted};
+	--bs-navbar-hover-color: #{$ink};
+	--bs-navbar-active-color: #{$ink};
+	--bs-navbar-brand-color: #{$ink};
+	--bs-navbar-brand-hover-color: #{$navy};
+}
+
+.navbar[data-bs-theme="dark"] .navbar-toggler-icon {
+	filter: invert(1);
+}
+
+.navbar-title {
+	font-size: 1.15rem;
+	font-weight: 600;
+	color: $ink !important;
+}
+
+.navbar .nav-link {
+	font-size: 0.88rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: $muted !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+	color: $ink !important;
+}
+
+.nav-footer {
+	background-color: $paper !important;
+	border-top: 1px solid $hairline;
+	color: $muted;
+	font-size: 0.82rem;
 }

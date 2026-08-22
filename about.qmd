@@ -10,4 +10,8 @@ about:
 
 ---
 
-Data visualization and economic analysis blog by Yoram Gilboa.
+gilboa.blog is a data-visualization notebook on the US economy: CPI and its parts, the labor market, Fed policy, producer prices, and the occasional high-signal one-off when the data spine is strong enough to chart.
+
+The aim is the same each time. Put official series next to a plain-English argument, show the chart that carries the claim, and keep the pipeline reproducible.
+
+Yoram Gilboa writes it.

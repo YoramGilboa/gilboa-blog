@@ -11,10 +11,12 @@ listing:
   sort-ui: false
   filter-ui: false
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 # Keep the browser/social title exact; otherwise Quarto appends " - Yoram Gilboa".
 format:
   html:
     title-prefix: ""
 ---
+
+US macro through charts: inflation, jobs, the Fed, and the occasional high-signal exception.
 
