@@ -22,13 +22,12 @@ website:
     site: "@gilboa"
 
   navbar:
+    title: "gilboa.blog"
     background: primary
     left:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: index.qmd
-        text: Blog
     right:
       - icon: rss
         href: index.xml

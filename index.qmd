@@ -1,5 +1,5 @@
 ---
-title: "Yoram Gilboa"
+title: "gilboa.blog"
 pagetitle: "Yoram Gilboa | US Macro Data Visualization & Analysis"
 description: "Data-driven analysis of US inflation, jobs, GDP, and Fed policy. Clear charts and commentary on CPI, PCE, FOMC, and labor market trends."
 listing:
