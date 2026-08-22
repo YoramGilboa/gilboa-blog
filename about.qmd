@@ -10,4 +10,8 @@ about:
 
 ---
 
-Data visualization and economic analysis blog by Yoram Gilboa.
+gilboa.blog is a data-visualization notebook on the US economy. Most posts are about inflation, jobs, Fed policy, producer prices, and GDP. Occasionally there is a one-off when a public data spine is strong enough to chart.
+
+Each post pairs official series (usually FRED, BLS, or BEA) with a plain-English argument and a reproducible Python pipeline.
+
+Yoram Gilboa writes it.
