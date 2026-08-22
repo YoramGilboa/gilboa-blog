@@ -1,17 +1,24 @@
 ---
 title: "About"
-image: profile.jpg
-about:
-  template: jolla
-  links:
-    - icon: github
-      text: Github
-      href: https://github.com/YoramGilboa
-
+description: "About Yoram Gilboa and gilboa.blog — data-driven analysis of US inflation, jobs, GDP, Fed policy, and related topics."
+hide-description: true
+toc: false
 ---
 
-gilboa.blog is a data-visualization notebook on the US economy. Most posts are about inflation, jobs, Fed policy, producer prices, and GDP. Occasionally there is a one-off when a public data spine is strong enough to chart.
+I write about data visualization and how to apply Python to real-world problems in order to produce clear insight. A natural application has been US macro releases (e.g. inflation, jobs, GDP, and Federal Reserve policy) with occasional pieces on AI and technology. The focus is always the same: what is actually moving in the data and what it means.
 
-Each post pairs official series (usually FRED, BLS, or BEA) with a plain-English argument and a reproducible Python pipeline.
+I have spent my career working with data in the insurance industry, turning complex information into insight for stakeholders and senior management. I started **gilboa.blog** to practice that same discipline in public: timely reads of major economic releases and selected technology topics, supported by clear charts and reproducible code.
 
-Yoram Gilboa writes it.
+Charts are the main tool I use to surface patterns that are easy to miss in tables or headlines. I also use AI agents to automate much of the production pipeline, which frees up time to improve the figures, refine the writing, and make the posts more approachable to a broader audience. Most posts include the full Python code so the analysis remains reproducible.
+
+### What you’ll find here
+- CPI, PCE, and PPI releases with contribution and persistence analysis  
+- Jobs reports (BLS and ADP) with sector and breadth detail  
+- GDP and related demand-side breakdowns  
+- FOMC decisions, minutes, and the dot plot  
+- Occasional technology and AI pieces (e.g. open-weight models)
+
+### Elsewhere
+- GitHub: [YoramGilboa](https://github.com/YoramGilboa)
+
+If you have a question or a comment, I'd like to hear from you.

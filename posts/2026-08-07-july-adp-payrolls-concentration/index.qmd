@@ -1,10 +1,10 @@
 ---
-title: "July 2026 Jobs: Only 44k ADP Gains, Heavily Concentrated"
-pagetitle: "July 2026 Jobs: Only 44k ADP Gains, Heavily Concentrated"
+title: "July ADP: Only 44k Jobs, 82% from Education & Health"
+pagetitle: "July ADP: Only 44k Jobs, 82% from Education & Health"
 date: "2026-08-07"
 author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization, inflation]
-description: "ADP private payrolls rose just 44,000 in July with 82% of the gain in education and health services. BLS then showed a net loss after revisions — what this mixed signal means for the Fed."
+description: "ADP private payrolls rose just 44,000 in July, with 82% of the gain in one sector. BLS later showed a net loss after revisions."
 image: images/july-adp-payroll-trend.png
 image-alt: "Monthly ADP private payroll changes and their three-month average through July 2026"
 toc: true
