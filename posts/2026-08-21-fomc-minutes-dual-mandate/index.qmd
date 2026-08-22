@@ -1,0 +1,611 @@
+---
+title: "July FOMC Minutes: Many Officials Saw Hikes If Inflation Does Not Cool"
+date: "2026-08-21"
+author: Yoram Gilboa
+categories: [economics, inflation, federal reserve, data visualization, labor market]
+description: "Three members dissented for a 25 bp hike while the Committee held 3.50-3.75%. After the meeting, payrolls fell 23k and CPI rose 0.1%; futures still treated a September hold as the base case."
+image: images/core-cpi-pce-yoy.png
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+POST_DIR = Path(".").resolve()
+DATA_DIR = POST_DIR / "data"
+CLEAN_DIR = DATA_DIR / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+for folder in [CLEAN_DIR, IMG_DIR, STATS_DIR]:
+    folder.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+inflation = pd.read_csv(CLEAN_DIR / "inflation.csv", index_col="date", parse_dates=True).sort_index()
+labor = pd.read_csv(CLEAN_DIR / "labor.csv", index_col="date", parse_dates=True).sort_index()
+rates = pd.read_csv(CLEAN_DIR / "rates_daily.csv", index_col="date", parse_dates=True).sort_index()
+fedwatch = pd.read_csv(CLEAN_DIR / "fedwatch.csv")
+contrib = pd.read_csv(CLEAN_DIR / "cpi_contributions.csv")
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    if isinstance(value, float):
+        return f"{value:.{digits}f}"
+    return f"{value:,}"
+
+
+def fmt_chg(value, digits=1):
+    if abs(value) < 0.5 * (10 ** (-digits)):
+        return f"{0:.{digits}f}"
+    return f"{value:+.{digits}f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def label_endpoints(ax, entries, gap_frac=0.05):
+    y0, y1 = ax.get_ylim()
+    gap = (y1 - y0) * gap_frac
+    ordered = sorted(entries, key=lambda item: item["y"])
+    ys = [item["y"] for item in ordered]
+    for index in range(1, len(ys)):
+        if ys[index] - ys[index - 1] < gap:
+            ys[index] = ys[index - 1] + gap
+    for item, y_value in zip(ordered, ys):
+        if abs(y_value - item["y"]) > 1e-9:
+            ax.plot(
+                [item["x"], item["x"]],
+                [item["y"], y_value],
+                color=COLORS["light"],
+                linewidth=0.6,
+                zorder=4,
+            )
+        ax.scatter(
+            item["x"],
+            item["y"],
+            s=40,
+            color=item["color"],
+            edgecolors="white",
+            linewidth=0.8,
+            zorder=5,
+        )
+        ax.text(
+            item["x"],
+            y_value,
+            f"  {item['text']}",
+            color=item["color"],
+            fontsize=8,
+            fontweight="bold",
+            va="center",
+            zorder=6,
+        )
+```
+
+The Federal Reserve's `{python} stats['fomc_meeting_dates']` meeting minutes, released on `{python} stats['minutes_release_date']`, show a Committee more worried about inflation than the later July data would suggest. Officials held the federal funds rate, the overnight bank rate that is the Fed's main policy tool, at **`{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%**. `{python} stats['vote_against_cap']` members dissented, preferring a **`{python} fmt(stats['dissent_hike_bp'], 0)` basis-point** hike. A basis point is one hundredth of a percentage point.
+
+The key sentence is qualitative: "`{python} stats['minutes_many_quote']`" That record was written from late-July information. After the meeting, payrolls fell **`{python} fmt(abs(stats['july_payroll_k']), 0)`k**, with large downward revisions to May and June. Headline CPI, the Consumer Price Index, rose **`{python} fmt(stats['cpi_headline_mom'])`%** on the month and **`{python} fmt(stats['cpi_headline_yoy'])`%** from a year earlier. Core CPI, which excludes food and energy, rose **`{python} fmt(stats['cpi_core_mom'])`%** and **`{python} fmt(stats['cpi_core_yoy'])`%** year over year. Retail sales and housing starts also weakened. Those prints had opened dual-mandate space for a September hold. The minutes pull some of that space back without closing it.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The complete pipeline is included with this draft:
+
+- `scripts/01_fetch_data.py` downloads validated FRED series for CPI, PCE, payrolls, unemployment, retail sales, housing starts, the federal funds target range, and the 10-year Treasury yield. It also writes curated CME FedWatch snapshots and source URLs.
+- `scripts/02_clean_data.py` calculates monthly change, year-over-year change, payroll differences, and approximate July CPI contributions. Rate formulas live in this script so the charts only plot finished columns.
+- `scripts/04_compute_stats.py` writes every prose and metric-card value to `stats/summary_stats.json`.
+
+Run the scripts in numeric order from this post directory, then render `index.qmd`. pandas handles the transformations, and matplotlib draws every chart. FRED and BLS supply the official series. CME FedWatch probabilities are compiled from contemporaneous reports because CME does not publish a stable historical CSV.
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+The minutes are a qualitative record. Words such as "many," "several," and "some" are the Federal Reserve's conventional ranking of how widely a view was shared. They are not vote counts. The `{python} stats['vote_split']` decision is the only numerical vote in the document.
+
+July PCE, the Fed's preferred inflation gauge, is not published until `{python} stats['next_pce_date']`. This post therefore uses June core PCE beside July core CPI and flags that lag on the first chart.
+
+CME FedWatch probabilities are implied by 30-day federal funds futures, not a poll of Fed officials. The three snapshots are point-in-time readings from published reports that cite CME, not a continuous official history file.
+
+The July CPI contribution chart uses fixed relative-importance weights. That is a directional approximation, not the official BLS chained contribution method.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.55rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    (
+        "Dissents for a hike",
+        f"{int(stats['vote_against'])}",
+        COLORS["accent"],
+        f"{int(stats['vote_for'])}-{int(stats['vote_against'])} vote; {int(stats['dissent_hike_bp'])} bp preferred",
+    ),
+    (
+        "July payrolls",
+        f"{fmt_chg(stats['july_payroll_k'], 0)}k",
+        COLORS["warning"],
+        f"unemployment {fmt(stats['unrate'])}%",
+    ),
+    (
+        "July core CPI",
+        f"{fmt(stats['cpi_core_yoy'])}% y/y",
+        COLORS["neutral"],
+        f"{fmt_chg(stats['cpi_core_mom'])}% on the month",
+    ),
+    (
+        "Sept. hike odds",
+        f"{fmt(stats['fedwatch_hike_after_minutes'])}%",
+        COLORS["secondary"],
+        "CME FedWatch after the minutes",
+    ),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+HTML(
+    f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.9rem; margin: 1.35rem 0 1.05rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+    Minutes released {stats['minutes_release_date']}. Labor and CPI through {stats['latest_month']}.
+</p>
+"""
+)
+```
+
+## What is the FOMC, the minutes, and the dual mandate?
+
+The Federal Open Market Committee (FOMC) is the Fed's rate-setting group: the Board governors, the New York Fed president, and a rotating set of other Reserve Bank presidents. They vote on the federal funds target, publish a statement the same day, and about three weeks later publish the minutes, a summary of the debate rather than a transcript.
+
+The dual mandate is the job Congress gave the Fed: maximum employment and stable prices. Stable prices means inflation around 2 percent over time, measured by the personal consumption expenditures (PCE) price index. Maximum employment is judged from payrolls, unemployment, participation, and wages together, not from one number.
+
+CPI and PCE both track consumer prices. CPI, from the Bureau of Labor Statistics, is the household headline. PCE, from the Bureau of Economic Analysis, is the series the Fed formally targets. Core CPI and core PCE exclude food and energy so gasoline or grocery swings do not dominate. Core CPI is currently cooler than core PCE, which is why both appear below.
+
+A dissent is a formal vote against the decision. Beth M. Hammack, Neel Kashkari, and Lorie K. Logan preferred an immediate quarter-point hike. Chair Kevin Warsh voted with the majority. In Fed drafting, "many" is broader than "several." The minutes say several participants wanted a hike in July, and many said tightening would likely be needed if inflation did not decline. The hawkish case was wider than the `{python} stats['vote_against_word']` recorded dissents.
+
+The hinge is timing. The minutes describe late July, when officials still saw stable labor demand and elevated inflation. Jobs arrived on `{python} stats['jobs_release_date']`, CPI on `{python} stats['cpi_release_date']`, retail sales on `{python} stats['retail_release_date']`, and housing starts on `{python} stats['housing_release_date']`. The minutes show the July reaction function. They do not, by themselves, lock in a September hike.
+
+## Core inflation is still above the Fed's 2% target
+
+The minutes keep returning to one fact: inflation remains above 2 percent. July CPI improved the household numbers without closing that gap. Headline CPI slowed to **`{python} fmt(stats['cpi_headline_yoy'])`%** year over year from `{python} fmt(stats['cpi_headline_prev_yoy'])`% in June. Core CPI slowed to **`{python} fmt(stats['cpi_core_yoy'])`%** from `{python} fmt(stats['cpi_core_prev_yoy'])`%.
+
+The Fed's preferred gauge is still warmer. Core PCE was **`{python} fmt(stats['pce_core_yoy'])`%** in `{python} stats['pce_latest_month']`, with headline PCE at **`{python} fmt(stats['pce_headline_yoy'])`%**. July PCE is not due until `{python} stats['next_pce_date']`. At the meeting, staff cited May PCE of `{python} fmt(stats['minutes_staff_pce_may_yoy'])`% and core PCE of `{python} fmt(stats['minutes_staff_core_pce_may_yoy'])`%. Several participants called the past year's price increases broad based. Many warned that a long stretch above 2 percent could begin to affect expectations. A `{python} fmt(stats['cpi_headline_mom'])`% monthly CPI print eases that worry. It does not retire it.
+
+```{python}
+#| echo: true
+#| label: fig-core-cpi-pce-yoy
+#| fig-cap: "Core CPI and the Fed's preferred core PCE gauge both remain above the 2 percent objective, with a marker at the July FOMC month."
+
+# Core CPI (unadjusted year-over-year, matching the BLS release) and core PCE
+# (the Fed's target concept). PCE lags CPI by one month in this vintage.
+cpi_yoy = inflation["cpi_core_release_yoy"].dropna().loc["2023-01-01":]
+pce_yoy = inflation["pce_core_yoy"].dropna().loc["2023-01-01":]
+fomc = cpi_yoy.index[-1]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(cpi_yoy.index, cpi_yoy.values, color=COLORS["primary"], linewidth=1.9)
+ax.plot(pce_yoy.index, pce_yoy.values, color=COLORS["accent"], linewidth=1.9)
+ax.axhline(2.0, color=COLORS["fed_target"], linestyle="--", linewidth=1.0, alpha=0.7)
+ax.axvline(fomc, color=COLORS["light"], linestyle=":", linewidth=1.0, zorder=2)
+ax.text(
+    fomc,
+    5.55,
+    "July FOMC  ",
+    color=COLORS["neutral"],
+    fontsize=8,
+    ha="right",
+    va="top",
+    zorder=6,
+)
+ax.text(
+    cpi_yoy.index[8],
+    2.12,
+    "Fed 2% target (PCE)",
+    color=COLORS["fed_target"],
+    fontsize=8,
+    alpha=0.8,
+)
+
+date_span = cpi_yoy.index[-1] - cpi_yoy.index[0]
+ax.set_xlim(left=cpi_yoy.index[0], right=cpi_yoy.index[-1] + date_span * 0.16)
+ax.set_ylim(1.8, 5.7)
+ax.set_ylabel("Year-over-year change (%)")
+ax.set_xlabel("Month")
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.0f"))
+
+label_endpoints(
+    ax,
+    [
+        {
+            "x": cpi_yoy.index[-1],
+            "y": float(cpi_yoy.iloc[-1]),
+            "text": f"Core CPI {fmt(float(cpi_yoy.iloc[-1]))}%",
+            "color": COLORS["primary"],
+        },
+        {
+            "x": pce_yoy.index[-1],
+            "y": float(pce_yoy.iloc[-1]),
+            "text": f"Core PCE {fmt(float(pce_yoy.iloc[-1]))}%",
+            "color": COLORS["accent"],
+        },
+    ],
+    gap_frac=0.08,
+)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "core-cpi-pce-yoy.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics and Bureau of Economic Analysis via FRED (CPILFENS, PCEPILFE). The vertical line marks the July 2026 FOMC month.
+:::
+
+What this chart shows in plain English: Both core inflation measures remain above the Fed's 2 percent goal. CPI has cooled more than PCE, and PCE is one month behind, so the minutes' inflation worry is not contradicted by the July CPI print. It is only partly eased.
+
+## The labor market softened after the July meeting
+
+At the July meeting, participants described labor conditions as stable, using data through June. Payroll gains looked consistent with labor-force growth, and unemployment had changed little.
+
+The `{python} stats['jobs_release_date']` report changed that. Nonfarm payrolls, the BLS count of jobs at businesses and government excluding farm work, fell **`{python} fmt(abs(stats['july_payroll_k']), 0)`k** in July. Unemployment was **`{python} fmt(stats['unrate'])`%**, not a spike. Participation was **`{python} fmt(stats['civpart'])`%**. May was revised from **`{python} fmt(stats['bls_may_initial_k'], 0)`k** to **`{python} fmt(stats['bls_may_revised_k'], 0)`k**, and June from **`{python} fmt(stats['bls_june_initial_k'], 0)`k** to **`{python} fmt(stats['bls_june_revised_k'], 0)`k**, a combined markdown of **`{python} fmt(abs(stats['bls_two_month_revision_k']), 0)`k**. Advance retail sales then fell **`{python} fmt(abs(stats['retail_sales_mom']))`%**, and housing starts fell **`{python} fmt(abs(stats['housing_starts_mom']))`%** to **`{python} fmt(stats['housing_starts_k'], 0)`k** units at an annual rate. The employment side of the mandate is no longer an automatic argument for tighter policy.
+
+```{python}
+#| echo: true
+#| label: fig-payrolls-unemployment
+#| fig-cap: "July nonfarm payrolls turned negative after large downward revisions, while the unemployment rate stayed moderate rather than spiking."
+
+# Current-vintage FRED payroll changes (PAYEMS) plus the unemployment rate.
+# May and June bars already include BLS revisions; July is the -23k print.
+window = labor.loc["2025-02-01":, ["payroll_change_k", "unrate"]].dropna()
+july = window.index.max()
+bar_colors = [
+    COLORS["accent"] if stamp == july else COLORS["primary"]
+    for stamp in window.index
+]
+
+fig, axes = plt.subplots(
+    2, 1, figsize=(8.0, 7.0), sharex=True,
+    gridspec_kw={"height_ratios": [2.2, 1.4]},
+)
+ax1, ax2 = axes
+
+ax1.bar(window.index, window["payroll_change_k"], width=20, color=bar_colors, edgecolor="white")
+ax1.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+ax1.annotate(
+    f"July {fmt_chg(float(window.loc[july, 'payroll_change_k']), 0)}k",
+    xy=(july, window.loc[july, "payroll_change_k"]),
+    xytext=(-8, -16),
+    textcoords="offset points",
+    color=COLORS["accent"],
+    fontsize=8,
+    fontweight="bold",
+    ha="right",
+    va="top",
+)
+ax1.set_ylabel("Monthly payroll change (thousands)")
+span = window.index[-1] - window.index[0]
+ax1.set_xlim(window.index[0] - span * 0.02, window.index[-1] + span * 0.12)
+
+ax2.plot(window.index, window["unrate"], color=COLORS["secondary"], linewidth=1.9)
+ax2.scatter(
+    july,
+    window.loc[july, "unrate"],
+    s=40,
+    color=COLORS["secondary"],
+    edgecolors="white",
+    linewidth=0.8,
+    zorder=5,
+)
+ax2.text(
+    july,
+    window.loc[july, "unrate"],
+    f"  {fmt(float(window.loc[july, 'unrate']))}%",
+    color=COLORS["secondary"],
+    fontsize=8,
+    fontweight="bold",
+    va="center",
+)
+ax2.set_ylabel("Unemployment rate (%)")
+ax2.set_xlabel("Month")
+ax2.set_xlim(window.index[0] - span * 0.02, window.index[-1] + span * 0.12)
+ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "payrolls-unemployment.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics via FRED (PAYEMS, UNRATE). July is highlighted. May and June bars use the current revised vintage; first-print comparisons are in the prose from the BLS Employment Situation release.
+:::
+
+What this chart shows in plain English: Hiring stalled in July without a jump in unemployment. That is a softer labor market, not a recession print. It is also a different labor market from the one described in the July minutes.
+
+## Markets cut September hike odds, then nudged them up after the minutes
+
+CME FedWatch converts 30-day federal funds futures into implied odds for the next meeting. It is a market forecast, not a poll of officials.
+
+On the eve of the jobs report, implied odds of a September hike were about **`{python} fmt(stats['fedwatch_hike_before'])`%**, with a **`{python} fmt(stats['fedwatch_hold_before'])`%** chance of an unchanged range. After the jobs miss, CPI, and the rest of the soft July run, hike odds fell to about **`{python} fmt(stats['fedwatch_hike_after_data'])`%**. After the minutes they ticked up to **`{python} fmt(stats['fedwatch_hike_after_minutes'])`%**, with a **`{python} fmt(stats['fedwatch_hold_after_minutes'])`%** implied hold. Soft data opened dual-mandate space. The minutes kept a hike alive if inflation stops cooling. Traders did not restore a hike as the base case, and they did not ignore the document.
+
+```{python}
+#| echo: true
+#| label: fig-fedwatch-september
+#| fig-cap: "CME FedWatch implied odds of a September hike fell after the soft July data, then rose modestly after the minutes, leaving a hold as the base case."
+
+# Three documented snapshots, not a daily CME history file. Heights are the
+# implied probability of a 25 bp (or larger) hike at the September 15-16 meeting.
+plot = fedwatch.copy()
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+bar_colors = [COLORS["warning"], COLORS["secondary"], COLORS["primary"]]
+short_labels = ["Before data", "After data", "After minutes"]
+bars = ax.bar(short_labels, plot["sept_hike_prob"], color=bar_colors, edgecolor="white", width=0.65)
+ax.set_ylabel("Implied probability of a September hike (%)")
+ax.set_xlabel("Market snapshot")
+ax.set_ylim(0, 72)
+for bar, value, as_of in zip(bars, plot["sept_hike_prob"], plot["as_of"]):
+    ax.text(
+        bar.get_x() + bar.get_width() / 2,
+        value + 1.6,
+        f"{value:.1f}%\n{pd.Timestamp(as_of).month}/{pd.Timestamp(as_of).day}",
+        ha="center",
+        va="bottom",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "fedwatch-september.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: CME FedWatch probabilities compiled from contemporaneous reports (Barron's `{python} stats['jobs_release_date']`, MacroMicro `{python} stats['fedwatch_after_data_md']`, Investing.com `{python} stats['fedwatch_after_minutes_md']`). See `data/raw/sources.json`.
+:::
+
+What this chart shows in plain English: Traders became much less sure of a September hike after the weak data, then slightly more sure again after reading that many officials still see tightening as likely if inflation does not decline. A hold is still the more likely outcome in this futures snapshot.
+
+## July CPI cooled because energy fell, not because the whole basket reset
+
+A `{python} fmt(stats['cpi_headline_mom'])`% monthly CPI increase can hide very different stories. If every category is hot, waiting is harder. If energy is falling while shelter and services are only modestly up, the report is softer without being a full reset.
+
+July looks like the second story. Using fixed December 2025 relative-importance weights, a directional approximation rather than the official BLS chained method, energy subtracted **`{python} fmt(abs(stats['contrib_energy_mom_pp']), 2)`** percentage points. Shelter added **`{python} fmt(stats['contrib_shelter_mom_pp'], 2)`** points, other services added **`{python} fmt(stats['contrib_other_services_mom_pp'], 2)`**, core goods added **`{python} fmt(stats['contrib_core_goods_mom_pp'], 2)`**, and food added **`{python} fmt(stats['contrib_food_mom_pp'], 2)`**. Energy CPI fell **`{python} fmt(abs(stats['cpi_energy_mom']))`%** on the month even though it remained **`{python} fmt(stats['cpi_energy_yoy'])`%** above a year earlier. Core still rose **`{python} fmt(stats['cpi_core_mom'])`%**. Officials who said tightening would likely be necessary if inflation did not decline now have some decline, concentrated in energy.
+
+```{python}
+#| echo: true
+#| label: fig-cpi-contributions
+#| fig-cap: "Approximate July CPI contributions show energy subtracting from the monthly total while shelter and other services still added pressure."
+
+# Fixed-weight approximation using BLS relative-importance shares. Do not read
+# these bars as the official chained BLS contribution table.
+plot = contrib.set_index("component")["contribution_pp"].round(2).sort_values()
+colors = [
+    COLORS["warning"] if name == "Energy" else
+    COLORS["secondary"] if name == "Shelter" else
+    COLORS["accent"] if value < 0 else
+    COLORS["primary"]
+    for name, value in plot.items()
+]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+bars = ax.barh(plot.index, plot.values, color=colors, edgecolor="white", height=0.65)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+span = plot.max() - plot.min()
+padding = max(span * 0.06, 0.01)
+for bar, value in zip(bars, plot.values):
+    x = value + padding if value >= 0 else value - padding
+    ax.text(
+        x,
+        bar.get_y() + bar.get_height() / 2,
+        f"{value:+.2f} pp",
+        va="center",
+        ha="left" if value >= 0 else "right",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+ax.set_xlabel("Approximate contribution to monthly CPI (percentage points)")
+ax.set_xlim(plot.min() - padding * 4, plot.max() + padding * 4)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "july-cpi-contributions.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics CPI via FRED (CPIAUCSL, CPIENGSL, CPIFABSL, CUSR0000SAH1, CUSR0000SACL1E), with fixed December 2025 relative-importance weights. This is a directional approximation.
+:::
+
+What this chart shows in plain English: July's friendly headline was real, but it was not a story in which every household cost fell. Energy helped. Shelter and other services did not.
+
+## The 10-year yield shows how the minutes landed in markets
+
+The 10-year Treasury yield is the rate the U.S. government pays to borrow for 10 years. It feeds into mortgages, corporate borrowing, and bond prices. It is not the federal funds rate, but it moves when investors change their view of the policy path.
+
+It was **`{python} fmt2(stats['dgs10_before_jobs'])`%** on the eve of the jobs report, **`{python} fmt2(stats['dgs10_after_cpi'])`%** after CPI, **`{python} fmt2(stats['dgs10_after_minutes'])`%** on the minutes day, and **`{python} fmt2(stats['dgs10_latest'])`%** as of `{python} stats['dgs10_latest_date']`. Those are small moves. If the minutes had been read as a promise to hike in September regardless of the new data, longer yields would more likely have jumped. They did not. Investors still treat September as data-dependent, with the minutes raising the hurdle for a cut.
+
+```{python}
+#| echo: true
+#| label: fig-treasury-10y
+#| fig-cap: "The 10-year Treasury yield moved only modestly across the jobs report, CPI release, and minutes, consistent with a hold remaining the futures base case."
+
+# Daily constant-maturity 10-year yield with event markers. Rate formulas are
+# not applied here; FRED DGS10 is already a yield in percent.
+plot = rates.loc["2026-06-01":, "dgs10"].dropna()
+events = [
+    (pd.Timestamp("2026-07-29"), "FOMC"),
+    (pd.Timestamp("2026-08-07"), "Jobs"),
+    (pd.Timestamp("2026-08-12"), "CPI"),
+    (pd.Timestamp("2026-08-19"), "Minutes"),
+]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(plot.index, plot.values, color=COLORS["primary"], linewidth=1.9)
+ax.set_ylim(float(plot.min()) - 0.02, float(plot.max()) + 0.16)
+for stamp, name in events:
+    ax.axvline(stamp, color=COLORS["light"], linestyle=":", linewidth=1.0, zorder=2)
+    ax.text(
+        stamp,
+        float(plot.max()) + 0.05,
+        name,
+        color=COLORS["neutral"],
+        fontsize=8,
+        ha="left",
+        va="bottom",
+        rotation=90,
+    )
+
+date_span = plot.index[-1] - plot.index[0]
+ax.set_xlim(left=plot.index[0], right=plot.index[-1] + date_span * 0.14)
+ax.set_ylabel("10-year yield (%)")
+ax.set_xlabel("Day")
+ax.xaxis.set_major_locator(mdates.MonthLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.scatter(
+    plot.index[-1],
+    plot.iloc[-1],
+    s=40,
+    color=COLORS["primary"],
+    edgecolors="white",
+    linewidth=0.8,
+    zorder=5,
+)
+ax.text(
+    plot.index[-1],
+    plot.iloc[-1],
+    f"  {fmt2(float(plot.iloc[-1]))}%",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    va="center",
+)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "treasury-10y.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: U.S. Treasury via FRED (DGS10). Vertical lines mark the `{python} stats['fomc_decision_date']` FOMC, the `{python} stats['jobs_release_date']` jobs report, the `{python} stats['cpi_release_date']` CPI release, and the `{python} stats['minutes_release_date']` minutes.
+:::
+
+What this chart shows in plain English: Bond investors heard the minutes and did not treat them as a surprise tightening shock. The bigger yield story in this window is still the soft data, with the minutes as a modest counterweight.
+
+## Putting it together
+
+Two clocks are running at once. On the July FOMC clock, inflation was still too high, labor looked stable, and a `{python} stats['vote_split']` hold with `{python} stats['vote_against_word']` hike dissents was already a hawkish hold. "Many" participants said policy would likely have to tighten if inflation did not decline. On the August data clock, payrolls fell, revisions erased `{python} fmt(abs(stats['bls_two_month_revision_k']), 0)`k previously published jobs, CPI cooled, retail sales slipped, and housing starts dropped.
+
+Dual-mandate space is the gap between those clocks. Employment no longer argues for a hike as clearly as it did in July. Prices improved on CPI, especially in energy, but core CPI and core PCE are not at 2 percent. A hold fits the new labor data and a modest CPI deceleration. A hike still fits the minutes if the next prints reverse, or if officials decide that core PCE near **`{python} fmt(stats['pce_core_yoy'])`%** is too far from target to wait. Markets assign a minority chance to a September hike and a majority chance to a hold. That reading is coherent, and it is fragile.
+
+## What it means for
+
+**For the Fed path.** The range is still `{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%. The minutes make an early cut harder to justify and keep a September hike on the table if inflation stalls. They do not tell the Committee to ignore the jobs miss. Neutral implication: a hold is the futures base case, with a hike still the documented risk if prices stop cooling.
+
+**For households.** Borrowing costs stay high while the funds rate sits here and the 10-year yield is near **`{python} fmt2(stats['dgs10_latest'])`%**. Cooler monthly CPI helps a little through energy, but shelter is still rising and hiring has weakened. Neutral implication: the inflation squeeze eased, and the job-finding backdrop worsened.
+
+**For investors.** The minutes reduced the chance that September would be priced as an easy hold-and-cut. They did not restore a hike-heavy path. Neutral implication: two-way risk around `{python} stats['next_fomc_range']`, with the next CPI and jobs prints still doing more work than one qualitative phrase.
+
+**For property and casualty insurers and actuarial readers.** A longer hold keeps discount rates for long-duration liabilities higher than in an easing cycle, and it keeps reinvestment rates elevated. Modest 10-year moves around the minutes imply limited immediate bond mark-to-market drama. Claims costs still track shelter and services more closely than the headline `{python} fmt(stats['cpi_headline_mom'])`% CPI print. Neutral implication: treat September as hold-leaning with hike risk, not as the start of easing.
+
+## What to watch next
+
+- `{python} stats['jackson_hole_timing']` remarks from Chair Warsh.
+- `{python} stats['next_pce_date']`, the July PCE release.
+- `{python} stats['next_jobs_date']`, the August Employment Situation, including revisions to July.
+- `{python} stats['next_cpi_date']`, August CPI, especially shelter, core services, and energy.
+- `{python} stats['next_fomc_range']`, the next FOMC meeting.
+
+## Limitations
+
+The minutes are a summary, not a transcript. Words such as "many" are not vote shares, and the document predates the July jobs, CPI, retail, and housing releases.
+
+Payrolls, CPI, retail sales, and housing starts are revised. FRED payrolls are the current vintage, so the bar chart already includes May and June revisions. First-print comparisons come from the BLS Employment Situation.
+
+The CPI contribution bars use fixed relative-importance weights to show direction, not to match the official BLS chained table. CME FedWatch snapshots are compiled from contemporaneous reports that cite CME futures, not from an official CME history file. The P&C note is a light rate-sensitivity sketch, not a reserving or pricing recommendation.
+
+## Data sources
+
+| Series or source | Use in this post | Source |
+|---|---|---|
+| CPILFENS, CPIAUCNS, CPIAUCSL, CPILFESL | Headline and core CPI, including the BLS-style year-over-year print | [FRED](https://fred.stlouisfed.org/) |
+| PCEPI, PCEPILFE | Headline and core PCE, the Fed's target concept | [FRED](https://fred.stlouisfed.org/) |
+| CPIENGSL, CPIFABSL, CUSR0000SAH1, CUSR0000SACL1E | Energy, food, shelter, and core goods CPI for the contribution chart | [FRED](https://fred.stlouisfed.org/) |
+| PAYEMS, UNRATE, CIVPART | Payrolls, unemployment, and participation | [FRED](https://fred.stlouisfed.org/) |
+| RSAFS, HOUST | Retail sales and housing starts | [FRED](https://fred.stlouisfed.org/) |
+| DFEDTARL, DFEDTARU, DGS10 | Policy target range and the 10-year Treasury yield | [FRED](https://fred.stlouisfed.org/) |
+| July FOMC minutes | Vote, dissents, and "many participants" language | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomcminutes20260729.htm) |
+| CME FedWatch snapshots | September hike versus hold probabilities at three dates | [CME FedWatch](https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html) |
+| July 2026 Employment Situation | First-print payrolls and May/June revisions | [BLS](https://www.bls.gov/news.release/empsit.htm) |
+
+: Public data and official release materials used in the analysis.
+
+### How this post was built
+
+Python pulls FRED series into `data/raw/`, computes rates in `scripts/02_clean_data.py`, and stores every prose number in `stats/summary_stats.json`. matplotlib draws the five figures. CME FedWatch snapshots and BLS first-print revisions are documented in `data/raw/sources.json`. Minutes language is quoted from the Federal Reserve HTML record.
+
+*Data current as of `{python} stats['data_current_as_of']`. Minutes released `{python} stats['minutes_release_date']`. `{python} stats['latest_month']` CPI and jobs; `{python} stats['pce_latest_month']` PCE.*

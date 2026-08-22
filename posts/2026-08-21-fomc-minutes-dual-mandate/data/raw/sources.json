@@ -1,0 +1,48 @@
+{
+  "minutes": {
+    "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260729.htm",
+    "used_for": "Vote, dissents, and qualitative language from the July 28-29, 2026 meeting"
+  },
+  "fedwatch": {
+    "tool": "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html",
+    "used_for": "September 2026 hike vs hold probabilities at three dates",
+    "snapshots": [
+      {
+        "snapshot": "before_soft_data",
+        "label": "Before soft data",
+        "as_of": "2026-08-06",
+        "sept_hike_prob": 55.0,
+        "sept_hold_prob": 45.0,
+        "source": "Barron's, 08/07/2026, citing CME FedWatch (Thursday close before jobs)"
+      },
+      {
+        "snapshot": "after_soft_data",
+        "label": "After soft data",
+        "as_of": "2026-08-17",
+        "sept_hike_prob": 30.6,
+        "sept_hold_prob": 69.4,
+        "source": "MacroMicro CME FedWatch series as of 08/17/2026"
+      },
+      {
+        "snapshot": "after_minutes",
+        "label": "After minutes",
+        "as_of": "2026-08-21",
+        "sept_hike_prob": 35.6,
+        "sept_hold_prob": 64.4,
+        "source": "Investing.com Fed rate monitor, CME futures implied, 08/21/2026"
+      }
+    ]
+  },
+  "bls_jobs": {
+    "url": "https://www.bls.gov/news.release/empsit.htm",
+    "used_for": "July payroll first print and May/June revisions"
+  },
+  "census_retail": {
+    "url": "https://www.census.gov/retail/sales.html",
+    "used_for": "July advance retail sales confirmation"
+  },
+  "census_housing": {
+    "url": "https://www.census.gov/construction/nrc/current/index.html",
+    "used_for": "July housing starts confirmation"
+  }
+}

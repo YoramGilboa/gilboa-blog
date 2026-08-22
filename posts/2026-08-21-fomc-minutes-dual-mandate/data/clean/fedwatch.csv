@@ -1,0 +1,4 @@
+snapshot,label,as_of,sept_hike_prob,sept_hold_prob,source
+before_soft_data,Before soft data,2026-08-06,55.0,45.0,"Barron's, 08/07/2026, citing CME FedWatch (Thursday close before jobs)"
+after_soft_data,After soft data,2026-08-17,30.6,69.4,MacroMicro CME FedWatch series as of 08/17/2026
+after_minutes,After minutes,2026-08-21,35.6,64.4,"Investing.com Fed rate monitor, CME futures implied, 08/21/2026"
