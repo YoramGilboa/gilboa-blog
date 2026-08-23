@@ -13,7 +13,9 @@ This is a visual-only gate.
 1. Read the post and inventory every `#| label: fig-*` block, caption, and
    chart type.
 2. Confirm the matching freeze metadata is current; render if needed.
-3. Start `quarto preview --port 4200 --no-browser` with the root `.venv`.
+3. Start `quarto preview --port 4200 --no-browser` with the root `.venv`,
+   following `.github/copilot-instructions.md` **Local preview** (do not
+   `quarto render` while preview holds the port; stop leftover `deno` on 4200).
 4. Use available browser or IDE preview tools to screenshot every chart at
    normal width and 400px. If screenshot tooling is unavailable, report the
    gate as blocked rather than inferring visual quality from code alone.

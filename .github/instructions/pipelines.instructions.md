@@ -59,8 +59,9 @@ Some posts (AI benchmarks, policy, court data) do not use FRED. Still use
    for.
 2. `02_clean_data.py` normalizes types and chart-ready columns; document any
    non-macro formulas (e.g. teaching rubrics, Elo, composite indexes).
-3. `04_compute_stats.py` emits every prose/card key, including US-format date
-   strings when dates appear in prose (`mm/dd/yyyy`).
+3. `04_compute_stats.py` emits every prose/card key, including prose-facing
+   calendar dates in US month/day order (e.g. `8/19` or `8/19/2026`; no
+   required leading zeros). Do not invent date strings in the `.qmd`.
 4. Mark teaching rubrics and approximate benchmark point estimates in the post
    "Note on data" callout and in pipeline logs.
 5. Never invent unpublished lab figures (e.g. MoE active-parameter totals).

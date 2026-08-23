@@ -29,6 +29,8 @@ code-summary: "Show code"
 - Categories are lowercase and space-separated, not hyphenated.
 - Use `description-meta:` only when SEO text must differ from visible listing
   text.
+- When changing `title` or `description`, set `pagetitle` to the same string as
+  `title` unless the human wants a different browser tab title.
 - Shared responsive and content styles belong in root `styles.css`, not inline
   `<style>` blocks.
 
@@ -63,14 +65,15 @@ Reference example: `posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/`.
 - Use full URLs with descriptive link text. Never use "click here."
 - Never hard-code key figures in prose. Read them from
   `stats/summary_stats.json` with inline Python.
-- **Dates in prose use US format `mm/dd/yyyy`** (e.g. `07/16/2026`). YAML
-  frontmatter `date:` stays ISO `YYYY-MM-DD`. Stats keys that appear in prose
-  should already be formatted US-style when they are calendar dates.
+- **Dates in prose:** US month/day order, **from stats**, never invented in
+  the `.qmd`. Short forms are preferred (`8/19`, `8/19/26`). Leading zeros are
+  not required. YAML frontmatter `date:` stays ISO `YYYY-MM-DD`.
 - **Bold is sparse.** Prefer no decorative bold in body paragraphs. Use bold
   for audience lead-ins in the conclusion (see below). Do not blanket-bold every
   first-mention statistic unless the human asks for that house style on a
   specific post.
 - Use `##` for sections and `###` for subsections. Never use `#` in the body.
+- Section titles are unnumbered (`## Labor breadth`, not `## 1. Labor breadth`).
 - Prefer two to five analytical sections and a linear narrative (one-offs may
   run longer when strategy or multi-metric comparison requires it).
 - **Never use a bullet list for a single item.** Convert one-item lists to a

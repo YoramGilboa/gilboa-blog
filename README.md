@@ -14,7 +14,7 @@ canonical guide; this README is the quick-start.
 - `posts/drafts/_template/` - starting point for new posts
 - `_freeze/` - committed Quarto execution cache used by publishing
 - `_site/` - generated local output, ignored by Git
-- `.github/instructions/` - scoped post and pipeline guidance for Copilot
+- `.github/instructions/` - scoped post, pipeline, and site-chrome guidance
 - `.github/skills/` - tracked blog creation and review skills
 - `scripts/` - reusable project-level utilities
 
@@ -26,11 +26,17 @@ pip install -r requirements.txt
 git config core.hooksPath .githooks
 ```
 
-Start the local site on the standard review port:
+Start the local site on the standard review port (from the repo root):
 
 ```bash
 quarto preview --port 4200 --no-browser
 ```
+
+Do not `quarto render` while preview is running. After editing `about.qmd` or
+other root pages, stop preview (and leftover `deno` on 4200), render the file,
+restart preview, then fetch the URL and confirm the new copy. Full recipe:
+[.github/copilot-instructions.md](./.github/copilot-instructions.md) (Local
+preview).
 
 ## Create a Post
 
@@ -44,11 +50,13 @@ Write the post in `posts\drafts\YYYY-MM-DD-slug\index.qmd`. Keep `draft: true`
 until it is ready to publish.
 
 House writing and chart rules (including deliberate non-macro one-offs, US
-`mm/dd/yyyy` dates in prose, sparse bold, no single-item bullets, composite
-metric caveats, frontier-chart hygiene) live in
+month/day dates from stats, unnumbered section titles, sparse bold, no
+single-item bullets, composite-metric caveats, frontier-chart hygiene) live in
 [.github/instructions/posts.instructions.md](./.github/instructions/posts.instructions.md).
-Pipeline rules for FRED and curated non-FRED sources live in
+Pipeline rules live in
 [.github/instructions/pipelines.instructions.md](./.github/instructions/pipelines.instructions.md).
+About, navbar, and theme rules live in
+[.github/instructions/site.instructions.md](./.github/instructions/site.instructions.md).
 
 ## Check and Render a Post
 
@@ -140,6 +148,15 @@ git add posts/YYYY-MM-DD-slug _freeze/posts/YYYY-MM-DD-slug
 git commit -m "Add post: post title"
 git push origin main
 ```
+
+## Publish site changes (About, navbar, SEO YAML)
+
+Do not use the post freeze / `check_post` path. Work on `site/<name>`, wait for
+sign-off, merge that branch into `main` locally, then `git push origin main`.
+Watch `publish.yml` and confirm live URLs contain the new copy.
+
+Canonical checklist: [.github/copilot-instructions.md](./.github/copilot-instructions.md)
+(Publishing site changes). Grok: `blog-publish` site mode.
 
 Chart house typeface is **Calibri** (see blog-viz-specialist and the post setup
 template). Example one-off with curated benchmarks:

@@ -1,11 +1,12 @@
 # gilboa.blog repository instructions
 
-This is the repository-wide operating model for GitHub Copilot. More specific
-rules are loaded from:
+This is the repository-wide operating model. More specific rules:
 
-- `.github/instructions/posts.instructions.md` for post prose and charts
-- `.github/instructions/pipelines.instructions.md` for post data pipelines
-- `.github/skills/` for reusable creation and review workflows
+- `.github/instructions/posts.instructions.md` — post prose and charts
+- `.github/instructions/pipelines.instructions.md` — post data pipelines
+- `.github/instructions/site.instructions.md` — About, navbar, theme, SEO tabs
+- `.github/skills/` — Copilot creation and review workflows
+- `~/.grok/skills/blog-*` — Grok factory skills (keep aligned with this file)
 
 ## Project
 
@@ -17,14 +18,21 @@ Primary lane: US macro data (CPI, labor, Fed, PPI, BTOS) with reproducible
 pipelines. Occasional high-signal one-offs (e.g. open-weight AI / sovereign AI)
 are allowed when the human requests them; open with an explicit one-off frame
 and keep a chartable data spine. House writing/chart rules live in
-`.github/instructions/posts.instructions.md` (US dates in prose, sparse bold,
-no single-item bullets, composite-metric caveats, frontier-chart hygiene).
+`.github/instructions/posts.instructions.md`. Site chrome rules live in
+`.github/instructions/site.instructions.md`.
+
+## Working directory
+
+The Git root is `gilboa-blog/` (the folder that contains `_quarto.yml`). Never
+treat `tests/` or a post folder as the repo root. Report absolute paths when
+creating or editing `.qmd` files.
 
 ## Repository rules
 
 - Use one Git repository and one root `.venv`.
 - Never create a repository or virtual environment inside a post.
-- Commit `_freeze/`; never commit `_site/` or local Quarto caches.
+- Commit `_freeze/`; never commit `_site/`, local Quarto caches, or `generated/`
+  factory notes.
 - Commit each post's `index.qmd`, scripts, stats, images, required source or
   cleaned data, and matching `_freeze/` entry.
 - Do not commit regenerable top-level FRED series caches under
@@ -50,6 +58,24 @@ no single-item bullets, composite-metric caveats, frontier-chart hygiene).
 10. Commit on the post branch, merge locally into `main`, and push only after
     the release gate succeeds.
 
+## Site and experiment workflow
+
+1. Site chrome, About, homepage, theme, or SEO-only front matter: branch
+   `site/<name>` (not `post/...`).
+2. Do not merge to `main` until the human signs off.
+3. Do not run post freeze, `check_post`, or undraft steps for site-only work.
+4. After sign-off, use **Publishing site changes** below.
+
+## Orchestration
+
+After any narrative, chart, or data fix, re-run the editor (Grok: `blog-editor`;
+Copilot: `blog-final-review` plus chart review if visuals changed) **without
+being asked**. If the ship bar is not met, keep looping with the named owner.
+If it is met, stop and show the human. Do not ask which skill is next when the
+review already named an owner.
+
+Ready for human review is not published. Publish only after explicit sign-off.
+
 ## Path and artifact contract
 
 - While drafting, create and update post files only under
@@ -70,6 +96,25 @@ no single-item bullets, composite-metric caveats, frontier-chart hygiene).
 
 These tools check form and repository state. Visual quality and analytical
 truth still require the chart and final-review skills.
+
+## Local preview
+
+Standard review server:
+
+```powershell
+quarto preview --port 4200 --no-browser
+```
+
+On Windows the watcher often serves a stale page or a `Quarto Render Error`
+(`Bad resource ID` / Sass cache) for root pages such as `about.qmd`.
+
+- Never `quarto render` while preview is holding files (locks `_freeze` / `_site`).
+- After a site-page edit: stop preview **and** leftover `deno`/`quarto` on port
+  4200, `quarto render <file>`, restart preview.
+- Before telling the human localhost is updated, fetch the preview URL and
+  confirm the new copy. Reject bodies that contain `Quarto Render Error`.
+- When asked to stop preview, kill the process **and** anything still listening
+  on 4200.
 
 ## Interaction contracts
 
@@ -114,3 +159,24 @@ Before merging a post into `main`, confirm:
 
 Publish only after human approval; then undraft, move out of `posts/drafts/`,
 freeze, gate, commit post + freeze only, merge `main`, push, verify Actions.
+
+Grok: `blog-publish` post mode. Copilot: this checklist.
+
+## Publishing site changes
+
+Use this path for About, `_quarto.yml`, homepage chrome, CSS/theme, or SEO-only
+post front matter. Do **not** run freeze, `check_post`, or undraft.
+
+1. Commit only the signed-off files on `site/<name>`. Never `_site/`, never
+   `generated/`, never leftover `index.html` next to a post.
+2. `git checkout main` && `git pull origin main`.
+3. Merge `site/<name>` into `main` locally (prefer fast-forward).
+4. Only then `git push origin main`. Pushing the experiment branch alone does
+   not update gilboa.blog.
+5. `gh run list --workflow=publish.yml --limit 3` then
+   `gh run watch <run-id> --exit-status`.
+6. Fetch live URLs and confirm the new strings (not only HTTP 200):
+   `https://gilboa.blog/`, `/about.html`, and any edited posts.
+
+Grok: `blog-publish` site mode. Keep `site/<name>` after merge unless asked to
+delete it.

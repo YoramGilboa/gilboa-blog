@@ -20,7 +20,8 @@ Evaluate:
 
 1. **Accuracy**
    - claims match computed values and direction;
-   - time references are consistent (prose dates US `mm/dd/yyyy` when shown);
+   - time references are consistent (prose dates from stats, US month/day);
+   - `##` section titles are unnumbered;
    - conclusions do not overstate the evidence;
    - composite indexes are not treated as winning every subtest when task-level
      gaps exist in the post's data.
