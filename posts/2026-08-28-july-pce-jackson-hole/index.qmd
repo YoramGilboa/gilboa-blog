@@ -4,7 +4,7 @@ pagetitle: "July PCE Held at 3.7% as Jackson Hole Opens: The Fed's Gauge Did Not
 date: "2026-08-28"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization, labor market]
-description: "July PCE prices rose 0.2% on the month and 3.7% from a year earlier, matching June's yearly rate, as Chair Warsh opened Jackson Hole."
+description: "Real household spending barely budged, yearly core inflation stayed stuck, and Polymarket still split a September hold from a hike."
 image: figures/pce-headline-core-yoy.png
 image-alt: "Headline and core PCE year-over-year inflation since 2023, with the Fed 2% target"
 draft: true
@@ -31,6 +31,7 @@ import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
 from IPython.display import HTML
+from matplotlib.patches import Patch
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -90,24 +91,31 @@ def fmt2(value):
 def extend_xlim(ax, index, pad_frac=0.12):
     span = index[-1] - index[0]
     ax.set_xlim(index[0], index[-1] + span * pad_frac)
+
+
+def solid_right_spine(ax):
+    """Draw the right frame so axis numbers are not mistaken for minus signs."""
+    ax.spines["right"].set_visible(True)
+    ax.spines["right"].set_color(COLORS["neutral"])
+    ax.spines["right"].set_linewidth(0.5)
 ```
 
-July's PCE price index - the inflation measure the Fed targets - rose **`{python} fmt_chg(stats['pce_headline_mom'])`%** from June and **`{python} fmt(stats['pce_headline_yoy'])`%** from a year earlier. Core PCE, which excludes food and energy, also rose **`{python} fmt_chg(stats['pce_core_mom'])`%** and held at **`{python} fmt(stats['pce_core_yoy'])`%** year over year. The yearly rates did not move. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The `{python} stats['next_fomc_dates']` FOMC is next. This post stays with the tables.
+The Bureau of Economic Analysis ([BEA]{title="Bureau of Economic Analysis"}) is the federal statistical agency that measures US income and spending. Its July report on Personal Consumption Expenditures ([PCE]{title="Personal Consumption Expenditures"}) showed that the price index the Federal Reserve targets rose **`{python} fmt_chg(stats['pce_headline_mom'])`%** from June and **`{python} fmt(stats['pce_headline_yoy'])`%** from a year earlier. Core [PCE]{title="Personal Consumption Expenditures"}, which excludes food and energy, also rose **`{python} fmt_chg(stats['pce_core_mom'])`%** and held at **`{python} fmt(stats['pce_core_yoy'])`%** year over year. The yearly rates did not move. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The `{python} stats['next_fomc_dates']` [FOMC]{title="Federal Open Market Committee"} meeting is next. This post stays with the tables.
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this analysis
 
-Expand any chart block for the Python. Run from this post folder: `01_fetch_data.py`, then `02_clean_data.py`, then `03_visualizations.py`, then `04_compute_stats.py`. FRED series and the BEA release are listed under Methodology.
+Expand any chart block for the Python. Run from this post folder: `01_fetch_data.py`, then `02_clean_data.py`, then `03_visualizations.py`, then `04_compute_stats.py`. [FRED]{title="Federal Reserve Economic Data"} series and the [BEA]{title="Bureau of Economic Analysis"} release are listed under Methodology.
 :::
 
 ::: {.callout-note collapse="true"}
-## Note on data
+## How to read this print
 
-### What is PCE, and why does the Fed prefer it to CPI?
+Rest the pointer on short names such as [PCE]{title="Personal Consumption Expenditures"} or [BEA]{title="Bureau of Economic Analysis"} to see the full phrase.
 
-PCE, or personal consumption expenditures, is BEA's measure of what households spend on goods and services. The PCE price index tracks those prices. Core PCE excludes food and energy. Disposable personal income, or DPI, is income after taxes. The personal saving rate is saving as a share of DPI.
+Personal Consumption Expenditures are what households spend on goods and services. The [PCE]{title="Personal Consumption Expenditures"} price index tracks those prices. Core [PCE]{title="Personal Consumption Expenditures"} excludes food and energy. Disposable personal income, or [DPI]{title="Disposable Personal Income"}, is income after taxes. The personal saving rate is saving as a share of [DPI]{title="Disposable Personal Income"}.
 
-The Federal Reserve's dual mandate is maximum employment and stable prices. The Fed's 2% inflation goal is defined on PCE, not on the Consumer Price Index. CPI is built by the Bureau of Labor Statistics from an urban consumer basket. PCE is built by BEA from a broader set of spending, including more services, and it updates weights with actual spending shares. That is why a CPI print and a PCE print for the same month can differ without either series being "wrong."
+The Federal Reserve's dual mandate is maximum employment and stable prices. The Fed's 2% inflation goal is defined on [PCE]{title="Personal Consumption Expenditures"}, not on the Consumer Price Index ([CPI]{title="Consumer Price Index"}). [CPI]{title="Consumer Price Index"} is built by the Bureau of Labor Statistics from an urban consumer basket. [PCE]{title="Personal Consumption Expenditures"} is built by the [BEA]{title="Bureau of Economic Analysis"} from a broader set of spending, including more services, and it updates weights with actual spending shares. That is why a [CPI]{title="Consumer Price Index"} print and a [PCE]{title="Personal Consumption Expenditures"} print for the same month can differ without either series being wrong.
 :::
 
 ```{python}
@@ -139,10 +147,10 @@ cards = [
         f"y/y | m/m {fmt_chg(stats['pce_core_mom'])}%",
     ),
     (
-        "Real PCE",
-        f"<{fmt(stats['real_pce_mom_ceiling'])}%",
+        "Real spending",
+        f"+${fmt(stats['real_pce_change_bn'])} bn",
         COLORS["target"],
-        f"m/m | {fmt(stats['real_pce_change_bn'])} bn",
+        f"volume m/m, under {fmt(stats['real_pce_mom_ceiling'])}%",
     ),
     (
         "Saving rate",
@@ -174,41 +182,44 @@ HTML(
 )
 ```
 
-Personal income rose **`{python} fmt_chg(stats['pi_mom_pct'])`%** in July, and disposable personal income rose **`{python} fmt_chg(stats['dpi_mom_pct'])`%**. Current-dollar PCE rose **`{python} fmt_chg(stats['pce_nom_mom_pct'])`%**, or `{python} fmt(stats['pce_nom_change_bn'])` billion dollars, as services gained `{python} fmt(stats['pce_services_change_bn'])` billion and goods fell `{python} fmt(abs(stats['pce_goods_change_bn']))` billion. Real PCE, the inflation-adjusted volume of spending, rose under `{python} fmt(stats['real_pce_mom_ceiling'])`%, effectively flat. Personal saving was **`{python} fmt(stats['saving_rate'])`%** of DPI.
+The third card is a quantity, not a price. The [BEA]{title="Bureau of Economic Analysis"} said the inflation-adjusted volume of household spending, often called real spending or real [PCE]{title="Personal Consumption Expenditures"}, rose `{python} fmt(stats['real_pce_change_bn'])` billion dollars in July. That is under `{python} fmt(stats['real_pce_mom_ceiling'])`% from June, so the card treats the month as essentially flat even though the dollar change is not zero.
+
+Personal income rose **`{python} fmt_chg(stats['pi_mom_pct'])`%** in July, and disposable personal income rose **`{python} fmt_chg(stats['dpi_mom_pct'])`%**. Current-dollar [PCE]{title="Personal Consumption Expenditures"} rose **`{python} fmt_chg(stats['pce_nom_mom_pct'])`%**, or `{python} fmt(stats['pce_nom_change_bn'])` billion dollars, as services gained `{python} fmt(stats['pce_services_change_bn'])` billion and goods fell `{python} fmt(abs(stats['pce_goods_change_bn']))` billion. Personal saving was **`{python} fmt(stats['saving_rate'])`%** of [DPI]{title="Disposable Personal Income"}.
 
 ::: {.callout-note collapse="true"}
 ## Already on this blog
 
-The funds target is **`{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%**. The July FOMC held **`{python} stats['fomc_hold']`**, with `{python} fmt(stats['july_dissents'], 0)` dissents preferring a `{python} fmt(stats['dissent_hike_bp'], 0)` basis-point increase. July payrolls fell **`{python} fmt(stats['july_payroll_abs_k'], 0)`,000** and unemployment was **`{python} fmt(stats['unrate'])`%**. Headline CPI rose **`{python} fmt(stats['cpi_headline_mom'])`%** on the month and **`{python} fmt(stats['cpi_headline_yoy'])`%** year over year. Core CPI rose **`{python} fmt(stats['cpi_core_mom'])`%** and **`{python} fmt(stats['cpi_core_yoy'])`%**, while PPI final demand was `{python} stats['ppi_print']` on the month.
+The funds target is **`{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%**. The July [FOMC]{title="Federal Open Market Committee"} held **`{python} stats['fomc_hold']`**, with `{python} fmt(stats['july_dissents'], 0)` dissents preferring a `{python} fmt(stats['dissent_hike_bp'], 0)` basis-point increase. July payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** and unemployment was **`{python} fmt(stats['unrate'])`%**. Headline [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_headline_mom'])`%** on the month and **`{python} fmt(stats['cpi_headline_yoy'])`%** year over year. Core [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_core_mom'])`%** and **`{python} fmt(stats['cpi_core_yoy'])`%**, while [PPI]{title="Producer Price Index"} final demand was `{python} stats['ppi_print']` on the month.
 :::
 
 ## The Fed's preferred gauge did not cool
 
-Year-over-year headline PCE stayed at **`{python} fmt(stats['pce_headline_yoy'])`%**, the same as June, while core PCE stayed at **`{python} fmt(stats['pce_core_yoy'])`%**. July's monthly headline and core prints were both **`{python} fmt_chg(stats['pce_headline_mom'])`%**. June's softer headline month did not pull the yearly rate down.
+Year-over-year headline [PCE]{title="Personal Consumption Expenditures"} stayed at **`{python} fmt(stats['pce_headline_yoy'])`%**, the same as June, while core [PCE]{title="Personal Consumption Expenditures"} stayed at **`{python} fmt(stats['pce_core_yoy'])`%**. July's monthly headline and core prints were both **`{python} fmt_chg(stats['pce_headline_mom'])`%**. June's softer headline month did not pull the yearly rate down.
 
-Headline inflation peaked at `{python} fmt(stats['energy_shock_headline_yoy'])`% during the spring energy spike. The Fed's 2% goal is a PCE target. CPI looked cooler in July because BLS and BEA use different baskets and weights. PCE's broader services coverage, including health and financial services, also bears more directly on property and casualty claim severity than gasoline swings do.
+Headline inflation peaked at `{python} fmt(stats['energy_shock_headline_yoy'])`% during the spring energy spike. The Fed's 2% goal is a [PCE]{title="Personal Consumption Expenditures"} target. [CPI]{title="Consumer Price Index"} looked cooler in July because the Bureau of Labor Statistics and the [BEA]{title="Bureau of Economic Analysis"} use different baskets and weights.
 
 ```{python}
 #| echo: true
 #| label: fig-pce-headline-core-yoy
-#| fig-cap: "Headline and core PCE year-over-year inflation both held above the Fed's 2% target after the spring energy spike; endpoint labels show the latest prints."
+#| fig-cap: "Headline and core PCE year-over-year inflation both held above the Fed's 2% target after the spring energy spike; the axis starts at zero so distance from target is visible."
 
 # YoY means this month versus the same month last year. Rate columns come
-# from scripts/02_clean_data.py.
+# from scripts/02_clean_data.py. Starting at zero keeps the 2% line from
+# looking like the floor of the chart.
 plot = df.loc["2023-01-01":, ["pce_headline_yoy", "pce_core_yoy"]].dropna()
 
 fig, ax = plt.subplots(figsize=(8.0, 4.6))
 ax.plot(plot.index, plot["pce_headline_yoy"], color=COLORS["headline"], linewidth=1.9)
 ax.plot(plot.index, plot["pce_core_yoy"], color=COLORS["core"], linewidth=1.9)
 ax.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
-ax.text(plot.index[4], 2.12, "Fed 2% target", color=COLORS["target"], fontsize=8, alpha=0.85)
+ax.text(plot.index[8], 0.25, "Fed 2% target", color=COLORS["target"], fontsize=8, alpha=0.85)
 
 shock = pd.Timestamp("2026-05-01")
 if shock in plot.index:
     ax.annotate(
         "Spring 2026\nenergy shock",
         xy=(shock, float(plot.loc[shock, "pce_headline_yoy"])),
-        xytext=(shock - pd.Timedelta(days=220), float(plot["pce_headline_yoy"].max()) - 0.15),
+        xytext=(shock - pd.Timedelta(days=240), float(plot["pce_headline_yoy"].max()) - 0.2),
         fontsize=8,
         color=COLORS["headline"],
         arrowprops=dict(arrowstyle="->", color=COLORS["light"], lw=0.8),
@@ -229,6 +240,8 @@ ax.text(plot.index[-1], last["pce_core_yoy"] - 0.18,
         color=COLORS["core"], fontsize=8, fontweight="bold", va="top")
 
 extend_xlim(ax, plot.index, 0.20)
+y_top = float(plot[["pce_headline_yoy", "pce_core_yoy"]].max().max()) + 0.4
+ax.set_ylim(0, y_top)
 ax.set_ylabel("Year-over-year (%)")
 ax.set_xlabel("Month")
 ax.xaxis.set_major_locator(mdates.YearLocator())
@@ -241,11 +254,11 @@ fig.savefig(FIG_DIR / "pce-headline-core-yoy.png", dpi=150, bbox_inches="tight")
 Source: [BEA](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026) via FRED series PCEPI and PCEPILFE.
 :::
 
-**What this chart shows in plain English:** Prices are still rising faster than the Fed wants. July did not change that yearly picture, even after the spring energy spike faded.
+Prices are still rising faster than the Fed wants. July did not change that yearly picture, even after the spring energy spike faded.
 
 ## Monthly prints still run above a 2% path
 
-A yearly rate can hide a friendly month. June headline PCE prices fell **`{python} fmt_chg(stats['pce_headline_june_mom'])`%**. July went back to **`{python} fmt_chg(stats['pce_headline_mom'])`%** for both headline and core.
+A yearly rate can hide a friendly month. June headline [PCE]{title="Personal Consumption Expenditures"} prices fell **`{python} fmt_chg(stats['pce_headline_june_mom'])`%**. July went back to **`{python} fmt_chg(stats['pce_headline_mom'])`%** for both headline and core.
 
 A useful benchmark is the monthly pace that compounds to 2% over a year, about **`{python} fmt(stats['two_pct_monthly_pace'])`%** a month. July's `{python} fmt(stats['pce_headline_mom'])`% prints sit above that line. One month above the line does not lock in a high yearly rate, and one month below it (June headline) does not lock in 2%. The last 12 months show several readings well above that dashed path, then June's dip, then July back above it.
 
@@ -286,13 +299,15 @@ fig.savefig(FIG_DIR / "pce-monthly-pace.png", dpi=150, bbox_inches="tight")
 Source: [BEA](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026) via FRED series PCEPI and PCEPILFE.
 :::
 
-**What this chart shows in plain English:** June's headline decline did not persist. July put both measures back above the monthly pace that compounds to 2%, a benchmark rather than a forecast.
+June's headline decline did not persist. July put both measures back above the monthly pace that compounds to 2%, a benchmark rather than a forecast.
 
 ## Real spending was flat while saving ticked up
 
-Real PCE rose under `{python} fmt(stats['real_pce_mom_ceiling'])`% in July. Nominal PCE still rose because prices rose: households paid more without buying a clearly larger bundle of goods and services.
+"Real spending" means the volume of goods and services households bought after stripping out price changes. If prices rise 0.2% and households spend 0.2% more dollars, real spending is unchanged: they paid more for the same basket. The third card's `{python} fmt(stats['real_pce_change_bn'])` billion dollars is that volume change in July, which the [BEA]{title="Bureau of Economic Analysis"} also described as under `{python} fmt(stats['real_pce_mom_ceiling'])`% month over month.
 
-The saving rate was **`{python} fmt(stats['saving_rate'])`%** of disposable income, up from `{python} fmt(stats['saving_rate_june'])`% in June but still a thin cushion. Real PCE was `{python} fmt(stats['real_pce_yoy'])`% above a year earlier, so yearly spending growth remained positive despite the flat month.
+Compared with a year earlier, real spending was still `{python} fmt(stats['real_pce_yoy'])`% higher. That yearly gap can stay positive even when the latest month adds almost nothing. The two facts are not a contradiction. They answer different questions: the yearly number asks whether the level of consumption is above last summer; the monthly number asks whether households added more volume in July itself. July's answer to the second question is no. That is why this print is not an overheating boom in volumes. It is a pause in the quantity of spending while prices keep rising.
+
+The saving rate was **`{python} fmt(stats['saving_rate'])`%** of disposable income, up from `{python} fmt(stats['saving_rate_june'])`% in June but still a thin cushion.
 
 ```{python}
 #| echo: true
@@ -326,46 +341,63 @@ fig.savefig(FIG_DIR / "real-pce-saving.png", dpi=150, bbox_inches="tight")
 Source: FRED series DPCERA3M086SBEA (real PCE) and PSAVERT (personal saving rate); July saving rate aligned to the BEA release.
 :::
 
-**What this chart shows in plain English:** People consumed more than a year ago but added almost no real spending in July. That is not an overheating boom in volumes.
+The top panel is the yearly volume of spending. The bottom panel is how much of after-tax income households did not spend. July sits at a higher yearly volume than 2025 and a low saving rate.
 
 ## Labor context: a weak July jobs print
 
-The dual mandate also covers employment. Nonfarm payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** in July while unemployment held at **`{python} fmt(stats['unrate'])`%**. That is a softer labor market without a jump in joblessness, so the price data cannot be read alone.
+The dual mandate also covers employment. Nonfarm payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** in July while unemployment held at **`{python} fmt(stats['unrate'])`%**. That mix can look calmer than it is. The unemployment rate is jobless people divided by the labor force, not by the whole adult population. If people leave the labor force, the denominator shrinks and the rate can stay near `{python} fmt(stats['unrate'])`% even as fewer adults are working or looking. The participation rate, the share of adults in the labor force, was `{python} fmt(stats['civpart'])`% in July, versus `{python} fmt(stats['civpart_jan'])`% in January (`{python} fmt_chg(stats['civpart_change_pp'])` percentage points). The jobs print is therefore a weaker market and a smaller labor force, not a clean all-clear on the employment side of the mandate.
 
 ```{python}
 #| echo: true
 #| label: fig-labor-dashboard
-#| fig-cap: "Payroll changes and a three-month average in the top panel, with the unemployment rate in the lower panel so the two scales are not mixed."
+#| fig-cap: "Top panel: monthly payroll gains and losses plus a three-month average. Bottom panel: the unemployment rate. Each panel has its own axis and its own legend."
 
+# Two panels keep payroll thousands off the unemployment-rate scale.
+# The July payroll label sits under the orange bar with no extra marker.
 plot = df.loc["2025-01-01":"2026-07-01", ["payroll_change_k", "unrate"]].dropna()
 payroll_average = plot["payroll_change_k"].rolling(3).mean()
 fig, (ax1, ax2) = plt.subplots(
     2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
 )
 bar_colors = [COLORS["target"] if v >= 0 else COLORS["headline"] for v in plot["payroll_change_k"]]
-ax1.bar(plot.index, plot["payroll_change_k"], width=20, color=bar_colors, alpha=0.7, edgecolor="white")
-ax1.plot(plot.index, payroll_average, color=COLORS["core"], linewidth=2.0,
-         label="3-month average")
+ax1.bar(plot.index, plot["payroll_change_k"], width=20, color=bar_colors, alpha=0.75, edgecolor="white")
+ax1.plot(plot.index, payroll_average, color=COLORS["core"], linewidth=2.0)
 ax1.axhline(0, color=COLORS["neutral"], linewidth=0.8)
-ax2.plot(plot.index, plot["unrate"], color=COLORS["core"], linewidth=1.9)
+ax2.plot(plot.index, plot["unrate"], color=COLORS["headline"], linewidth=1.9)
 july = pd.Timestamp("2026-07-01")
 if july in plot.index:
     val = float(plot.loc[july, "payroll_change_k"])
     un = float(plot.loc[july, "unrate"])
-    ax1.scatter(july, val, s=40, color=COLORS["headline"], edgecolors="white",
-                linewidth=0.8, zorder=5)
-    ax1.text(july, val - 8, f"  July {val:+.0f}k", color=COLORS["headline"],
-             fontsize=8, fontweight="bold", va="top")
-    ax2.scatter(july, un, s=40, color=COLORS["core"], edgecolors="white",
-                linewidth=0.8, zorder=5)
-    ax2.text(july, un, f"  {un:.1f}%", color=COLORS["core"],
+    pad = max(12.0, abs(plot["payroll_change_k"]).max() * 0.06)
+    ax1.text(july, val - pad, f"July {val:+.0f}k",
+             color=COLORS["headline"], fontsize=8, fontweight="bold",
+             ha="center", va="top", zorder=6)
+    ax2.text(july, un, f"  {un:.1f}%", color=COLORS["headline"],
              fontsize=8, fontweight="bold", va="center")
-extend_xlim(ax1, plot.index, 0.18)
-ax1.set_ylabel("Payroll change, k")
-ax2.set_ylabel("Unemployment (%)")
+extend_xlim(ax1, plot.index, 0.10)
+ax1.set_ylabel("Monthly payroll change (thousands)")
+ax2.set_ylabel("Unemployment rate (%)")
 ax2.set_xlabel("Month")
 ax1.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
-ax1.legend(loc="upper right", frameon=False, fontsize=8)
+ax1.legend(
+    handles=[
+        Patch(facecolor=COLORS["target"], edgecolor="white", label="Payroll gain (top panel)"),
+        Patch(facecolor=COLORS["headline"], edgecolor="white", label="Payroll loss (top panel)"),
+        plt.Line2D([0], [0], color=COLORS["core"], linewidth=2.0, label="3-month payroll average"),
+    ],
+    loc="upper right",
+    frameon=False,
+    fontsize=8,
+)
+ax2.legend(
+    handles=[plt.Line2D([0], [0], color=COLORS["headline"], linewidth=1.9,
+                        label="Unemployment rate (bottom panel)")],
+    loc="upper right",
+    frameon=False,
+    fontsize=8,
+)
+solid_right_spine(ax1)
+solid_right_spine(ax2)
 ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
 ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
 plt.tight_layout()
@@ -373,51 +405,42 @@ fig.savefig(FIG_DIR / "labor-dashboard.png", dpi=150, bbox_inches="tight")
 ```
 
 ::: {.figure-source}
-Source: Bureau of Labor Statistics via FRED series PAYEMS and UNRATE.
+Source: Bureau of Labor Statistics via FRED series PAYEMS, UNRATE, and CIVPART.
 :::
 
-**What this chart shows in plain English:** Hiring cooled into a July decline while unemployment stayed near `{python} fmt(stats['unrate'])`%. That is slack opening at the margin, not a recession signal by itself.
+The top panel is jobs gained or lost. The bottom panel is the unemployment rate. They do not share an axis.
 
-## The policy rate versus core PCE
+## The policy rate and core PCE are different questions
 
-The funds target range is `{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%. Core PCE is `{python} fmt(stats['pce_core_yoy'])`% year over year. Plotting those two lines on one axis is a visual comparison of a policy setting and an inflation reading. It is **not** a model of r*, the unobservable neutral real rate, and it is not a rule that says the gap should be a certain number of points.
+The funds target range is `{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%. That is a short-term interest rate the Fed sets. Core [PCE]{title="Personal Consumption Expenditures"} is `{python} fmt(stats['pce_core_yoy'])`% year over year. That is how fast prices in the core household basket rose over twelve months. Putting both numbers in one subtracted "gap" makes them look like a single tightness score. They are not. The two panels below keep the questions apart: the top panel is the policy ceiling; the bottom panel is core inflation against the 2% goal.
 
 ```{python}
 #| echo: true
 #| label: fig-fed-funds-core-pce
-#| fig-cap: "The federal funds upper bound versus core PCE year-over-year inflation, with the gap shaded. This chart is a visual comparison of two published series. It is not a model of r*, the unobservable neutral real rate."
+#| fig-cap: "Top panel: the upper bound of the federal funds target range. Bottom panel: core PCE year-over-year inflation with the 2% goal. These are two published series, not a model of r*."
 
 plot = df.loc["2023-01-01":, ["fed_target_upper", "pce_core_yoy"]].dropna()
-fig, ax = plt.subplots(figsize=(8.0, 4.6))
-ax.fill_between(
-    plot.index,
-    plot["fed_target_upper"],
-    plot["pce_core_yoy"],
-    color=COLORS["light"],
-    alpha=0.28,
-    label="Gap (not a model of r*)",
+fig, (ax1, ax2) = plt.subplots(
+    2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [1.4, 2.2]}
 )
-ax.plot(plot.index, plot["fed_target_upper"], color=COLORS["core"], linewidth=1.9,
-        label="Fed funds upper bound")
-ax.plot(plot.index, plot["pce_core_yoy"], color=COLORS["headline"], linewidth=1.9,
-        label="Core PCE YoY")
+ax1.plot(plot.index, plot["fed_target_upper"], color=COLORS["core"], linewidth=1.9)
+ax2.plot(plot.index, plot["pce_core_yoy"], color=COLORS["headline"], linewidth=1.9)
+ax2.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
+ax2.text(plot.index[8], 0.25, "Fed 2% PCE target", color=COLORS["target"], fontsize=8, alpha=0.85)
 last = plot.iloc[-1]
-ax.scatter(plot.index[-1], last["fed_target_upper"], s=40, color=COLORS["core"],
-           edgecolors="white", linewidth=0.8, zorder=5)
-ax.scatter(plot.index[-1], last["pce_core_yoy"], s=40, color=COLORS["headline"],
-           edgecolors="white", linewidth=0.8, zorder=5)
-ax.text(plot.index[-1], last["fed_target_upper"],
-        f"  Funds {last['fed_target_upper']:.2f}%",
-        color=COLORS["core"], fontsize=8, fontweight="bold", va="center")
-ax.text(plot.index[-1], last["pce_core_yoy"],
-        f"  Core {last['pce_core_yoy']:.1f}%",
-        color=COLORS["headline"], fontsize=8, fontweight="bold", va="center")
-extend_xlim(ax, plot.index, 0.20)
-ax.set_ylabel("Percent")
-ax.set_xlabel("Month")
-ax.legend(loc="upper right", frameon=False, fontsize=8)
-ax.xaxis.set_major_locator(mdates.YearLocator())
-ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+ax1.text(plot.index[-1], last["fed_target_upper"],
+         f"  {last['fed_target_upper']:.2f}%",
+         color=COLORS["core"], fontsize=8, fontweight="bold", va="center")
+ax2.text(plot.index[-1], last["pce_core_yoy"],
+         f"  {last['pce_core_yoy']:.1f}%",
+         color=COLORS["headline"], fontsize=8, fontweight="bold", va="center")
+extend_xlim(ax1, plot.index, 0.18)
+ax1.set_ylabel("Fed funds upper bound (%)")
+ax2.set_ylabel("Core PCE, year-over-year (%)")
+ax2.set_xlabel("Month")
+ax2.set_ylim(0, float(plot["pce_core_yoy"].max()) + 0.4)
+ax2.xaxis.set_major_locator(mdates.YearLocator())
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 plt.tight_layout()
 fig.savefig(FIG_DIR / "fed-funds-core-pce.png", dpi=150, bbox_inches="tight")
 ```
@@ -426,9 +449,9 @@ fig.savefig(FIG_DIR / "fed-funds-core-pce.png", dpi=150, bbox_inches="tight")
 Source: Federal Reserve (DFEDTARU) and BEA via FRED (PCEPILFE).
 :::
 
-**What this chart shows in plain English:** Both rates are in the mid-3s. The shaded difference does not say whether policy is tight or easy because that judgment depends on r* and broader financial conditions.
+Read the panels separately. A policy rate in the mid-3s and core inflation in the mid-3s can coexist without telling you whether the stance is tight or easy. That judgment needs r*, financial conditions, and the rest of the dual mandate, which this chart does not estimate.
 
-Chair Warsh's prepared Jackson Hole remarks kept PCE at the center of the price-stability discussion without turning this post into a speech recap:
+Chair Warsh's prepared Jackson Hole remarks kept [PCE]{title="Personal Consumption Expenditures"} at the center of the price-stability discussion without turning this post into a speech recap:
 
 > "And while this summer's PCE and CPI readings were better than expected, they do not tell me that underlying trends have meaningfully improved."
 >
@@ -438,25 +461,23 @@ That line matches the tables: July brought no further cooldown in the yearly rat
 
 ## Putting it together
 
-Yearly headline and core PCE did not cool. They held at **`{python} fmt(stats['pce_headline_yoy'])`%** and **`{python} fmt(stats['pce_core_yoy'])`%**. June's `{python} fmt_chg(stats['pce_headline_june_mom'])`% headline dip did not persist; July was `{python} fmt_chg(stats['pce_headline_mom'])`% on both headline and core. Payrolls fell `{python} fmt_chg(stats['july_payroll_k'], 0)`k while unemployment held at `{python} fmt(stats['unrate'])`%.
+Yearly headline and core [PCE]{title="Personal Consumption Expenditures"} did not cool. They held at **`{python} fmt(stats['pce_headline_yoy'])`%** and **`{python} fmt(stats['pce_core_yoy'])`%**. June's `{python} fmt_chg(stats['pce_headline_june_mom'])`% headline dip did not persist; July was `{python} fmt_chg(stats['pce_headline_mom'])`% on both headline and core. Payrolls fell `{python} fmt_chg(stats['july_payroll_k'], 0)`k while unemployment held at `{python} fmt(stats['unrate'])`%, with participation lower than in January.
 
 ### What it means for
 
-**Fed path.** The dual mandate is split. July PCE alone did not clear the inflation side, while softer payrolls raised the employment concern. This post makes no rate call.
+**Fed path.** The dual mandate is split. July [PCE]{title="Personal Consumption Expenditures"} alone did not clear the inflation side, while softer payrolls and a smaller labor force raised the employment concern. This post makes no rate call. As of `{python} stats['polymarket_as_of']`, [Polymarket](https://polymarket.com/event/fed-decision-in-september-762) priced a September hold at `{python} fmt(stats['polymarket_hold_pct'])`% and a 25 basis-point increase at `{python} fmt(stats['polymarket_hike25_pct'])`%. Those are wagers, not a forecast from this analysis.
 
-**Households.** Nominal income and DPI rose, but real consumption was flat and the saving rate is only `{python} fmt(stats['saving_rate'])`% of disposable income. That is a thin buffer if hours or prices worsen.
+**Households.** Nominal income and [DPI]{title="Disposable Personal Income"} rose, but real spending was flat and the saving rate is only `{python} fmt(stats['saving_rate'])`% of disposable income. That is a thin buffer if hours or prices worsen.
 
 **Investors.** This is not a new inflation spike, and it is not an easing signal. June's monthly dip now has a counter-observation.
 
-**Property and casualty insurers and actuaries.** Services spending rose `{python} fmt(stats['pce_services_change_bn'])` billion dollars while goods spending fell `{python} fmt(abs(stats['pce_goods_change_bn']))` billion. Housing, health, and financial-services prices sit closer to repair and claim costs than gasoline does.
-
 ## What to watch next
 
-The `{python} stats['next_jobs_date']` employment report is the next labor checkpoint. The `{python} stats['next_fomc_dates']` FOMC includes new projections, and August PCE follows on `{python} stats['next_pce_date']`. Watch whether monthly core inflation remains near `{python} fmt(stats['pce_core_mom'])`%. One month will not set policy by itself.
+The `{python} stats['next_jobs_date']` employment report is the next labor checkpoint, including participation as well as the unemployment rate. The `{python} stats['next_fomc_dates']` [FOMC]{title="Federal Open Market Committee"} includes new projections, and August [PCE]{title="Personal Consumption Expenditures"} follows on `{python} stats['next_pce_date']`. Watch whether monthly core inflation remains near `{python} fmt(stats['pce_core_mom'])`%. One month will not set policy by itself.
 
 ## Limitations
 
-Monthly PCE estimates are seasonally adjusted and revise, while yearly rates move slowly. FRED carried the July series used here, so no history was reconstructed. Dollar figures come from the BEA release. The funds-versus-core chart is not an r* estimate, and the official Warsh quotation is context rather than evidence about the tables. One month does not determine September policy.
+Monthly [PCE]{title="Personal Consumption Expenditures"} estimates are seasonally adjusted and revise, while yearly rates move slowly. [FRED]{title="Federal Reserve Economic Data"} carried the July series used here, so no history was reconstructed. Dollar figures come from the [BEA]{title="Bureau of Economic Analysis"} release. The policy-rate and core-inflation panels are not an r* estimate. Polymarket odds move by the hour and are recorded as of `{python} stats['polymarket_as_of']`. The official Warsh quotation is context rather than evidence about the tables. One month does not determine September policy.
 
 ## Methodology and data
 
@@ -466,9 +487,10 @@ Monthly PCE estimates are seasonally adjusted and revise, while yearly rates mov
 | PCEPILFE | Core PCE price index | [FRED](https://fred.stlouisfed.org/series/PCEPILFE) |
 | DPCERA3M086SBEA | Real PCE quantity index | [FRED](https://fred.stlouisfed.org/series/DPCERA3M086SBEA) |
 | PSAVERT | Personal saving rate | [FRED](https://fred.stlouisfed.org/series/PSAVERT) |
-| PAYEMS, UNRATE | Payrolls and unemployment | [BLS via FRED](https://fred.stlouisfed.org/) |
+| PAYEMS, UNRATE, CIVPART | Payrolls, unemployment, participation | [BLS via FRED](https://fred.stlouisfed.org/) |
 | DFEDTARU | Fed funds target upper bound | [FRED](https://fred.stlouisfed.org/series/DFEDTARU) |
 | Personal Income and Outlays | Official July dollar and percent prints | [BEA July 2026 PIO](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026) |
+| Fed Decision in September? | Hold vs 25 bp hike odds | [Polymarket](https://polymarket.com/event/fed-decision-in-september-762) |
 | Jackson Hole remarks | One short blockquote | [Warsh remarks](https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm) |
 
 : Public data used in the analysis.
@@ -477,16 +499,12 @@ Monthly PCE estimates are seasonally adjusted and revise, while yearly rates mov
 
 The Python code for each chart is in this post. Expand a chart block to see it. The pipeline runs in numeric order from the post folder:
 
-- `scripts/01_fetch_data.py` downloads PCEPI, PCEPILFE, PSAVERT, PAYEMS, UNRATE, DPCERA3M086SBEA, and DFEDTARU from [FRED](https://fred.stlouisfed.org/). It requires `FRED_API_KEY`.
-- `scripts/02_clean_data.py` computes month-over-month and year-over-year changes. Official July BEA rates are pinned to the release if FRED rounding differs.
+- `scripts/01_fetch_data.py` downloads the [FRED]{title="Federal Reserve Economic Data"} series, including CIVPART for participation.
+- `scripts/02_clean_data.py` computes month-over-month and year-over-year changes. Official July [BEA]{title="Bureau of Economic Analysis"} rates are pinned to the release if FRED rounding differs.
 - `scripts/03_visualizations.py` writes the five PNGs under `figures/`.
 - `scripts/04_compute_stats.py` writes every prose and card value to `stats/summary_stats.json`.
 
-pandas handles the tables and matplotlib draws the figures. Official BEA dollar figures that FRED does not publish as standalone monthly series are entered from the [Personal Income and Outlays release](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026) and marked in `04_compute_stats.py`.
-
-### Takeaway
-
-July PCE did not cool the Fed's preferred yearly inflation gauge: headline held at `{python} fmt(stats['pce_headline_yoy'])`% and core at `{python} fmt(stats['pce_core_yoy'])`%, real spending was flat, and Jackson Hole opened with that print on the table rather than a new downshift in the trend.
+pandas handles the tables and matplotlib draws the figures. Official [BEA]{title="Bureau of Economic Analysis"} dollar figures that FRED does not publish as standalone monthly series are entered from the [Personal Income and Outlays release](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026) and marked in `04_compute_stats.py`.
 
 ---
 

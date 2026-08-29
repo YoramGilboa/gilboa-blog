@@ -39,12 +39,20 @@ BEA_JULY_SAVING_RATE = 3.0
 
 
 def mom(series: pd.Series) -> pd.Series:
-    """Month-over-month percent change from the index level."""
+    """Month-over-month percent change from the index level.
+
+    Example: if the index is 100 in June and 100.2 in July, m/m is +0.2%.
+    fill_method=None means we do not invent values across missing months.
+    """
     return series.pct_change(fill_method=None) * 100
 
 
 def yoy(series: pd.Series) -> pd.Series:
-    """Year-over-year percent change: this month versus the same month last year."""
+    """Year-over-year percent change: this month versus the same month last year.
+
+    Example: July 2026 versus July 2025. Charts and prose both use this column
+    so a reader never sees two different 'yearly' formulas.
+    """
     return series.pct_change(12, fill_method=None) * 100
 
 

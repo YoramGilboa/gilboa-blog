@@ -37,13 +37,16 @@ POST_DIR = Path(__file__).resolve().parents[1]
 RAW_DIR = POST_DIR / "data" / "raw"
 
 # Friendly column name -> FRED series ID.
+# Friendly name -> FRED ID. FRED IDs are short codes; we rename them so
+# later scripts never have to remember PCEPI vs PCEPILFE.
 MONTHLY_SERIES = {
-    "pce_headline": "PCEPI",
-    "pce_core": "PCEPILFE",
-    "saving_rate": "PSAVERT",
-    "payems": "PAYEMS",
-    "unrate": "UNRATE",
-    "real_pce": "DPCERA3M086SBEA",
+    "pce_headline": "PCEPI",       # price index for all household spending
+    "pce_core": "PCEPILFE",        # same index excluding food and energy
+    "saving_rate": "PSAVERT",      # saving as a % of after-tax income
+    "payems": "PAYEMS",            # nonfarm payrolls, thousands
+    "unrate": "UNRATE",            # unemployment rate, % of the labor force
+    "civpart": "CIVPART",          # labor-force participation rate, % of adults
+    "real_pce": "DPCERA3M086SBEA", # inflation-adjusted spending volume (index)
 }
 
 DAILY_SERIES = {
@@ -52,7 +55,12 @@ DAILY_SERIES = {
 
 
 def fetch_monthly(fred: Fred, series_id: str, start: str) -> pd.Series:
-    """One observation per calendar month. FRED dates are month-start."""
+    """Download one FRED series and keep one value per calendar month.
+
+    FRED sometimes stamps a month as the first day (2026-07-01). Converting
+    to a monthly period, then back to a timestamp, makes later joins easy.
+    If two rows land in the same month, we keep the last one.
+    """
     series = fred.get_series(series_id, observation_start=start)
     if series.empty:
         raise RuntimeError(f"FRED series returned no observations: {series_id}")
@@ -61,6 +69,7 @@ def fetch_monthly(fred: Fred, series_id: str, start: str) -> pd.Series:
 
 
 def fetch_daily(fred: Fred, series_id: str, start: str) -> pd.Series:
+    """Download a daily series (the fed-funds target can change mid-month)."""
     series = fred.get_series(series_id, observation_start=start)
     if series.empty:
         raise RuntimeError(f"FRED series returned no observations: {series_id}")

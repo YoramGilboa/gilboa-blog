@@ -92,6 +92,8 @@ def chart_yoy(df: pd.DataFrame) -> None:
             color=COLORS["core"], fontsize=8, fontweight="bold", va="top")
 
     extend_xlim(ax, plot.index, 0.20)
+    y_top = float(plot[["pce_headline_yoy", "pce_core_yoy"]].max().max()) + 0.4
+    ax.set_ylim(0, y_top)
     ax.set_ylabel("Year-over-year (%)")
     ax.set_xlabel("Month")
     ax.xaxis.set_major_locator(mdates.YearLocator())
@@ -155,36 +157,66 @@ def chart_spending(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
+def _solid_right_spine(ax) -> None:
+    """Keep the right spine so tick marks do not look like stray minus signs."""
+    ax.spines["right"].set_visible(True)
+    ax.spines["right"].set_color(COLORS["neutral"])
+    ax.spines["right"].set_linewidth(0.5)
+
+
 def chart_labor(df: pd.DataFrame) -> None:
+    """Two panels, two axes: payrolls on top, unemployment below.
+
+    The top legend maps every series on that panel. The July payroll bar is
+    labeled under the bar with no extra marker, so the bar itself is the data.
+    """
+    from matplotlib.patches import Patch
+
     plot = df.loc["2025-01-01":"2026-07-01", ["payroll_change_k", "unrate"]].dropna()
     payroll_average = plot["payroll_change_k"].rolling(3).mean()
     fig, (ax1, ax2) = plt.subplots(
         2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
     )
     colors = [COLORS["target"] if v >= 0 else COLORS["headline"] for v in plot["payroll_change_k"]]
-    ax1.bar(plot.index, plot["payroll_change_k"], width=20, color=colors, alpha=0.7, edgecolor="white")
-    ax1.plot(plot.index, payroll_average, color=COLORS["core"], linewidth=2.0,
-             label="3-month average")
+    ax1.bar(plot.index, plot["payroll_change_k"], width=20, color=colors, alpha=0.75, edgecolor="white")
+    ax1.plot(plot.index, payroll_average, color=COLORS["core"], linewidth=2.0)
     ax1.axhline(0, color=COLORS["neutral"], linewidth=0.8)
-    ax2.plot(plot.index, plot["unrate"], color=COLORS["core"], linewidth=1.9)
+    # Orange line lives only on the bottom panel (unemployment).
+    ax2.plot(plot.index, plot["unrate"], color=COLORS["headline"], linewidth=1.9)
     july = pd.Timestamp("2026-07-01")
     if july in plot.index:
         val = float(plot.loc[july, "payroll_change_k"])
         un = float(plot.loc[july, "unrate"])
-        ax1.scatter(july, val, s=40, color=COLORS["headline"], edgecolors="white",
-                    linewidth=0.8, zorder=5)
-        ax1.text(july, val - 8, f"  July {val:+.0f}k", color=COLORS["headline"],
-                 fontsize=8, fontweight="bold", va="top")
-        ax2.scatter(july, un, s=40, color=COLORS["core"], edgecolors="white",
-                    linewidth=0.8, zorder=5)
-        ax2.text(july, un, f"  {un:.1f}%", color=COLORS["core"],
+        pad = max(12.0, abs(plot["payroll_change_k"]).max() * 0.06)
+        ax1.text(july, val - pad, f"July {val:+.0f}k",
+                 color=COLORS["headline"], fontsize=8, fontweight="bold",
+                 ha="center", va="top", zorder=6)
+        ax2.text(july, un, f"  {un:.1f}%", color=COLORS["headline"],
                  fontsize=8, fontweight="bold", va="center")
-    extend_xlim(ax1, plot.index, 0.18)
-    ax1.set_ylabel("Payroll change, k")
-    ax2.set_ylabel("Unemployment (%)")
+    extend_xlim(ax1, plot.index, 0.10)
+    ax1.set_ylabel("Monthly payroll change (thousands)")
+    ax2.set_ylabel("Unemployment rate (%)")
     ax2.set_xlabel("Month")
     ax1.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
-    ax1.legend(loc="upper right", frameon=False, fontsize=8)
+    ax1.legend(
+        handles=[
+            Patch(facecolor=COLORS["target"], edgecolor="white", label="Payroll gain (top panel)"),
+            Patch(facecolor=COLORS["headline"], edgecolor="white", label="Payroll loss (top panel)"),
+            plt.Line2D([0], [0], color=COLORS["core"], linewidth=2.0, label="3-month payroll average"),
+        ],
+        loc="upper right",
+        frameon=False,
+        fontsize=8,
+    )
+    ax2.legend(
+        handles=[plt.Line2D([0], [0], color=COLORS["headline"], linewidth=1.9,
+                            label="Unemployment rate (bottom panel)")],
+        loc="upper right",
+        frameon=False,
+        fontsize=8,
+    )
+    _solid_right_spine(ax1)
+    _solid_right_spine(ax2)
     ax2.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
     plt.tight_layout()
@@ -193,37 +225,33 @@ def chart_labor(df: pd.DataFrame) -> None:
 
 
 def chart_policy(df: pd.DataFrame) -> None:
+    """Two panels: the policy-rate ceiling, then core inflation.
+
+    These are different questions (a rate the Fed sets vs a price index), so
+    they are not subtracted or shaded into a 'gap'.
+    """
     plot = df.loc["2023-01-01":, ["fed_target_upper", "pce_core_yoy"]].dropna()
-    fig, ax = plt.subplots(figsize=(8.0, 4.6))
-    ax.fill_between(
-        plot.index,
-        plot["fed_target_upper"],
-        plot["pce_core_yoy"],
-        color=COLORS["light"],
-        alpha=0.28,
-        label="Gap (not a model of r*)",
+    fig, (ax1, ax2) = plt.subplots(
+        2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [1.4, 2.2]}
     )
-    ax.plot(plot.index, plot["fed_target_upper"], color=COLORS["core"], linewidth=1.9,
-            label="Fed funds upper bound")
-    ax.plot(plot.index, plot["pce_core_yoy"], color=COLORS["headline"], linewidth=1.9,
-            label="Core PCE YoY")
+    ax1.plot(plot.index, plot["fed_target_upper"], color=COLORS["core"], linewidth=1.9)
+    ax2.plot(plot.index, plot["pce_core_yoy"], color=COLORS["headline"], linewidth=1.9)
+    ax2.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
+    ax2.text(plot.index[4], 2.12, "Fed 2% PCE target", color=COLORS["target"], fontsize=8, alpha=0.85)
     last = plot.iloc[-1]
-    ax.scatter(plot.index[-1], last["fed_target_upper"], s=40, color=COLORS["core"],
-               edgecolors="white", linewidth=0.8, zorder=5)
-    ax.scatter(plot.index[-1], last["pce_core_yoy"], s=40, color=COLORS["headline"],
-               edgecolors="white", linewidth=0.8, zorder=5)
-    ax.text(plot.index[-1], last["fed_target_upper"],
-            f"  Funds {last['fed_target_upper']:.2f}%",
-            color=COLORS["core"], fontsize=8, fontweight="bold", va="center")
-    ax.text(plot.index[-1], last["pce_core_yoy"],
-            f"  Core {last['pce_core_yoy']:.1f}%",
-            color=COLORS["headline"], fontsize=8, fontweight="bold", va="center")
-    extend_xlim(ax, plot.index, 0.20)
-    ax.set_ylabel("Percent")
-    ax.set_xlabel("Month")
-    ax.legend(loc="upper right", frameon=False, fontsize=8)
-    ax.xaxis.set_major_locator(mdates.YearLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax1.text(plot.index[-1], last["fed_target_upper"],
+             f"  {last['fed_target_upper']:.2f}%",
+             color=COLORS["core"], fontsize=8, fontweight="bold", va="center")
+    ax2.text(plot.index[-1], last["pce_core_yoy"],
+             f"  {last['pce_core_yoy']:.1f}%",
+             color=COLORS["headline"], fontsize=8, fontweight="bold", va="center")
+    extend_xlim(ax1, plot.index, 0.18)
+    ax1.set_ylabel("Fed funds upper bound (%)")
+    ax2.set_ylabel("Core PCE, year-over-year (%)")
+    ax2.set_xlabel("Month")
+    ax2.set_ylim(0, float(plot["pce_core_yoy"].max()) + 0.4)
+    ax2.xaxis.set_major_locator(mdates.YearLocator())
+    ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     plt.tight_layout()
     fig.savefig(FIG_DIR / "fed-funds-core-pce.png", dpi=150, bbox_inches="tight")
     plt.close(fig)

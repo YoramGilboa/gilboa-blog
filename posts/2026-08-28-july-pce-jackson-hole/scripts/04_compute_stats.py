@@ -4,10 +4,13 @@
 STEP 4 of the data pipeline.
 
 Writes every number used in the prose and metric cards to
-stats/summary_stats.json. The .qmd never hard-codes those values.
+stats/summary_stats.json. Think of this file as a shared notebook of
+answers: the cards, the sentences, and the charts all read from it so a
+July print cannot be 3.7% in one place and 3.6% in another.
 
-Official July 2026 dollar and percent prints that FRED does not carry as
-standalone series are marked # MANUAL with the BEA release URL.
+Official July 2026 dollar prints that FRED does not carry as standalone
+series are marked # MANUAL with the BEA release URL. Polymarket odds are
+also marked MANUAL because they are a snapshot, not a FRED series.
 """
 
 from __future__ import annotations
@@ -80,12 +83,25 @@ def main() -> None:
     funds_upper = float(frame["fed_target_upper"].dropna().iloc[-1])
     may = frame.loc[pd.Timestamp("2026-05-01")]
     saving_june = float(june["saving_rate"])
+    civpart = float(july["civpart"]) if "civpart" in july.index and pd.notna(july["civpart"]) else None
+    jan_stamp = pd.Timestamp("2026-01-01")
+    civpart_jan = (
+        float(frame.loc[jan_stamp, "civpart"])
+        if jan_stamp in frame.index and pd.notna(frame.loc[jan_stamp, "civpart"])
+        else None
+    )
+
+    # MANUAL: Polymarket "Fed Decision in September?" Yes prices as of 8/29/2026.
+    # https://polymarket.com/event/fed-decision-in-september-762
+    polymarket_hold_pct = 54.5
+    polymarket_hike25_pct = 43.5
+    polymarket_as_of = "8/29/2026"
 
     stats = {
         "latest_month": "July 2026",
         "latest_month_short": "Jul 2026",
         "previous_month": "June 2026",
-        "data_current_as_of": "8/28/2026",
+        "data_current_as_of": "8/29/2026",
         "bea_release_date": "8/26/2026",
         "jackson_hole_date": "8/28/2026",
         "jackson_hole_time": "10:00 a.m. ET",
@@ -117,6 +133,17 @@ def main() -> None:
         "july_payroll_k": r0(payroll_k),
         "july_payroll_abs_k": abs(r0(payroll_k)),
         "unrate": r1(unrate),
+        "civpart": r1(civpart) if civpart is not None else None,
+        "civpart_jan": r1(civpart_jan) if civpart_jan is not None else None,
+        "civpart_change_pp": (
+            r1(civpart - civpart_jan)
+            if civpart is not None and civpart_jan is not None
+            else None
+        ),
+        "polymarket_hold_pct": polymarket_hold_pct,
+        "polymarket_hike25_pct": polymarket_hike25_pct,
+        "polymarket_as_of": polymarket_as_of,
+        "polymarket_url": "https://polymarket.com/event/fed-decision-in-september-762",
         "cpi_headline_mom": cpi_headline_mom,
         "cpi_headline_yoy": cpi_headline_yoy,
         "cpi_core_mom": cpi_core_mom,
