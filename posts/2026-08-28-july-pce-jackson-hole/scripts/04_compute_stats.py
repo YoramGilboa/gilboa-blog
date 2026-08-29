@@ -66,13 +66,20 @@ def main() -> None:
     cpi_core_mom = 0.2
     cpi_core_yoy = 2.5
     july_dissents = 3
+    fomc_hold = "9-3"
+    dissent_hike_bp = 25
     fed_target_lower = 3.5
     fed_target_upper = 3.75
+    # MANUAL: July 2026 PPI final demand was unchanged.
+    # https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/
+    ppi_final_demand_mom = 0.0
 
     payroll_k = float(july["payroll_change_k"]) if pd.notna(july["payroll_change_k"]) else -23.0
     unrate = float(july["unrate"]) if pd.notna(july["unrate"]) else 4.1
     real_pce_yoy = float(july["real_pce_yoy"]) if pd.notna(july["real_pce_yoy"]) else None
     funds_upper = float(frame["fed_target_upper"].dropna().iloc[-1])
+    may = frame.loc[pd.Timestamp("2026-05-01")]
+    saving_june = float(june["saving_rate"])
 
     stats = {
         "latest_month": "July 2026",
@@ -102,18 +109,27 @@ def main() -> None:
         "pce_goods_change_bn": pce_goods_change_bn,
         "real_pce_change_bn": real_pce_change_bn,
         "real_pce_mom_pct": 0.0,
+        "real_pce_mom_ceiling": 0.1,
         "real_pce_yoy": r1(real_pce_yoy) if real_pce_yoy is not None else None,
         "saving_bn": saving_bn,
         "saving_rate": r1(july["saving_rate"]),
+        "saving_rate_june": r1(saving_june),
         "july_payroll_k": r0(payroll_k),
+        "july_payroll_abs_k": abs(r0(payroll_k)),
         "unrate": r1(unrate),
         "cpi_headline_mom": cpi_headline_mom,
         "cpi_headline_yoy": cpi_headline_yoy,
         "cpi_core_mom": cpi_core_mom,
         "cpi_core_yoy": cpi_core_yoy,
+        "ppi_final_demand_mom": ppi_final_demand_mom,
+        "ppi_print": "unchanged" if ppi_final_demand_mom == 0 else f"{ppi_final_demand_mom:+.1f}%",
         "fed_target_lower": r2(fed_target_lower),
         "fed_target_upper": r2(funds_upper if pd.notna(funds_upper) else fed_target_upper),
         "july_dissents": july_dissents,
+        "fomc_hold": fomc_hold,
+        "dissent_hike_bp": dissent_hike_bp,
+        "energy_shock_month": "May 2026",
+        "energy_shock_headline_yoy": r1(may["pce_headline_yoy"]),
         "two_pct_monthly_pace": 0.17,
         "reconstructed_july": reconstructed,
         "warsh_speech_url": "https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm",

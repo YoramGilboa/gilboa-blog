@@ -64,12 +64,12 @@ def chart_yoy(df: pd.DataFrame) -> None:
     ax.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
     ax.text(plot.index[4], 2.12, "Fed 2% target", color=COLORS["target"], fontsize=8, alpha=0.85)
 
-    shock = pd.Timestamp("2026-04-01")
+    shock = pd.Timestamp("2026-05-01")
     if shock in plot.index:
         ax.annotate(
             "Spring 2026\nenergy shock",
             xy=(shock, float(plot.loc[shock, "pce_headline_yoy"])),
-            xytext=(shock - pd.Timedelta(days=200), float(plot["pce_headline_yoy"].max()) - 0.4),
+            xytext=(shock - pd.Timedelta(days=220), float(plot["pce_headline_yoy"].max()) - 0.15),
             fontsize=8,
             color=COLORS["headline"],
             arrowprops=dict(arrowstyle="->", color=COLORS["light"], lw=0.8),
@@ -113,13 +113,17 @@ def chart_monthly(df: pd.DataFrame) -> None:
     ax.axhline(TWO_PCT_MONTHLY, color=COLORS["target"], linestyle="--", linewidth=1.0)
     ax.text(
         0.02, 0.92,
-        "Dashed line: 0.17% monthly pace that compounds to 2%",
+        "Dashed line: 0.17% monthly pace that compounds to 2%",  # matches two_pct_monthly_pace
         color=COLORS["target"], fontsize=8, transform=ax.transAxes,
     )
     ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
     ax.set_xticks(list(x))
     ax.set_xticklabels([d.strftime("%b\n%Y") for d in plot.index])
-    ax.set_title("July's 0.2% Monthly Prints Still Sit Above a 2% Path", fontweight="bold")
+    last_mom = float(plot["pce_headline_mom"].iloc[-1])
+    ax.set_title(
+        f"July's {last_mom:.1f}% Monthly Prints Still Sit Above a 2% Path",
+        fontweight="bold",
+    )
     ax.set_ylabel("Month-over-month (%)")
     ax.set_xlabel("Month")
     ax.legend(loc="upper right", frameon=False, fontsize=8)
@@ -146,7 +150,11 @@ def chart_spending(df: pd.DataFrame) -> None:
                  f"  July saving rate {plot.loc[july, 'saving_rate']:.1f}%",
                  color=COLORS["core"], fontsize=8, fontweight="bold", va="center")
     extend_xlim(ax1, plot.index, 0.22)
-    ax1.set_title("Real Spending Stayed Soft as Households Saved 3.0% of DPI", fontweight="bold")
+    july_save = float(plot.loc[july, "saving_rate"]) if july in plot.index else float(plot["saving_rate"].iloc[-1])
+    ax1.set_title(
+        f"Real Spending Stayed Soft as Households Saved {july_save:.1f}% of DPI",
+        fontweight="bold",
+    )
     ax1.set_ylabel("Real PCE, year-over-year (%)", color=COLORS["target"])
     ax2.set_ylabel("Personal saving rate (% of DPI)", color=COLORS["core"])
     ax1.set_xlabel("Month")
@@ -175,8 +183,14 @@ def chart_labor(df: pd.DataFrame) -> None:
         ax1.text(july, val, f"  July {val:+.0f}k", color=COLORS["headline"],
                  fontsize=8, fontweight="bold", va="center")
     extend_xlim(ax1, plot.index, 0.12)
-    ax1.set_title("July Payrolls Fell 23,000 with Unemployment Still Near 4.1%", fontweight="bold")
+    july_pay = float(plot.loc[july, "payroll_change_k"]) if july in plot.index else float(plot["payroll_change_k"].iloc[-1])
+    july_un = float(plot.loc[july, "unrate"]) if july in plot.index else float(plot["unrate"].iloc[-1])
+    ax1.set_title(
+        f"July Payrolls Were {july_pay:+.0f}k, Unemployment Near {july_un:.1f}%",
+        fontweight="bold",
+    )
     ax1.set_ylabel("Monthly payroll change (thousands)")
+    ax2.set_ylim(3.5, 5.0)
     ax2.set_ylabel("Unemployment rate (%)", color=COLORS["core"])
     ax1.set_xlabel("Month")
     ax1.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
