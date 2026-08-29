@@ -3036,7 +3036,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
   <media:content url="https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/images/cpi-headline-core-yoy.png" medium="image" type="image/png" height="88" width="144"/>
 </item>
 <item>
-  <title>July 2026 Jobs: Only 44k ADP Gains, Heavily Concentrated</title>
+  <title>July ADP: Only 44k Jobs, 82% from Education &amp; Health</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/</link>
   <description><![CDATA[ 
@@ -3085,7 +3085,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 </div>
 </div>
 </div>
-<div id="fe7cf911" class="cell" data-execution_count="2">
+<div id="597225fa" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.3rem 0;"><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP private payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #2e5984;">+44k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP education and health share</div><div style="font-size: 1.55rem; font-weight: 700; color: #007c91;">82%</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">BLS total payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #9b3a32;">-23k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">Initial claims, four-week average</div><div style="font-size: 1.55rem; font-weight: 700; color: #4f7c63;">199k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div></div>
 </div>
@@ -4748,7 +4748,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
   <media:content url="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png" medium="image" type="image/png" height="86" width="144"/>
 </item>
 <item>
-  <title>Q2 GDP Slowed to 1.5% – But Private Demand Was Actually Stronger</title>
+  <title>Q2 GDP Slowed to 1.5%, but Private Demand Accelerated to 3.9%</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/</link>
   <description><![CDATA[ 
@@ -4781,7 +4781,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
 </div>
 </div>
 </div>
-<div id="fe7cfae0" class="cell" data-execution_count="2">
+<div id="6ad95667" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
