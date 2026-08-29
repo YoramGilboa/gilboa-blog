@@ -7,7 +7,6 @@ categories: [economics, inflation, federal reserve, data visualization, labor ma
 description: "Real household spending barely budged, yearly core inflation stayed stuck, and Polymarket still split a September hold from a hike."
 image: figures/pce-headline-core-yoy.png
 image-alt: "Headline and core PCE year-over-year inflation since 2023, with the Fed 2% target"
-draft: true
 toc: true
 toc-location: right
 code-fold: true
@@ -116,6 +115,8 @@ Rest the pointer on short names such as [PCE]{title="Personal Consumption Expend
 Personal Consumption Expenditures are what households spend on goods and services. The [PCE]{title="Personal Consumption Expenditures"} price index tracks those prices. Core [PCE]{title="Personal Consumption Expenditures"} excludes food and energy. Disposable personal income, or [DPI]{title="Disposable Personal Income"}, is income after taxes. The personal saving rate is saving as a share of [DPI]{title="Disposable Personal Income"}.
 
 The Federal Reserve's dual mandate is maximum employment and stable prices. The Fed's 2% inflation goal is defined on [PCE]{title="Personal Consumption Expenditures"}, not on the Consumer Price Index ([CPI]{title="Consumer Price Index"}). [CPI]{title="Consumer Price Index"} is built by the Bureau of Labor Statistics from an urban consumer basket. [PCE]{title="Personal Consumption Expenditures"} is built by the [BEA]{title="Bureau of Economic Analysis"} from a broader set of spending, including more services, and it updates weights with actual spending shares. That is why a [CPI]{title="Consumer Price Index"} print and a [PCE]{title="Personal Consumption Expenditures"} print for the same month can differ without either series being wrong.
+
+The funds rate is a nominal rate, before inflation. The real policy rate, written [r]{title="the actual short-term real interest rate: the funds rate after inflation"}, is that same overnight rate after inflation. [r\*]{title="an estimated short-term real interest rate that would neither add demand nor take it away"} is a different number: an estimate of where r would sit if policy were neither adding demand nor taking it away. If r sat at r\*, cheap credit would not be pushing inflation higher, and expensive credit would not be squeezing hiring. Nobody prints r\* the way the [BEA]{title="Bureau of Economic Analysis"} prints [PCE]{title="Personal Consumption Expenditures"}. Staffs and markets estimate it; this post does not.
 :::
 
 ```{python}
@@ -212,7 +213,7 @@ fig, ax = plt.subplots(figsize=(8.0, 4.6))
 ax.plot(plot.index, plot["pce_headline_yoy"], color=COLORS["headline"], linewidth=1.9)
 ax.plot(plot.index, plot["pce_core_yoy"], color=COLORS["core"], linewidth=1.9)
 ax.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
-ax.text(plot.index[8], 0.25, "Fed 2% target", color=COLORS["target"], fontsize=8, alpha=0.85)
+ax.text(plot.index[4], 2.12, "Fed 2% target", color=COLORS["target"], fontsize=8, alpha=0.85)
 
 shock = pd.Timestamp("2026-05-01")
 if shock in plot.index:
@@ -341,8 +342,6 @@ fig.savefig(FIG_DIR / "real-pce-saving.png", dpi=150, bbox_inches="tight")
 Source: FRED series DPCERA3M086SBEA (real PCE) and PSAVERT (personal saving rate); July saving rate aligned to the BEA release.
 :::
 
-The top panel is the yearly volume of spending. The bottom panel is how much of after-tax income households did not spend. July sits at a higher yearly volume than 2025 and a low saving rate.
-
 ## Labor context: a weak July jobs print
 
 The dual mandate also covers employment. Nonfarm payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** in July while unemployment held at **`{python} fmt(stats['unrate'])`%**. That mix can look calmer than it is. The unemployment rate is jobless people divided by the labor force, not by the whole adult population. If people leave the labor force, the denominator shrinks and the rate can stay near `{python} fmt(stats['unrate'])`% even as fewer adults are working or looking. The participation rate, the share of adults in the labor force, was `{python} fmt(stats['civpart'])`% in July, versus `{python} fmt(stats['civpart_jan'])`% in January (`{python} fmt_chg(stats['civpart_change_pp'])` percentage points). The jobs print is therefore a weaker market and a smaller labor force, not a clean all-clear on the employment side of the mandate.
@@ -408,16 +407,16 @@ fig.savefig(FIG_DIR / "labor-dashboard.png", dpi=150, bbox_inches="tight")
 Source: Bureau of Labor Statistics via FRED series PAYEMS, UNRATE, and CIVPART.
 :::
 
-The top panel is jobs gained or lost. The bottom panel is the unemployment rate. They do not share an axis.
-
 ## The policy rate and core PCE are different questions
 
-The funds target range is `{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%. That is a short-term interest rate the Fed sets. Core [PCE]{title="Personal Consumption Expenditures"} is `{python} fmt(stats['pce_core_yoy'])`% year over year. That is how fast prices in the core household basket rose over twelve months. Putting both numbers in one subtracted "gap" makes them look like a single tightness score. They are not. The two panels below keep the questions apart: the top panel is the policy ceiling; the bottom panel is core inflation against the 2% goal.
+The [FOMC]{title="Federal Open Market Committee"} does not pick a single overnight rate. It sets a target range for the federal funds rate, the overnight interest rate banks charge one another to borrow reserves. The current range is `{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%. That 25-basis-point band is the instruction: overnight trading is supposed to stay inside it. The Fed uses its overnight facilities to keep the effective rate in the band. The chart plots the upper edge of that range, `{python} fmt2(stats['fed_target_upper'])`%.
+
+Core [PCE]{title="Personal Consumption Expenditures"} is `{python} fmt(stats['pce_core_yoy'])`% year over year. That is how fast prices in the core household basket rose over twelve months. It is a price change, not an interest rate. Putting the funds ceiling and core inflation in one subtracted "gap" makes them look like a single tightness score. They are not.
 
 ```{python}
 #| echo: true
 #| label: fig-fed-funds-core-pce
-#| fig-cap: "Top panel: the upper bound of the federal funds target range. Bottom panel: core PCE year-over-year inflation with the 2% goal. These are two published series, not a model of r*."
+#| fig-cap: "Top panel: the upper bound of the federal funds target range. Bottom panel: core PCE year-over-year inflation with the 2% goal. These are two published series, not an estimate of r\\*."
 
 plot = df.loc["2023-01-01":, ["fed_target_upper", "pce_core_yoy"]].dropna()
 fig, (ax1, ax2) = plt.subplots(
@@ -426,7 +425,7 @@ fig, (ax1, ax2) = plt.subplots(
 ax1.plot(plot.index, plot["fed_target_upper"], color=COLORS["core"], linewidth=1.9)
 ax2.plot(plot.index, plot["pce_core_yoy"], color=COLORS["headline"], linewidth=1.9)
 ax2.axhline(2.0, color=COLORS["target"], linestyle="--", linewidth=1.0, alpha=0.7)
-ax2.text(plot.index[8], 0.25, "Fed 2% PCE target", color=COLORS["target"], fontsize=8, alpha=0.85)
+ax2.text(plot.index[4], 2.12, "Fed 2% PCE target", color=COLORS["target"], fontsize=8, alpha=0.85)
 last = plot.iloc[-1]
 ax1.text(plot.index[-1], last["fed_target_upper"],
          f"  {last['fed_target_upper']:.2f}%",
@@ -438,6 +437,8 @@ extend_xlim(ax1, plot.index, 0.18)
 ax1.set_ylabel("Fed funds upper bound (%)")
 ax2.set_ylabel("Core PCE, year-over-year (%)")
 ax2.set_xlabel("Month")
+funds = plot["fed_target_upper"]
+ax1.set_ylim(float(funds.min()) - 0.40, float(funds.max()) + 0.25)
 ax2.set_ylim(0, float(plot["pce_core_yoy"].max()) + 0.4)
 ax2.xaxis.set_major_locator(mdates.YearLocator())
 ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
@@ -449,7 +450,7 @@ fig.savefig(FIG_DIR / "fed-funds-core-pce.png", dpi=150, bbox_inches="tight")
 Source: Federal Reserve (DFEDTARU) and BEA via FRED (PCEPILFE).
 :::
 
-Read the panels separately. A policy rate in the mid-3s and core inflation in the mid-3s can coexist without telling you whether the stance is tight or easy. That judgment needs r*, financial conditions, and the rest of the dual mandate, which this chart does not estimate.
+A policy rate in the mid-3s and core inflation in the mid-3s can coexist without telling you whether policy is tight or easy. Tight or easy is a comparison of two different real rates. The real policy rate, [r]{title="the actual short-term real interest rate: the funds rate after inflation"}, is the funds rate after inflation. [r\*]{title="an estimated short-term real interest rate that would neither add demand nor take it away"} is an estimate of where r would sit if policy were neither adding demand nor taking it away. If r sat at r\*, monetary policy would not be pushing the economy to heat up or cool down. If r is above r\*, policy is pulling demand down. If r is below r\*, it is adding demand. r\* is not in any official table. It has to be estimated, and estimates disagree. This chart does not produce r or r\*, and it also leaves out financial conditions and the rest of the dual mandate.
 
 Chair Warsh's prepared Jackson Hole remarks kept [PCE]{title="Personal Consumption Expenditures"} at the center of the price-stability discussion without turning this post into a speech recap:
 
@@ -477,7 +478,7 @@ The `{python} stats['next_jobs_date']` employment report is the next labor check
 
 ## Limitations
 
-Monthly [PCE]{title="Personal Consumption Expenditures"} estimates are seasonally adjusted and revise, while yearly rates move slowly. [FRED]{title="Federal Reserve Economic Data"} carried the July series used here, so no history was reconstructed. Dollar figures come from the [BEA]{title="Bureau of Economic Analysis"} release. The policy-rate and core-inflation panels are not an r* estimate. Polymarket odds move by the hour and are recorded as of `{python} stats['polymarket_as_of']`. The official Warsh quotation is context rather than evidence about the tables. One month does not determine September policy.
+Monthly [PCE]{title="Personal Consumption Expenditures"} estimates are seasonally adjusted and revise, while yearly rates move slowly. [FRED]{title="Federal Reserve Economic Data"} carried the July series used here, so no history was reconstructed. Dollar figures come from the [BEA]{title="Bureau of Economic Analysis"} release. The policy-rate and core-inflation panels are not an [r\*]{title="an estimated short-term real interest rate that would neither add demand nor take it away"} estimate. Polymarket odds move by the hour and are recorded as of `{python} stats['polymarket_as_of']`. The official Warsh quotation is context rather than evidence about the tables. One month does not determine September policy.
 
 ## Methodology and data
 

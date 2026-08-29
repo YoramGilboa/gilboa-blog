@@ -249,6 +249,8 @@ def chart_policy(df: pd.DataFrame) -> None:
     ax1.set_ylabel("Fed funds upper bound (%)")
     ax2.set_ylabel("Core PCE, year-over-year (%)")
     ax2.set_xlabel("Month")
+    funds = plot["fed_target_upper"]
+    ax1.set_ylim(float(funds.min()) - 0.40, float(funds.max()) + 0.25)
     ax2.set_ylim(0, float(plot["pce_core_yoy"].max()) + 0.4)
     ax2.xaxis.set_major_locator(mdates.YearLocator())
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
