@@ -12,7 +12,7 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Fri, 28 Aug 2026 00:00:00 GMT</lastBuildDate>
 <item>
-  <title>July PCE Held at 3.7% as Jackson Hole Opens: The Fed’s Gauge Did Not Cool</title>
+  <title>July PCE Held at 3.7%: The Fed’s Preferred Gauge Did Not Cool</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/</link>
   <description><![CDATA[ 
@@ -21,7 +21,7 @@
 
 
 
-<p>The Bureau of Economic Analysis (<span title="Bureau of Economic Analysis">BEA</span>) is the federal statistical agency that measures US income and spending. Its July report on Personal Consumption Expenditures (<span title="Personal Consumption Expenditures">PCE</span>) showed that the price index the Federal Reserve targets rose <strong>+0.2%</strong> from June and <strong>3.7%</strong> from a year earlier. Core <span title="Personal Consumption Expenditures">PCE</span>, which excludes food and energy, also rose <strong>+0.2%</strong> and held at <strong>3.3%</strong> year over year. The yearly rates did not move. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The 9/15/2026-9/16/2026 <span title="Federal Open Market Committee">FOMC</span> meeting is next. This post stays with the tables.</p>
+<p>Personal Consumption Expenditures (<span title="Personal Consumption Expenditures">PCE</span>) are what households spend on goods and services. July headline <span title="Personal Consumption Expenditures">PCE</span> stayed at <strong>3.7%</strong> year over year, unchanged from June. Core <span title="Personal Consumption Expenditures">PCE</span>, which excludes food and energy, stayed at <strong>3.3%</strong>. Real spending was essentially flat.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -57,7 +57,7 @@
 </div>
 </div>
 </div>
-<div id="60444123" class="cell" data-execution_count="2">
+<div id="9d1aeb56" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -69,6 +69,7 @@
 </p>
 </div>
 </div>
+<p>The Bureau of Economic Analysis (<span title="Bureau of Economic Analysis">BEA</span>) is the federal statistical agency that measures US income and spending. Its July report showed that the price index the Federal Reserve targets rose <strong>+0.2%</strong> from June. Core <span title="Personal Consumption Expenditures">PCE</span> also rose <strong>+0.2%</strong>. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The 9/15/2026-9/16/2026 <span title="Federal Open Market Committee">FOMC</span> meeting is next. This post stays with the tables.</p>
 <p>The third card is a quantity, not a price. The <span title="Bureau of Economic Analysis">BEA</span> said the inflation-adjusted volume of household spending, often called real spending or real <span title="Personal Consumption Expenditures">PCE</span>, rose 1.3 billion dollars in July. That is under 0.1% from June, so the card treats the month as essentially flat even though the dollar change is not zero.</p>
 <p>Personal income rose <strong>+0.4%</strong> in July, and disposable personal income rose <strong>+0.5%</strong>. Current-dollar <span title="Personal Consumption Expenditures">PCE</span> rose <strong>+0.2%</strong>, or 36.3 billion dollars, as services gained 86.2 billion and goods fell 49.9 billion. Personal saving was <strong>3.0%</strong> of <span title="Disposable Personal Income">DPI</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -83,7 +84,7 @@
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The funds target is <strong>3.50% to 3.75%</strong>. The July <span title="Federal Open Market Committee">FOMC</span> held <strong>9-3</strong>, with 3 dissents preferring a 25 basis-point increase. July payrolls fell <strong>-23k</strong> and unemployment was <strong>4.1%</strong>. Headline <span title="Consumer Price Index">CPI</span> rose <strong>+0.1%</strong> on the month and <strong>3.4%</strong> year over year. Core <span title="Consumer Price Index">CPI</span> rose <strong>+0.2%</strong> and <strong>2.5%</strong>, while <span title="Producer Price Index">PPI</span> final demand was unchanged on the month.</p>
+<p>The <a href="https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/">Q2 GDP report</a> is the demand backdrop for this print. The funds target is <strong>3.50% to 3.75%</strong>. The <a href="https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/">July FOMC minutes</a> show the Committee held <strong>9-3</strong>, with 3 dissents preferring a 25 basis-point increase. July payrolls fell <strong>-23k</strong> and unemployment was <strong>4.1%</strong>. In the <a href="https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/">July CPI and PPI report</a>, headline <span title="Consumer Price Index">CPI</span> rose <strong>+0.1%</strong> on the month and <strong>3.4%</strong> year over year. Core <span title="Consumer Price Index">CPI</span> rose <strong>+0.2%</strong> and <strong>2.5%</strong>, while <span title="Producer Price Index">PPI</span> final demand was unchanged on the month.</p>
 </div>
 </div>
 </div>
@@ -27497,7 +27498,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout.">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." width="753" height="426">
@@ -28009,7 +28010,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="801" height="589">
@@ -28856,7 +28857,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-130">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -29332,7 +29333,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-66">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -29832,7 +29833,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average.">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." width="725" height="672">
