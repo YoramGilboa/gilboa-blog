@@ -1,10 +1,10 @@
 ---
-title: "July PCE Held at 3.7% as Jackson Hole Opens: The Fed's Gauge Did Not Cool"
-pagetitle: "July PCE Held at 3.7% as Jackson Hole Opens: The Fed's Gauge Did Not Cool"
+title: "July PCE Held at 3.7%: The Fed's Preferred Gauge Did Not Cool"
+pagetitle: "July PCE Held at 3.7%: The Fed's Preferred Gauge Did Not Cool"
 date: "2026-08-28"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization, labor market]
-description: "Real household spending barely budged, yearly core inflation stayed stuck, and Polymarket still split a September hold from a hike."
+description: "July headline PCE stayed at 3.7% and core PCE at 3.3%. Real spending was essentially flat. Full breakdown of the BEA print and the setup into Jackson Hole."
 image: figures/pce-headline-core-yoy.png
 image-alt: "Headline and core PCE year-over-year inflation since 2023, with the Fed 2% target"
 toc: true
@@ -99,7 +99,7 @@ def solid_right_spine(ax):
     ax.spines["right"].set_linewidth(0.5)
 ```
 
-The Bureau of Economic Analysis ([BEA]{title="Bureau of Economic Analysis"}) is the federal statistical agency that measures US income and spending. Its July report on Personal Consumption Expenditures ([PCE]{title="Personal Consumption Expenditures"}) showed that the price index the Federal Reserve targets rose **`{python} fmt_chg(stats['pce_headline_mom'])`%** from June and **`{python} fmt(stats['pce_headline_yoy'])`%** from a year earlier. Core [PCE]{title="Personal Consumption Expenditures"}, which excludes food and energy, also rose **`{python} fmt_chg(stats['pce_core_mom'])`%** and held at **`{python} fmt(stats['pce_core_yoy'])`%** year over year. The yearly rates did not move. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The `{python} stats['next_fomc_dates']` [FOMC]{title="Federal Open Market Committee"} meeting is next. This post stays with the tables.
+Personal Consumption Expenditures ([PCE]{title="Personal Consumption Expenditures"}) are what households spend on goods and services. July headline [PCE]{title="Personal Consumption Expenditures"} stayed at **`{python} fmt(stats['pce_headline_yoy'])`%** year over year, unchanged from June. Core [PCE]{title="Personal Consumption Expenditures"}, which excludes food and energy, stayed at **`{python} fmt(stats['pce_core_yoy'])`%**. Real spending was essentially flat.
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this analysis
@@ -183,6 +183,8 @@ HTML(
 )
 ```
 
+The Bureau of Economic Analysis ([BEA]{title="Bureau of Economic Analysis"}) is the federal statistical agency that measures US income and spending. Its July report showed that the price index the Federal Reserve targets rose **`{python} fmt_chg(stats['pce_headline_mom'])`%** from June. Core [PCE]{title="Personal Consumption Expenditures"} also rose **`{python} fmt_chg(stats['pce_core_mom'])`%**. Two days later Chair Warsh opened Jackson Hole with that print still on the table. The `{python} stats['next_fomc_dates']` [FOMC]{title="Federal Open Market Committee"} meeting is next. This post stays with the tables.
+
 The third card is a quantity, not a price. The [BEA]{title="Bureau of Economic Analysis"} said the inflation-adjusted volume of household spending, often called real spending or real [PCE]{title="Personal Consumption Expenditures"}, rose `{python} fmt(stats['real_pce_change_bn'])` billion dollars in July. That is under `{python} fmt(stats['real_pce_mom_ceiling'])`% from June, so the card treats the month as essentially flat even though the dollar change is not zero.
 
 Personal income rose **`{python} fmt_chg(stats['pi_mom_pct'])`%** in July, and disposable personal income rose **`{python} fmt_chg(stats['dpi_mom_pct'])`%**. Current-dollar [PCE]{title="Personal Consumption Expenditures"} rose **`{python} fmt_chg(stats['pce_nom_mom_pct'])`%**, or `{python} fmt(stats['pce_nom_change_bn'])` billion dollars, as services gained `{python} fmt(stats['pce_services_change_bn'])` billion and goods fell `{python} fmt(abs(stats['pce_goods_change_bn']))` billion. Personal saving was **`{python} fmt(stats['saving_rate'])`%** of [DPI]{title="Disposable Personal Income"}.
@@ -190,7 +192,7 @@ Personal income rose **`{python} fmt_chg(stats['pi_mom_pct'])`%** in July, and d
 ::: {.callout-note collapse="true"}
 ## Already on this blog
 
-The funds target is **`{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%**. The July [FOMC]{title="Federal Open Market Committee"} held **`{python} stats['fomc_hold']`**, with `{python} fmt(stats['july_dissents'], 0)` dissents preferring a `{python} fmt(stats['dissent_hike_bp'], 0)` basis-point increase. July payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** and unemployment was **`{python} fmt(stats['unrate'])`%**. Headline [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_headline_mom'])`%** on the month and **`{python} fmt(stats['cpi_headline_yoy'])`%** year over year. Core [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_core_mom'])`%** and **`{python} fmt(stats['cpi_core_yoy'])`%**, while [PPI]{title="Producer Price Index"} final demand was `{python} stats['ppi_print']` on the month.
+The [Q2 GDP report](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/) is the demand backdrop for this print. The funds target is **`{python} fmt2(stats['fed_target_lower'])`% to `{python} fmt2(stats['fed_target_upper'])`%**. The [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/) show the Committee held **`{python} stats['fomc_hold']`**, with `{python} fmt(stats['july_dissents'], 0)` dissents preferring a `{python} fmt(stats['dissent_hike_bp'], 0)` basis-point increase. July payrolls fell **`{python} fmt_chg(stats['july_payroll_k'], 0)`k** and unemployment was **`{python} fmt(stats['unrate'])`%**. In the [July CPI and PPI report](https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/), headline [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_headline_mom'])`%** on the month and **`{python} fmt(stats['cpi_headline_yoy'])`%** year over year. Core [CPI]{title="Consumer Price Index"} rose **`{python} fmt_chg(stats['cpi_core_mom'])`%** and **`{python} fmt(stats['cpi_core_yoy'])`%**, while [PPI]{title="Producer Price Index"} final demand was `{python} stats['ppi_print']` on the month.
 :::
 
 ## The Fed's preferred gauge did not cool
