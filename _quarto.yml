@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - llms.txt
+    - robots.txt
   # Rewrite sitemap locs to clean URLs after Quarto emit (see tools/seo_post_render.py).
   post-render:
     - tools/seo_post_render.py
