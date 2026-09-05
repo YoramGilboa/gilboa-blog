@@ -47,6 +47,8 @@ website:
 
 format:
   html:
+    include-in-header:
+      - file: includes/schema-person.html
     theme: theme.scss
     css:
       - styles.css
