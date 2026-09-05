@@ -94,7 +94,7 @@ def extend_xlim(ax, index, pad_frac=0.12):
 
 The August jobs report was a beat, not a boom. Nonfarm payrolls rose `{python} fmt_chg(stats['payroll_aug_k'], 0)`k, against a [Wall Street Journal survey of economists](https://www.wsj.com/economy/jobs/august-jobs-report-unemployment-c9da2f0c) at +53k and a prior-12-month average of `{python} fmt_chg(stats['prior_12m_avg_k'], 0)`k. The Bureau of Labor Statistics also revised June and July up by a combined `{python} fmt_chg(stats['combined_revision_k'], 0)`k, so July's first-print scare is smaller than it looked.
 
-The catch is composition. Food services and drinking places plus local government education supplied `{python} fmt(stats['two_sector_share_pct'])`% of the monthly gain. Average hourly earnings rose `{python} fmt(stats['ahe_mom_pct'])`% on the month and `{python} fmt(stats['ahe_yoy_pct'])`% over the year. That is a labor market that hired in restaurants and schools after a weak July - not one that suddenly tightened heading into the `{python} stats['next_fomc_date']` FOMC.
+The catch is composition. Food services and drinking places plus local government education supplied `{python} fmt(stats['two_sector_share_pct'])`% of the monthly gain. Average hourly earnings rose `{python} fmt(stats['ahe_mom_pct'])`% on the month and `{python} fmt(stats['ahe_yoy_pct'])`% over the year. That is a labor market that hired in restaurants and schools after a weak July. It is not one that suddenly tightened heading into the `{python} stats['next_fomc_date']` FOMC.
 
 ```{python}
 #| echo: false

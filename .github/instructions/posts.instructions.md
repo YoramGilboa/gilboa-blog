@@ -61,7 +61,8 @@ Reference example: `posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/`.
   Introduction heading.
 - Tone: **adult engagement, plain vocabulary**. A careful high-school graduate
   should follow the argument; do not talk down. Define jargon once on first use.
-- Do not use em or en dashes in prose. Restructure or use spaced hyphens.
+- Do not use em dashes, en dashes, or a spaced hyphen as a dash. Break the
+  sentence with a period or a comma, or restructure. Write ranges with "to".
 - Use full URLs with descriptive link text. Never use "click here."
 - Never hard-code key figures in prose. Read them from
   `stats/summary_stats.json` with inline Python.

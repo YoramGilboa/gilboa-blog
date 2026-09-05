@@ -162,13 +162,12 @@ def check_prose(body: str, findings):
             findings.append(Finding(
                 ERROR, "unicode-dash",
                 f"line {n}: contains an em/en dash (— or –). "
-                "Post instructions forbid these - use spaced hyphens, commas, or "
-                "restructured sentences."))
+                "Use a period, a comma, or restructure the sentence."))
         if re.search(r"\w ?-- ?\w", line) or re.search(r"\w--\w", line):
             findings.append(Finding(
                 WARN, "ascii-dash",
                 f"line {n}: inline '--' renders as an en/em dash in Quarto. "
-                "Use ' - ' or restructure."))
+                "Use a period, a comma, or restructure."))
         if re.search(r"\bclick here\b", line, re.IGNORECASE):
             findings.append(Finding(
                 ERROR, "click-here",
