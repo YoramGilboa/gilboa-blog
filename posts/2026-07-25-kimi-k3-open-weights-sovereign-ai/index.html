@@ -115,6 +115,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://gilboa.blog/#website",
+      "url": "https://gilboa.blog/",
+      "name": "gilboa.blog",
+      "description": "Data-driven analysis of US inflation, jobs, GDP, and Fed policy.",
+      "inLanguage": "en-US",
+      "publisher": { "@id": "https://gilboa.blog/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://gilboa.blog/#person",
+      "name": "Yoram Gilboa",
+      "url": "https://gilboa.blog/about.html",
+      "jobTitle": "P&C actuary",
+      "description": "Writes data-driven analysis of US inflation, jobs, GDP, and Fed policy, with reproducible Python charts.",
+      "knowsAbout": [
+        "US inflation",
+        "CPI",
+        "PCE",
+        "labor market",
+        "FOMC",
+        "data visualization",
+        "property and casualty insurance"
+      ],
+      "sameAs": [
+        "https://github.com/YoramGilboa"
+      ]
+    }
+  ]
+}
+</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
