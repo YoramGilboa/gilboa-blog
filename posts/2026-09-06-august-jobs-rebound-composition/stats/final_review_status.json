@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-09-04T21:15:00Z",
+  "reviewer": "blog-final-review",
+  "notes": "Editor pass 3 scores 9.6/10. Concentration prose now matches rest_chg (+89k in July, +61k in August). Household caption notes the January gap. Hours y-scale widened. Lint clean. Rendered HTML has no leftover {python}. Ready for human review; still draft: true."
+}

@@ -1,0 +1,4 @@
+date,payrolls,private_payrolls,government_payrolls,unrate,u6rate,civpart,emratio,ahe_all_private,avg_weekly_hours,ahe_production,jolts_openings,jolts_quits_rate,initial_claims
+2026-06-01,31000.0,,,,,,,,,,,,
+2026-07-01,21000.0,,,,,,,,,,,,
+2026-08-01,162000.0,127000.0,35000.0,4.1,7.7,61.6,59.1,37.75,34.4,32.53,7271000.0,1.9,234000.0
