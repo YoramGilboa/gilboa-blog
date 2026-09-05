@@ -1,0 +1,54 @@
+# gilboa.blog
+
+> Data-driven analysis of US inflation, jobs, GDP, and Fed policy.
+> Release-day reads with charts, official-source series (BEA, BLS, FRED),
+> and reproducible Python. Written by Yoram Gilboa.
+
+Prefer individual post pages over the homepage listing.
+Each post states the print in the opening paragraph, names the FRED/BEA/BLS
+series, and includes methodology and limitations.
+
+- Site: https://gilboa.blog/
+- Author: https://gilboa.blog/about.html
+- RSS: https://gilboa.blog/index.xml
+- Sitemap: https://gilboa.blog/sitemap.xml
+- GitHub: https://github.com/YoramGilboa
+
+## Start here
+
+- [About](https://gilboa.blog/about.html): What the site covers and how the analysis is produced
+- [Home](https://gilboa.blog/): Latest posts
+
+## Latest
+
+- [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
+- [July PCE held at 3.7%](https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/): Headline and core PCE unchanged; real spending flat
+- [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/): Dissents for a hike if inflation does not cool
+- [July CPI and PPI](https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/): Soft consumer and producer prints after weak jobs
+- [July ADP](https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/): +44k private jobs, 82% in education and health
+- [Q2 GDP and June PCE](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/): GDP +1.5%; private demand +3.9%
+
+## Inflation
+
+- [June CPI](https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/): Energy reversal after ceasefire; core and shelter linger
+- [Core persistence](https://gilboa.blog/posts/2026-07-11-core-inflation-persistence-services-goods-shelter/): Services ex-shelter vs goods vs shelter
+- [June PPI](https://gilboa.blog/posts/2026-07-25-june-ppi-energy-relief-core-goods-pipeline/): Upstream energy relief; core-goods pipeline still firm
+- [May CPI energy passthrough](https://gilboa.blog/posts/2026-06-13-may-2026-cpi-energy-shock-passthrough/): Iran-war energy shock vs core stability
+
+## Labor market
+
+- [June jobs report](https://gilboa.blog/posts/2026-07-03-june-jobs-report-soft-labor-market/): Soft payrolls and a labor-force drop
+- [June labor dashboard](https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/): Headline resilience vs slower hiring flows
+- [May jobs](https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/): Stabilization at +172k
+
+## Fed policy and growth
+
+- [June 2026 dot plot](https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/): 40 bp hawkish shift with rates on hold
+- [April FOMC](https://gilboa.blog/posts/2026-05-01-april-fomc-decision/): Dissents, dots, and the market wedge
+- [Q1 GDP revision](https://gilboa.blog/posts/2026-05-29-q1-gdp-revision-consumer-ai/): Consumer pullback vs AI equipment surge
+
+## Optional
+
+- [Kimi K3 and sovereign AI](https://gilboa.blog/posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/): Open-weights note, not a macro release
+- [P&C severity CPI](https://gilboa.blog/posts/2025-02-01-pc-severity-cpi/): Claims-weighted inflation index
+- [How this blog is built](https://gilboa.blog/posts/2025-02-01-first-visualization/): Quarto setup post
