@@ -1,5 +1,42 @@
-# Block draft paths if they ever appear on the live host.
-# Published posts live under /posts/YYYY-MM-DD-slug/ and remain crawlable.
+# gilboa.blog — crawl policy
+# Drafts stay private. Published pages are open to search and AI bots.
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /posts/drafts/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /posts/drafts/
+
 User-agent: *
 Disallow: /posts/drafts/
 
