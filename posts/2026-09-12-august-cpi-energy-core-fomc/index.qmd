@@ -1,6 +1,6 @@
 ---
-title: "The CPI Rebound Was Energy, Not a Soft Core"
-pagetitle: "The CPI Rebound Was Energy, Not a Soft Core"
+title: "The CPI Rebound Was Energy, and Not a Soft Core"
+pagetitle: "The CPI Rebound Was Energy, and Not a Soft Core"
 date: "2026-09-12"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization]
