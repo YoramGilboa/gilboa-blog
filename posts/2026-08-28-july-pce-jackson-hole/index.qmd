@@ -1,6 +1,6 @@
 ---
 title: "July PCE Held at 3.7%: The Fed's Preferred Gauge Did Not Cool"
-pagetitle: "July PCE Held at 3.7%: The Fed's Preferred Gauge Did Not Cool"
+pagetitle: "July 2026 PCE: 3.7% headline, 3.3% core, spending flat"
 date: "2026-08-28"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization, labor market]

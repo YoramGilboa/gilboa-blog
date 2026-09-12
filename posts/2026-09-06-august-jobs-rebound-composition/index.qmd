@@ -1,6 +1,6 @@
 ---
 title: "The Jobs Rebound Was Restaurants and Schools"
-pagetitle: "The Jobs Rebound Was Restaurants and Schools"
+pagetitle: "August 2026 jobs: +162,000, mostly restaurants and schools"
 date: "2026-09-04"
 author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization]

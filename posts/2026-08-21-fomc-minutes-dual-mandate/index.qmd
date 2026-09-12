@@ -1,5 +1,6 @@
 ---
 title: "July FOMC Minutes: Many Officials Saw Hikes If Inflation Does Not Cool"
+pagetitle: "July 2026 FOMC minutes: hike risk if inflation stays high"
 date: "2026-08-21"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization, labor market]
