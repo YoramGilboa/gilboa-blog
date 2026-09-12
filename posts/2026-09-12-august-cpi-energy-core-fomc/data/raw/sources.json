@@ -1,0 +1,38 @@
+{
+  "bls_cpi_release": "https://www.bls.gov/news.release/cpi.nr0.htm",
+  "bls_cpi_table_1": "https://www.bls.gov/news.release/cpi.t01.htm",
+  "fred": "https://fred.stlouisfed.org/",
+  "fred_series": {
+    "headline_sa": "CPIAUCSL",
+    "headline_nsa": "CPIAUCNS",
+    "core_sa": "CPILFESL",
+    "core_nsa": "CPILFENS",
+    "food_sa": "CPIUFDSL",
+    "food_nsa": "CPIUFDNS",
+    "energy_sa": "CPIENGSL",
+    "energy_nsa": "CPIENGNS",
+    "gasoline_sa": "CUSR0000SETB01",
+    "gasoline_nsa": "CUUR0000SETB01",
+    "core_goods_sa": "CUSR0000SACL1E",
+    "core_goods_nsa": "CUUR0000SACL1E",
+    "services_less_energy_sa": "CUSR0000SASLE",
+    "services_less_energy_nsa": "CUUR0000SASLE",
+    "services_less_shelter_sa": "CUSR0000SASL2RS",
+    "services_less_shelter_nsa": "CUUR0000SASL2RS",
+    "shelter_sa": "CUSR0000SAH1",
+    "shelter_nsa": "CUUR0000SAH1",
+    "rent_sa": "CUSR0000SEHA",
+    "rent_nsa": "CUUR0000SEHA",
+    "oer_sa": "CUSR0000SEHC",
+    "oer_nsa": "CUUR0000SEHC",
+    "fed_target_lower": "DFEDTARL",
+    "fed_target_upper": "DFEDTARU"
+  },
+  "fomc_calendar": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+  "june_sep": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm",
+  "bea_schedule": "https://www.bea.gov/news/schedule",
+  "notes": [
+    "FRED CPIAUCSL/CPILFESL have a published NaN for 2025-10-01.",
+    "Do not interpolate that month. Charts must show the calendar gap."
+  ]
+}

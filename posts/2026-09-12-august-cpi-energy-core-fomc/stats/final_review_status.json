@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-09-12T17:11:09Z",
+  "reviewer": "blog-final-review",
+  "notes": "Rewritten version reviewed. Accuracy verified against BLS Table 1 and clean data (gasoline +3.9 SA, share 36.8%, 10/2025 FRED gap real). Lint, preflight, desktop and 400px visual checks pass. Human confirmed compact date forms and collapsed definitions are intentional; no open editorial decisions remain."
+}
