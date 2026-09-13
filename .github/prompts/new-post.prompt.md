@@ -13,6 +13,7 @@ Standing constraints (do not ask me about these again):
 - Run blog-data-validate before building the pipeline, blog-seo-tags after
   the draft exists, blog-chart-review after charts, blog-final-review before
   presenting to me.
+- At human review, show title (H1), description (dek), pagetitle, and tags.
 - Report absolute paths for every file you create or move.
 
 Post brief (I will fill this in):

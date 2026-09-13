@@ -11,10 +11,11 @@ New drafts use:
 ```yaml
 ---
 title: "Post Title"
+pagetitle: "Month year release: print and short claim"
 date: "YYYY-MM-DD"
 author: Yoram Gilboa
 categories: [economics, data visualization]
-description: "One sentence for the listing and social preview."
+description: "Print-heavy dek for the listing card and the line under the H1."
 image: images/preview-image.png
 draft: true
 toc: true
@@ -24,14 +25,29 @@ code-summary: "Show code"
 ---
 ```
 
+These three YAML fields do different jobs. Do not copy one into the others.
+
+- `title:` is the on-page H1. It states the finding in plain language. A
+  composition title names what supplied the move (example: restaurants and
+  schools). Two separate facts belong in two sentences (example: energy
+  turned up, and core stayed sticky). Do not write "X, not Y" when Y is a
+  different kind of claim from X. A rebound is an increase. A soft print is
+  not the composition of that increase.
+- `description:` is the visible dek under the H1 and the homepage card text.
+  It leads with official prints and spells out "percent". Do not add
+  `subtitle:`. That field duplicates the dek.
+- `pagetitle:` is the browser tab and the Google `<title>`. It includes month,
+  year, the release name, and the key print or prints. Aim for 50–65
+  characters. Cap at 70. It does not have to equal `title:`.
+
 - Remove `draft: true` only when publishing.
-- Never add `subtitle:`. It duplicates the listing description.
 - Use `description-meta:` only when SEO text must differ from visible listing
   text.
-- When changing `title` or `description`, set `pagetitle` to the same string as
-  `title` unless the human wants a different browser tab title.
 - Shared responsive and content styles belong in root `styles.css`, not inline
   `<style>` blocks.
+- The reproducing callout says "this post" even while `draft: true` remains.
+- `posts/drafts/_metadata.yml` sets `title-block-banner: true` so a draft
+  renders title, then dek, then tags, matching published posts.
 
 ## Categories (on-page tags)
 

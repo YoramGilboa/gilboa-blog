@@ -40,6 +40,19 @@ creating or editing `.qmd` files.
 - Do not modify unrelated published posts during new-post work.
 - Preserve published folder names because they are public URLs.
 
+## Working post
+
+When the user says "the latest post" or "this post", resolve the target in
+this order:
+
+1. The `post/YYYY-MM-DD-slug` branch and `posts/drafts/YYYY-MM-DD-slug/` if
+   that draft exists.
+2. Otherwise the newest folder under `posts/` that is not `drafts/`.
+
+Do not score or edit a published post while a matching draft is the working
+copy. If both a draft and a live post exist, use the draft unless the user
+named the live URL.
+
 ## Authoring workflow
 
 1. Create branch `post/YYYY-MM-DD-slug`.
@@ -64,7 +77,9 @@ creating or editing `.qmd` files.
 1. Site chrome, About, homepage, theme, or SEO-only front matter: branch
    `site/<name>` (not `post/...`).
 2. Do not merge to `main` until the human signs off.
-3. Do not run post freeze, `check_post`, or undraft steps for site-only work.
+3. Do not undraft or run `check_post` for site-only work. Freeze a published
+   post when its YAML `title`, `description`, `pagetitle`, or `categories`
+   changed.
 4. After sign-off, use **Publishing site changes** below.
 
 ## Orchestration
@@ -170,7 +185,12 @@ Grok: `blog-publish` post mode. Copilot: this checklist.
 ## Publishing site changes
 
 Use this path for About, `_quarto.yml`, homepage chrome, CSS/theme, or SEO-only
-post front matter. Do **not** run freeze, `check_post`, or undraft.
+post front matter. Do **not** undraft or run `check_post`.
+
+If `title`, `description`, `pagetitle`, or `categories` change on a published
+`index.qmd`, re-render that post and commit `_freeze/posts/<slug>/`. Quarto
+stores that YAML inside freeze `html.json`. A YAML-only commit will not update
+the live `<title>` tag.
 
 1. Commit only the signed-off files on `site/<name>`. Never `_site/`, never
    `generated/`, never leftover `index.html` next to a post.
@@ -181,7 +201,8 @@ post front matter. Do **not** run freeze, `check_post`, or undraft.
 5. `gh run list --workflow=publish.yml --limit 3` then
    `gh run watch <run-id> --exit-status`.
 6. Fetch live URLs and confirm the new strings (not only HTTP 200):
-   `https://gilboa.blog/`, `/about.html`, and any edited posts.
+   `https://gilboa.blog/`, `/about.html`, and any edited posts. For a post YAML
+   change, confirm the live `<title>` tag matches `pagetitle:`.
 
 ## Terminal output hygiene
 

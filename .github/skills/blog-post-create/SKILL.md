@@ -8,12 +8,18 @@ argument-hint: "<topic, optional date, and optional slug>"
 
 Coordinate the full post workflow without bypassing approval gates.
 
+Resolve the working post per `.github/copilot-instructions.md` **Working post**.
+Do not review a live URL when `posts/drafts/` on the current `post/...` branch
+is the work.
+
 ## 1. Architecture and chart plan
 
 1. Create `posts/drafts/YYYY-MM-DD-slug/` from the template.
 2. Create branch `post/YYYY-MM-DD-slug`.
 3. Propose:
-   - title and framing (for non-macro one-offs: explicit "this blog is usually
+   - `title` (H1 finding), `description` (print dek), and `pagetitle` (Google
+     tab) as three fields per posts.instructions.md;
+   - framing (for non-macro one-offs: explicit "this blog is usually
      macro viz; today is a deliberate exception" frame);
    - three to five headline metrics;
    - two to five analytical sections with unnumbered `##` titles (one-offs may
@@ -47,10 +53,10 @@ Follow `.github/instructions/pipelines.instructions.md`.
 
 Follow `.github/instructions/posts.instructions.md`:
 
-- complete frontmatter with `draft: true`; if title/description change later,
-  keep `pagetitle` in sync with `title` unless the human set a print-heavy
-  browser title;
+- complete frontmatter with `draft: true`; set `title`, `description`, and
+  `pagetitle` as three fields per posts.instructions.md;
 - draft `categories:` from the preferred list in posts.instructions.md;
+- reproducing callout says "this post", not "this draft";
 - hidden setup, opening then callouts then metric cards;
 - approved analytical sections and charts (unnumbered `##` titles);
 - inline stats rather than hard-coded key values (every `{python}` backticked);
@@ -83,8 +89,9 @@ Then continue.
 
 ## 5. Human handoff and publication
 
-Report the title, sections, chart count, key metrics, caveats, final-review
-status, and rendered HTML path. Wait for explicit human approval.
+Report H1 `title`, dek `description`, `pagetitle`, tags, sections, chart
+count, key metrics, caveats, final-review status, and rendered HTML path.
+Wait for explicit human approval of that title block before publish.
 
 After approval:
 

@@ -37,7 +37,10 @@ Evaluate:
    - no single-item bullet lists; no bare `{python}` expressions;
    - underperformance peers shown when a "weaker" section exists;
    - `categories:` match posts.instructions.md (lowercase, 3–6, preferred
-     list). If not, invoke `blog-seo-tags` then continue.
+     list). If not, invoke `blog-seo-tags` then continue;
+   - `title`, `description`, and `pagetitle` are three fields per
+     posts.instructions.md. Fail an H1 that uses "X, not Y" when Y is a
+     different kind of claim from X.
 
 Apply only low-risk wording, transition, and terminology fixes directly. Do
 not auto-fix high-impact analytical issues; return FAIL with remediation.
@@ -60,5 +63,6 @@ Use `FAIL` when required work remains.
 ## Output
 
 Report status plus one-line accuracy, flow, and consistency results; list
-automatic fixes; and identify the next step. If a fix changed a visual element,
-require another chart review before final review.
+automatic fixes; and identify the next step. Quote `title`, `description`,
+`pagetitle`, and `categories` as the title block for human review. If a fix
+changed a visual element, require another chart review before final review.

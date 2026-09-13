@@ -1,0 +1,3 @@
+# Drafts do not inherit posts/_metadata.yml. Keep the live title block:
+# H1, then description (dek), then category tags.
+title-block-banner: true

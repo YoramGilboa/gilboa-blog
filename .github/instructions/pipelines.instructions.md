@@ -38,6 +38,10 @@ stats/summary_stats.json
   substitute success-shaped defaults.
 - Keep time frequencies and date alignment explicit.
 - Run scripts from the post directory in numeric order.
+- Do not interpolate a published missing month (a FRED NaN is information).
+- Do not `dropna()` in a way that slides non-adjacent months together on a
+  chart. Keep the calendar axis so a hole stays a hole. Name the gap in the
+  pipeline log and in the post's Note on data.
 
 ## Data sources
 

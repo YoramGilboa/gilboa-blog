@@ -3,7 +3,7 @@ title: "Post Title"
 date: "YYYY-MM-DD"
 author: Yoram Gilboa
 categories: [economics, data visualization]
-description: "One sentence summary for social previews and search engines."
+description: "Print-heavy dek for the listing card and the line under the H1."
 image: images/preview-image.png
 draft: true
 toc: true

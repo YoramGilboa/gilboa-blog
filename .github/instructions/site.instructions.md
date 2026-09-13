@@ -20,6 +20,8 @@ Navbar and homepage wordmark: **gilboa.blog** (not the author's personal name).
 - YAML `title:` is the page H1. Do not repeat it as `# Title` in the body.
 - `description:` is the HTML meta description only. Set `hide-description: true`
   so it does not render under the heading. Do not hide it with CSS.
+- This About hiding rule does not apply to posts. Post `title`, `description`,
+  and `pagetitle` are defined in `.github/instructions/posts.instructions.md`.
 - Short pages (`about.qmd`): `toc: false`.
 - Escape at-handles in Markdown so Quarto does not treat them as citations:
   `[\@name](https://x.com/name)`.
