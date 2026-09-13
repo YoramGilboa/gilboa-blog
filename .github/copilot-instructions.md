@@ -50,7 +50,8 @@ creating or editing `.qmd` files.
 6. Run preflight while drafting:
    - `bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft`
    - PowerShell: `.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft`
-7. Run `blog-chart-review`, then `blog-final-review`.
+7. Run `blog-seo-tags` on the draft (categories only), then
+   `blog-chart-review`, then `blog-final-review`.
 8. After human approval, remove `draft: true`, move the post and freeze cache
    to published paths, and rerender.
 9. Run the local release gate:
@@ -68,11 +69,14 @@ creating or editing `.qmd` files.
 
 ## Orchestration
 
-After any narrative, chart, or data fix, re-run the editor (Grok: `blog-editor`;
-Copilot: `blog-final-review` plus chart review if visuals changed) **without
-being asked**. If the ship bar is not met, keep looping with the named owner.
+After any narrative, chart, data, or tags fix, re-run the editor (Grok:
+`blog-editor`; Copilot: `blog-final-review` plus chart review if visuals
+changed) **without being asked**. If the ship bar is not met, keep looping
+with the named owner.
 If it is met, stop and show the human. Do not ask which skill is next when the
 review already named an owner.
+
+In sessions longer than ~15 turns, suggest the user run /compact after post approval and before publishing.
 
 Ready for human review is not published. Publish only after explicit sign-off.
 
@@ -136,10 +140,11 @@ On Windows the watcher often serves a stale page or a `Quarto Render Error`
 
 - `blog-post-create`: orchestrate a post from topic through human review
 - `blog-data-validate`: validate FRED and BEA identifiers and freshness
+- `blog-seo-tags`: set YAML `categories:` (on-page tags) after prose, before review
 - `blog-chart-review`: visual-only desktop and mobile chart QA
 - `blog-final-review`: non-visual accuracy, flow, and consistency gate
 - External Grok skills (when present): topic-selection, architect,
-  data-engineer, viz-specialist, narrative-writer, editor, publish
+  data-engineer, viz-specialist, narrative-writer, seo-tags, editor, publish
 
 ## Publishing requirements
 
@@ -177,6 +182,15 @@ post front matter. Do **not** run freeze, `check_post`, or undraft.
    `gh run watch <run-id> --exit-status`.
 6. Fetch live URLs and confirm the new strings (not only HTTP 200):
    `https://gilboa.blog/`, `/about.html`, and any edited posts.
+
+## Terminal output hygiene
+
+- Pipe long-running or verbose commands through `| tail -n 30`
+  (renders, `git push`, freeze runs).
+- Use `gh run watch <run-id> --exit-status | tail -n 20`; never dump the
+  full Actions log into chat.
+- For `quarto render`, capture to a log file and show only the last 30
+  lines plus any ERROR lines: `quarto render ... 2>&1 | tee /tmp/render.log | tail -n 30`.
 
 Grok: `blog-publish` site mode. Keep `site/<name>` after merge unless asked to
 delete it.

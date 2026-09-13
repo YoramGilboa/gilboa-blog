@@ -48,7 +48,9 @@ Follow `.github/instructions/pipelines.instructions.md`.
 Follow `.github/instructions/posts.instructions.md`:
 
 - complete frontmatter with `draft: true`; if title/description change later,
-  keep `pagetitle` in sync with `title`;
+  keep `pagetitle` in sync with `title` unless the human set a print-heavy
+  browser title;
+- draft `categories:` from the preferred list in posts.instructions.md;
 - hidden setup, opening then callouts then metric cards;
 - approved analytical sections and charts (unnumbered `##` titles);
 - inline stats rather than hard-coded key values (every `{python}` backticked);
@@ -57,16 +59,26 @@ Follow `.github/instructions/posts.instructions.md`:
 - dual-meaning chart series labeled; no non-record scatter under frontiers;
 - conclusion, audience implications, limitations, methodology, and data date.
 
+## 3b. SEO tags
+
+Follow `.github/skills/blog-seo-tags/SKILL.md` on the draft `index.qmd` after
+prose exists and before `blog-chart-review`. It may rewrite only `categories:`.
+Then continue.
+
 ## 4. Review
 
-1. Render the draft with the root `.venv`.
-2. Invoke `blog-chart-review`.
-3. Fix and rerender until desktop and 400px chart checks pass.
-4. Invoke `blog-final-review`.
-5. If the review fails, fix with the named owner and rerun the review
+1. Run `python tools/validate_expressions.py <post-dir>` and fix any missing
+   stats keys or unbackticked inline expressions before rendering.
+2. Render the draft with the root `.venv`.
+3. Run `python tools/validate_rendered_output.py <post-dir>` and fix any raw
+   `{python}`, `NaN`, `undefined`, or `None%` in the rendered HTML.
+4. Invoke `blog-chart-review`.
+5. Fix and rerender until desktop and 400px chart checks pass.
+6. Invoke `blog-final-review`.
+7. If the review fails, fix with the named owner and rerun the review
    **without asking** which skill is next. If prose changes affect charts,
    rerun both reviews.
-6. Require `stats/final_review_status.json` to contain `PASS`. Then stop and
+8. Require `stats/final_review_status.json` to contain `PASS`. Then stop and
    show the human.
 
 ## 5. Human handoff and publication
@@ -83,3 +95,17 @@ After approval:
 5. commit on the post branch;
 6. merge locally into `main`, then `git push origin main`, only when requested
    (see copilot-instructions Publishing requirements).
+7. After the post is publication-ready (or once the user says it is live),
+   offer to run `gilboa-blog-ai-visibility` to add the new URL to `/llms.txt`.
+   Do not edit `robots.txt` or `llms.txt` inside this skill.
+
+## After Publish Hook
+
+When offering the handoff, include:
+
+- Live post URL in sitemap form (`https://gilboa.blog/posts/YYYY-MM-DD-slug/`)
+- One-line factual note for the llms.txt bullet (the print or the core claim)
+- Reminder that crawl files live in the Quarto project root and need
+  `quarto render` plus publish
+
+If the user declines, stop. If they accept, follow `gilboa-blog-ai-visibility`.

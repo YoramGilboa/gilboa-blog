@@ -26,13 +26,42 @@ code-summary: "Show code"
 
 - Remove `draft: true` only when publishing.
 - Never add `subtitle:`. It duplicates the listing description.
-- Categories are lowercase and space-separated, not hyphenated.
 - Use `description-meta:` only when SEO text must differ from visible listing
   text.
 - When changing `title` or `description`, set `pagetitle` to the same string as
   `title` unless the human wants a different browser tab title.
 - Shared responsive and content styles belong in root `styles.css`, not inline
   `<style>` blocks.
+
+## Categories (on-page tags)
+
+YAML `categories:` are the tags under the subtitle and the listing filters.
+`blog-seo-tags` sets them after the draft exists. Do not treat them as a
+keyword dump.
+
+- Lowercase and space-separated, not hyphenated (`labor market`, not
+  `labor-market`).
+- 3–6 tags. Default 4.
+- Prefer this vocabulary, in this spirit of order: `economics`, then the
+  topic, then `federal reserve` when the Fed is in the thesis, then
+  `data visualization`.
+
+Preferred tags:
+
+- `economics`
+- `inflation`
+- `labor market`
+- `federal reserve`
+- `energy`
+- `fomc`
+- `interest rates`
+- `data visualization`
+- `markets`
+- `technology`
+
+Reuse a string already on a published post before minting a new tag. Do not
+pair `visualization` with `data visualization`, or `data analysis` with
+`data visualization`. One-offs may add `technology` or `markets` as below.
 
 ## Scope of the blog
 

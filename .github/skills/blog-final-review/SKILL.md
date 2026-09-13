@@ -35,7 +35,9 @@ Evaluate:
    - terminology and units are stable;
    - audience implications follow from the analysis;
    - no single-item bullet lists; no bare `{python}` expressions;
-   - underperformance peers shown when a "weaker" section exists.
+   - underperformance peers shown when a "weaker" section exists;
+   - `categories:` match posts.instructions.md (lowercase, 3–6, preferred
+     list). If not, invoke `blog-seo-tags` then continue.
 
 Apply only low-risk wording, transition, and terminology fixes directly. Do
 not auto-fix high-impact analytical issues; return FAIL with remediation.
