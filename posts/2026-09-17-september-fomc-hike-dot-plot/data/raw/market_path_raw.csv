@@ -1,0 +1,7 @@
+date,label,implied_rate,kind
+2026-09-16,After Sept hike,3.875,realized_mid
+2026-10-28,Oct FOMC (expected),4.0,futures
+2026-12-09,Dec FOMC (expected),4.072,futures
+2026-12-31,SEP median end-2026,4.1,sep
+2027-12-31,SEP median end-2027,4.1,sep
+2028-12-31,SEP median end-2028,3.9,sep

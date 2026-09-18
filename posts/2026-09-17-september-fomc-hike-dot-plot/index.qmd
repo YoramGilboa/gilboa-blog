@@ -1,0 +1,542 @@
+---
+title: "The FOMC hiked 25 bp and lifted the 2026 median dot to 4.1 percent."
+pagetitle: "September 2026 FOMC: 25 bp hike, median dot 4.1%"
+date: "2026-09-17"
+author: Yoram Gilboa
+categories: [economics, federal reserve, fomc, interest rates, data visualization]
+description: "The unanimous decision took the target range to 3.75 to 4.00 percent. Twelve of eighteen participants penciled in one more 2026 hike, and the 2027 and 2028 medians rose 50 basis points."
+image: images/september-2026-median-dots.png
+image-alt: "Connected median federal funds projections from the June and September 2026 SEPs, showing a higher path for 2026 through 2028."
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+infl = pd.read_csv(CLEAN_DIR / "inflation.csv", index_col="date", parse_dates=True).sort_index()
+labor = pd.read_csv(CLEAN_DIR / "labor.csv", index_col="date", parse_dates=True).sort_index()
+rates_d = pd.read_csv(CLEAN_DIR / "rates_daily.csv", index_col="date", parse_dates=True).sort_index()
+sep_medians = pd.read_csv(CLEAN_DIR / "sep_medians.csv")
+sep_dots = pd.read_csv(CLEAN_DIR / "sep_dots_2026.csv")
+market_path = pd.read_csv(CLEAN_DIR / "market_path.csv", parse_dates=["date"])
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    return f"{float(value):.{digits}f}"
+
+
+def fmt_chg(value, digits=1):
+    value = float(value)
+    if abs(value) < 0.5 * 10 ** (-digits):
+        value = 0.0
+    return f"{value:+.{digits}f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def fmt_int(value):
+    return f"{int(value)}"
+```
+
+The Federal Open Market Committee raised the federal funds target range by **`{python} fmt_int(stats['hike_bp'])` basis points** to **`{python} fmt2(stats['target_lower'])`% to `{python} fmt2(stats['target_upper'])`%** on `{python} stats['decision_date_short']`. The vote was `{python} stats['vote_split']`. The median 2026 dot moved to **`{python} fmt(stats['sep_funds_2026'])`%** from `{python} fmt(stats['jun_funds_2026'])`% in June. **`{python} fmt_int(stats['dots_one_more'])` of `{python} fmt_int(stats['dots_total'])`** participants see one more hike in 2026.
+
+::: {.callout-note}
+## Terms used below
+
+The federal funds target range is the overnight rate band the Fed sets for banks. A basis point is one hundredth of a percentage point. The Summary of Economic Projections (SEP) is the quarterly set of participant forecasts released with four meetings a year. The dot plot is the SEP chart in which each participant places one anonymous mark at the funds-rate level they see as appropriate at year-end. The dual mandate is maximum employment and `{python} fmt(stats['fed_inflation_goal'])`% inflation. The longer-run rate is each participant's guess of where the funds rate settles once those goals are met and shocks have faded.
+:::
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The complete pipeline is included with this post:
+
+- `scripts/01_fetch_data.py` downloads validated FRED series for CPI, PCE, unemployment, payrolls, the funds target range, the effective funds rate, and Treasury yields. It also writes transcribed SEP tables and a futures-implied path snapshot, with source URLs in `data/raw/sources.json`.
+- `scripts/02_clean_data.py` calculates month-over-month and year-over-year percent changes. Those formulas live there. Charts only plot the finished columns.
+- `scripts/04_compute_stats.py` writes every prose and metric-card value to `stats/summary_stats.json`.
+
+Run the scripts in numeric order from this post directory, then render `index.qmd`. pandas handles the tables and matplotlib draws the figures.
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+SEP medians and the 2026 dot counts are transcribed from the Federal Reserve's [September 16, 2026 projection materials](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm) and the [June 17, 2026 projection materials](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm). Eighteen participants submitted projections in both cycles. Chair Warsh did not submit a personal dot.
+
+The funds-rate dots are midpoints of target ranges, rounded to the nearest one-eighth percentage point. A `{python} fmt2(stats['dot_one_more_level'])`% dot is one `{python} fmt_int(stats['hike_bp'])` basis-point hike above the new `{python} fmt2(stats['target_mid'])`% midpoint. SEP dots are midpoints of 1/8-point target ranges. This post writes `{python} stats['dot_hold_level']`% as `{python} fmt2(stats['dot_hold_level'])`% and `{python} stats['dot_one_more_level']`% as `{python} fmt2(stats['dot_one_more_level'])`% in running text; Table 1 medians stay at one decimal (`{python} fmt(stats['sep_funds_2026'])`%).
+
+CME FedWatch probabilities are implied by 30-day federal funds futures, not a poll of officials. CME does not publish a stable historical CSV, so the October and December odds in this post are a documented point-in-time snapshot compiled after the `{python} stats['decision_date_short']` decision. See `data/raw/sources.json`.
+
+July PCE is the latest official personal-consumption inflation print. August CPI is already in. August PCE is scheduled for `{python} stats['next_pce_date']`.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.55rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b; text-align: center;"
+
+cards = [
+    ("Median 2026 dot", f"{fmt(stats['sep_funds_2026'])}%", COLORS["accent"],
+     f"June SEP {fmt(stats['jun_funds_2026'])}%"),
+    ("See one more 2026 hike", f"{fmt_int(stats['dots_one_more'])}", COLORS["warning"],
+     f"of {fmt_int(stats['dots_total'])} dots; {fmt_int(stats['dots_two_more'])} see two"),
+    ("2026 PCE inflation", f"{fmt(stats['sep_pce_2026'])}%", COLORS["fed_target"],
+     f"core PCE {fmt(stats['sep_corepce_2026'])}%"),
+    ("2026 unemployment", f"{fmt(stats['sep_unrate_2026'])}%", COLORS["secondary"],
+     f"longer-run {fmt(stats['sep_unrate_longer'])}%"),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  SEP and statement as of {stats['decision_date_short']} | FRED through {stats['latest_month']}
+</p>
+"""
+HTML(html)
+```
+
+## The rate decision and statement
+
+The statement is short. The Committee said it raised the target range "in support of the Federal Reserve's dual mandate," that "economic activity is expanding at a solid pace," that "domestic spending has been resilient," and that "inflation remains elevated." The operational sentence is that today's action "will support a timelier return to the Committee's `{python} fmt(stats['fed_inflation_goal'])` percent goal."
+
+The implementation note, effective `{python} stats['hike_effective_date']`, set interest on reserve balances at `{python} fmt2(stats['iorb'])`% and the primary credit rate at `{python} fmt2(stats['target_upper'])`%. The daily effective funds rate was still `{python} fmt2(stats['current_effr'])`% on `{python} stats['effr_as_of']`, the last print before the new range took effect.
+
+This is the first funds-rate increase of 2026, after five scheduled holds at `{python} fmt2(stats['prior_target_lower'])`% to `{python} fmt2(stats['prior_target_upper'])`%. The midpoint of that band was `{python} fmt(stats['jun_target_mid'], 3)`%.
+
+```{python}
+#| echo: true
+#| label: fig-funds-path
+#| fig-cap: "The federal funds target-range midpoint rose on 9/16/2026, the first hike after a long hold at 3.50 to 3.75 percent."
+
+# Target-range midpoint is the average of the published lower and upper bounds.
+# Charts plot that finished column from scripts/02_clean_data.py.
+
+path = rates_d.loc["2022-01-01":, ["target_mid", "dff"]].copy()
+path = path.dropna(subset=["target_mid"])
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(path.index, path["target_mid"], color=COLORS["primary"], linewidth=1.9, zorder=3)
+ax.fill_between(path.index, rates_d.loc[path.index, "dfedtarl"],
+                rates_d.loc[path.index, "dfedtaru"],
+                color=COLORS["primary"], alpha=0.10, zorder=1)
+
+x_end = path.index[-1]
+y_end = float(path["target_mid"].iloc[-1])
+ax.scatter(x_end, y_end, s=40, color=COLORS["accent"], zorder=5,
+           edgecolors="white", linewidth=0.8)
+ax.text(x_end, y_end, f"  {y_end:.2f}% after hike",
+        color=COLORS["accent"], fontsize=8, fontweight="bold", va="center")
+
+hike_day = pd.Timestamp("2026-09-16")
+if hike_day in path.index:
+    ax.axvline(hike_day, color=COLORS["accent"], linewidth=0.8, linestyle="--", alpha=0.7)
+    ax.text(hike_day, 5.35, " 9/16 hike", color=COLORS["accent"], fontsize=8, alpha=0.85)
+
+ax.set_ylabel("Percent")
+ax.set_ylim(0, 6.2)
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+ax.xaxis.set_major_locator(mdates.YearLocator())
+span = path.index[-1] - path.index[0]
+ax.set_xlim(path.index[0], path.index[-1] + span * 0.18)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-2026-funds-path.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: Federal Reserve via FRED, DFEDTARL and DFEDTARU. The shaded band is the target range. The line is the midpoint.
+:::
+
+## The new median dots versus June
+
+A median is the middle projection when the `{python} fmt_int(stats['dots_total'])` dots are lined up from low to high. It is a summary, not a Committee vote. The September median still says the funds rate ends 2026 at `{python} fmt(stats['sep_funds_2026'])`%, which is one hike above today's midpoint, and stays there through 2027. The larger move is farther out. The 2027 median rose **`{python} fmt_int(stats['funds_shift_2027_bp'])` basis points**, to `{python} fmt(stats['sep_funds_2027'])`% from `{python} fmt(stats['jun_funds_2027'])`%. The 2028 median rose **`{python} fmt_int(stats['funds_shift_2028_bp'])` basis points**, to `{python} fmt(stats['sep_funds_2028'])`% from `{python} fmt(stats['jun_funds_2028'])`%.
+
+June did not publish a 2029 column. September does, at `{python} fmt(stats['sep_funds_2029'])`%. The longer-run median, a rough stand-in for the neutral rate, rose `{python} fmt_int(stats['funds_shift_longer_bp'])` basis points to `{python} fmt(stats['sep_funds_longer'])`%.
+
+```{python}
+#| echo: true
+#| label: fig-median-dots-shift
+#| fig-cap: "Median projected funds rates moved higher for 2026 through 2028, with the largest revisions in 2027 and 2028."
+
+# Official SEP Table 1 medians, transcribed in scripts/01_fetch_data.py.
+
+order = ["2026", "2027", "2028", "2029", "Longer run"]
+june = sep_medians[sep_medians["meeting"] == "June 2026"].set_index("horizon")["funds"]
+sept = sep_medians[sep_medians["meeting"] == "September 2026"].set_index("horizon")["funds"]
+x = np.arange(len(order))
+june_y = [june.get(h, np.nan) for h in order]
+sept_y = [sept.get(h, np.nan) for h in order]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(x, june_y, color=COLORS["primary"], linewidth=1.8, marker="o",
+        markersize=7, markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+ax.plot(x, sept_y, color=COLORS["accent"], linewidth=1.9, marker="o",
+        markersize=7, markeredgecolor="white", markeredgewidth=0.8, zorder=4)
+
+for i, (j_val, s_val) in enumerate(zip(june_y, sept_y)):
+    if pd.notna(j_val):
+        ax.text(i, j_val - 0.18, f"{j_val:.1f}", ha="center", va="top",
+                fontsize=8, color=COLORS["primary"])
+    if pd.notna(s_val):
+        ax.text(i, s_val + 0.12, f"{s_val:.1f}", ha="center", va="bottom",
+                fontsize=8, color=COLORS["accent"], fontweight="bold")
+
+ax.set_xticks(x)
+ax.set_xticklabels(order)
+ax.set_ylabel("Median funds rate, percent")
+ax.set_ylim(2.7, 4.7)
+ax.set_xlim(-0.3, 4.55)
+ax.text(4.08, sept_y[-1], "  Sept", color=COLORS["accent"], fontsize=8,
+        fontweight="bold", va="center")
+ax.text(1.12, june_y[1], "  June", color=COLORS["primary"], fontsize=8,
+        fontweight="bold", va="center")
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-2026-median-dots.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: FOMC Summary of Economic Projections, Table 1, June 17 and September 16, 2026. June did not publish a 2029 median.
+:::
+
+The 2026 median rose `{python} fmt_int(stats['funds_shift_2026_bp'])` basis points. That is the hike the Committee just delivered plus one more penciled in. The 2027 and 2028 revisions are the "higher for longer" part of the SEP. They say participants now expect restrictive policy to last past this year, not only that they wanted this week's move.
+
+## The 2026 distribution
+
+Medians hide clusters. In September, `{python} fmt_int(stats['dots_one_more'])` dots sit at `{python} fmt2(stats['dot_one_more_level'])`%, the midpoint of a `{python} fmt2(stats['target_upper'])`% to `{python} fmt2(stats['one_more_range_upper'])`% range. That is the "one more hike" group. `{python} fmt_int(stats['dots_two_more'])` dots sit at `{python} fmt2(stats['dot_two_more_level'])`%. `{python} fmt_int(stats['dots_hold'])` remain at `{python} fmt2(stats['dot_hold_level'])`%, today's midpoint. `{python} fmt_int(stats['dots_at_least_one_more'])` of `{python} fmt_int(stats['dots_total'])` therefore see at least one additional increase before year-end.
+
+June's 2026 distribution was lower and more spread out: `{python} fmt_int(stats['june_dots_at_old_mid'])` participants were still at the old `{python} fmt2(stats['jun_target_mid'])`% midpoint, and only `{python} fmt_int(stats['june_dots_at_or_above_one_more'])` dots were at or above `{python} fmt2(stats['dot_one_more_level'])`%. The September cluster at one more hike is new.
+
+```{python}
+#| echo: true
+#| label: fig-dots-2026
+#| fig-cap: "Twelve participants see one additional 2026 hike. Four see two. Two see none."
+
+# Counts of anonymous SEP dots at each 1/8-point midpoint. Charts only plot
+# these finished counts; the raw participant list is in sep_dots_2026.csv.
+
+levels = [3.375, 3.625, 3.875, 4.125, 4.375]
+june_vals = sep_dots.loc[sep_dots["meeting"] == "June 2026", "dot"]
+sept_vals = sep_dots.loc[sep_dots["meeting"] == "September 2026", "dot"]
+june_n = [(june_vals == level).sum() for level in levels]
+sept_n = [(sept_vals == level).sum() for level in levels]
+x = np.arange(len(levels))
+width = 0.38
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+bars_j = ax.bar(x - width / 2, june_n, width, color=COLORS["primary"],
+                edgecolor="white", zorder=3)
+bars_s = ax.bar(x + width / 2, sept_n, width, color=COLORS["accent"],
+                edgecolor="white", zorder=3)
+for bar, val in zip(list(bars_j) + list(bars_s), june_n + sept_n):
+    if val == 0:
+        continue
+    ax.text(bar.get_x() + bar.get_width() / 2, val + 0.15, str(int(val)),
+            ha="center", va="bottom", fontsize=8, color=COLORS["neutral"])
+
+ax.annotate(
+    "One more hike",
+    xy=(3 + width / 2, stats["dots_one_more"]),
+    xytext=(3.55, 13.2),
+    fontsize=8, color=COLORS["accent"],
+    arrowprops=dict(arrowstyle="->", color=COLORS["accent"], lw=0.8),
+    bbox=dict(facecolor="#fafafa", edgecolor="none", pad=2, alpha=0.9),
+)
+ax.set_xticks(x)
+ax.set_xticklabels([f"{level:.3f}" for level in levels])
+ax.set_ylabel("Number of participants")
+ax.set_ylim(0, 15)
+ax.set_xlim(-0.55, 4.7)
+ax.text(0.02, 14.2, "June", color=COLORS["primary"], fontsize=8, fontweight="bold")
+ax.text(0.55, 14.2, "September", color=COLORS["accent"], fontsize=8, fontweight="bold")
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-2026-dots-2026.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: FOMC SEP Figure 2, June 17 and September 16, 2026. Bars are participant counts at each 1/8-point midpoint of the year-end target range.
+:::
+
+The distribution is the reason the 2026 median is `{python} fmt(stats['sep_funds_2026'])`% rather than `{python} fmt2(stats['dot_two_more_level'])`%. The center of the Committee is one more hike, not two. The right tail is large enough that a second 2026 increase is a live minority view, not an outlier of one.
+
+## Inflation, growth, and dual-mandate gaps
+
+The SEP did not rewrite the economy. It nudged it. Median 2026 real GDP growth rose to `{python} fmt(stats['sep_gdp_2026'])`% from `{python} fmt(stats['jun_gdp_2026'])`%. Median 2026 unemployment fell to **`{python} fmt(stats['sep_unrate_2026'])`%** from `{python} fmt(stats['jun_unrate_2026'])`%, and it stays at `{python} fmt(stats['sep_unrate_2026'])`% through 2028, `{python} fmt(abs(stats['unrate_gap_vs_longer_pp']))` percentage point below the `{python} fmt(stats['sep_unrate_longer'])`% longer-run median. Headline PCE inflation for 2026 rose to **`{python} fmt(stats['sep_pce_2026'])`%** from `{python} fmt(stats['jun_pce_2026'])`%. Core PCE, which excludes food and energy, rose to **`{python} fmt(stats['sep_corepce_2026'])`%** from `{python} fmt(stats['jun_corepce_2026'])`%.
+
+Those are small revisions. They matter because they all point the same way: slightly firmer demand, slightly lower unemployment, slightly higher inflation, and a higher policy path. Realized data match the inflation side of that picture more than the "already back at 2 percent" side. `{python} stats['latest_pce_month']` headline PCE was `{python} fmt(stats['pce_yoy'])`% year over year, `{python} fmt(stats['pce_gap_pp'])` percentage points above the `{python} fmt(stats['fed_inflation_goal'])`% goal. Core PCE was `{python} fmt(stats['core_pce_yoy'])`%. `{python} stats['latest_cpi_month']` CPI was `{python} fmt(stats['cpi_yoy'])`% yearly and `{python} fmt_chg(stats['cpi_mom'])`% on the month. Unemployment in `{python} stats['latest_labor_month']` was `{python} fmt(stats['unrate'])`%, `{python} fmt(abs(stats['unrate_gap_vs_longer_pp']))` percentage point below the longer-run SEP median.
+
+PCE is the Fed's preferred inflation gauge. CPI is the more timely consumer index and the one households see in news coverage. Both are plotted or cited here. The dual-mandate chart uses PCE and unemployment, the two series that sit in the SEP table.
+
+```{python}
+#| echo: true
+#| label: fig-dual-mandate-gaps
+#| fig-cap: "Inflation remains above the 2 percent goal, while unemployment is already near the longer-run SEP median."
+
+# Year-over-year rates are computed in 02_clean_data.py as
+# (this month / the month 12 months earlier - 1) * 100.
+
+start = "2021-01-01"
+pce = infl.loc[start:, "headline_pce_yoy"].dropna()
+core = infl.loc[start:, "core_pce_yoy"].dropna()
+ur = labor.loc[start:, "unrate"].dropna()
+
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), sharex=True,
+                         gridspec_kw={"height_ratios": [2.2, 1.4]})
+
+axes[0].plot(pce.index, pce, color=COLORS["accent"], linewidth=1.9, zorder=3)
+axes[0].plot(core.index, core, color=COLORS["primary"], linewidth=1.7, zorder=3)
+axes[0].axhline(stats["fed_inflation_goal"], color=COLORS["fed_target"],
+                linestyle="--", linewidth=0.8, alpha=0.8)
+axes[0].text(pce.index[8], stats["fed_inflation_goal"] + 0.15, "2% goal",
+             color=COLORS["fed_target"], fontsize=8, alpha=0.85)
+axes[0].scatter(pce.index[-1], pce.iloc[-1], s=40, color=COLORS["accent"],
+                edgecolors="white", linewidth=0.8, zorder=5)
+axes[0].scatter(core.index[-1], core.iloc[-1], s=40, color=COLORS["primary"],
+                edgecolors="white", linewidth=0.8, zorder=5)
+axes[0].text(pce.index[-1], pce.iloc[-1], f"  PCE {pce.iloc[-1]:.1f}%",
+             color=COLORS["accent"], fontsize=8, fontweight="bold", va="center")
+axes[0].text(core.index[-1], core.iloc[-1] - 0.35, f"  core {core.iloc[-1]:.1f}%",
+             color=COLORS["primary"], fontsize=8, fontweight="bold", va="center")
+axes[0].set_ylabel("Year over year, percent")
+span0 = pce.index[-1] - pce.index[0]
+axes[0].set_xlim(pce.index[0], pce.index[-1] + span0 * 0.14)
+
+axes[1].plot(ur.index, ur, color=COLORS["secondary"], linewidth=1.9, zorder=3)
+axes[1].axhline(stats["sep_unrate_longer"], color=COLORS["neutral"],
+                linestyle="--", linewidth=0.8, alpha=0.8)
+axes[1].text(ur.index[8], stats["sep_unrate_longer"] + 0.08, "SEP longer-run",
+             color=COLORS["neutral"], fontsize=8, alpha=0.85)
+axes[1].scatter(ur.index[-1], ur.iloc[-1], s=40, color=COLORS["secondary"],
+                edgecolors="white", linewidth=0.8, zorder=5)
+axes[1].text(ur.index[-1], ur.iloc[-1], f"  {ur.iloc[-1]:.1f}%",
+             color=COLORS["secondary"], fontsize=8, fontweight="bold", va="center")
+axes[1].set_ylabel("Unemployment, percent")
+axes[1].xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+axes[1].xaxis.set_major_locator(mdates.YearLocator())
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-2026-dual-mandate.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: BEA and BLS via FRED, PCEPI, PCEPILFE, and UNRATE. The 2 percent line is the FOMC's longer-run inflation goal for PCE, not a CPI target. The unemployment reference is the September SEP longer-run median.
+:::
+
+The gap that still needs work is inflation, not employment. That is the statement's emphasis, and it is the SEP's emphasis. It is also why a hike with unemployment at `{python} fmt(stats['unrate'])`% is not a contradiction of the dual mandate. The employment side is close to the Committee's own longer-run benchmark. The price side is not.
+
+## Markets versus the Committee
+
+Futures markets had already placed a high probability on this week's hike. After the decision they still do not treat the SEP as a promise of two more 2026 increases. A reconstruction of 30-day federal funds futures after `{python} stats['decision_date_short']` put the chance of another hike at the `{python} stats['next_meeting_dates']` meeting near `{python} fmt_int(stats['market_oct_hike_pct'])`%, and the chance of at least one more hike by the `{python} stats['next_sep_meeting_dates']` meeting near `{python} fmt_int(stats['market_dec_hike_pct'])`%. That expected path ends 2026 around `{python} fmt2(stats['market_implied_eoy2026'])`%, `{python} fmt_int(stats['wedge_to_dots_abs_bp'])` basis points below the `{python} fmt(stats['sep_funds_2026'])`% median.
+
+The 2-year Treasury yield was `{python} fmt2(stats['dgs2'])`% on `{python} stats['effr_as_of']`. The 10-year was `{python} fmt2(stats['dgs10'])`%. Those levels sit above the new policy midpoint, which is the market's way of writing "restrictive for a while" without matching every SEP year.
+
+```{python}
+#| echo: true
+#| label: fig-markets-vs-sep
+#| fig-cap: "Futures imply about one more 2026 hike, close to the new median. The Committee's 2027 and 2028 medians stay higher for longer."
+
+# Futures points are expected values: current midpoint plus hike probability
+# times 0.25. SEP points are Table 1 medians. See sources.json.
+
+labels = [
+    "After 9/16",
+    "Oct 28\nexpected",
+    "Dec 9\nexpected",
+    "End-2026\nSEP",
+    "End-2027\nSEP",
+    "End-2028\nSEP",
+]
+market_y = [stats["target_mid"], stats["market_oct_implied"], stats["market_implied_eoy2026"], np.nan, np.nan, np.nan]
+sep_y = [np.nan, np.nan, np.nan, stats["sep_funds_2026"], stats["sep_funds_2027"], stats["sep_funds_2028"]]
+x = np.arange(len(labels))
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(x[:3], market_y[:3], color=COLORS["primary"], linewidth=1.9,
+        marker="o", markersize=7, markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+ax.plot(x[3:], sep_y[3:], color=COLORS["accent"], linewidth=1.9,
+        marker="o", markersize=7, markeredgecolor="white", markeredgewidth=0.8, zorder=4)
+ax.plot([2, 3], [market_y[2], sep_y[3]], color=COLORS["light"],
+        linewidth=1.0, linestyle=":", zorder=2)
+
+for i, val in enumerate(market_y):
+    if pd.notna(val):
+        ax.scatter(i, val, s=40, color=COLORS["primary"], edgecolors="white",
+                   linewidth=0.8, zorder=5)
+        ax.text(i, val + 0.08, f"{val:.2f}", ha="center", fontsize=8,
+                color=COLORS["primary"], fontweight="bold")
+for i, val in enumerate(sep_y):
+    if pd.notna(val):
+        ax.scatter(i, val, s=40, color=COLORS["accent"], edgecolors="white",
+                   linewidth=0.8, zorder=5)
+        ax.text(i, val + 0.08, f"{val:.1f}", ha="center", fontsize=8,
+                color=COLORS["accent"], fontweight="bold")
+
+ax.annotate(
+    f"{fmt_int(stats['wedge_to_dots_bp'])} bp at end-2026",
+    xy=(3, stats["sep_funds_2026"]), xytext=(2.35, 4.28),
+    fontsize=8, color=COLORS["neutral"],
+    arrowprops=dict(arrowstyle="->", color=COLORS["neutral"], lw=0.8),
+    bbox=dict(facecolor="#fafafa", edgecolor="none", pad=2, alpha=0.9),
+)
+
+ax.set_xticks(x)
+ax.set_xticklabels(labels)
+ax.set_ylabel("Percent")
+ax.set_ylim(3.55, 4.65)
+ax.set_xlim(-0.35, 5.35)
+ax.text(0.05, 3.62, "Futures expected path", color=COLORS["primary"], fontsize=8)
+ax.text(3.55, 3.62, "SEP medians", color=COLORS["accent"], fontsize=8)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-2026-markets-vs-sep.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: FOMC September 2026 SEP Table 1 and a snapshot of 30-day federal funds futures pricing taken after the 9/16 decision. October uses a 50 percent hike probability. December uses 79 percent for at least one more hike. Those are expected values, not mode outcomes.
+:::
+
+Read the chart as two claims, not one. Near-term pricing and the 2026 median now tell a similar story: this hike, then probably one more by December, with October as a coin flip. The SEP's 2027 and 2028 medians are the part markets have not fully written into a year-end 2026 contract. Higher for longer is a 2027-2028 statement more than a December statement.
+
+## Putting it together
+
+The `{python} stats['decision_date_short']` meeting did two things that should not be collapsed into one headline. It raised the target range by `{python} fmt_int(stats['hike_bp'])` basis points, unanimously. It also shifted the median path up, with `{python} fmt_int(stats['dots_one_more'])` of `{python} fmt_int(stats['dots_total'])` dots at one more 2026 hike and with 2027-2028 medians `{python} fmt_int(stats['funds_shift_2027_bp'])` basis points higher than in June.
+
+The forecast revisions that accompany those dots are modest: `{python} fmt(stats['gdp_shift_2026_pp'])` percentage point on 2026 growth, `{python} fmt(stats['pce_shift_2026_pp'])` on PCE, and `{python} fmt(abs(stats['unrate_shift_2026_pp']))` percentage point lower on unemployment. The policy path moved more than the growth path. That is a credibility choice. Participants are saying that returning inflation to `{python} fmt(stats['fed_inflation_goal'])`% on a timely basis, with demand still resilient, requires a higher funds rate for longer, not a larger rewrite of real activity.
+
+The dual-mandate arithmetic is the same story in realized data. Inflation is still the gap. Unemployment is not. Markets agree about 2026 and are less tightly bound to the new 2027-2028 dots. The next tests are incoming PCE and the `{python} stats['next_meeting_dates']` meeting, which has no SEP.
+
+### What it means for
+
+**For the Fed:** The `{python} stats['vote_split']` vote closed the dissent that showed up in July. The SEP did not close the debate about a second 2026 hike. Twelve dots at one more increase make December the modal additional meeting. October is live if the next inflation prints stay firm, and it is skippable if they do not. The longer-run median at `{python} fmt(stats['sep_funds_longer'])`% is a small signal that participants see less need to return to the pre-2022 low-rate era.
+
+**For households:** The overnight rate is now `{python} fmt2(stats['target_lower'])`% to `{python} fmt2(stats['target_upper'])`%. Borrowing costs that track the funds rate, including many credit cards and adjustable loans, move with that range. The SEP's inflation path still has PCE at `{python} fmt(stats['sep_pce_2026'])`% this year, so the Committee is not telling households that the `{python} fmt(stats['fed_inflation_goal'])`% goal is already in hand.
+
+**For investors:** The 2026 median and futures now sit within a few basis points. The new information is the 2027-2028 path and the `{python} fmt_int(stats['funds_shift_longer_bp'])` basis-point longer-run uptick. Duration-sensitive assets care about that "higher for longer" tail more than about whether the extra 2026 hike lands in October or December.
+
+**For insurers and other long-duration balance sheets:** A higher path for 2027 and 2028 raises the discount rates that mark long-tailed liabilities. It does not, by itself, tell you claims inflation has peaked. `{python} stats['latest_pce_month']` headline PCE is still `{python} fmt(stats['pce_yoy'])`%, so replacement-cost and severity pressure can stay elevated even while the funds rate is moving up.
+
+## What to watch next
+
+- The `{python} stats['next_meeting_dates']` FOMC meeting, with a decision on `{python} stats['next_meeting_decision_date']`. That meeting has no SEP.
+- August PCE on `{python} stats['next_pce_date']`. July PCE was `{python} fmt(stats['pce_yoy'])`% headline and `{python} fmt(stats['core_pce_yoy'])`% core.
+- The next CPI print on `{python} stats['next_cpi_date']`.
+- The next JOLTS release, for whether job openings still show a labor market that can absorb tighter policy.
+- The `{python} stats['next_sep_meeting_dates']` meeting, the last 2026 SEP, where the "one more hike" cluster will have to become a decision or a walk-back.
+
+## Limitations
+
+The dot plot is a set of conditional projections, not a policy commitment. Participants change their dots when the data change. Historical SEP errors are wide, which is why this post treats the median as a central case and the distribution as the more informative object.
+
+Eighteen dots are not nineteen. The Chair did not submit a projection. The `{python} stats['vote_split']` vote includes only the twelve voting members, a different group from the nineteen participants who may submit dots.
+
+Futures odds are a snapshot. They move with every CPI, payroll, and Fed-speak print. The `{python} fmt_int(stats['market_oct_hike_pct'])`% and `{python} fmt_int(stats['market_dec_hike_pct'])`% figures should be read as the post-meeting starting point, not as a live FedWatch feed.
+
+PCE lags CPI by a month in this vintage. Dual-mandate inflation in the charts is therefore `{python} stats['latest_pce_month']`, while the consumer CPI discussion uses `{python} stats['latest_cpi_month']`.
+
+## Methodology and data
+
+| Series | Description | Source |
+|---|---|---|
+| FOMC statement and implementation note | Vote, target range, IORB | [Federal Reserve, 9/16/2026](https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm) |
+| SEP Table 1 and Figure 2 | Medians and 2026 dots | [September 2026 projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm) |
+| June SEP Table 1 | Prior medians and 2026 dots | [June 2026 projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm) |
+| DFEDTARL, DFEDTARU | Funds target range | [FRED](https://fred.stlouisfed.org/series/DFEDTARL) |
+| DFF, FEDFUNDS | Effective funds rate | [FRED](https://fred.stlouisfed.org/series/DFF) |
+| PCEPI, PCEPILFE | Headline and core PCE inflation | [FRED](https://fred.stlouisfed.org/series/PCEPI) |
+| CPIAUCSL, CPILFESL | Headline and core CPI | [FRED](https://fred.stlouisfed.org/series/CPIAUCSL) |
+| UNRATE, PAYEMS | Unemployment and payrolls | [FRED](https://fred.stlouisfed.org/series/UNRATE) |
+| DGS2, DGS10 | 2-year and 10-year Treasury yields | [FRED](https://fred.stlouisfed.org/series/DGS2) |
+| FOMC calendar | Next meeting dates | [Federal Reserve](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm) |
+
+: Public data used in the analysis.
+
+pandas retrieves and transforms the FRED series with `fredapi`. matplotlib draws each figure. Official SEP prints and the futures snapshot are marked `# MANUAL:` in `scripts/04_compute_stats.py` because they are not FRED series.
+
+## Takeaway
+
+The Committee hiked once, clustered at one more 2026 hike, and raised the 2027 and 2028 medians by `{python} fmt_int(stats['funds_shift_2027_bp'])` basis points. Inflation is still the open dual-mandate gap; unemployment is not. Near-term futures and the 2026 median now sit within a few basis points. The new information is the higher 2027-2028 path.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*

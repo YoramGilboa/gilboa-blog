@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-09-18T01:55:00Z",
+  "reviewer": "blog-final-review",
+  "notes": "Full re-review after fresh render. Visual: all five figures pass desktop and 400px (earlier apparent right-edge clipping was a screenshot-tool crop, not in the PNGs). Accuracy: opening, metric cards, SEP medians (4.1/4.1/3.9/3.6/3.2 vs June 3.8/3.6/3.4/3.1), 2/12/4 dot split summing to 18 in both cycles, futures math (3.875+0.5*0.25=4.00; +0.79*0.25=4.07; 3 bp wedge), and dual-mandate gaps all match stats and charts. Fixes applied: removed a duplicated hold-range sentence; per human review, rewrote the description dek to complement rather than repeat the title and removed the redundant funds-target-range metric card (4 cards remain, one row under site CSS); rerendered; 0 raw {python} in HTML. Flag for human: frontmatter lacks draft: true while the post is still under posts/drafts/ (confirm removal was the intentional publish step). # MANUAL: SEP/futures values carry primary-source URLs."
+}

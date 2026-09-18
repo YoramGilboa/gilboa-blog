@@ -1,0 +1,13 @@
+{
+  "fomc_statement": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+  "implementation_note": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a1.htm",
+  "september_sep": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm",
+  "june_sep": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm",
+  "fomc_calendar": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+  "market_notes": "October ~50% hike and December ~79% at least one more hike from contemporaneous reconstructions of 30-day fed funds futures after the 9/16/2026 decision. CME FedWatch is not a stable public CSV.",
+  "used_for": {
+    "sep_medians_raw.csv": "Median SEP paths, June vs September",
+    "sep_dots_2026_raw.csv": "Individual end-2026 dots",
+    "market_path_raw.csv": "Futures-implied expected path vs SEP medians"
+  }
+}
