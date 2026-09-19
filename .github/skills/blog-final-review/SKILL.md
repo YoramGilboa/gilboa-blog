@@ -36,11 +36,15 @@ Evaluate:
    - audience implications follow from the analysis;
    - no single-item bullet lists; no bare `{python}` expressions;
    - underperformance peers shown when a "weaker" section exists;
-   - `categories:` match posts.instructions.md (lowercase, 3–6, preferred
-     list). If not, invoke `blog-seo-tags` then continue;
-   - `title`, `description`, and `pagetitle` are three fields per
-     posts.instructions.md. Fail an H1 that uses "X, not Y" when Y is a
-     different kind of claim from X.
+   - `pagetitle:`, `description:`, and `categories:` match
+     posts.instructions.md Frontmatter and Categories. If pagetitle copies
+     the H1, misses prints, or is outside 50-65 characters (cap 70), or if
+     description is jargon-first or too long for a snippet, or if tags fail
+     the catalog rules, invoke `blog-seo-tags` then continue. Do not rewrite
+     the H1 `title:` here;
+   - `title`, `description`, and `pagetitle` are three distinct fields.
+     Fail an H1 that uses "X, not Y" when Y is a different kind of claim
+     from X.
 
 Apply only low-risk wording, transition, and terminology fixes directly. Do
 not auto-fix high-impact analytical issues; return FAIL with remediation.

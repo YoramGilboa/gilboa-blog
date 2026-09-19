@@ -83,8 +83,9 @@ Then continue.
 5. Fix and rerender until desktop and 400px chart checks pass.
 6. Invoke `blog-final-review`.
 7. If the review fails, fix with the named owner and rerun the review
-   **without asking** which skill is next. If prose changes affect charts,
-   rerun both reviews.
+   **without asking** which skill is next. Owner `seo_tags` means re-run
+   `blog-seo-tags` (pagetitle, description, categories). If prose changes
+   affect charts, rerun both reviews.
 8. Require `stats/final_review_status.json` to contain `PASS`. Then stop and
    show the human.
 

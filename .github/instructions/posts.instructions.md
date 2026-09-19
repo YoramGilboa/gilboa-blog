@@ -56,8 +56,9 @@ These three YAML fields do different jobs. Do not copy one into the others.
 ## Categories (on-page tags)
 
 YAML `categories:` are the tags under the subtitle and the listing filters.
-`blog-seo-tags` sets them after the draft exists. Do not treat them as a
-keyword dump.
+`blog-seo-tags` sets `pagetitle:`, `description:`, and `categories:` after
+the draft exists. It does not rewrite the H1 `title:`. Do not treat tags as
+a keyword dump.
 
 - Lowercase and space-separated, not hyphenated (`labor market`, not
   `labor-market`).

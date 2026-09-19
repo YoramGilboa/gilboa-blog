@@ -33,8 +33,10 @@ This is a visual-only gate.
      labeled in caption and/or on-chart notes.
 6. Review the homepage listing card for one description, correct categories,
    date/author, and preview image.
-7. Confirm frontmatter has `description`, a real `image`, no `subtitle`, and
-   lowercase space-separated categories.
+7. Confirm frontmatter has `pagetitle` distinct from `title`, `description`,
+   a real `image`, no `subtitle`, and lowercase space-separated categories.
+   If pagetitle or description fail posts.instructions.md Frontmatter, name
+   `blog-seo-tags` as the owner rather than rewriting them here.
 8. Search the post and stats script for `# MANUAL:`, `placeholder`, and `TODO`.
 
 ## Output

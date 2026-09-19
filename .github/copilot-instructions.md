@@ -63,8 +63,9 @@ named the live URL.
 6. Run preflight while drafting:
    - `bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft`
    - PowerShell: `.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft`
-7. Run `blog-seo-tags` on the draft (categories only), then
-   `blog-chart-review`, then `blog-final-review`.
+7. Run `blog-seo-tags` on the draft (`pagetitle:`, `description:`, and
+   `categories:`; not the H1 `title:`), then `blog-chart-review`, then
+   `blog-final-review`.
 8. After human approval, remove `draft: true`, move the post and freeze cache
    to published paths, and rerender.
 9. Run the local release gate:
@@ -84,12 +85,23 @@ named the live URL.
 
 ## Orchestration
 
-After any narrative, chart, data, or tags fix, re-run the editor (Grok:
+Grok factory order (do not skip SEO meta):
+
+`blog-topic-selection` → `blog-post-architect` → `blog-data-engineer` →
+`blog-viz-specialist` → `blog-narrative-writer` → `blog-seo-tags`
+(`pagetitle:`, `description:`, `categories:`; not H1 `title:`) →
+`blog-editor` → human OK → `blog-publish`.
+
+Copilot factory order is `.github/skills/blog-post-create/SKILL.md` (same
+SEO step as 3b). The prompt `.github/prompts/new-post.prompt.md` launches
+that skill.
+
+After any narrative, chart, data, or SEO-meta fix, re-run the editor (Grok:
 `blog-editor`; Copilot: `blog-final-review` plus chart review if visuals
 changed) **without being asked**. If the ship bar is not met, keep looping
-with the named owner.
-If it is met, stop and show the human. Do not ask which skill is next when the
-review already named an owner.
+with the named owner (`seo_tags` owns pagetitle, description, and
+categories). If it is met, stop and show the human. Do not ask which skill
+is next when the review already named an owner.
 
 In sessions longer than ~15 turns, suggest the user run /compact after post approval and before publishing.
 
