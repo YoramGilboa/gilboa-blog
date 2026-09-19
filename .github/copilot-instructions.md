@@ -155,7 +155,7 @@ On Windows the watcher often serves a stale page or a `Quarto Render Error`
 
 - `blog-post-create`: orchestrate a post from topic through human review
 - `blog-data-validate`: validate FRED and BEA identifiers and freshness
-- `blog-seo-tags`: set YAML `categories:` (on-page tags) after prose, before review
+- `blog-seo-tags`: set YAML `pagetitle:`, `description:`, and `categories:` after prose, before review
 - `blog-chart-review`: visual-only desktop and mobile chart QA
 - `blog-final-review`: non-visual accuracy, flow, and consistency gate
 - External Grok skills (when present): topic-selection, architect,

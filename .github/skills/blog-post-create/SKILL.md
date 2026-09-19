@@ -65,10 +65,11 @@ Follow `.github/instructions/posts.instructions.md`:
 - dual-meaning chart series labeled; no non-record scatter under frontiers;
 - conclusion, audience implications, limitations, methodology, and data date.
 
-## 3b. SEO tags
+## 3b. SEO tags and meta
 
 Follow `.github/skills/blog-seo-tags/SKILL.md` on the draft `index.qmd` after
-prose exists and before `blog-chart-review`. It may rewrite only `categories:`.
+prose exists and before `blog-chart-review`. It may rewrite `pagetitle:`,
+`description:`, and `categories:`. It does not rewrite the H1 `title:`.
 Then continue.
 
 ## 4. Review

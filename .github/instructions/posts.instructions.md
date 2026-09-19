@@ -33,12 +33,16 @@ These three YAML fields do different jobs. Do not copy one into the others.
   turned up, and core stayed sticky). Do not write "X, not Y" when Y is a
   different kind of claim from X. A rebound is an increase. A soft print is
   not the composition of that increase.
-- `description:` is the visible dek under the H1 and the homepage card text.
-  It leads with official prints and spells out "percent". Do not add
-  `subtitle:`. That field duplicates the dek.
-- `pagetitle:` is the browser tab and the Google `<title>`. It includes month,
-  year, the release name, and the key print or prints. Aim for 50–65
-  characters. Cap at 70. It does not have to equal `title:`.
+- `description:` is the visible dek under the H1, the homepage card text, and
+  the HTML meta / Open Graph description unless `description-meta:` is set.
+  It leads with official prints and spells out "percent". Keep it print-heavy
+  and short enough to survive a search snippet (about 150-160 characters)
+  without dropping those prints. Do not add `subtitle:`. That field
+  duplicates the dek.
+- `pagetitle:` is the browser tab, the Google `<title>`, and `og:title`.
+  It includes month, year, the release name, and the key print or prints.
+  Aim for 50–65 characters. Cap at 70. Count the characters. It does not
+  have to equal `title:`.
 
 - Remove `draft: true` only when publishing.
 - Use `description-meta:` only when SEO text must differ from visible listing
