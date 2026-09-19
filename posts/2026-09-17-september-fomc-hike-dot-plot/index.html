@@ -278,7 +278,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-to-watch-next" id="toc-what-to-watch-next" class="nav-link" data-scroll-target="#what-to-watch-next">What to watch next</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#methodology-and-data" id="toc-methodology-and-data" class="nav-link" data-scroll-target="#methodology-and-data">Methodology and data</a></li>
-  <li><a href="#takeaway" id="toc-takeaway" class="nav-link" data-scroll-target="#takeaway">Takeaway</a></li>
   </ul>
 </nav>
     </div>
@@ -291,16 +290,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>The Federal Open Market Committee raised the federal funds target range by <strong>25 basis points</strong> to <strong>3.75% to 4.00%</strong> on 9/16. The vote was 12-0. The median 2026 dot moved to <strong>4.1%</strong> from 3.8% in June. <strong>12 of 18</strong> participants see one more hike in 2026.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Terms used below
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The federal funds target range is the overnight rate band the Fed sets for banks. A basis point is one hundredth of a percentage point. The Summary of Economic Projections (SEP) is the quarterly set of participant forecasts released with four meetings a year. The dot plot is the SEP chart in which each participant places one anonymous mark at the funds-rate level they see as appropriate at year-end. The dual mandate is maximum employment and 2.0% inflation. The longer-run rate is each participant’s guess of where the funds rate settles once those goals are met and shocks have faded.</p>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -344,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="7540589b" class="cell" data-execution_count="2">
+<div id="27b06a2a" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -784,10 +786,6 @@ Figure&nbsp;5: Futures imply about one more 2026 hike, close to the new median. 
 </tbody>
 </table>
 <p>pandas retrieves and transforms the FRED series with <code>fredapi</code>. matplotlib draws each figure. Official SEP prints and the futures snapshot are marked <code># MANUAL:</code> in <code>scripts/04_compute_stats.py</code> because they are not FRED series.</p>
-</section>
-<section id="takeaway" class="level2">
-<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
-<p>The Committee hiked once, clustered at one more 2026 hike, and raised the 2027 and 2028 medians by 50 basis points. Inflation is still the open dual-mandate gap; unemployment is not. Near-term futures and the 2026 median now sit within a few basis points. The new information is the higher 2027-2028 path.</p>
 <hr>
 <p><em>Data current as of 9/17/2026. FOMC statement and SEP released 9/16/2026. CPI through August 2026; PCE through July 2026; unemployment through August 2026. Daily effective funds rate last printed 9/16.</em></p>
 

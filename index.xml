@@ -23,16 +23,19 @@
 
 <p>The Federal Open Market Committee raised the federal funds target range by <strong>25 basis points</strong> to <strong>3.75% to 4.00%</strong> on 9/16. The vote was 12-0. The median 2026 dot moved to <strong>4.1%</strong> from 3.8% in June. <strong>12 of 18</strong> participants see one more hike in 2026.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 <span class="screen-reader-only">Note</span>Terms used below
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The federal funds target range is the overnight rate band the Fed sets for banks. A basis point is one hundredth of a percentage point. The Summary of Economic Projections (SEP) is the quarterly set of participant forecasts released with four meetings a year. The dot plot is the SEP chart in which each participant places one anonymous mark at the funds-rate level they see as appropriate at year-end. The dual mandate is maximum employment and 2.0% inflation. The longer-run rate is each participant’s guess of where the funds rate settles once those goals are met and shocks have faded.</p>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -76,7 +79,7 @@
 </div>
 </div>
 </div>
-<div id="7540589b" class="cell" data-execution_count="2">
+<div id="27b06a2a" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -2134,10 +2137,6 @@ Figure&nbsp;5: Futures imply about one more 2026 hike, close to the new median. 
 </tbody>
 </table>
 <p>pandas retrieves and transforms the FRED series with <code>fredapi</code>. matplotlib draws each figure. Official SEP prints and the futures snapshot are marked <code># MANUAL:</code> in <code>scripts/04_compute_stats.py</code> because they are not FRED series.</p>
-</section>
-<section id="takeaway" class="level2">
-<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
-<p>The Committee hiked once, clustered at one more 2026 hike, and raised the 2027 and 2028 medians by 50 basis points. Inflation is still the open dual-mandate gap; unemployment is not. Near-term futures and the 2026 median now sit within a few basis points. The new information is the higher 2027-2028 path.</p>
 <hr>
 <p><em>Data current as of 9/17/2026. FOMC statement and SEP released 9/16/2026. CPI through August 2026; PCE through July 2026; unemployment through August 2026. Daily effective funds rate last printed 9/16.</em></p>
 
@@ -32980,7 +32979,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb1-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." data-fig-align="center">
+<div id="fig-payrolls-ma" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-payrolls-ma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-payrolls-ma-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Bar and line chart of monthly nonfarm payroll changes since 2021 with 3-, 6-, and 12-month moving averages, April 2026 (revised +179k) and May 2026 (+172k) highlighted in an upper-right callout." width="753" height="426">
@@ -33492,7 +33491,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb2-88">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." data-fig-align="center">
+<div id="fig-labor-dashboard" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-labor-dashboard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-labor-dashboard-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Six-panel dashboard since 2022: monthly payroll change, unemployment rate, JOLTS quits rate, four-week initial claims, JOLTS job openings, and CES versus ADP private payrolls year-over-year growth." width="801" height="589">
@@ -34339,7 +34338,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb3-130">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." data-fig-align="center">
+<div id="fig-sector-mom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sector-mom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-sector-mom-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two-panel chart: top is a horizontal bar chart of May 2026 month-over-month employment change by major sector with small sectors aggregated into 'Others'; bottom is a horizontal bar chart of the latest unemployment rate for California, Texas, New York, and Florida against the US average." width="753" height="704">
@@ -34815,7 +34814,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb4-66">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." data-fig-align="center">
+<div id="fig-wages-productivity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly).">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wages-productivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-wages-productivity-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Two stacked panels covering 2018 through May 2026: nominal versus real average hourly earnings year over year, and nonfarm business productivity versus unit labor costs year over year (quarterly)." width="752" height="522">
@@ -35315,7 +35314,7 @@ font-style: inherit;">"tight"</span>)</span>
 <span id="cb5-83">plt.show()</span></code></pre></div></div>
 </details>
 <div class="cell-output cell-output-display">
-<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." data-fig-align="center">
+<div id="fig-cross-checks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cross-checks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/index_files/figure-html/fig-cross-checks-output-1.png" class="quarto-figure quarto-figure-center figure-img" alt="Three-panel chart: top is a scatter of monthly ADP versus CES private payroll changes over the last 24 months with a 45-degree reference line; middle is a bar chart of monthly payroll changes; bottom is a line chart of four-week initial claims average." width="725" height="672">
