@@ -102,7 +102,7 @@ def fmt_int(value):
 
 The Federal Open Market Committee raised the federal funds target range by **`{python} fmt_int(stats['hike_bp'])` basis points** to **`{python} fmt2(stats['target_lower'])`% to `{python} fmt2(stats['target_upper'])`%** on `{python} stats['decision_date_short']`. The vote was `{python} stats['vote_split']`. The median 2026 dot moved to **`{python} fmt(stats['sep_funds_2026'])`%** from `{python} fmt(stats['jun_funds_2026'])`% in June. **`{python} fmt_int(stats['dots_one_more'])` of `{python} fmt_int(stats['dots_total'])`** participants see one more hike in 2026.
 
-::: {.callout-note}
+::: {.callout-note collapse="true"}
 ## Terms used below
 
 The federal funds target range is the overnight rate band the Fed sets for banks. A basis point is one hundredth of a percentage point. The Summary of Economic Projections (SEP) is the quarterly set of participant forecasts released with four meetings a year. The dot plot is the SEP chart in which each participant places one anonymous mark at the funds-rate level they see as appropriate at year-end. The dual mandate is maximum employment and `{python} fmt(stats['fed_inflation_goal'])`% inflation. The longer-run rate is each participant's guess of where the funds rate settles once those goals are met and shocks have faded.
@@ -532,10 +532,6 @@ PCE lags CPI by a month in this vintage. Dual-mandate inflation in the charts is
 : Public data used in the analysis.
 
 pandas retrieves and transforms the FRED series with `fredapi`. matplotlib draws each figure. Official SEP prints and the futures snapshot are marked `# MANUAL:` in `scripts/04_compute_stats.py` because they are not FRED series.
-
-## Takeaway
-
-The Committee hiked once, clustered at one more 2026 hike, and raised the 2027 and 2028 medians by `{python} fmt_int(stats['funds_shift_2027_bp'])` basis points. Inflation is still the open dual-mandate gap; unemployment is not. Near-term futures and the 2026 median now sit within a few basis points. The new information is the higher 2027-2028 path.
 
 ---
 
