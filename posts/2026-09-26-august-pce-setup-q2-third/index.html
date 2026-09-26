@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yoram Gilboa">
+<meta name="dcterms.date" content="2026-09-26">
+<meta name="description" content="July core PCE was 3.3 percent and real spending was flat. The Q2 GDP second estimate was 1.5 percent, with private demand at 4.2 percent. August is not out.">
+
+<title>September 2026 BEA setup: core PCE 3.3%, Q2 GDP 1.5%</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b72e881c923e973ff70ea6d3c61f5a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://gilboa.blog/#website",
+      "url": "https://gilboa.blog/",
+      "name": "gilboa.blog",
+      "description": "Data-driven analysis of US inflation, jobs, GDP, and Fed policy.",
+      "inLanguage": "en-US",
+      "publisher": { "@id": "https://gilboa.blog/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://gilboa.blog/#person",
+      "name": "Yoram Gilboa",
+      "url": "https://gilboa.blog/about.html",
+      "jobTitle": "P&C actuary",
+      "description": "Writes data-driven analysis of US inflation, jobs, GDP, and Fed policy, with reproducible Python charts.",
+      "knowsAbout": [
+        "US inflation",
+        "CPI",
+        "PCE",
+        "labor market",
+        "FOMC",
+        "data visualization",
+        "property and casualty insurance"
+      ],
+      "sameAs": [
+        "https://github.com/YoramGilboa"
+      ]
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../styles-site.css">
+<meta property="og:title" content="September 2026 BEA setup: core PCE 3.3%, Q2 GDP 1.5%">
+<meta property="og:description" content="July core PCE was 3.3 percent and real spending was flat. The Q2 GDP second estimate was 1.5 percent, with private demand at 4.2 percent. August is not out.">
+<meta property="og:image" content="https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/images/core-pce-yoy.png">
+<meta property="og:site_name" content="Yoram Gilboa">
+<meta property="og:image:height" content="674">
+<meta property="og:image:width" content="1177">
+<meta property="og:image:alt" content="Year-over-year headline and core PCE through July 2026, with the September FOMC hike marked after the last point">
+<meta name="twitter:title" content="September 2026 BEA setup: core PCE 3.3%, Q2 GDP 1.5%">
+<meta name="twitter:description" content="July core PCE was 3.3 percent and real spending was flat. The Q2 GDP second estimate was 1.5 percent, with private demand at 4.2 percent. August is not out.">
+<meta name="twitter:image" content="https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/images/core-pce-yoy.png">
+<meta name="twitter:site" content="@gilboa">
+<meta name="twitter:image-height" content="674">
+<meta name="twitter:image-width" content="1177">
+<meta name="twitter:image:alt" content="Year-over-year headline and core PCE through July 2026, with the September FOMC hike marked after the last point">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">gilboa.blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"> <i class="bi bi-rss" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/YoramGilboa"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">What Wednesday’s PCE Has to Do After the Hike</h1>
+                  <div>
+        <div class="description">
+          July core PCE was 3.3 percent and real spending was flat. The Q2 GDP second estimate was 1.5 percent, with private demand at 4.2 percent. August is not out.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">economics</div>
+                <div class="quarto-category">inflation</div>
+                <div class="quarto-category">federal reserve</div>
+                <div class="quarto-category">data visualization</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Yoram Gilboa </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 26, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#where-core-stood-in-july" id="toc-where-core-stood-in-july" class="nav-link active" data-scroll-target="#where-core-stood-in-july">Where core stood in July</a></li>
+  <li><a href="#a-2-percent-target-is-a-monthly-pace" id="toc-a-2-percent-target-is-a-monthly-pace" class="nav-link" data-scroll-target="#a-2-percent-target-is-a-monthly-pace">A 2 percent target is a monthly pace</a></li>
+  <li><a href="#real-spending-paused-on-a-thin-saving-rate" id="toc-real-spending-paused-on-a-thin-saving-rate" class="nav-link" data-scroll-target="#real-spending-paused-on-a-thin-saving-rate">Real spending paused on a thin saving rate</a></li>
+  <li><a href="#headline-gdp-and-private-demand-are-different-questions" id="toc-headline-gdp-and-private-demand-are-different-questions" class="nav-link" data-scroll-target="#headline-gdp-and-private-demand-are-different-questions">Headline GDP and private demand are different questions</a></li>
+  <li><a href="#the-wednesday-test" id="toc-the-wednesday-test" class="nav-link" data-scroll-target="#the-wednesday-test">The Wednesday test</a></li>
+  <li><a href="#putting-it-together" id="toc-putting-it-together" class="nav-link" data-scroll-target="#putting-it-together">Putting it together</a></li>
+  <li><a href="#what-it-means" id="toc-what-it-means" class="nav-link" data-scroll-target="#what-it-means">What it means</a>
+  <ul class="collapse">
+  <li><a href="#what-it-means-for" id="toc-what-it-means-for" class="nav-link" data-scroll-target="#what-it-means-for">What it means for</a></li>
+  </ul></li>
+  <li><a href="#what-to-watch-next" id="toc-what-to-watch-next" class="nav-link" data-scroll-target="#what-to-watch-next">What to watch next</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#methodology-and-data" id="toc-methodology-and-data" class="nav-link" data-scroll-target="#methodology-and-data">Methodology and data</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>The September hike is 9 days old, and Wednesday is 4 days away. On 9/30 the Bureau of Economic Analysis publishes three things at once: August income and spending, a third look at second-quarter GDP, and the start of an annual update that can rewrite recent history.</p>
+<p>This post is a test list for that morning. It says what would change the story after the hike, and what would not. It makes no rate call. August prices were already set before the hike on 9/17, so the new month cannot show the decision.</p>
+<p>The picture you walk in with is still July. The Fed’s preferred price gauge, the PCE price index, was <strong>3.7%</strong> over the past year. Core PCE, the same index without food and energy, was <strong>3.3%</strong>. That is not a clean all-clear against a 2% goal. Second-quarter GDP was <strong>1.5%</strong> annualized, while spending by households and businesses at home ran at <strong>4.2%</strong>. Headline growth and private demand are different questions.</p>
+<p>The September decision left the funds rate at 3.75 to 4.00 percent. The median forecast for the end of 2026 is <strong>4.1%</strong>, and 12 of 18 forecasts looked for one more hike. Those are forecasts, not a second vote. Wednesday is the test of whether the July picture those forecasts sat on is still the picture.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reproducing this analysis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Open a code block to read the chart. From this post’s folder, run <code>scripts/01_fetch_data.py</code>, then <code>scripts/02_clean_data.py</code>, then <code>scripts/04_compute_stats.py</code>. Monthly history stops at July 2026. August is not filled in. Data come from the <a href="https://www.bea.gov/">Bureau of Economic Analysis</a> by way of <a href="https://fred.stlouisfed.org/">FRED</a>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note on data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>August PCE is TBD, BEA 9/30. The third estimate is TBD, BEA 9/30. Neither is filled in. July price cards match BEA’s one-decimal prints. GDP bars are the current vintage through 8/26, not each quarter’s first print. The advance private-demand number is transcribed from <a href="https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-2nd-quarter-2026">BEA’s comparison table</a>. FOMC, CPI, and payrolls are transcribed context. The annual-update window is <a href="https://www.bea.gov/information-updates-national-regional-economic-accounts">BEA’s note</a>. No revision size is estimated, so there is no fifth chart.</p>
+</div>
+</div>
+</div>
+<div id="760fae0a" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+<div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Core PCE, year over year</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #2e5984;">3.3%</div><div style="font-size: 0.74rem; color: #64748b;">Jul 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Saving rate</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #6b8e6b;">3.0%</div><div style="font-size: 0.74rem; color: #64748b;">Jul 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Real GDP, Q2 second</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #2e5984;">1.5%</div><div style="font-size: 0.74rem; color: #64748b;">annualized</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.05rem 0.95rem; display: flex; flex-direction: column; align-items: center; min-height: 132px;"><div style="font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; min-height: 2.5rem; display: flex; align-items: center; text-align: center;">Private demand, Q2</div><div style="font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1; color: #8b0000;">4.2%</div><div style="font-size: 0.74rem; color: #64748b;">annualized</div></div>
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  July 2026 personal income and outlays, released 8/26,
+  and the Q2 GDP second estimate, released 8/26. Source: BEA.
+</p>
+</div>
+</div>
+<section id="where-core-stood-in-july" class="level2">
+<h2 class="anchored" data-anchor-id="where-core-stood-in-july">Where core stood in July</h2>
+<p>PCE, personal consumption expenditures, is the price of what households consume. Headline PCE counts the whole basket, food and energy included. Core PCE is that same index with food and energy removed. Those two categories jump around, so a gasoline spike can lift the headline while saying little about the slower trend. Core is the measure the Fed usually watches for that trend. The consumer price index is a related gauge of out-of-pocket prices, with a different basket. When the two disagree, the gap is often the basket, not a math error.</p>
+<p>The chart below is the yearly change in headline and core PCE through July. The dashed line is the 2% goal. The vertical line is the September hike. It stands to the right of the last point because it marks a date, not a price. July is the last month in the file, and the hike on 9/17 came after those prices were set.</p>
+<p>July’s headline rate was 3.7%, the same as June. Core was 3.3%, also the same as June. A yearly rate moves only when the new month is hotter or cooler than the month from a year earlier that drops out of the window. July 2026 replaced July 2025, and both core months round to 0.2%. Both headline months round to 0.2%. The lines held steady because the new month was not cooler than the one it replaced.</p>
+<div id="cell-fig-core-pce-level" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Yearly percent changes were already computed in scripts/02_clean_data.py.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This cell only draws them. Headline includes food and energy. Core leaves</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># them out. The dashed line is the 2 percent goal. The vertical line is the</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># September hike, a date after the last month, not a price observation.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>yoy <span class="op">=</span> pd.read_csv(CLEAN_DIR <span class="op">/</span> <span class="st">"pce_yoy.csv"</span>, index_col<span class="op">=</span><span class="st">"date"</span>, parse_dates<span class="op">=</span><span class="va">True</span>).sort_index()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">8.0</span>, <span class="fl">4.6</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>ax.plot(yoy.index, yoy[<span class="st">"headline_yoy"</span>], color<span class="op">=</span>COLORS[<span class="st">"accent"</span>], linewidth<span class="op">=</span><span class="fl">1.7</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.plot(yoy.index, yoy[<span class="st">"core_yoy"</span>], color<span class="op">=</span>COLORS[<span class="st">"primary"</span>], linewidth<span class="op">=</span><span class="fl">1.9</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.axhline(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    stats[<span class="st">"fed_inflation_goal"</span>],</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"fed_target"</span>],</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    yoy.index[<span class="dv">0</span>],</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    stats[<span class="st">"fed_inflation_goal"</span>],</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"  </span><span class="sc">{</span>fmt_int(stats[<span class="st">'fed_inflation_goal'</span>])<span class="sc">}</span><span class="ss">% goal"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"fed_target"</span>],</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>last_x <span class="op">=</span> yoy.index[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>endpoint_label(ax, last_x, yoy[<span class="st">"headline_yoy"</span>].iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Headline </span><span class="sc">{</span>yoy[<span class="st">'headline_yoy'</span>]<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>, COLORS[<span class="st">"accent"</span>])</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>endpoint_label(ax, last_x, yoy[<span class="st">"core_yoy"</span>].iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Core </span><span class="sc">{</span>yoy[<span class="st">'core_yoy'</span>]<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>, COLORS[<span class="st">"primary"</span>])</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Percent change from a year ago"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"%.0f"</span>))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_locator(mdates.YearLocator())</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">"%Y"</span>))</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>pad_xlim(ax, yoy.index)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>mark_fomc(ax)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>fig.savefig(IMG_DIR <span class="op">/</span> <span class="st">"core-pce-yoy.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-core-pce-level" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-core-pce-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-core-pce-level-output-1.png" width="784" height="449" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-core-pce-level-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Year-over-year headline and core PCE through July, with the 2 percent goal and the September hike marked after the last month.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: BEA via FRED, headline and core PCE price indexes, through July 2026. Dashed line: 2 percent goal. Vertical line: the September hike, after the last month.</p>
+</div>
+<p>The chart above stops in July. Wednesday starts from 3.3% core. A shorter window, which the chart does not draw, says the same thing another way: core’s three-month pace was 3.0%, and the headline’s was 2.2%. The calmer headline window is not a clean all-clear.</p>
+<p>August consumer prices are already public, and they are not on the chart above. That separate release rose 0.4% on the month, with gasoline up 3.9% and core up 0.3%. Use it only as a warning for Wednesday. If the PCE headline is loud because of energy, do not treat that as the core trend.</p>
+</section>
+<section id="a-2-percent-target-is-a-monthly-pace" class="level2">
+<h2 class="anchored" data-anchor-id="a-2-percent-target-is-a-monthly-pace">A 2 percent target is a monthly pace</h2>
+<p>A 2% year works out to about 0.17% a month, once you compound it. The chart below is that monthly pace for headline and core over the last 18 months, through July. The dashed line is the monthly path that matches the yearly goal. Landing on the line for a single month does not deliver a 2 percent year. It helps the yearly rate only if the new month is cooler than the month that drops out of the twelve-month window.</p>
+<p>BEA printed July as 0.2% for the headline and 0.2% for core. At one decimal they look alike. Before that rounding, the headline month sits on the path and the core month sits above it. June was the softer month, at -0.1% for the headline and 0.1% for core, and July firmed from there.</p>
+<div id="cell-fig-pce-monthly-pace" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monthly percent changes come from scripts/02_clean_data.py. This cell only</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># draws them. The dashed line is the monthly pace that compounds to 2 percent</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a year, about 0.17 percent. It is a reference, not a forecast.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mom <span class="op">=</span> pd.read_csv(CLEAN_DIR <span class="op">/</span> <span class="st">"pce_mom.csv"</span>, index_col<span class="op">=</span><span class="st">"date"</span>, parse_dates<span class="op">=</span><span class="va">True</span>).sort_index()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">8.0</span>, <span class="fl">4.6</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ax.plot(mom.index, mom[<span class="st">"headline_mom"</span>], color<span class="op">=</span>COLORS[<span class="st">"accent"</span>], linewidth<span class="op">=</span><span class="fl">1.7</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ax.plot(mom.index, mom[<span class="st">"core_mom"</span>], color<span class="op">=</span>COLORS[<span class="st">"primary"</span>], linewidth<span class="op">=</span><span class="fl">1.9</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span>COLORS[<span class="st">"neutral"</span>], linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.axhline(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    stats[<span class="st">"two_pct_monthly"</span>],</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"fed_target"</span>],</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    linestyle<span class="op">=</span><span class="st">"--"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    linewidth<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    mom.index[<span class="dv">0</span>],</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    stats[<span class="st">"two_pct_monthly"</span>],</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"  </span><span class="sc">{</span>fmt_int(stats[<span class="st">'fed_inflation_goal'</span>])<span class="sc">}</span><span class="ss">% path"</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"fed_target"</span>],</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    va<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>last_x <span class="op">=</span> mom.index[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>endpoint_label(ax, last_x, mom[<span class="st">"headline_mom"</span>].iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Headline </span><span class="sc">{</span>mom[<span class="st">'headline_mom'</span>]<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>, COLORS[<span class="st">"accent"</span>], dy<span class="op">=-</span><span class="fl">0.045</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>endpoint_label(ax, last_x, mom[<span class="st">"core_mom"</span>].iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Core </span><span class="sc">{</span>mom[<span class="st">'core_mom'</span>]<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss">%"</span>, COLORS[<span class="st">"primary"</span>], dy<span class="op">=</span><span class="fl">0.02</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Percent change from prior month"</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"</span><span class="sc">%.1f</span><span class="st">"</span>))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>pad_xlim(ax, mom.index)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>mark_fomc(ax)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>fig.savefig(IMG_DIR <span class="op">/</span> <span class="st">"pce-monthly-pace.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-pce-monthly-pace" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pce-monthly-pace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pce-monthly-pace-output-1.png" width="783" height="448" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pce-monthly-pace-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Monthly headline and core PCE through July against the monthly pace that compounds to 2 percent a year.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: BEA via FRED, headline and core PCE price indexes, February 2025 through July 2026. Dashed line: monthly pace of a 2 percent year.</p>
+</div>
+<p>The chart above is why those two July prints should not be read as the same thing. Core did not reach the monthly path. One more month at 0.2% would not, by itself, pull a 3.3% yearly rate down to the goal.</p>
+</section>
+<section id="real-spending-paused-on-a-thin-saving-rate" class="level2">
+<h2 class="anchored" data-anchor-id="real-spending-paused-on-a-thin-saving-rate">Real spending paused on a thin saving rate</h2>
+<p>The cash-register bill and the quantity bought are different numbers. The bill is nominal spending. The quantity is real spending, the same purchases after prices are removed. When the bill rises more than the quantity, the gap is the price increase. The chart below draws both monthly changes. Red shading is a month when the bill outran the quantity. Green shading is the opposite, a month when people bought more than the bill rose. The bottom panel is the saving rate, the share of after-tax income that was not spent. Income itself is not a line on the chart.</p>
+<p>In July the bill rose 0.2% and the quantity was 0.0%. The increase was price, not more stuff, which is why July should show as a red gap rather than a tall quantity bar. Over the past year the quantity is still up 2.1%, so this was a pause inside a year that was not a collapse. Income rose 0.4% and after-tax income rose 0.5%. The saving rate moved from 2.6% in June to 3.0% in July. Households kept a bit more of the paycheck. They did not build a new cushion.</p>
+<div id="cell-fig-real-spending-saving" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Both monthly percent changes come from scripts/02_clean_data.py.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Bill = nominal spending. Quantity = real spending.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The red band is bill minus quantity, an approximate price gap, not the</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># official price index. The green band is the reverse. A month at zero is</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># still visible because it is a line, not a bar with no height.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># The bottom panel is the saving rate, already stored as a percent.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>real <span class="op">=</span> pd.read_csv(CLEAN_DIR <span class="op">/</span> <span class="st">"real_saving.csv"</span>, index_col<span class="op">=</span><span class="st">"date"</span>, parse_dates<span class="op">=</span><span class="va">True</span>).sort_index()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="fl">8.0</span>, <span class="fl">7.0</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    sharex<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    gridspec_kw<span class="op">=</span>{<span class="st">"height_ratios"</span>: [<span class="fl">2.2</span>, <span class="fl">1.4</span>]},</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>bill <span class="op">=</span> real[<span class="st">"bill_mom"</span>]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> real[<span class="st">"quantity_mom"</span>]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(real.index, bill, color<span class="op">=</span>COLORS[<span class="st">"accent"</span>], linewidth<span class="op">=</span><span class="fl">1.7</span>, label<span class="op">=</span><span class="st">"Bill"</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(real.index, quantity, color<span class="op">=</span>COLORS[<span class="st">"primary"</span>], linewidth<span class="op">=</span><span class="fl">1.8</span>, label<span class="op">=</span><span class="st">"Quantity"</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill_between(</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    real.index,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    bill,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    quantity,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    where<span class="op">=</span>(bill <span class="op">&gt;=</span> quantity),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    interpolate<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"accent"</span>],</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.28</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Bill above quantity"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].fill_between(</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    real.index,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    bill,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    quantity,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    where<span class="op">=</span>(bill <span class="op">&lt;</span> quantity),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    interpolate<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"secondary"</span>],</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.35</span>,</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Quantity above bill"</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span>COLORS[<span class="st">"neutral"</span>], linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>last_x <span class="op">=</span> real.index[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>endpoint_label(axes[<span class="dv">0</span>], last_x, bill.iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Bill </span><span class="sc">{</span>bill<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>, COLORS[<span class="st">"accent"</span>], dy<span class="op">=</span><span class="fl">0.06</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>endpoint_label(axes[<span class="dv">0</span>], last_x, quantity.iloc[<span class="op">-</span><span class="dv">1</span>], <span class="ss">f"Quantity </span><span class="sc">{</span>quantity<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>, COLORS[<span class="st">"primary"</span>], dy<span class="op">=-</span><span class="fl">0.08</span>)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Percent change from prior month"</span>)</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"</span><span class="sc">%.1f</span><span class="st">"</span>))</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(frameon<span class="op">=</span><span class="va">False</span>, fontsize<span class="op">=</span><span class="dv">8</span>, loc<span class="op">=</span><span class="st">"upper left"</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(real.index, real[<span class="st">"saving_rate"</span>], color<span class="op">=</span>COLORS[<span class="st">"secondary"</span>], linewidth<span class="op">=</span><span class="fl">1.8</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>endpoint_label(</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>],</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    last_x,</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    real[<span class="st">"saving_rate"</span>].iloc[<span class="op">-</span><span class="dv">1</span>],</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"Saving </span><span class="sc">{</span>real[<span class="st">'saving_rate'</span>]<span class="sc">.</span>iloc[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.1f}</span><span class="ss">%"</span>,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    COLORS[<span class="st">"secondary"</span>],</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Saving rate (%)"</span>)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="st">"%.0f"</span>))</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].xaxis.set_major_locator(mdates.MonthLocator(interval<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].xaxis.set_major_formatter(mdates.DateFormatter(<span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>))</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> panel <span class="kw">in</span> axes:</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    pad_xlim(panel, real.index)</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    mark_fomc(panel)</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>fig.savefig(IMG_DIR <span class="op">/</span> <span class="st">"real-spending-saving.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-real-spending-saving" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-real-spending-saving-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-real-spending-saving-output-1.png" width="783" height="688" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-real-spending-saving-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The cash-register bill and the quantity of spending. Red shading is a month when the bill rose more than the quantity.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: BEA via FRED, nominal spending, real spending, and the saving rate, February 2025 through July 2026. Red shading: the bill rose more than the quantity. Bottom panel: saving rate. Vertical line: the September hike, after July.</p>
+</div>
+<p>The chart above is that gap. In July the quantity line is on zero and the bill is above it, so the red space is the price increase. The saving rate underneath is still thin after a small rebound. The hike line is only a date after the last month.</p>
+</section>
+<section id="headline-gdp-and-private-demand-are-different-questions" class="level2">
+<h2 class="anchored" data-anchor-id="headline-gdp-and-private-demand-are-different-questions">Headline GDP and private demand are different questions</h2>
+<p>There are two ways to read last quarter, and they answer different questions. Real GDP is how fast the whole economy grew, including government, inventories, and trade. Private demand is how fast households and businesses spent at home. The chart below shows both.</p>
+<p>In the second quarter the whole economy grew 1.5% and spending at home grew 4.2%. The gap is 2.7 percentage points. BEA’s second look left the 1.5% growth rate where the first look had put it. It raised spending at home from 3.9% to 4.2%. Imports are why those two can move apart. Imports subtract from GDP, and they are not part of spending at home. A higher import figure can leave the headline unchanged while spending at home is revised up.</p>
+<p>Do not treat that pattern as permanent. In the first quarter GDP grew 2.1% and spending at home grew 1.7%, so the headline was the stronger number. Wednesday is a third look at a quarter that ended in June. The result is TBD, BEA 9/30. It can change either bar for that quarter. It cannot show the September hike.</p>
+<p>The same morning BEA also starts an update that can revise earlier years, from Q1 2021 through Q1 2026. national, industry, and regional statistics begin on the same day for the first time. If an older bar moves, that is a correction to the past, not news about August. The size of any correction is not published yet, so it is not drawn.</p>
+<div id="cell-fig-gdp-vs-private-demand" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># These are already annualized percent changes from scripts/02_clean_data.py.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Real GDP is the whole economy. Private demand is household and business</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># spending at home. This cell only draws the bars. It does not recompute rates.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>gdp <span class="op">=</span> pd.read_csv(CLEAN_DIR <span class="op">/</span> <span class="st">"gdp_vs_pdfp.csv"</span>, index_col<span class="op">=</span><span class="st">"date"</span>, parse_dates<span class="op">=</span><span class="va">True</span>).sort_index()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">8.0</span>, <span class="fl">4.2</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>x_pos <span class="op">=</span> np.arange(<span class="bu">len</span>(gdp))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.38</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ax.bar(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    x_pos <span class="op">-</span> width <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    gdp[<span class="st">"gdp_saar"</span>],</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>width,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"primary"</span>],</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Real GDP"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>ax.bar(</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    x_pos <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    gdp[<span class="st">"pdfp_saar"</span>],</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>width,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>COLORS[<span class="st">"secondary"</span>],</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    edgecolor<span class="op">=</span><span class="st">"white"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Private demand"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    zorder<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span>COLORS[<span class="st">"neutral"</span>], linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>span <span class="op">=</span> <span class="bu">float</span>(gdp[[<span class="st">"gdp_saar"</span>, <span class="st">"pdfp_saar"</span>]].<span class="bu">max</span>().<span class="bu">max</span>() <span class="op">-</span> gdp[[<span class="st">"gdp_saar"</span>, <span class="st">"pdfp_saar"</span>]].<span class="bu">min</span>().<span class="bu">min</span>())</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>pad <span class="op">=</span> <span class="bu">max</span>(span <span class="op">*</span> <span class="fl">0.012</span>, <span class="fl">0.15</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (gdp_value, pdfp_value) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(gdp[<span class="st">"gdp_saar"</span>], gdp[<span class="st">"pdfp_saar"</span>])):</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    ax.text(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        i <span class="op">-</span> width <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        gdp_value <span class="op">+</span> (pad <span class="cf">if</span> gdp_value <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="op">-</span>pad),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"</span><span class="sc">{</span>gdp_value<span class="sc">:.1f}</span><span class="ss">"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        va<span class="op">=</span><span class="st">"bottom"</span> <span class="cf">if</span> gdp_value <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"top"</span>,</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>COLORS[<span class="st">"neutral"</span>],</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    ax.text(</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        pdfp_value <span class="op">+</span> (pad <span class="cf">if</span> pdfp_value <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="op">-</span>pad),</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"</span><span class="sc">{</span>pdfp_value<span class="sc">:.1f}</span><span class="ss">"</span>,</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        va<span class="op">=</span><span class="st">"bottom"</span> <span class="cf">if</span> pdfp_value <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"top"</span>,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>COLORS[<span class="st">"neutral"</span>],</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="ss">f"Q</span><span class="sc">{</span>(ts.month <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ch">\n</span><span class="sc">{</span>ts<span class="sc">.</span>year<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> ts <span class="kw">in</span> gdp.index]</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(x_pos)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(labels)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Percent change, annualized"</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>low <span class="op">=</span> <span class="bu">float</span>(gdp[[<span class="st">"gdp_saar"</span>, <span class="st">"pdfp_saar"</span>]].<span class="bu">min</span>().<span class="bu">min</span>())</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>high <span class="op">=</span> <span class="bu">float</span>(gdp[[<span class="st">"gdp_saar"</span>, <span class="st">"pdfp_saar"</span>]].<span class="bu">max</span>().<span class="bu">max</span>())</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(low <span class="op">-</span> span <span class="op">*</span> <span class="fl">0.22</span>, high <span class="op">+</span> span <span class="op">*</span> <span class="fl">0.22</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">False</span>, loc<span class="op">=</span><span class="st">"upper left"</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>fig.savefig(IMG_DIR <span class="op">/</span> <span class="st">"gdp-vs-private-demand.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div id="fig-gdp-vs-private-demand" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gdp-vs-private-demand-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-gdp-vs-private-demand-output-1.png" width="788" height="408" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gdp-vs-private-demand-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The current vintage of real GDP growth and private domestic final purchases. The second quarter’s headline and its private-demand rate do not match.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="figure-source">
+<p>Source: BEA via FRED, real GDP growth and private domestic final purchases, current vintage through the Q2 second estimate. Earlier bars are not each quarter’s first print.</p>
+</div>
+<p>The chart above is the latest quarter’s split. Private demand ran at 4.2% while GDP ran at 1.5%. The third estimate can change that mix without moving the headline, and the annual update can move the earlier bars.</p>
+</section>
+<section id="the-wednesday-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-wednesday-test">The Wednesday test</h2>
+<p>This is a checklist, not a forecast.</p>
+<p><strong>Core PCE, month to month</strong></p>
+<ul>
+<li>Soft: at or under 0.2%, given a yearly core rate of 3.3%.</li>
+<li>Sticky: 0.3%, or any month that keeps the yearly rate from falling. July was this case.</li>
+<li>Hot: a print that lifts the yearly rate, or detail that shows services prices, rather than energy, doing the work.</li>
+</ul>
+<p><strong>Headline PCE</strong></p>
+<ul>
+<li>Treat an energy bounce as already telegraphed by August CPI, when gasoline rose 3.9%.</li>
+<li>Do not let gasoline become the lede. The lede is core, unless the detail says energy is the whole story and core cooled.</li>
+</ul>
+<p><strong>Real PCE and the saving rate</strong></p>
+<ul>
+<li>Does the quantity stay near July’s 0.0%, recover, or roll over?</li>
+<li>Does the 3.0% saving rate thicken, or get spent?</li>
+</ul>
+<p><strong>The second-quarter third estimate</strong></p>
+<ul>
+<li>Where is the headline relative to the 1.5% second estimate?</li>
+<li>Did private demand stay the stronger part, as it was at 4.2% against that headline? In the first quarter it was not.</li>
+</ul>
+<p><strong>The annual update</strong></p>
+<ul>
+<li>Did BEA rewrite 2025 or early-2026 core PCE or GDP, inside Q1 2021 through Q1 2026?</li>
+<li>If history moves, that can matter more than August.</li>
+<li>Call a revision a revision. Do not describe a rewritten past as news about August.</li>
+</ul>
+</section>
+<section id="putting-it-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-together">Putting it together</h2>
+<p>The story changes if core’s monthly pace gets near 0.17% often enough for the yearly rate to fall. July did not. A gasoline echo of August CPI does not do it, and neither does a quiet month that leaves the yearly rate at 3.3%. The easy misread is a calm August on top of a rewritten 2025. The hike is 9 days old and still outside the sample, so August cannot show the 25 basis point move.</p>
+</section>
+<section id="what-it-means" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-means">What it means</h2>
+<section id="what-it-means-for" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-means-for">What it means for</h3>
+<p><strong>For the Fed.</strong> Core at 3.3% is the gauge that would have to cool before the 4.1% median dot looks out of date. One August month, mostly from before the decision, will not do that. This post makes no rate call.</p>
+<p><strong>For households.</strong> Spending paused in quantity while income was still rising. A 3.0% saving rate is not a cushion. The question is whether the basket holds still while prices rise, or the basket shrinks.</p>
+<p><strong>For investors.</strong> 1.5% GDP and 4.2% private demand are different questions. The second estimate already split them. A revised older bar is history until it is labeled as a revision.</p>
+<p>If core stays near 3.3% instead of gliding toward 2%, that persistence is what shows up in multi-year claims costs. One August print does not price a book of business. This is not a product recommendation.</p>
+</section>
+</section>
+<section id="what-to-watch-next" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-watch-next">What to watch next</h2>
+<ul>
+<li>9/30 at 8:30 a.m. ET: August PCE, the second-quarter third estimate, and the 2026 annual update. This is the release the post is built for. The result is TBD, BEA 9/30 until then.</li>
+<li>10/2 at 8:30 a.m. ET: the September employment situation. September 29 JOLTS is a nearby read on labor demand, not a second topic of this post.</li>
+<li>10/7 at 2:00 p.m. ET: minutes of the 9/15 to 9/16 meeting, on the Federal Reserve’s October calendar.</li>
+<li>10/14: the September CPI. That is the next public price print after Wednesday’s PCE, on a different basket.</li>
+</ul>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>August income and spending, and the third look at last quarter, are not out yet. The post stops at July and at BEA’s second look.</p>
+<p>The GDP bars use the latest published figures. The one exception is the first look at second-quarter spending at home, which BEA printed beside the second look. A gasoline move in the consumer price index is a hint about energy, not energy’s weight inside PCE. The 12 of 18 figure is a count of forecasts behind the 4.1% median, not the Committee’s vote. August payrolls are mentioned only so this is not mistaken for a jobs piece. No revision size is known for Q1 2021 through Q1 2026.</p>
+</section>
+<section id="methodology-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-and-data">Methodology and data</h2>
+<p>How this post was built. The three scripts download FRED, compute the rates, and check the July and second-estimate prints. The charts only plot. Re-run them from this folder with <code>FRED_API_KEY</code> set.</p>
+<table class="caption-top table">
+<caption>Sources for the charts and the locked priors. August 2026 PCE is not in this table because it has not been published.</caption>
+<thead>
+<tr class="header">
+<th>Series</th>
+<th>What it is in this post</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Headline and core PCE prices</td>
+<td>Yearly and monthly inflation. First two charts.</td>
+<td><a href="https://fred.stlouisfed.org/series/PCEPI">Headline</a>, <a href="https://fred.stlouisfed.org/series/PCEPILFE">Core</a></td>
+</tr>
+<tr class="even">
+<td>Real spending and the saving rate</td>
+<td>Quantity of spending, and saving as a share of after-tax income. Third chart.</td>
+<td><a href="https://fred.stlouisfed.org/series/PCEC96">Real spending</a>, <a href="https://fred.stlouisfed.org/series/PSAVERT">Saving rate</a></td>
+</tr>
+<tr class="odd">
+<td>Income and the cash-register bill</td>
+<td>The bill is the top line of the third chart. Income and after-tax income are text only.</td>
+<td><a href="https://fred.stlouisfed.org/">FRED</a></td>
+</tr>
+<tr class="even">
+<td>GDP and private demand</td>
+<td>Whole-economy growth, and household plus business spending at home. Fourth chart.</td>
+<td><a href="https://fred.stlouisfed.org/series/A191RL1Q225SBEA">GDP</a>, <a href="https://fred.stlouisfed.org/series/PB0000031Q225SBEA">Private demand</a></td>
+</tr>
+<tr class="odd">
+<td>July PCE and Q2 second estimate</td>
+<td>Official prints, including the advance column.</td>
+<td><a href="https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026">July PCE</a>, <a href="https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-2nd-quarter-2026">Q2 second</a></td>
+</tr>
+<tr class="even">
+<td>2026 annual update</td>
+<td>Open window. No magnitudes.</td>
+<td><a href="https://www.bea.gov/information-updates-national-regional-economic-accounts">BEA note</a></td>
+</tr>
+<tr class="odd">
+<td>FOMC, August CPI, August payrolls</td>
+<td>Context only. Not charted, except the hike line.</td>
+<td><a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm">SEP</a>, <a href="https://www.bls.gov/news.release/cpi.nr0.htm">CPI</a>, <a href="https://www.bls.gov/news.release/empsit.nr0.htm">payrolls</a></td>
+</tr>
+</tbody>
+</table>
+<p><em>Data current as of 9/25/2026. BEA Personal Income and Outlays for July 2026 and the Q2 GDP second estimate were released 8/26/2026. August PCE, the Q2 third estimate, and the 2026 annual update are scheduled for 9/30/2026 at 8:30 a.m. ET. No August PCE or third-estimate figures are in this file.</em></p>
+<!--
+Wednesday swap list, after 8:30 a.m. ET on 9/30. Update these and do not rewrite the post:
+1. pagetitle and description: replace the July setup framing with the August PCE print and the Q2 third estimate.
+2. Key-number cards: swap the July core, real-spending, and saving-rate cards for the August prints, and the GDP cards for the third estimate.
+3. Opening: one paragraph on which test-list bucket printed, and whether the annual update moved history.
+4. The Wednesday test: mark soft, sticky, or hot, and say whether private demand stayed the stronger part of GDP.
+5. data_current_as_of, latest_month, and the release note: move the sample from July 2026 to August 2026.
+6. Leave the annual-update explanation. Add a revision direction only if BEA published one, and label it as a revision.
+-->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gilboa\.blog");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025-2026 Gilboa</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../index.xml">
+<p>RSS</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
