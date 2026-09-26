@@ -1,0 +1,584 @@
+---
+title: "What Wednesday's PCE Has to Do After the Hike"
+pagetitle: "September 2026 BEA setup: core PCE 3.3%, Q2 GDP 1.5%"
+date: "2026-09-26"
+author: Yoram Gilboa
+categories: [economics, inflation, federal reserve, data visualization]
+description: "July core PCE was 3.3 percent and real spending was flat. The Q2 GDP second estimate was 1.5 percent, with private demand at 4.2 percent. August is not out."
+image: images/core-pce-yoy.png
+image-alt: "Year-over-year headline and core PCE through July 2026, with the September FOMC hike marked after the last point"
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+# Setup, hidden from the reader. Loads the numbers the prose is allowed to
+# quote, sets the house chart style, and defines small helpers used by every
+# figure. Rate formulas live in scripts/02_clean_data.py, not here.
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(n):
+    """One decimal, the precision BEA uses on these monthly and quarterly prints."""
+    return f"{float(n):.1f}"
+
+
+def fmt2(n):
+    """Two decimals, for the monthly pace that compounds to a 2 percent year."""
+    return f"{float(n):.2f}"
+
+
+def fmt_chg(n):
+    """Signed one-decimal change."""
+    return f"{float(n):+.1f}"
+
+
+def fmt_int(n):
+    """Whole number, for counts, days, and basis points."""
+    return f"{int(round(float(n))):,}"
+
+
+def pad_xlim(ax, index):
+    """Leave room for end labels and for the hike, which sits after the last month."""
+    start = index[0]
+    last = index[-1]
+    fomc = pd.Timestamp(stats["fomc_vline"])
+    span = last - start
+    right = max(last + span * 0.12, fomc + pd.Timedelta(days=48))
+    ax.set_xlim(start, right)
+
+
+def mark_fomc(ax):
+    """Vertical line at the September 17 effective date. It is not a data point."""
+    x_line = pd.Timestamp(stats["fomc_vline"])
+    ax.axvline(x_line, color=COLORS["neutral"], linestyle="--", linewidth=0.8, zorder=2)
+    y0, y1 = ax.get_ylim()
+    ax.text(
+        x_line,
+        y1 - 0.06 * (y1 - y0),
+        " FOMC hike",
+        color=COLORS["neutral"],
+        fontsize=8,
+        va="top",
+        ha="left",
+    )
+
+
+def endpoint_label(ax, x_point, y_point, text, color, dy=0):
+    """Dot plus a short label to the right. Same grammar on every line chart."""
+    ax.scatter(
+        [x_point],
+        [y_point],
+        s=40,
+        color=color,
+        zorder=5,
+        edgecolors="white",
+        linewidth=0.8,
+    )
+    ax.text(
+        x_point,
+        y_point + dy,
+        "  " + text,
+        color=color,
+        fontsize=8,
+        fontweight="bold",
+        va="center",
+    )
+```
+
+The September hike is `{python} fmt_int(stats['days_since_hike'])` days old, and Wednesday is `{python} fmt_int(stats['days_until_release'])` days away. On `{python} stats['next_bea_date']` the Bureau of Economic Analysis publishes three things at once: August income and spending, a third look at second-quarter GDP, and the start of an annual update that can rewrite recent history.
+
+This post is a test list for that morning. It says what would change the story after the hike, and what would not. It makes no rate call. August prices were already set before the hike on `{python} stats['hike_effective_date']`, so the new month cannot show the decision.
+
+The picture you walk in with is still July. The Fed's preferred price gauge, the PCE price index, was **`{python} fmt(stats['pce_headline_yoy'])`%** over the past year. Core PCE, the same index without food and energy, was **`{python} fmt(stats['pce_core_yoy'])`%**. That is not a clean all-clear against a `{python} fmt_int(stats['fed_inflation_goal'])`% goal. Second-quarter GDP was **`{python} fmt(stats['gdp_q2'])`%** annualized, while spending by households and businesses at home ran at **`{python} fmt(stats['pdfp_q2'])`%**. Headline growth and private demand are different questions.
+
+The September decision left the funds rate at `{python} stats['target_range']` percent. The median forecast for the end of 2026 is **`{python} fmt(stats['sep_funds_2026'])`%**, and `{python} fmt_int(stats['dots_one_more'])` of `{python} fmt_int(stats['dots_total'])` forecasts looked for one more hike. Those are forecasts, not a second vote. Wednesday is the test of whether the July picture those forecasts sat on is still the picture.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+Open a code block to read the chart. From this post's folder, run `scripts/01_fetch_data.py`, then `scripts/02_clean_data.py`, then `scripts/04_compute_stats.py`. Monthly history stops at July 2026. August is not filled in. Data come from the [Bureau of Economic Analysis](https://www.bea.gov/) by way of [FRED](https://fred.stlouisfed.org/).
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+August PCE is `{python} stats['august_pce_status']`. The third estimate is `{python} stats['q2_third_status']`. Neither is filled in. July price cards match BEA's one-decimal prints. GDP bars are the current vintage through `{python} stats['gdp_second_release_date']`, not each quarter's first print. The advance private-demand number is transcribed from [BEA's comparison table](https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-2nd-quarter-2026). FOMC, CPI, and payrolls are transcribed context. The annual-update window is [BEA's note](https://www.bea.gov/information-updates-national-regional-economic-accounts). No revision size is estimated, so there is no fifth chart.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; "
+    "min-height: 2.5rem; display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    ("Core PCE, year over year", f"{fmt(stats['pce_core_yoy'])}%", COLORS["primary"], stats["latest_month_short"]),
+    ("Saving rate", f"{fmt(stats['saving_rate'])}%", COLORS["secondary"], stats["latest_month_short"]),
+    ("Real GDP, Q2 second", f"{fmt(stats['gdp_q2'])}%", COLORS["primary"], "annualized"),
+    ("Private demand, Q2", f"{fmt(stats['pdfp_q2'])}%", COLORS["accent"], "annualized"),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  {stats['latest_month']} personal income and outlays, released {stats['pce_release_date']},
+  and the Q2 GDP second estimate, released {stats['gdp_second_release_date']}. Source: BEA.
+</p>
+"""
+HTML(html)
+```
+
+## Where core stood in July
+
+PCE, personal consumption expenditures, is the price of what households consume. Headline PCE counts the whole basket, food and energy included. Core PCE is that same index with food and energy removed. Those two categories jump around, so a gasoline spike can lift the headline while saying little about the slower trend. Core is the measure the Fed usually watches for that trend. The consumer price index is a related gauge of out-of-pocket prices, with a different basket. When the two disagree, the gap is often the basket, not a math error.
+
+The chart below is the yearly change in headline and core PCE through July. The dashed line is the `{python} fmt_int(stats['fed_inflation_goal'])`% goal. The vertical line is the September hike. It stands to the right of the last point because it marks a date, not a price. July is the last month in the file, and the hike on `{python} stats['hike_effective_date']` came after those prices were set.
+
+July's headline rate was `{python} fmt(stats['pce_headline_yoy'])`%, the same as June. Core was `{python} fmt(stats['pce_core_yoy'])`%, also the same as June. A yearly rate moves only when the new month is hotter or cooler than the month from a year earlier that drops out of the window. July 2026 replaced July 2025, and both core months round to `{python} fmt(stats['pce_core_mom_year_ago'])`%. Both headline months round to `{python} fmt(stats['pce_headline_mom_year_ago'])`%. The lines held steady because the new month was not cooler than the one it replaced.
+
+```{python}
+#| echo: true
+#| label: fig-core-pce-level
+#| fig-cap: "Year-over-year headline and core PCE through July, with the 2 percent goal and the September hike marked after the last month."
+
+# Yearly percent changes were already computed in scripts/02_clean_data.py.
+# This cell only draws them. Headline includes food and energy. Core leaves
+# them out. The dashed line is the 2 percent goal. The vertical line is the
+# September hike, a date after the last month, not a price observation.
+yoy = pd.read_csv(CLEAN_DIR / "pce_yoy.csv", index_col="date", parse_dates=True).sort_index()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(yoy.index, yoy["headline_yoy"], color=COLORS["accent"], linewidth=1.7, zorder=3)
+ax.plot(yoy.index, yoy["core_yoy"], color=COLORS["primary"], linewidth=1.9, zorder=3)
+ax.axhline(
+    stats["fed_inflation_goal"],
+    color=COLORS["fed_target"],
+    linestyle="--",
+    linewidth=1,
+    alpha=0.5,
+)
+ax.text(
+    yoy.index[0],
+    stats["fed_inflation_goal"],
+    f"  {fmt_int(stats['fed_inflation_goal'])}% goal",
+    color=COLORS["fed_target"],
+    fontsize=8,
+    va="bottom",
+    alpha=0.8,
+)
+
+last_x = yoy.index[-1]
+endpoint_label(ax, last_x, yoy["headline_yoy"].iloc[-1], f"Headline {yoy['headline_yoy'].iloc[-1]:.1f}%", COLORS["accent"])
+endpoint_label(ax, last_x, yoy["core_yoy"].iloc[-1], f"Core {yoy['core_yoy'].iloc[-1]:.1f}%", COLORS["primary"])
+
+ax.set_ylabel("Percent change from a year ago")
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.0f"))
+ax.xaxis.set_major_locator(mdates.YearLocator())
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+pad_xlim(ax, yoy.index)
+mark_fomc(ax)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "core-pce-yoy.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: BEA via FRED, headline and core PCE price indexes, through July 2026. Dashed line: 2 percent goal. Vertical line: the September hike, after the last month.
+:::
+
+The chart above stops in July. Wednesday starts from `{python} fmt(stats['pce_core_yoy'])`% core. A shorter window, which the chart does not draw, says the same thing another way: core's three-month pace was `{python} fmt(stats['pce_core_ann3'])`%, and the headline's was `{python} fmt(stats['pce_headline_ann3'])`%. The calmer headline window is not a clean all-clear.
+
+August consumer prices are already public, and they are not on the chart above. That separate release rose `{python} fmt(stats['cpi_headline_mom'])`% on the month, with gasoline up `{python} fmt(stats['cpi_gasoline_mom'])`% and core up `{python} fmt(stats['cpi_core_mom'])`%. Use it only as a warning for Wednesday. If the PCE headline is loud because of energy, do not treat that as the core trend.
+
+## A 2 percent target is a monthly pace
+
+A `{python} fmt_int(stats['fed_inflation_goal'])`% year works out to about `{python} fmt2(stats['two_pct_monthly'])`% a month, once you compound it. The chart below is that monthly pace for headline and core over the last 18 months, through July. The dashed line is the monthly path that matches the yearly goal. Landing on the line for a single month does not deliver a 2 percent year. It helps the yearly rate only if the new month is cooler than the month that drops out of the twelve-month window.
+
+BEA printed July as `{python} fmt(stats['pce_headline_mom'])`% for the headline and `{python} fmt(stats['pce_core_mom'])`% for core. At one decimal they look alike. Before that rounding, the headline month sits on the path and the core month sits above it. June was the softer month, at `{python} fmt_chg(stats['pce_headline_prior_mom'])`% for the headline and `{python} fmt(stats['pce_core_prior_mom'])`% for core, and July firmed from there.
+
+```{python}
+#| echo: true
+#| label: fig-pce-monthly-pace
+#| fig-cap: "Monthly headline and core PCE through July against the monthly pace that compounds to 2 percent a year."
+
+# Monthly percent changes come from scripts/02_clean_data.py. This cell only
+# draws them. The dashed line is the monthly pace that compounds to 2 percent
+# a year, about 0.17 percent. It is a reference, not a forecast.
+mom = pd.read_csv(CLEAN_DIR / "pce_mom.csv", index_col="date", parse_dates=True).sort_index()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(mom.index, mom["headline_mom"], color=COLORS["accent"], linewidth=1.7, zorder=3)
+ax.plot(mom.index, mom["core_mom"], color=COLORS["primary"], linewidth=1.9, zorder=3)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+ax.axhline(
+    stats["two_pct_monthly"],
+    color=COLORS["fed_target"],
+    linestyle="--",
+    linewidth=1,
+    alpha=0.5,
+)
+ax.text(
+    mom.index[0],
+    stats["two_pct_monthly"],
+    f"  {fmt_int(stats['fed_inflation_goal'])}% path",
+    color=COLORS["fed_target"],
+    fontsize=8,
+    va="bottom",
+    alpha=0.8,
+)
+
+last_x = mom.index[-1]
+endpoint_label(ax, last_x, mom["headline_mom"].iloc[-1], f"Headline {mom['headline_mom'].iloc[-1]:.2f}%", COLORS["accent"], dy=-0.045)
+endpoint_label(ax, last_x, mom["core_mom"].iloc[-1], f"Core {mom['core_mom'].iloc[-1]:.2f}%", COLORS["primary"], dy=0.02)
+
+ax.set_ylabel("Percent change from prior month")
+ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.1f"))
+ax.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+pad_xlim(ax, mom.index)
+mark_fomc(ax)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "pce-monthly-pace.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: BEA via FRED, headline and core PCE price indexes, February 2025 through July 2026. Dashed line: monthly pace of a 2 percent year.
+:::
+
+The chart above is why those two July prints should not be read as the same thing. Core did not reach the monthly path. One more month at `{python} fmt(stats['test_core_soft_mom'])`% would not, by itself, pull a `{python} fmt(stats['pce_core_yoy'])`% yearly rate down to the goal.
+
+## Real spending paused on a thin saving rate
+
+The cash-register bill and the quantity bought are different numbers. The bill is nominal spending. The quantity is real spending, the same purchases after prices are removed. When the bill rises more than the quantity, the gap is the price increase. The chart below draws both monthly changes. Red shading is a month when the bill outran the quantity. Green shading is the opposite, a month when people bought more than the bill rose. The bottom panel is the saving rate, the share of after-tax income that was not spent. Income itself is not a line on the chart.
+
+In July the bill rose `{python} fmt(stats['pce_nominal_mom'])`% and the quantity was `{python} fmt(stats['real_pce_mom'])`%. The increase was price, not more stuff, which is why July should show as a red gap rather than a tall quantity bar. Over the past year the quantity is still up `{python} fmt(stats['real_pce_yoy'])`%, so this was a pause inside a year that was not a collapse. Income rose `{python} fmt(stats['pi_mom'])`% and after-tax income rose `{python} fmt(stats['dpi_mom'])`%. The saving rate moved from `{python} fmt(stats['saving_rate_prior'])`% in June to `{python} fmt(stats['saving_rate'])`% in July. Households kept a bit more of the paycheck. They did not build a new cushion.
+
+```{python}
+#| echo: true
+#| label: fig-real-spending-saving
+#| fig-cap: "The cash-register bill and the quantity of spending. Red shading is a month when the bill rose more than the quantity."
+
+# Both monthly percent changes come from scripts/02_clean_data.py.
+# Bill = nominal spending. Quantity = real spending.
+# The red band is bill minus quantity, an approximate price gap, not the
+# official price index. The green band is the reverse. A month at zero is
+# still visible because it is a line, not a bar with no height.
+# The bottom panel is the saving rate, already stored as a percent.
+real = pd.read_csv(CLEAN_DIR / "real_saving.csv", index_col="date", parse_dates=True).sort_index()
+
+fig, axes = plt.subplots(
+    2,
+    1,
+    figsize=(8.0, 7.0),
+    sharex=True,
+    gridspec_kw={"height_ratios": [2.2, 1.4]},
+)
+bill = real["bill_mom"]
+quantity = real["quantity_mom"]
+axes[0].plot(real.index, bill, color=COLORS["accent"], linewidth=1.7, label="Bill", zorder=3)
+axes[0].plot(real.index, quantity, color=COLORS["primary"], linewidth=1.8, label="Quantity", zorder=3)
+axes[0].fill_between(
+    real.index,
+    bill,
+    quantity,
+    where=(bill >= quantity),
+    interpolate=True,
+    color=COLORS["accent"],
+    alpha=0.28,
+    label="Bill above quantity",
+    zorder=2,
+)
+axes[0].fill_between(
+    real.index,
+    bill,
+    quantity,
+    where=(bill < quantity),
+    interpolate=True,
+    color=COLORS["secondary"],
+    alpha=0.35,
+    label="Quantity above bill",
+    zorder=2,
+)
+axes[0].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+last_x = real.index[-1]
+endpoint_label(axes[0], last_x, bill.iloc[-1], f"Bill {bill.iloc[-1]:.1f}%", COLORS["accent"], dy=0.06)
+endpoint_label(axes[0], last_x, quantity.iloc[-1], f"Quantity {quantity.iloc[-1]:.1f}%", COLORS["primary"], dy=-0.08)
+axes[0].set_ylabel("Percent change from prior month")
+axes[0].yaxis.set_major_formatter(ticker.FormatStrFormatter("%.1f"))
+axes[0].legend(frameon=False, fontsize=8, loc="upper left", ncol=2)
+
+axes[1].plot(real.index, real["saving_rate"], color=COLORS["secondary"], linewidth=1.8, zorder=3)
+endpoint_label(
+    axes[1],
+    last_x,
+    real["saving_rate"].iloc[-1],
+    f"Saving {real['saving_rate'].iloc[-1]:.1f}%",
+    COLORS["secondary"],
+)
+axes[1].set_ylabel("Saving rate (%)")
+axes[1].yaxis.set_major_formatter(ticker.FormatStrFormatter("%.0f"))
+axes[1].xaxis.set_major_locator(mdates.MonthLocator(interval=3))
+axes[1].xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+
+for panel in axes:
+    pad_xlim(panel, real.index)
+    mark_fomc(panel)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "real-spending-saving.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: BEA via FRED, nominal spending, real spending, and the saving rate, February 2025 through July 2026. Red shading: the bill rose more than the quantity. Bottom panel: saving rate. Vertical line: the September hike, after July.
+:::
+
+The chart above is that gap. In July the quantity line is on zero and the bill is above it, so the red space is the price increase. The saving rate underneath is still thin after a small rebound. The hike line is only a date after the last month.
+
+## Headline GDP and private demand are different questions
+
+There are two ways to read last quarter, and they answer different questions. Real GDP is how fast the whole economy grew, including government, inventories, and trade. Private demand is how fast households and businesses spent at home. The chart below shows both.
+
+In the second quarter the whole economy grew `{python} fmt(stats['gdp_q2'])`% and spending at home grew `{python} fmt(stats['pdfp_q2'])`%. The gap is `{python} fmt(stats['pdfp_minus_gdp_pp'])` percentage points. BEA's second look left the `{python} fmt(stats['gdp_q2'])`% growth rate where the first look had put it. It raised spending at home from `{python} fmt(stats['pdfp_q2_advance'])`% to `{python} fmt(stats['pdfp_q2'])`%. Imports are why those two can move apart. Imports subtract from GDP, and they are not part of spending at home. A higher import figure can leave the headline unchanged while spending at home is revised up.
+
+Do not treat that pattern as permanent. In the first quarter GDP grew `{python} fmt(stats['gdp_q1'])`% and spending at home grew `{python} fmt(stats['pdfp_q1'])`%, so the headline was the stronger number. Wednesday is a third look at a quarter that ended in June. The result is `{python} stats['q2_third_status']`. It can change either bar for that quarter. It cannot show the September hike.
+
+The same morning BEA also starts an update that can revise earlier years, from `{python} stats['revision_window']`. `{python} stats['annual_update_scope']`. If an older bar moves, that is a correction to the past, not news about August. The size of any correction is not published yet, so it is not drawn.
+
+```{python}
+#| echo: true
+#| label: fig-gdp-vs-private-demand
+#| fig-cap: "The current vintage of real GDP growth and private domestic final purchases. The second quarter's headline and its private-demand rate do not match."
+
+# These are already annualized percent changes from scripts/02_clean_data.py.
+# Real GDP is the whole economy. Private demand is household and business
+# spending at home. This cell only draws the bars. It does not recompute rates.
+gdp = pd.read_csv(CLEAN_DIR / "gdp_vs_pdfp.csv", index_col="date", parse_dates=True).sort_index()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+x_pos = np.arange(len(gdp))
+width = 0.38
+ax.bar(
+    x_pos - width / 2,
+    gdp["gdp_saar"],
+    width=width,
+    color=COLORS["primary"],
+    edgecolor="white",
+    label="Real GDP",
+    zorder=3,
+)
+ax.bar(
+    x_pos + width / 2,
+    gdp["pdfp_saar"],
+    width=width,
+    color=COLORS["secondary"],
+    edgecolor="white",
+    label="Private demand",
+    zorder=3,
+)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+
+span = float(gdp[["gdp_saar", "pdfp_saar"]].max().max() - gdp[["gdp_saar", "pdfp_saar"]].min().min())
+pad = max(span * 0.012, 0.15)
+for i, (gdp_value, pdfp_value) in enumerate(zip(gdp["gdp_saar"], gdp["pdfp_saar"])):
+    ax.text(
+        i - width / 2,
+        gdp_value + (pad if gdp_value >= 0 else -pad),
+        f"{gdp_value:.1f}",
+        ha="center",
+        va="bottom" if gdp_value >= 0 else "top",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+    ax.text(
+        i + width / 2,
+        pdfp_value + (pad if pdfp_value >= 0 else -pad),
+        f"{pdfp_value:.1f}",
+        ha="center",
+        va="bottom" if pdfp_value >= 0 else "top",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+
+labels = [f"Q{(ts.month - 1) // 3 + 1}\n{ts.year}" for ts in gdp.index]
+ax.set_xticks(x_pos)
+ax.set_xticklabels(labels)
+ax.set_ylabel("Percent change, annualized")
+low = float(gdp[["gdp_saar", "pdfp_saar"]].min().min())
+high = float(gdp[["gdp_saar", "pdfp_saar"]].max().max())
+ax.set_ylim(low - span * 0.22, high + span * 0.22)
+ax.legend(frameon=False, loc="upper left")
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-vs-private-demand.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: BEA via FRED, real GDP growth and private domestic final purchases, current vintage through the Q2 second estimate. Earlier bars are not each quarter's first print.
+:::
+
+The chart above is the latest quarter's split. Private demand ran at `{python} fmt(stats['pdfp_q2'])`% while GDP ran at `{python} fmt(stats['gdp_q2'])`%. The third estimate can change that mix without moving the headline, and the annual update can move the earlier bars.
+
+## The Wednesday test
+
+This is a checklist, not a forecast.
+
+**Core PCE, month to month**
+
+- Soft: at or under `{python} fmt(stats['test_core_soft_mom'])`%, given a yearly core rate of `{python} fmt(stats['pce_core_yoy'])`%.
+- Sticky: `{python} fmt(stats['test_core_sticky_mom'])`%, or any month that keeps the yearly rate from falling. July was this case.
+- Hot: a print that lifts the yearly rate, or detail that shows services prices, rather than energy, doing the work.
+
+**Headline PCE**
+
+- Treat an energy bounce as already telegraphed by August CPI, when gasoline rose `{python} fmt(stats['cpi_gasoline_mom'])`%.
+- Do not let gasoline become the lede. The lede is core, unless the detail says energy is the whole story and core cooled.
+
+**Real PCE and the saving rate**
+
+- Does the quantity stay near July's `{python} fmt(stats['real_pce_mom'])`%, recover, or roll over?
+- Does the `{python} fmt(stats['saving_rate'])`% saving rate thicken, or get spent?
+
+**The second-quarter third estimate**
+
+- Where is the headline relative to the `{python} fmt(stats['gdp_q2'])`% second estimate?
+- Did private demand stay the stronger part, as it was at `{python} fmt(stats['pdfp_q2'])`% against that headline? In the first quarter it was not.
+
+**The annual update**
+
+- Did BEA rewrite 2025 or early-2026 core PCE or GDP, inside `{python} stats['revision_window']`?
+- If history moves, that can matter more than August.
+- Call a revision a revision. Do not describe a rewritten past as news about August.
+
+## Putting it together
+
+The story changes if core's monthly pace gets near `{python} fmt2(stats['two_pct_monthly'])`% often enough for the yearly rate to fall. July did not. A gasoline echo of August CPI does not do it, and neither does a quiet month that leaves the yearly rate at `{python} fmt(stats['pce_core_yoy'])`%. The easy misread is a calm August on top of a rewritten 2025. The hike is `{python} fmt_int(stats['days_since_hike'])` days old and still outside the sample, so August cannot show the `{python} fmt_int(stats['hike_bp'])` basis point move.
+
+## What it means
+
+### What it means for
+
+**For the Fed.** Core at `{python} fmt(stats['pce_core_yoy'])`% is the gauge that would have to cool before the `{python} fmt(stats['sep_funds_2026'])`% median dot looks out of date. One August month, mostly from before the decision, will not do that. This post makes no rate call.
+
+**For households.** Spending paused in quantity while income was still rising. A `{python} fmt(stats['saving_rate'])`% saving rate is not a cushion. The question is whether the basket holds still while prices rise, or the basket shrinks.
+
+**For investors.** `{python} fmt(stats['gdp_q2'])`% GDP and `{python} fmt(stats['pdfp_q2'])`% private demand are different questions. The second estimate already split them. A revised older bar is history until it is labeled as a revision.
+
+If core stays near `{python} fmt(stats['pce_core_yoy'])`% instead of gliding toward `{python} fmt_int(stats['fed_inflation_goal'])`%, that persistence is what shows up in multi-year claims costs. One August print does not price a book of business. This is not a product recommendation.
+
+## What to watch next
+
+- `{python} stats['next_bea_date']` at `{python} stats['next_bea_time']`: August PCE, the second-quarter third estimate, and the 2026 annual update. This is the release the post is built for. The result is `{python} stats['august_pce_status']` until then.
+- `{python} stats['jobs_date']` at `{python} stats['jobs_time']`: the September employment situation. September 29 JOLTS is a nearby read on labor demand, not a second topic of this post.
+- `{python} stats['minutes_date']` at `{python} stats['minutes_time']`: minutes of the `{python} stats['fomc_meeting_dates']` meeting, on the Federal Reserve's October calendar.
+- `{python} stats['cpi_next_date']`: the September CPI. That is the next public price print after Wednesday's PCE, on a different basket.
+
+## Limitations
+
+August income and spending, and the third look at last quarter, are not out yet. The post stops at July and at BEA's second look.
+
+The GDP bars use the latest published figures. The one exception is the first look at second-quarter spending at home, which BEA printed beside the second look. A gasoline move in the consumer price index is a hint about energy, not energy's weight inside PCE. The `{python} fmt_int(stats['dots_one_more'])` of `{python} fmt_int(stats['dots_total'])` figure is a count of forecasts behind the `{python} fmt(stats['sep_funds_2026'])`% median, not the Committee's vote. August payrolls are mentioned only so this is not mistaken for a jobs piece. No revision size is known for `{python} stats['revision_window']`.
+
+## Methodology and data
+
+How this post was built. The three scripts download FRED, compute the rates, and check the July and second-estimate prints. The charts only plot. Re-run them from this folder with `FRED_API_KEY` set.
+
+| Series | What it is in this post | Source |
+|---|---|---|
+| Headline and core PCE prices | Yearly and monthly inflation. First two charts. | [Headline](https://fred.stlouisfed.org/series/PCEPI), [Core](https://fred.stlouisfed.org/series/PCEPILFE) |
+| Real spending and the saving rate | Quantity of spending, and saving as a share of after-tax income. Third chart. | [Real spending](https://fred.stlouisfed.org/series/PCEC96), [Saving rate](https://fred.stlouisfed.org/series/PSAVERT) |
+| Income and the cash-register bill | The bill is the top line of the third chart. Income and after-tax income are text only. | [FRED](https://fred.stlouisfed.org/) |
+| GDP and private demand | Whole-economy growth, and household plus business spending at home. Fourth chart. | [GDP](https://fred.stlouisfed.org/series/A191RL1Q225SBEA), [Private demand](https://fred.stlouisfed.org/series/PB0000031Q225SBEA) |
+| July PCE and Q2 second estimate | Official prints, including the advance column. | [July PCE](https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026), [Q2 second](https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-2nd-quarter-2026) |
+| 2026 annual update | Open window. No magnitudes. | [BEA note](https://www.bea.gov/information-updates-national-regional-economic-accounts) |
+| FOMC, August CPI, August payrolls | Context only. Not charted, except the hike line. | [SEP](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm), [CPI](https://www.bls.gov/news.release/cpi.nr0.htm), [payrolls](https://www.bls.gov/news.release/empsit.nr0.htm) |
+
+: Sources for the charts and the locked priors. August 2026 PCE is not in this table because it has not been published.
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*
+
+<!--
+Wednesday swap list, after 8:30 a.m. ET on 9/30. Update these and do not rewrite the post:
+1. pagetitle and description: replace the July setup framing with the August PCE print and the Q2 third estimate.
+2. Key-number cards: swap the July core, real-spending, and saving-rate cards for the August prints, and the GDP cards for the third estimate.
+3. Opening: one paragraph on which test-list bucket printed, and whether the annual update moved history.
+4. The Wednesday test: mark soft, sticky, or hot, and say whether private demand stayed the stronger part of GDP.
+5. data_current_as_of, latest_month, and the release note: move the sample from July 2026 to August 2026.
+6. Leave the annual-update explanation. Add a revision direction only if BEA published one, and label it as a revision.
+-->

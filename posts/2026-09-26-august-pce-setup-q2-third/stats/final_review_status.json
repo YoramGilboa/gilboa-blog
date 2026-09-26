@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-09-26T02:00:00Z",
+  "reviewer": "blog-final-review",
+  "notes": "Full-chain review: lint PASS, preflight PASS (freeze current), expression validator OK, no raw {python}/NaN in rendered HTML. SEO: pagetitle 52 chars, description 156 chars, 4 preferred-vocabulary categories, three distinct title fields. Chart review: all 4 figures PASS at desktop and 400px; endpoint dots, direct labels, FOMC-line convention, figure-source blocks, homepage card (one description, tags, date, preview image) all correct. Accuracy: every prose value traces to stats/summary_stats.json; pipeline locks July PCE and Q2 prints against official BEA values; derived figures (2.7pp gap, 9/4 day counts, 0.17 monthly path) verified. No auto-fixes required. Draft flag was temporarily lifted for visual review only and restored; rerendered."
+}
