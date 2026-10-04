@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-10-04T01:57:32Z",
+  "reviewer": "blog-final-review",
+  "notes": "Chart review passed all five figures and the listing card at 1366x768 and 400x900. Typography matches the prior August jobs post: 8-11pt chart text and 10pt annotations, replacing the enlarged labels. This post alone has centered 640px desktop charts; industry is approximately 428px tall and two-panel figures 461-462px tall. On phones, readable 800px images scroll within 334px figure containers; full charts require horizontal scrolling, and the page has no horizontal overflow. Canonical HTML, executed freeze, and standalone HTML were regenerated; both HTML variants load the sizing CSS and chart assets. Accuracy, flow, and consistency retain their previous review results: no data, statistical qualifications, or prose changed. Correct claims alt text and snapshot integrity guards remain intact. Lint, canonical-output preflight, CSS diagnostics, and repository audit passed. Temporary homepage and production render settings were restored. Timestamp is the actual UTC review time. draft: true. Not published."
+}

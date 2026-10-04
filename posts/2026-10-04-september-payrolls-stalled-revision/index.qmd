@@ -1,0 +1,689 @@
+---
+title: "The August Rebound Was a First Print"
+pagetitle: "September 2026 jobs: a 29,000 print and a 60,000 revision"
+date: "2026-10-04"
+author: Yoram Gilboa
+categories: [economics, labor market, federal reserve, data visualization]
+description: "Nonfarm payrolls rose 29,000 in September. July and August were revised down 60,000 combined. Unemployment was 4.2 percent. Pay rose 3.0 percent over the year."
+image: images/revision-bars.png
+image-alt: "Grouped bars of previously published versus current payroll changes for July, August, and September 2026"
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+body-classes: compact-charts
+css: ../../styles.css
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+labor = pd.read_csv(CLEAN_DIR / "labor_monthly.csv", index_col="date", parse_dates=True).sort_index()
+sector = pd.read_csv(CLEAN_DIR / "sector_september.csv")
+revisions = pd.read_csv(CLEAN_DIR / "revisions.csv")
+claims = pd.read_csv(CLEAN_DIR / "claims_weekly.csv", index_col="date", parse_dates=True).sort_index()
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    return f"{float(value):.{digits}f}"
+
+
+def fmt_chg(value, digits=1):
+    return f"{float(value):+.{digits}f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def extend_xlim(ax, index, pad_frac=0.12):
+    span = index[-1] - index[0]
+    ax.set_xlim(index[0], index[-1] + span * pad_frac)
+```
+
+The August jobs report looked like a rebound. September showed that the first estimate overstated its size. Nonfarm payrolls rose `{python} fmt_chg(stats['payroll_sep_k'], 0)`k, below the `{python} fmt_chg(stats['prior_12m_avg_k'], 0)`k average over the prior 12 months. The Bureau of Labor Statistics revised July from `{python} fmt_chg(stats['july_previous_k'], 0)`k to `{python} fmt_chg(stats['july_current_k'], 0)`k and August from `{python} fmt_chg(stats['august_previous_k'], 0)`k to `{python} fmt_chg(stats['august_current_k'], 0)`k. Combined, those two months are `{python} fmt(abs(stats['combined_revision_k']), 0)`k lower than previously published.
+
+Unemployment was `{python} fmt(stats['unrate_sep'])`%, with `{python} fmt(stats['unemployed_level_m'])` million people unemployed. Average hourly earnings were `{python} fmt2(stats['ahe_level'])` dollars, up `{python} fmt(stats['ahe_mom_pct'])`% on the month and `{python} fmt(stats['ahe_yoy_pct'])`% over the year. Weekly initial claims were `{python} fmt(stats['claims_latest_k'], 0)`k in the week ending `{python} stats['claims_as_of']`. BLS said September payroll employment changed little. The approximate 90 percent confidence interval for the monthly change is plus or minus `{python} fmt(stats['payroll_ci_k'], 0)`k, so the reported estimate is not statistically distinguishable from zero. That interval describes the monthly estimate. It does not test whether September differed from August. Low claims showed no sign of a broad layoff surge. Slower hiring is one interpretation, but September hires and separations are not yet available.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any
+code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py`: Verifies the committed October 2, 2026 FRED snapshot. It does not download a newer vintage. Its refresh option writes a side copy under `data/raw/refresh/` using that release vintage and the observation cutoffs, and it does not replace the snapshot.
+- `02_clean_data.py`: Cleans levels and computes monthly job changes and percent rates
+- `04_compute_stats.py`: Computes summary statistics for the prose and cards from the committed snapshot
+
+Payrolls, household rates, wages, hours, and industry detail are from the [archived BLS Employment Situation](https://www.bls.gov/news.release/archives/empsit_10022026.htm) via the committed [FRED](https://fred.stlouisfed.org/) snapshot. Previously published payroll estimates and the ADP private-sector contrast are transcribed from the linked official releases.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.55rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    (
+        "Nonfarm payrolls",
+        f"{fmt_chg(stats['payroll_sep_k'], 0)}k",
+        COLORS["primary"],
+        stats["latest_month_short"],
+    ),
+    (
+        "July + August revision",
+        f"{fmt_chg(stats['combined_revision_k'], 0)}k",
+        COLORS["accent"],
+        "previously published",
+    ),
+    (
+        "Unemployment rate",
+        f"{fmt(stats['unrate_sep'])}%",
+        COLORS["warning"],
+        f"from {fmt(stats['unrate_aug'])}%",
+    ),
+    (
+        "Average hourly earnings",
+        f"{fmt(stats['ahe_yoy_pct'])}%",
+        COLORS["secondary"],
+        "year-over-year",
+    ),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+HTML(
+    f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.25rem 0 1.0rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+    BLS Employment Situation via FRED | {stats['data_current_as_of']} | {stats['latest_month']}
+</p>
+"""
+)
+```
+
+## How to read this report
+
+This news release is two surveys. The establishment survey asks employers how many jobs are on payrolls, plus hours and pay. Nonfarm payrolls are that employer count, excluding farm work, the self-employed, and a few other groups. The household survey asks people whether they are employed, unemployed, or outside the labor force. The unemployment rate is the share of the labor force that is jobless and looking. The labor force participation rate is the share of adults who are working or looking.
+
+A revision is BLS replacing last month's estimate after more firms report and after seasonal factors are recalculated. Payroll estimates are preliminary through their first two releases. JOLTS, the Job Openings and Labor Turnover Survey, counts openings, hires, quits, and layoffs, and it lags the jobs print by a month. Initial claims count new filings for unemployment insurance each week. Average hourly earnings are the CES wage for private employees. Use payrolls for net job growth, the household survey for unemployment and participation, and claims as a timely but incomplete signal of layoffs.
+
+## The headline and the two-month revision
+
+Total nonfarm payrolls rose `{python} fmt_chg(stats['payroll_sep_k'], 0)`k in September. Private payrolls rose `{python} fmt_chg(stats['private_sep_k'], 0)`k. Government fell `{python} fmt(abs(stats['government_sep_k']), 0)`k. The prior-12-month average was `{python} fmt_chg(stats['prior_12m_avg_k'], 0)`k. BLS described the payroll change as little changed. The approximate 90 percent confidence interval is plus or minus `{python} fmt(stats['payroll_ci_k'], 0)`k, so this reported estimate is not statistically distinguishable from zero. That interval does not test the August-to-September difference.
+
+The revision is the other print. July moved from `{python} fmt_chg(stats['july_previous_k'], 0)`k, the figure in the August Employment Situation, to `{python} fmt_chg(stats['july_current_k'], 0)`k. August moved from `{python} fmt_chg(stats['august_previous_k'], 0)`k to `{python} fmt_chg(stats['august_current_k'], 0)`k. Together those two months are `{python} fmt(abs(stats['combined_revision_k']), 0)`k lower than previously published. The three-month average, which now includes September, is `{python} fmt_chg(stats['payroll_3m_avg_k'], 0)`k. That average is still above the prior-12-month pace because the revised August remains a solid month. The September point estimate sits below both of those reported averages.
+
+```{python}
+#| echo: true
+#| label: fig-revision-bars
+#| fig-cap: "August is no longer a 162,000 rebound. Combined July and August revisions subtracted 60,000 jobs, and September printed plus 29,000."
+#| fig-alt: "Grouped bars for July, August, and September 2026. Gray bars are the previously published estimates. Blue bars are the current positive estimates and the red bar is the current July decline. August falls from plus 162,000 to plus 133,000, July falls from plus 21,000 to minus 10,000, and September has only a current plus 29,000 bar."
+
+# Previous-estimate columns are the previously published CES changes from the
+# BLS release text. Current columns are this month's PAYEMS first
+# differences from scripts/02_clean_data.py.
+plot = revisions.copy()
+plot.loc[plot["month"].eq("September"), "first_print_k"] = np.nan
+x = np.arange(len(plot))
+width = 0.38
+current_positions = np.where(plot["first_print_k"].notna(), x + width / 2, x)
+current_colors = [
+    COLORS["accent"] if value < 0 else COLORS["primary"] for value in plot["current_k"]
+]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.bar(
+    x - width / 2,
+    plot["first_print_k"],
+    width,
+    color=COLORS["light"],
+    edgecolor="white",
+)
+ax.bar(
+    current_positions,
+    plot["current_k"],
+    width,
+    color=current_colors,
+    edgecolor="white",
+)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+bar_span = plot[["first_print_k", "current_k"]].max().max() - plot[["first_print_k", "current_k"]].min().min()
+label_padding = 0.04 * bar_span
+
+for position, row in plot.iterrows():
+    if pd.notna(row["first_print_k"]):
+        ax.text(
+            position - width / 2,
+            row["first_print_k"] + (label_padding if row["first_print_k"] >= 0 else -label_padding),
+            f"{row['first_print_k']:+.0f}k",
+            ha="center",
+            va="bottom" if row["first_print_k"] >= 0 else "top",
+            fontsize=10,
+            color=COLORS["neutral"],
+        )
+    ax.text(
+        current_positions[position],
+        row["current_k"] + (label_padding if row["current_k"] >= 0 else -label_padding),
+        f"{row['current_k']:+.0f}k",
+        ha="center",
+        va="bottom" if row["current_k"] >= 0 else "top",
+        fontsize=10,
+        color=COLORS["accent"] if row["current_k"] < 0 else COLORS["primary"],
+        fontweight="bold",
+    )
+
+ax.set_xticks(x)
+ax.set_xticklabels(plot["month"])
+ax.set_ylabel("Change (thousands)")
+ax.set_ylim(min(0, plot["current_k"].min()) - 0.18 * bar_span, plot[["first_print_k", "current_k"]].max().max() + 0.2 * bar_span)
+ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=4))
+legend_handles = [
+    plt.Rectangle((0, 0), 1, 1, facecolor=COLORS["light"], edgecolor="white", label="Previous estimate"),
+    plt.Rectangle((0, 0), 1, 1, facecolor=COLORS["primary"], edgecolor="white", label="Current"),
+    plt.Rectangle((0, 0), 1, 1, facecolor=COLORS["accent"], edgecolor="white", label="Current decline"),
+]
+ax.legend(handles=legend_handles, loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=3, frameon=False, handlelength=1, columnspacing=0.8)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "revision-bars.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [Archived BLS Employment Situation](https://www.bls.gov/news.release/archives/empsit_10022026.htm) previously published estimates; October 2 snapshot of [FRED PAYEMS](https://fred.stlouisfed.org/series/PAYEMS).
+:::
+
+The `{python} stats['prior_jobs_post_date']` post, [The Jobs Rebound Was Restaurants and Schools](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/), treated August as a restaurant-and-school rebound. Food services and drinking places were `{python} fmt_chg(stats['august_food_previous_k'], 1)`k and local government education was `{python} fmt_chg(stats['august_local_edu_previous_k'], 1)`k in the original BLS table, together `{python} fmt(stats['august_two_sector_previous_share_pct'])`% of the first-print `{python} fmt_chg(stats['august_previous_k'], 0)`k. On this vintage those two are `{python} fmt_chg(stats['august_food_current_k'], 1)`k and `{python} fmt_chg(stats['august_local_edu_current_k'], 1)`k. They still sum to `{python} fmt(stats['august_two_sector_share_pct'])`% of the revised `{python} fmt_chg(stats['august_current_k'], 0)`k, but restaurants were cut and local schools were raised. Leisure and hospitality itself was revised from `{python} fmt_chg(stats['august_leisure_previous_k'], 0)`k to `{python} fmt_chg(stats['august_leisure_current_k'], 0)`k. The composition story survived, but its restaurant component and the total rebound were smaller than first reported.
+
+## Where the September jobs were
+
+BLS said employment in every major industry changed little. The release narrated four industries. Health care added `{python} fmt_chg(stats['healthcare_sep_k'], 0)`k jobs, slower than its `{python} fmt_chg(stats['healthcare_12m_avg_k'], 0)`k average over the prior 12 months. Construction added `{python} fmt_chg(stats['construction_sep_k'], 0)`k. Manufacturing added `{python} fmt_chg(stats['manufacturing_sep_k'], 0)`k and is up `{python} fmt_chg(stats['manufacturing_since_dec_k'], 0)`k since `{python} stats['manufacturing_low_month']`. Financial activities lost `{python} fmt(abs(stats['financial_sep_k']), 0)`k jobs.
+
+Other supersector figures are point estimates inside that little-changed band, from Summary table B or Table B-1. Information lost `{python} fmt(abs(stats['information_sep_k']), 0)`k. Professional and business services lost `{python} fmt(abs(stats['professional_sep_k']), 0)`k, including `{python} fmt(abs(stats['temp_help_sep_k']), 1)`k in temporary help. Leisure and hospitality added `{python} fmt_chg(stats['leisure_sep_k'], 0)`k. Government fell `{python} fmt(abs(stats['government_sep_k']), 0)`k.
+
+Food services and drinking places added `{python} fmt_chg(stats['food_services_sep_k'], 1)`k inside leisure at `{python} fmt_chg(stats['leisure_sep_k'], 0)`k; the rest of leisure fell. Local government education fell `{python} fmt(abs(stats['local_education_sep_k']), 1)`k. Those two supplied most of the August first print. They did not supply most of September.
+
+Wholesale trade added `{python} fmt_chg(stats['wholesale_sep_k'], 1)`k, retail trade `{python} fmt_chg(stats['retail_sep_k'], 1)`k, and transportation and warehousing `{python} fmt_chg(stats['transportation_sep_k'], 1)`k. Each was positive in Summary table B. Together they are on the order of health care, and they are on the chart below.
+
+```{python}
+#| echo: true
+#| label: fig-industry-mix
+#| fig-cap: "Health care led the selected September gains, while government and several service industries lost jobs; wholesale, retail, and transportation together added slightly more than health care."
+#| fig-alt: "Horizontal bars of selected September 2026 industry employment changes, in thousands. Health care is the longest positive bar. Government is the longest negative bar, and information, professional and business services, and financial activities are also negative. Wholesale trade, retail trade, and transportation and warehousing are smaller positive bars."
+
+# Supersector changes are CES first differences from 02_clean_data.py.
+# Wholesale, retail, and transportation are Summary table B September
+# changes written in 04_compute_stats.py. Food services and local
+# education sit inside leisure and government, so they are omitted here.
+plot_sector = sector[sector["industry"] != "All other"].sort_values("change_k")
+highlight = {"Health care"}
+bar_colors = []
+for industry, value in zip(plot_sector["industry"], plot_sector["change_k"]):
+    if value < 0:
+        bar_colors.append(COLORS["accent"])
+    elif industry in highlight:
+        bar_colors.append(COLORS["primary"])
+    else:
+        bar_colors.append(COLORS["light"])
+
+industry_labels = {
+    "Leisure and hospitality": "Leisure and\nhospitality",
+    "Transportation and warehousing": "Transportation\nand warehousing",
+    "Professional and business": "Professional and\nbusiness services",
+    "Financial activities": "Financial\nactivities",
+}
+display_industries = plot_sector["industry"].replace(industry_labels)
+fig, ax = plt.subplots(figsize=(8.0, 5.4))
+ax.barh(
+    display_industries,
+    plot_sector["change_k"],
+    color=bar_colors,
+    edgecolor="white",
+    height=0.65,
+)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+x_span = plot_sector["change_k"].max() - plot_sector["change_k"].min()
+one_decimal = {
+    "Wholesale trade",
+    "Retail trade",
+    "Transportation and warehousing",
+}
+for industry, display_industry, value in zip(plot_sector["industry"], display_industries, plot_sector["change_k"]):
+    offset = 0.04 * x_span
+    label = f"{value:+.1f}k" if industry in one_decimal else f"{value:+.0f}k"
+    ax.text(
+        value + offset if value >= 0 else value - offset,
+        display_industry,
+        label,
+        va="center",
+        ha="left" if value >= 0 else "right",
+        fontsize=10,
+        color=COLORS["neutral"],
+    )
+
+xmin = float(plot_sector["change_k"].min())
+xmax = float(plot_sector["change_k"].max())
+ax.set_xlim(xmin - 0.35 * x_span, xmax + 0.28 * x_span)
+ax.set_xlabel("Change (thousands)")
+ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=3))
+plt.tight_layout()
+fig.savefig(IMG_DIR / "industry-mix.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [Archived September Employment Situation](https://www.bls.gov/news.release/archives/empsit_10022026.htm) Table B-1 via the October 2 FRED snapshot; wholesale, retail, and transportation from Summary table B in that archive.
+:::
+
+## Household survey
+
+The household survey is a different sample from payrolls. Unemployment was `{python} fmt(stats['unrate_sep'])`%, still inside the `{python} fmt(stats['unrate_band_low'])`% to `{python} fmt(stats['unrate_band_high'])`% band that has held since March. `{python} fmt(stats['unemployed_level_m'])` million people were unemployed. Table A-1 shows the labor force up `{python} fmt_chg(stats['labor_force_chg_k'], 0)`k and household employment up `{python} fmt_chg(stats['employed_chg_k'], 0)`k. Those monthly changes come from a different sample than payrolls. They are not a second payroll print. Use payrolls for the pace of net job growth.
+
+BLS said the labor force participation rate, at `{python} fmt(stats['participation_sep'])`%, and the employment-population ratio, at `{python} fmt(stats['emp_pop_sep'])`%, changed little. Black unemployment rose to `{python} fmt(stats['black_unrate_sep'])`%, the only major group BLS said increased.
+
+Long-term unemployment, people jobless for 27 weeks or more, was `{python} fmt(stats['long_term_unemployed_m'])` million, `{python} fmt(stats['long_term_unemployed_share_pct'])`% of the unemployed. People working part time for economic reasons were `{python} fmt(stats['pte_economic_m'])` million.
+
+```{python}
+#| echo: true
+#| label: fig-household
+#| fig-cap: "Unemployment was 4.2 percent, still inside the 4.1 to 4.3 percent range BLS cites since March. BLS said participation, at 61.8 percent, changed little."
+#| fig-alt: "Two panels from January through September 2026. Unemployment ends at 4.2 percent after a February reading of 4.4 percent above the shaded 4.1 to 4.3 percent band that contains the months since March. Participation dips to 61.4 percent in July and ends at 61.8 percent."
+
+# Household rates are FRED levels, not derived in 02. The payroll-change
+# formulas in 02_clean_data.py do not apply to these percent-of-population
+# series.
+plot = labor.loc["2026-01-01":, ["unrate", "civpart"]].dropna()
+
+fig, axes = plt.subplots(
+    2, 1, figsize=(8.0, 5.8), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+
+axes[0].axhspan(
+    stats["unrate_band_low"],
+    stats["unrate_band_high"],
+    color=COLORS["light"],
+    alpha=0.25,
+    zorder=0,
+)
+axes[0].plot(plot.index, plot["unrate"], color=COLORS["primary"], linewidth=1.8, zorder=3)
+axes[0].scatter(
+    plot.index[-1],
+    plot["unrate"].iloc[-1],
+    s=40,
+    color=COLORS["primary"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[0].text(
+    plot.index[-1],
+    plot["unrate"].iloc[-1],
+    f"  {plot['unrate'].iloc[-1]:.1f}%",
+    color=COLORS["primary"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[0].set_ylabel("Unemployment\n(percent)")
+
+axes[1].plot(plot.index, plot["civpart"], color=COLORS["secondary"], linewidth=1.8)
+axes[1].scatter(
+    plot.index[-1],
+    plot["civpart"].iloc[-1],
+    s=40,
+    color=COLORS["secondary"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[1].text(
+    plot.index[-1],
+    plot["civpart"].iloc[-1],
+    f"  {plot['civpart'].iloc[-1]:.1f}%",
+    color=COLORS["secondary"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[1].set_ylabel("Participation\n(percent)")
+axes[1].set_xlabel("Month")
+
+for ax in axes:
+    extend_xlim(ax, plot.index, 0.18)
+    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 5, 9]))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=3))
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.1f"))
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "household.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS Current Population Survey via FRED](https://fred.stlouisfed.org/), UNRATE and CIVPART.
+:::
+
+## Wages and hours
+
+Pay is one channel through which a tight labor market can affect inflation. Average hourly earnings for all private employees rose `{python} fmt(stats['ahe_mom_cents'], 0)` cents, or `{python} fmt(stats['ahe_mom_pct'])`%, to `{python} fmt2(stats['ahe_level'])` dollars. Over the year they are up `{python} fmt(stats['ahe_yoy_pct'])`%, down from `{python} fmt(stats['ahe_yoy_aug_pct'])`% in the August post. Production and nonsupervisory workers earned `{python} fmt2(stats['ahe_prod_level'])` dollars, up `{python} fmt(stats['ahe_prod_mom_cents'], 0)` cents, or `{python} fmt(stats['ahe_prod_mom_pct'])`%, on the month. The private workweek remained at `{python} fmt(stats['hours_level'])` hours.
+
+```{python}
+#| echo: true
+#| label: fig-wages-hours
+#| fig-cap: "Pay growth eased to 3.0 percent year over year from 3.1 percent in the August post, and the workweek held at 34.4 hours."
+#| fig-alt: "Two panels from January 2023 through September 2026. Year-over-year average hourly earnings growth eases to 3.0 percent. The private workweek stays near 34 hours and ends at 34.4 hours."
+
+# AHE y/y is defined in scripts/02_clean_data.py. Hours are the FRED
+# level (AWHAETP), not a percent change.
+plot = labor.loc["2023-01-01":, ["ahe_yoy", "hours"]].dropna()
+
+fig, axes = plt.subplots(
+    2, 1, figsize=(8.0, 5.8), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+
+axes[0].plot(plot.index, plot["ahe_yoy"], color=COLORS["primary"], linewidth=1.8)
+axes[0].scatter(
+    plot.index[-1],
+    plot["ahe_yoy"].iloc[-1],
+    s=40,
+    color=COLORS["primary"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[0].text(
+    plot.index[-1],
+    plot["ahe_yoy"].iloc[-1],
+    f"  {plot['ahe_yoy'].iloc[-1]:.1f}%",
+    color=COLORS["primary"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[0].set_ylabel("Wage growth\n(yearly percent)")
+axes[0].set_ylim(2.8, max(plot["ahe_yoy"].max() + 0.15, 4.9))
+
+axes[1].plot(plot.index, plot["hours"], color=COLORS["warning"], linewidth=1.8)
+axes[1].scatter(
+    plot.index[-1],
+    plot["hours"].iloc[-1],
+    s=40,
+    color=COLORS["warning"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[1].text(
+    plot.index[-1],
+    plot["hours"].iloc[-1],
+    f"  {plot['hours'].iloc[-1]:.1f}",
+    color=COLORS["warning"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[1].set_ylabel("Workweek\n(hours)")
+axes[1].set_xlabel("Month")
+axes[1].set_ylim(33.5, 35.0)
+
+for ax in axes:
+    extend_xlim(ax, plot.index, 0.18)
+    ax.set_xticks(pd.date_range(plot.index[0], plot.index[-1], freq="YS"))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=3))
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.1f"))
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "wages-hours.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS CES via FRED](https://fred.stlouisfed.org/), CES0500000003 and AWHAETP.
+:::
+
+## Claims, JOLTS, and ADP
+
+Initial claims were `{python} fmt(stats['claims_latest_k'], 0)`k in the week ending `{python} stats['claims_as_of']`. The four-week average was `{python} fmt(stats['claims_4wk_avg_k'], 0)`k. Those readings are low by historical standards and do not indicate a broad layoff surge. They are consistent with slower hiring, but claims cover unemployment-insurance filings rather than all job separations, and payrolls measure net employment change rather than gross hires.
+
+JOLTS lags the jobs print by a month. The latest JOLTS month in this file is `{python} stats['jolts_month']`: `{python} fmt(stats['jolts_openings_m'])` million openings, `{python} fmt(stats['jolts_hires_m'])` million hires, `{python} fmt(stats['jolts_quits_m'])` million quits, and `{python} fmt(stats['jolts_layoffs_m'])` million layoffs and discharges. That is context for the summer, not a September reading.
+
+ADP estimated `{python} fmt_chg(stats['adp_private_sep_k'], 0)`k private-sector jobs in September, released `{python} stats['adp_as_of']`. ADP is a payroll-processor sample of private employers. It is not the BLS establishment survey. BLS private payrolls were `{python} fmt_chg(stats['private_sep_k'], 0)`k. Treat the ADP figure as a contrast, not as a substitute for the official count.
+
+```{python}
+#| echo: true
+#| label: fig-claims-payrolls
+#| fig-cap: "The September payroll estimate was plus 29,000 while initial claims stayed low; the claims data do not indicate a broad layoff surge or establish the month's gross hiring pace."
+#| fig-alt: "Two panels from January 2025 through September 2026. Weekly initial claims end at 197,000 and the four-week average ends at 200,000 in the week ending September 26, 2026. Monthly net payroll changes end at a reported plus 29,000."
+
+# Claims are weekly ICSA levels. Payroll changes are PAYEMS first
+# differences from scripts/02_clean_data.py. The two panels do not share
+# an x-axis because the frequencies differ.
+plot_claims = claims.loc["2025-01-01":].dropna(subset=["initial_claims"])
+plot_pay = labor.loc["2025-01-01":, ["payems_chg"]].dropna()
+
+fig, axes = plt.subplots(
+    2, 1, figsize=(8.0, 5.8), gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+
+axes[0].plot(
+    plot_claims.index,
+    plot_claims["initial_claims"] / 1000.0,
+    color=COLORS["warning"],
+    linewidth=1.8,
+)
+axes[0].plot(
+    plot_claims.index,
+    plot_claims["claims_4wk_avg"] / 1000.0,
+    color=COLORS["neutral"],
+    linewidth=1.2,
+    alpha=0.8,
+)
+axes[0].scatter(
+    plot_claims.index[-1],
+    plot_claims["initial_claims"].iloc[-1] / 1000.0,
+    s=40,
+    color=COLORS["warning"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[0].text(
+    plot_claims.index[-1],
+    plot_claims["initial_claims"].iloc[-1] / 1000.0,
+    f"  {plot_claims['initial_claims'].iloc[-1] / 1000.0:.0f}k",
+    color=COLORS["warning"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[0].set_ylabel("Initial claims\n(thousands)")
+extend_xlim(axes[0], plot_claims.index, 0.14)
+axes[0].xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 9]))
+axes[0].xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+
+bar_colors = np.where(plot_pay["payems_chg"] >= 0, COLORS["primary"], COLORS["accent"])
+axes[1].bar(
+    plot_pay.index,
+    plot_pay["payems_chg"],
+    width=20,
+    color=bar_colors,
+    alpha=0.75,
+    edgecolor="white",
+)
+axes[1].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+axes[1].scatter(
+    plot_pay.index[-1],
+    plot_pay["payems_chg"].iloc[-1],
+    s=40,
+    color=COLORS["primary"],
+    zorder=5,
+    edgecolors="white",
+    linewidth=0.8,
+)
+axes[1].text(
+    plot_pay.index[-1],
+    plot_pay["payems_chg"].iloc[-1],
+    f"  {plot_pay['payems_chg'].iloc[-1]:+.0f}k",
+    color=COLORS["primary"],
+    fontsize=10,
+    fontweight="bold",
+    va="center",
+)
+axes[1].set_ylabel("Net job change\n(thousands)")
+axes[1].set_xlabel("Month")
+extend_xlim(axes[1], plot_pay.index, 0.14)
+axes[1].xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 9]))
+axes[1].xaxis.set_major_formatter(mdates.DateFormatter("%b\n%Y"))
+axes[1].yaxis.set_major_formatter(ticker.FuncFormatter(lambda v, pos: f"{v:+.0f}"))
+for ax in axes:
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=3))
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "claims-payrolls.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [DOL initial claims via FRED ICSA](https://fred.stlouisfed.org/series/ICSA); [BLS PAYEMS](https://fred.stlouisfed.org/series/PAYEMS).
+:::
+
+The gray line in the top panel is the four-week average of claims.
+
+## Putting it together
+
+The `{python} fmt(abs(stats['combined_revision_k']), 0)`k downward revision to July and August weakens the case for a sustained rebound. BLS reported a September payroll estimate of `{python} fmt_chg(stats['payroll_sep_k'], 0)`k and said employment changed little. That estimate is not statistically distinguishable from zero, and the monthly confidence interval does not test the difference from August. The revised three-month average of `{python} fmt_chg(stats['payroll_3m_avg_k'], 0)`k remains above the prior-year pace because August is still in the window. Wage growth eased to `{python} fmt(stats['ahe_yoy_pct'])`%, while low claims showed no broad layoff surge. The evidence points to a small reported net employment change and a lower revised path, not yet to a measured decline in September gross hiring.
+
+### What it means for
+
+**The Fed.** This print is a data constraint for `{python} stats['next_fomc_date']`, not a recommendation. Officials now have a `{python} fmt_chg(stats['payroll_sep_k'], 0)`k month, a `{python} fmt_chg(stats['combined_revision_k'], 0)`k two-month revision, unemployment at `{python} fmt(stats['unrate_sep'])`%, and pay at `{python} fmt(stats['ahe_yoy_pct'])`% over the year. CPI on `{python} stats['next_cpi_date']` is still the inflation read they will pair with it.
+
+**Households.** Unemployment was `{python} fmt(stats['unrate_sep'])`%, inside a narrow band. BLS said participation and the employment-population ratio changed little. Pay rose `{python} fmt(stats['ahe_mom_pct'])`% on the month. The reported payroll estimate was `{python} fmt_chg(stats['payroll_sep_k'], 0)`k, and BLS said employment in every major industry changed little. Gains and losses still differed across industries.
+
+**Investors.** Read the August revision, the reported `{python} fmt_chg(stats['payroll_sep_k'], 0)`k September estimate, and `{python} fmt(stats['ahe_yoy_pct'])`% wage growth alongside CPI on `{python} stats['next_cpi_date']`. The Fed's tension between employment and inflation remains. The downward revision weakened the previously published net job-growth picture without a corresponding rise in claims.
+
+**Insurers.** Financial activities is down `{python} fmt(abs(stats['financial_since_peak_k']), 0)`k jobs since `{python} stats['financial_peak_month']`. Insurance carriers and related activities account for `{python} fmt(abs(stats['insurance_since_peak_k']), 0)`k of that decline. September's `{python} fmt(abs(stats['financial_sep_k']), 0)`k drop in financial activities is one month inside that slide.
+
+## What to watch next
+
+- FOMC minutes on `{python} stats['next_minutes_date']`.
+- Weekly claims on `{python} stats['next_claims_date']`.
+- September JOLTS on `{python} stats['next_jolts_date']`, the first official reading of September hires and separations for the slower-hiring hypothesis.
+- CPI on `{python} stats['next_cpi_date']`.
+- The FOMC decision on `{python} stats['next_fomc_date']`.
+- The next Employment Situation on `{python} stats['next_jobs_date']`.
+
+## Limitations
+
+September is one month, and the first CES estimate will be revised twice. Industry point estimates need more than one print before they become a trend; the industry chart shows selected categories rather than a complete decomposition. ADP is a private-sector processor sample, not the official count. This post reproduces the `{python} stats['bls_release_date']` analysis from the committed FRED snapshot in `data/raw`. The fetch script does not replace that snapshot with a later vintage. A historical refetch has to request the October 2 release vintage as well as the observation cutoffs, because an end date alone does not freeze revisions. Earlier July and August estimates still come from BLS release text, because those first prints are not in the snapshot. The approximate 90 percent confidence interval applies to the monthly payroll change, not to the difference between August and September. JOLTS lags; the latest month here is `{python} stats['jolts_month']`. Low claims are an incomplete signal of layoffs, and September gross hires and separations are not yet observed here. The household and establishment surveys ask different questions of different samples and can diverge in the same month.
+
+## Methodology and data
+
+| Series | Description | Source |
+|---|---|---|
+| PAYEMS | Total nonfarm payrolls | [FRED / BLS](https://fred.stlouisfed.org/series/PAYEMS) |
+| USPRIV, USGOVT | Private and government payrolls | [FRED](https://fred.stlouisfed.org/) |
+| CES6562000101, USCONS, MANEMP, USLAH | Health care, construction, manufacturing, leisure | [FRED](https://fred.stlouisfed.org/) |
+| USFIRE, USINFO, USPBS, CES5552400001 | Financial, information, professional, insurance carriers | [FRED](https://fred.stlouisfed.org/) |
+| CES7072200001, CES9093161101 | Food services and local government education | [FRED](https://fred.stlouisfed.org/) |
+| Labor force and household employment | September changes | [Archived Summary table A and Table A-1](https://www.bls.gov/news.release/archives/empsit_10022026.htm) |
+| Wholesale, retail, transportation | September over-the-month changes | [Archived Summary table B](https://www.bls.gov/news.release/archives/empsit_10022026.htm) |
+| UNRATE, CIVPART, EMRATIO | Household rates | [FRED / BLS CPS](https://fred.stlouisfed.org/) |
+| UNEMPLOY, UEMP27OV, LNS12032194 | Unemployed, long-term unemployed, part time for economic reasons | [FRED](https://fred.stlouisfed.org/) |
+| CES0500000003, AHETPI, AWHAETP | Earnings and hours | [FRED](https://fred.stlouisfed.org/) |
+| JTSJOL, JTSHIL, JTSQUL, JTSLDL | JOLTS openings, hires, quits, layoffs (lagged) | [FRED / JOLTS](https://fred.stlouisfed.org/) |
+| ICSA | Initial claims | [FRED](https://fred.stlouisfed.org/series/ICSA) |
+| Employment Situation | Official September print and previously published estimates | [Archived BLS news release](https://www.bls.gov/news.release/archives/empsit_10022026.htm) |
+| August Employment Situation | Previously published August industry estimates | [BLS archived release](https://www.bls.gov/news.release/archives/empsit_09042026.htm) |
+| ADP National Employment Report | Private-sector contrast | [ADP release](https://mediacenter.adp.com/2026-09-30-ADP-National-Employment-Report-Private-Sector-Employment-Increased-by-90,000-Jobs-in-September) |
+
+: Public data used in the analysis.
+
+In that archived release, Summary table A is the first table under the news text. Table A-1 is the detailed household table farther down the same page. Summary table B is the next table after Summary table A. Its heading is "Employment by selected industry."
+
+### How this post was built
+
+The Python pipeline and every chart block are in this post folder. Expand a chart block to see the code. From this directory, verify the committed snapshot, then clean and compute. Do not replace `data/raw/fred_monthly.csv` or `data/raw/fred_weekly.csv` with a later download:
+
+- `scripts/01_fetch_data.py` checks that the committed snapshot ends on the October 2 analysis dates: CES and CPS on 2026-09-01, JOLTS on 2026-08-01, and claims on 2026-09-26. It does not call FRED.
+- The refresh option on `scripts/01_fetch_data.py` is optional. It writes `data/raw/refresh/` using realtime start and end of 2026-10-02 plus those observation cutoffs. It does not replace the snapshot, and the later scripts do not read the side copy.
+- `scripts/02_clean_data.py` turns the snapshot levels into monthly job changes and percent rates. The formulas live there. The charts only plot the columns.
+- `scripts/04_compute_stats.py` writes every figure used in the prose and metric cards to `stats/summary_stats.json`. Claims are the week ending 2026-09-26, and JOLTS is August 2026. Missing financial or insurance observations stop the script.
+
+pandas handles the tables and matplotlib draws the figures. The committed snapshot carried the `{python} stats['latest_month']` CES and CPS prints checked against the `{python} stats['bls_release_date']` release. Previously published July and August payroll estimates and the ADP private-sector contrast are entered from the linked official releases. The July comparison is its estimate in the August release, not its original first print.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*

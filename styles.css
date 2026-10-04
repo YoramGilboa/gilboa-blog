@@ -39,6 +39,25 @@
   height: auto;
 }
 
+@media (min-width: 768px) {
+  body.compact-charts #quarto-document-content .figure-img {
+    max-width: min(100%, 640px);
+    display: block;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  body.compact-charts #quarto-document-content .quarto-figure figure {
+    overflow-x: auto;
+  }
+
+  body.compact-charts #quarto-document-content .figure-img {
+    width: 800px;
+    max-width: none;
+  }
+}
+
 /* ── Content spacing and typography ──
    Consistent spacing for headings, callouts, charts,
    and data tables across all posts. */
