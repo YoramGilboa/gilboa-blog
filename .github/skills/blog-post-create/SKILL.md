@@ -104,17 +104,17 @@ After approval:
 5. commit on the post branch;
 6. merge locally into `main`, then `git push origin main`, only when requested
    (see copilot-instructions Publishing requirements).
-7. After the post is publication-ready (or once the user says it is live),
-   offer to run `gilboa-blog-ai-visibility` to add the new URL to `/llms.txt`.
-   Do not edit `robots.txt` or `llms.txt` inside this skill.
+7. After the live post returns 200, update project-root `llms.txt` as part of
+   publish. Follow `.github/copilot-instructions.md` Publishing requirements.
+   Do not ask for a second approval. Do not edit `robots.txt` unless crawl
+   policy changes.
 
 ## After Publish Hook
 
-When offering the handoff, include:
+The publish checklist includes `llms.txt`. Use:
 
 - Live post URL in sitemap form (`https://gilboa.blog/posts/YYYY-MM-DD-slug/`)
-- One-line factual note for the llms.txt bullet (the print or the core claim)
-- Reminder that crawl files live in the Quarto project root and need
-  `quarto render` plus publish
+- One-line factual note for the bullet (the print or the core claim)
 
-If the user declines, stop. If they accept, follow `gilboa-blog-ai-visibility`.
+Add that bullet under Latest, move the oldest Latest item into its topic
+section, commit `llms.txt`, push `main`, and confirm the live file.

@@ -21,12 +21,12 @@ series, and includes methodology and limitations.
 
 ## Latest
 
+- [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
 - [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
 - [August CPI turned up on energy](https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/): Headline CPI +0.4 percent; gasoline +3.9 percent; core +0.3 percent
 - [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
 - [July PCE held at 3.7%](https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/): Headline and core PCE unchanged; real spending flat
-- [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/): Dissents for a hike if inflation does not cool
 
 ## Inflation
 
@@ -45,6 +45,7 @@ series, and includes methodology and limitations.
 
 ## Fed policy and growth
 
+- [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/): Dissents for a hike if inflation does not cool
 - [Q2 GDP and June PCE](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/): GDP +1.5%; private demand +3.9%
 - [June 2026 dot plot](https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/): 40 bp hawkish shift with rates on hold
 - [April FOMC](https://gilboa.blog/posts/2026-05-01-april-fomc-decision/): Dissents, dots, and the market wedge

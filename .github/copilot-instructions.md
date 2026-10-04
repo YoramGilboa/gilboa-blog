@@ -192,6 +192,15 @@ Before merging a post into `main`, confirm:
 Publish only after human approval; then undraft, move out of `posts/drafts/`,
 freeze, gate, commit post + freeze only, merge `main`, push, verify Actions.
 
+After the live post returns 200 with the new H1 and `<title>`, update
+project-root `llms.txt` in the same publish. Do not ask again. Add the post
+under Latest with the sitemap URL and no `index.html`, plus a one-line print.
+Move the oldest Latest item into Inflation, Labor market, Fed policy and
+growth, or Optional. Leave `robots.txt` unchanged unless crawl policy changes.
+Commit only `llms.txt`, push `main`, watch `publish.yml`, then confirm
+`https://gilboa.blog/llms.txt` is HTTP 200 and starts with `# gilboa.blog`,
+and that `OAI-SearchBot` gets HTTP 200 for the post URL.
+
 Grok: `blog-publish` post mode. Copilot: this checklist.
 
 ## Publishing site changes
