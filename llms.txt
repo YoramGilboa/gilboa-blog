@@ -21,7 +21,7 @@ series, and includes methodology and limitations.
 
 ## Latest
 
-- [August Core PCE Is 3.0 Percent After the Annual Update](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): Core PCE 3.0 percent over the year after the annual update; real spending up 0.6 percent; Q2 GDP revised to 2.2 percent
+- [The Lower Core PCE Path Is a New Ruler](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): July core moved from 3.3 to 3.0 percent on a new price ruler; August core is 3.0 percent; Q2 GDP revised from 1.5 to 2.2 percent
 - [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
 - [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
