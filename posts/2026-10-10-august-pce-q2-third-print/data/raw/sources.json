@@ -1,0 +1,60 @@
+{
+  "retrieved_for": "August 2026 Personal Income and Outlays and the Q2 third estimate",
+  "analysis_release_date": "2026-09-30",
+  "reproduction_mode": "committed_snapshot",
+  "output_dir": "data/raw",
+  "fred_monthly": {
+    "pce_price": "PCEPI",
+    "core_price": "PCEPILFE",
+    "food_price": "DFXARG3M086SBEA",
+    "energy_price": "DNRGRG3M086SBEA",
+    "real_pce": "PCEC96",
+    "real_dpi": "DSPIC96",
+    "nominal_pce": "PCE",
+    "personal_income": "PI",
+    "disposable_pi": "DSPI",
+    "saving_rate": "PSAVERT",
+    "mich": "MICH"
+  },
+  "fred_quarterly": {
+    "gdp_saar": "A191RL1Q225SBEA",
+    "pdfp_saar": "PB0000031Q225SBEA"
+  },
+  "manual": {
+    "pce_release_url": "https://www.bea.gov/news/2026/personal-income-and-outlays-august-2026",
+    "pce_july_url": "https://www.bea.gov/news/2026/personal-income-and-outlays-july-2026",
+    "pce_hist_url": "https://www.bea.gov/sites/default/files/2026-09/pi0826-hist.xlsx",
+    "gdp_third_url": "https://www.bea.gov/news/2026/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-2nd",
+    "gdp_second_url": "https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-2nd-quarter-2026",
+    "annual_update_url": "https://www.bea.gov/information-updates-national-regional-economic-accounts",
+    "annual_update_blog_url": "https://www.bea.gov/news/blog/2026-08-17/annual-update-gdp-industry-and-state-stats-publicly-available-starting-sept-30",
+    "scb_url": "https://apps.bea.gov/scb/issues/2026/09-september/0926-nea-annual-update.htm",
+    "fomc_statement_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+    "fomc_implementation_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a1.htm",
+    "fomc_sep_url": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm",
+    "fomc_calendar_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    "bls_october_schedule_url": "https://www.bls.gov/schedule/2026/10_sched_list.htm",
+    "bea_schedule_url": "https://www.bea.gov/news/schedule",
+    "cpi_release_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+    "ppi_release_url": "https://www.bls.gov/news.release/ppi.nr0.htm"
+  },
+  "snapshot_sha256": {
+    "fred_pce_monthly.csv": "c3b9e96e23973afdccf312d30365e26e936e8a72c3ac433426e4c2c6f618bcf6",
+    "fred_gdp_quarterly.csv": "b7c2eaf4acb289113e746d81df72142046f99ac0894fd7a4f74c74a9b7f86ad4"
+  },
+  "alfred_check": {
+    "checked_on": "2026-10-10",
+    "realtime_start": "2026-09-30",
+    "realtime_end": "2026-09-30",
+    "observation_start": "2018-01-01",
+    "monthly_observation_end": "2026-08-01",
+    "quarterly_observation_end": "2026-04-01",
+    "matched_committed_snapshot": true,
+    "comparison": "values, not CSV bytes",
+    "refresh_sha256": {
+      "fred_pce_monthly.csv": "c3b9e96e23973afdccf312d30365e26e936e8a72c3ac433426e4c2c6f618bcf6",
+      "fred_gdp_quarterly.csv": "b7c2eaf4acb289113e746d81df72142046f99ac0894fd7a4f74c74a9b7f86ad4"
+    }
+  },
+  "history_rule": "Reproduction reads the committed CSVs in data/raw. Those files are the release snapshot for this post. python scripts/01_fetch_data.py verifies them and does not download. python scripts/01_fetch_data.py --refresh writes data/raw/refresh/ only, with realtime_start and realtime_end set to 2026-09-30. observation_end does not freeze later revisions. A failed or different vintage request does not replace the snapshot and does not fall back to current FRED. alfred_check records a real comparison when one was run. The pre-update July path and the second-estimate GDP comparison stay in manual_priors.json."
+}
