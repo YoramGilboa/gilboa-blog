@@ -21,15 +21,16 @@ series, and includes methodology and limitations.
 
 ## Latest
 
+- [August Core PCE Is 3.0 Percent After the Annual Update](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): Core PCE 3.0 percent over the year after the annual update; real spending up 0.6 percent; Q2 GDP revised to 2.2 percent
 - [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
 - [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
 - [August CPI turned up on energy](https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/): Headline CPI +0.4 percent; gasoline +3.9 percent; core +0.3 percent
 - [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
-- [July PCE held at 3.7%](https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/): Headline and core PCE unchanged; real spending flat
 
 ## Inflation
 
+- [July PCE held at 3.7%](https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/): Headline and core PCE unchanged; real spending flat
 - [July CPI and PPI](https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/): Soft consumer and producer prints after weak jobs
 - [June CPI](https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/): Energy reversal after ceasefire; core and shelter linger
 - [Core persistence](https://gilboa.blog/posts/2026-07-11-core-inflation-persistence-services-goods-shelter/): Services ex-shelter vs goods vs shelter
