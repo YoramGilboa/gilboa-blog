@@ -51,5 +51,13 @@
   "next_fomc_date": "10/28/2026",
   "next_bea_date": "10/29/2026",
   "fed_target": 2,
-  "reference_year": 2017
+  "reference_year": 2017,
+  "rbc_preview_url": "https://www.rbc.com/en/economics/us-analysis/us-featured-analysis/pce-deflator-update-a-retroactive-revision-not-a-disinflationary-signal/",
+  "rbc_core_preview_bp": 18,
+  "rbc_july_core_preview": 3.1,
+  "portfolio_old_deflator_yoy": 14.1,
+  "portfolio_new_implied_yoy": 12.3,
+  "portfolio_core_weight": 1.7,
+  "portfolio_contribution_bp": 3,
+  "portfolio_deflator_since": "December 2023"
 }

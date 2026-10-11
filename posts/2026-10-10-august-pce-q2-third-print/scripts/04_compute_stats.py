@@ -171,6 +171,19 @@ def main() -> None:
         "july_core_yoy_prior": manual["july_core_yoy_prior"],
         "july_headline_yoy_hundredths": round2(july["pce_price_yoy"]),
         "july_core_yoy_hundredths": round2(july["core_price_yoy"]),
+        "july_core_revision_bp": int(
+            round((float(manual["july_core_yoy_prior"]) - round2(july["core_price_yoy"])) * 100)
+        ),
+        # MANUAL: source https://www.rbc.com/en/economics/us-analysis/us-featured-analysis/pce-deflator-update-a-retroactive-revision-not-a-disinflationary-signal/
+        # rbc_core_preview_bp is the combined three-method preview, not portfolio alone.
+        # portfolio_contribution_bp is RBC's 0.03 percentage point for that category.
+        "rbc_core_preview_bp": manual["rbc_core_preview_bp"],
+        "rbc_july_core_preview": manual["rbc_july_core_preview"],
+        "portfolio_old_deflator_yoy": manual["portfolio_old_deflator_yoy"],
+        "portfolio_new_implied_yoy": manual["portfolio_new_implied_yoy"],
+        "portfolio_core_weight": manual["portfolio_core_weight"],
+        "portfolio_contribution_bp": manual["portfolio_contribution_bp"],
+        "portfolio_deflator_since": manual["portfolio_deflator_since"],
         "headline_yoy_hundredths": round2(august["pce_price_yoy"]),
         "core_yoy_hundredths": round2(august["core_price_yoy"]),
         "aug_prior_year": month_name(AUGUST_PRIOR),
