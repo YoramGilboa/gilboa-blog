@@ -21,12 +21,12 @@ series, and includes methodology and limitations.
 
 ## Latest
 
+- [Energy Raised September CPI and PPI. Core Stayed Firmer.](https://gilboa.blog/posts/2026-10-18-september-cpi-ppi-energy-core/): CPI rose 0.6 percent in September, with gasoline more than half of the month. PPI final demand rose 1.3 percent. Core was 0.3 percent on the month and 2.6 percent over the year
 - [The Lower Core PCE Path Is a New Ruler](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): July core moved from 3.3 to 3.0 percent on a new price ruler; August core is 3.0 percent; Q2 GDP revised from 1.5 to 2.2 percent
 - [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
 - [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
 - [August CPI turned up on energy](https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/): Headline CPI +0.4 percent; gasoline +3.9 percent; core +0.3 percent
-- [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
 
 ## Inflation
 
@@ -39,6 +39,7 @@ series, and includes methodology and limitations.
 
 ## Labor market
 
+- [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
 - [July ADP](https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/): +44k private jobs, 82% in education and health
 - [June jobs report](https://gilboa.blog/posts/2026-07-03-june-jobs-report-soft-labor-market/): Soft payrolls and a labor-force drop
 - [June labor dashboard](https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/): Headline resilience vs slower hiring flows
