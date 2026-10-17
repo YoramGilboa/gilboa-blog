@@ -1,0 +1,75 @@
+{
+  "retrieved_for": "September 2026 CPI and PPI",
+  "reproduction_mode": "committed_snapshot",
+  "output_dir": "data/raw",
+  "cpi_archive_url": "https://www.bls.gov/news.release/archives/cpi_10142026.htm",
+  "ppi_archive_url": "https://www.bls.gov/news.release/archives/ppi_10152026.htm",
+  "cpi_table6_url": "https://www.bls.gov/news.release/cpi.t06.htm",
+  "fred": "https://fred.stlouisfed.org/",
+  "fred_vintage": {
+    "cpi": {
+      "realtime_start": "2026-10-14",
+      "realtime_end": "2026-10-14",
+      "observation_start": "2010-01-01",
+      "observation_end": "2026-09-01"
+    },
+    "ppi": {
+      "realtime_start": "2026-10-15",
+      "realtime_end": "2026-10-15",
+      "observation_start": "2010-01-01",
+      "observation_end": "2026-09-01"
+    },
+    "funds": {
+      "realtime_start": "2026-10-17",
+      "realtime_end": "2026-10-17",
+      "observation_start": "2010-01-01",
+      "observation_end": "2026-10-17"
+    }
+  },
+  "snapshot_sha256": {
+    "fred_cpi_monthly.csv": "dd51bd28ce3cb9f03b092264fab84665d4fd2321be89397e21134cf7c360d67f",
+    "fred_ppi_monthly.csv": "06ef78ce3c6dc80bfd31d3d86ff071ebb28c66c3e724a207db5e7def9c4505ed",
+    "fred_funds_daily.csv": "95f97ad953dcafc881dd6a03816051358528cf354adbddf6a11677626f14d88b",
+    "bls_table6_september_2026.csv": "8fa27bae08282b29bec5913f881ec3af6299363bdd363f68bd9f873c9fc4a5d9",
+    "bls_ppi_manual_prints.csv": "5857cd17680dc494284ee50e17ae7572923560615595994a23e759697fa85681"
+  },
+  "cpi_series": {
+    "headline_sa": "CPIAUCSL",
+    "headline_nsa": "CPIAUCNS",
+    "core_sa": "CPILFESL",
+    "core_nsa": "CPILFENS",
+    "energy_sa": "CPIENGSL",
+    "energy_nsa": "CPIENGNS",
+    "gasoline_sa": "CUSR0000SETB01",
+    "gasoline_nsa": "CUUR0000SETB01",
+    "food_sa": "CPIUFDSL",
+    "food_nsa": "CPIUFDNS",
+    "shelter_sa": "CUSR0000SAH1",
+    "shelter_nsa": "CUUR0000SAH1",
+    "services_sa": "CUSR0000SASLE",
+    "services_nsa": "CUUR0000SASLE",
+    "core_goods_sa": "CUSR0000SACL1E"
+  },
+  "ppi_series": {
+    "ppi_fd_sa": "PPIFIS",
+    "ppi_fd_nsa": "PPIFID",
+    "ppi_goods_sa": "PPIDGS",
+    "ppi_services_sa": "PPIDSS",
+    "ppi_energy_sa": "PPIDES",
+    "ppi_foods_sa": "PPIDFS",
+    "ppi_core_goods_sa": "WPSFD413",
+    "ppi_x_sa": "WPSFD49116",
+    "ppi_x_nsa": "WPUFD49116"
+  },
+  "funds_series": {
+    "funds_upper": "DFEDTARU",
+    "funds_lower": "DFEDTARL"
+  },
+  "notes": [
+    "Exact reproduction reads data/raw and does not download.",
+    "python scripts/01_fetch_data.py --refresh writes data/raw/refresh/ only.",
+    "CPI realtime bounds are 2026-10-14. PPI realtime bounds are 2026-10-15.",
+    "Table 6 effects and the two PPI manual prints are transcribed, not estimated.",
+    "observation_end alone does not freeze later revisions."
+  ]
+}

@@ -1,0 +1,467 @@
+---
+title: "Energy Raised September CPI and PPI. Core Stayed Firmer."
+pagetitle: "October 2026: CPI up 0.6%, PPI final demand up 1.3%"
+date: "2026-10-18"
+author: Yoram Gilboa
+categories: [economics, inflation, federal reserve, data visualization]
+description: "Gasoline was more than half of the 0.6% CPI month. PPI less food, energy, and trade is still 5.0% over the year, and the next meeting has no new projections."
+image: images/september-cpi-contributions.png
+image-alt: "Energy, food, and core contributions to the September 26 CPI month. Gasoline sits inside energy."
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+body-classes: compact-charts
+css: ../../styles.css
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+cpi = pd.read_csv(CLEAN_DIR / "cpi_monthly.csv", index_col="date", parse_dates=True).sort_index()
+ppi_cpi = pd.read_csv(CLEAN_DIR / "ppi_cpi_monthly.csv", index_col="date", parse_dates=True).sort_index()
+contributions = pd.read_csv(CLEAN_DIR / "contributions_september.csv")
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    return f"{float(value):.{digits}f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def fmt3(value):
+    return f"{float(value):.3f}"
+
+
+def short_year(label):
+    """Print 2026 as 26. The full year stays in the stats file."""
+    return str(label).replace("2026", "26")
+
+
+for key, value in list(stats.items()):
+    if isinstance(value, str):
+        stats[key] = short_year(value)
+
+
+def monthly_calendar(frame, columns):
+    """Keep every month from April 25 through September 26. A hole stays a hole."""
+    calendar = pd.date_range("2025-04-01", "2026-09-01", freq="MS")
+    window = frame.reindex(calendar)[list(columns)]
+    window.index.name = "date"
+    return window
+
+
+def quarter_ticks(ax, index):
+    ax.set_xticks(list(pd.date_range(index[0], index[-1], freq="3MS")))
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda value, _pos: short_year(mdates.num2date(value).strftime("%b\n%Y")))
+    )
+
+
+def label_end(ax, series, color, name):
+    clean = series.dropna()
+    x_end = clean.index[-1]
+    y_end = float(clean.iloc[-1])
+    ax.scatter(x_end, y_end, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    ax.text(x_end, y_end, f"  {name} {y_end:.1f}%", color=color, fontsize=8, fontweight="bold", va="center")
+
+
+def extend_xlim(ax, index, pad=0.24):
+    span = index[-1] - index[0]
+    ax.set_xlim(index[0], index[-1] + span * pad)
+```
+
+The Consumer Price Index, the index of prices urban households pay, rose `{python} fmt(stats['headline_mom'])`% in `{python} stats['latest_month']` and `{python} fmt(stats['headline_yoy'])`% over the year. Gasoline rose `{python} fmt(stats['gasoline_mom'])`% and accounted for more than half of that monthly increase. The energy index, which also includes household utilities, rose `{python} fmt(stats['energy_mom'])`%.
+
+Producer prices moved further. The Producer Price Index for final demand, the prices producers receive for finished goods and services, rose `{python} fmt(stats['ppi_fd_mom'])`% in the month and `{python} fmt(stats['ppi_fd_yoy'])`% over the year. The month is the largest final-demand advance since `{python} fmt(stats['ppi_fd_largest_since_mom'])`% in `{python} stats['ppi_fd_largest_since_month']`. The year rate is the largest since `{python} fmt(stats['ppi_fd_largest_since_yoy'])`% in `{python} stats['ppi_fd_largest_since_yoy_month']`.
+
+Core CPI, all items less food and energy, rose `{python} fmt(stats['core_mom'])`% on the month, the same published pace as `{python} stats['prior_month']`, and `{python} fmt(stats['core_yoy'])`% over the year. The next policy statement is `{python} stats['fomc_statement_date']` at `{python} stats['fomc_statement_time']`. That meeting does not publish a new Summary of Economic Projections. The federal funds target range is `{python} fmt2(stats['funds_target_low'])`% to `{python} fmt2(stats['funds_target_high'])`%.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The complete pipeline is included with this post:
+
+- `scripts/01_fetch_data.py` checks the committed CPI, PPI, and funds-rate snapshots. It does not download. CPI is the `{python} stats['cpi_release_date']` vintage. PPI is the `{python} stats['ppi_release_date']` vintage.
+- `scripts/02_clean_data.py` calculates the monthly and yearly rates and checks them against the Bureau of Labor Statistics prints. Charts only plot those columns.
+- `scripts/04_compute_stats.py` writes every prose and card value to `stats/summary_stats.json`.
+
+Run the scripts in that order from this post's folder, then render `index.qmd`. pandas handles the tables and matplotlib draws the figures. The source archives are the [CPI release](https://www.bls.gov/news.release/archives/cpi_10142026.htm) and the [PPI release](https://www.bls.gov/news.release/archives/ppi_10152026.htm).
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+A month-over-month rate in this post is seasonally adjusted unless the sentence says otherwise. A year rate uses the index that is not seasonally adjusted. Seasonal adjustment is why gasoline can be `{python} fmt(stats['gasoline_mom'])`% in the news release and `{python} fmt(stats['gasoline_nsa_mom'])`% before adjustment.
+
+The contribution chart uses official effects from BLS Table 6, in percentage points. Food, energy, and core are mutually exclusive. Their effects sum to `{python} fmt3(stats['contrib_effect_sum_pp'])`, which is `{python} fmt(stats['headline_mom'])` at one decimal. A fixed-weight cross-check was computed and was not plotted.
+
+FRED has a published hole in `{python} stats['fred_gap_months']` for headline, core, and energy. Gasoline has a value that month. The charts keep that hole as a gap. These figures use the `{python} stats['cpi_release_date']` CPI vintage and the `{python} stats['ppi_release_date']` PPI vintage. The PPI release revised earlier months. The charts do not draw the prior publication.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.55rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b; text-align: center;"
+
+cards = [
+    ("Headline CPI", f"{fmt(stats['headline_mom'])}%", COLORS["primary"], f"{fmt(stats['headline_yoy'])}% over the year"),
+    ("Core CPI", f"{fmt(stats['core_yoy'])}%", COLORS["primary"], f"{fmt(stats['core_mom'])}% on the month"),
+    ("Gasoline", f"{fmt(stats['gasoline_mom'])}%", COLORS["warning"], "more than half the CPI month"),
+    ("PPI final demand", f"{fmt(stats['ppi_fd_mom'])}%", COLORS["accent"], f"{fmt(stats['ppi_fd_yoy'])}% over the year"),
+]
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div></div>'
+    for title, value, color, sub in cards
+)
+HTML(
+    f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.9rem; margin: 1.35rem 0 1.05rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+    BLS CPI released {stats['cpi_release_date']}. BLS PPI released {stats['ppi_release_date']}.
+</p>
+"""
+)
+```
+
+## Gasoline supplied more than half of the CPI month
+
+A contribution is the part of the monthly CPI change tied to one category. In `{python} stats['latest_month']` the three mutually exclusive pieces are energy, food, and core. Energy's effect was `{python} fmt3(stats['contrib_energy_pp'])` percentage point. Core's was `{python} fmt3(stats['contrib_core_pp'])`. Food's was `{python} fmt3(stats['contrib_food_pp'])` percentage point. The food index was unchanged on the month and up `{python} fmt(stats['food_yoy'])`% over the year.
+
+Gasoline is inside energy, so it is not drawn as a fourth bar. Its own effect was `{python} fmt3(stats['contrib_gasoline_pp'])` percentage point, `{python} fmt(stats['gasoline_share_of_headline_pct'])`% of the `{python} fmt(stats['headline_mom'])`% all-items increase. That is the Bureau's "over half" result, read off Table 6 rather than a homemade weight.
+
+```{python}
+#| echo: true
+#| label: fig-september-contributions
+#| fig-cap: "Energy accounts for the largest piece of the September CPI month, food is about flat, and core is the rest. Gasoline sits inside energy."
+
+# One idea: where the September CPI month came from.
+# Effects are the official Table 6 values carried in the clean file.
+# This cell only plots those columns.
+bars = contributions[contributions["plot"] == 1].set_index("label").loc[["Food", "Core", "Energy"]]
+gas = contributions.loc[contributions["component"] == "gasoline"].iloc[0]
+bar_colors = [COLORS["secondary"], COLORS["primary"], COLORS["warning"]]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+ax.barh(bars.index, bars["effect_pp"], color=bar_colors, edgecolor="white", height=0.65)
+for label, value in bars["effect_pp"].items():
+    ax.text(value + 0.012, label, f"{value:.3f}", va="center", ha="left", fontsize=8, color=COLORS["neutral"])
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+ax.set_xlabel("Effect on the all-items CPI change (percentage points)")
+ax.set_xlim(0, bars["effect_pp"].max() * 1.35)
+ax.text(
+    0.98,
+    0.08,
+    f"Gasoline {gas['effect_pp']:.3f} is inside energy",
+    transform=ax.transAxes,
+    ha="right",
+    va="bottom",
+    fontsize=8,
+    color=COLORS["neutral"],
+)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "september-cpi-contributions.png", dpi=150, bbox_inches="tight")
+```
+
+The bars end in `{python} stats['chart_end_month']`. They are one month, not a history.
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics, CPI Table 6 for `{python} stats['chart_end_month']`, [archived release](https://www.bls.gov/news.release/archives/cpi_10142026.htm).
+:::
+
+## Energy rose for a second month
+
+Energy rose `{python} fmt(stats['energy_mom'])`% after `{python} fmt(stats['energy_mom_prior'])`% in `{python} stats['prior_month']`. Gasoline rose `{python} fmt(stats['gasoline_mom'])`% on a seasonally adjusted basis. Before adjustment the gasoline index rose `{python} fmt(stats['gasoline_nsa_mom'])`%. The chart uses the adjusted rates, because those are the monthly prints in the release.
+
+Over the year, energy was `{python} fmt(stats['energy_yoy'])`% higher and gasoline was `{python} fmt(stats['gasoline_yoy'])`% higher. `{python} stats['latest_month']` was a second increase, not a spike after a decline. `{python} stats['prior_month']` had already turned up.
+
+```{python}
+#| echo: true
+#| label: fig-energy-gasoline
+#| fig-cap: "Gasoline rose faster than the broader energy index in September, after both had already risen in August."
+
+# Energy and gasoline month changes. The 2025-10 hole in energy is left empty.
+energy = monthly_calendar(cpi, ["energy_mom", "gasoline_mom"])
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(energy.index, energy["energy_mom"], color=COLORS["warning"], linewidth=1.8)
+ax.plot(energy.index, energy["gasoline_mom"], color=COLORS["accent"], linewidth=1.6)
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+label_end(ax, energy["energy_mom"], COLORS["warning"], "Energy")
+label_end(ax, energy["gasoline_mom"], COLORS["accent"], "Gasoline")
+extend_xlim(ax, energy.index)
+quarter_ticks(ax, energy.index)
+ax.set_ylabel("Change from the prior month (%)")
+plt.tight_layout()
+fig.savefig(IMG_DIR / "energy-gasoline-mom.png", dpi=150, bbox_inches="tight")
+```
+
+Both lines end in `{python} stats['chart_end_month']`. The break in the energy line at `{python} stats['fred_gap_months']` is a missing FRED month, not a price of zero.
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics via [FRED](https://fred.stlouisfed.org/series/CPIENGSL), CPIENGSL and CUSR0000SETB01. Monthly rates are seasonally adjusted.
+:::
+
+## The core year rate rose for a different reason
+
+The core year rate is the number this section is about. It is the change in core CPI, the index without food and energy, over the past twelve months. It rose from `{python} fmt(stats['core_yoy_prior'])`% to `{python} fmt(stats['core_yoy'])`%. The core month did not speed up. Core CPI rose `{python} fmt(stats['core_mom'])`% in `{python} stats['latest_month']` and `{python} fmt(stats['core_mom_prior'])`% in `{python} stats['prior_month']`.
+
+A year rate is a window of twelve months. The new month enters on the right, and the same month from a year earlier leaves on the left. The year rate changes by the entering month minus the leaving month. @fig-year-rate-window draws that step for headline CPI, where the subtraction can be checked on the page. Core CPI uses the same kind of window.
+
+Each box has two readings of the same month. Adjusted is the seasonally adjusted rate in the news release. Unadjusted is the rate the year rate actually uses. Read the bold unadjusted row, left box then right box.
+
+```{python}
+#| echo: true
+#| label: fig-year-rate-window
+#| fig-cap: "Headline CPI, one step in the year rate. Subtract the unadjusted number in the left box from the unadjusted number in the right box. Core follows the same step."
+
+# Two readings in each end box. The year rate uses the unadjusted row.
+fig, ax = plt.subplots(figsize=(8.0, 5.0))
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 6.4)
+ax.axis("off")
+
+def month_box(x, role, month, adjusted, unadjusted, edge):
+    ax.add_patch(plt.Rectangle((x, 1.55), 3.2, 2.85, facecolor=edge, alpha=0.12, edgecolor=edge, linewidth=1.15))
+    ax.text(x + 1.6, 3.95, role, ha="center", va="center", fontsize=13, color=edge, fontweight="bold")
+    ax.text(x + 1.6, 3.4, month, ha="center", va="center", fontsize=12, color=COLORS["neutral"])
+    ax.plot([x + 0.18, x + 3.02], [2.95, 2.95], color=edge, linewidth=0.6, alpha=0.6)
+    ax.text(x + 0.18, 2.45, "Adjusted", ha="left", va="center", fontsize=13, color=COLORS["neutral"])
+    ax.text(x + 3.02, 2.45, adjusted, ha="right", va="center", fontsize=13, color=COLORS["neutral"])
+    ax.text(x + 0.18, 1.9, "Unadjusted", ha="left", va="center", fontsize=13, color=COLORS["primary"], fontweight="bold")
+    ax.text(x + 3.02, 1.9, unadjusted, ha="right", va="center", fontsize=13, color=COLORS["primary"], fontweight="bold")
+
+month_box(
+    0.15,
+    "Leaves the window",
+    stats["dropout_month"],
+    f"{fmt(stats['headline_dropout_sa_mom'])}%",
+    f"{fmt2(stats['headline_dropout_mom_hundredths'])}%",
+    COLORS["warning"],
+)
+ax.add_patch(plt.Rectangle((3.55, 1.55), 4.9, 2.85, facecolor=COLORS["light"], alpha=0.28, edgecolor=COLORS["neutral"], linewidth=0.7))
+ax.text(6.0, 2.95, "The other 10 months\nstay in the window", ha="center", va="center", fontsize=13, color=COLORS["neutral"])
+month_box(
+    8.65,
+    "Enters the window",
+    stats["latest_month"],
+    f"{fmt(stats['headline_mom'])}%",
+    f"{fmt2(stats['headline_mom_hundredths'])}%",
+    COLORS["primary"],
+)
+ax.text(
+    6.0,
+    5.35,
+    f"Headline year rate: {fmt2(stats['headline_yoy_prior_hundredths'])}% to {fmt2(stats['headline_yoy_hundredths'])}%",
+    ha="center",
+    va="center",
+    fontsize=15,
+    color=COLORS["primary"],
+)
+ax.text(
+    6.0,
+    0.65,
+    f"Unadjusted row: {fmt2(stats['headline_mom_hundredths'])}% minus {fmt2(stats['headline_dropout_mom_hundredths'])}% = {fmt2(stats['headline_yoy_change_pp'])} point",
+    ha="center",
+    va="center",
+    fontsize=14,
+    color=COLORS["primary"],
+)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "year-rate-window.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics via [FRED](https://fred.stlouisfed.org/series/CPIAUCSL), CPIAUCSL and CPIAUCNS. The adjusted row is seasonally adjusted. The unadjusted row is not.
+:::
+
+In @fig-year-rate-window, `{python} fmt2(stats['headline_mom_hundredths'])`% minus `{python} fmt2(stats['headline_dropout_mom_hundredths'])`% is `{python} fmt2(stats['headline_yoy_change_pp'])` point. That is the move from `{python} fmt2(stats['headline_yoy_prior_hundredths'])`% to `{python} fmt2(stats['headline_yoy_hundredths'])`%. The adjusted `{python} fmt(stats['headline_mom'])`% in the right box is the headline figure in the CPI release. It is not the number the year rate subtracts. Core CPI takes the same step. At two decimals its year rate went from `{python} fmt2(stats['core_yoy_prior_hundredths'])`% to `{python} fmt2(stats['core_yoy_hundredths'])`%.
+
+From `{python} stats['window_start_month']` through `{python} stats['prior_month']`, the lowest core year rate was `{python} fmt(stats['core_yoy_low'])`% in `{python} stats['core_yoy_low_month']`. `{python} stats['latest_month']` is above that low and below the high of `{python} fmt(stats['core_yoy_high'])`% in `{python} stats['core_yoy_high_month']`.
+
+Services less energy services are the services in the CPI with household energy services removed. They are not core CPI. That year rate was `{python} fmt(stats['services_yoy'])`% in `{python} stats['latest_month']`. The low since `{python} stats['window_start_month']` was `{python} fmt(stats['services_yoy_low'])`% in `{python} stats['services_yoy_low_month']`, and the high was `{python} fmt(stats['services_yoy_high'])`% in `{python} stats['services_yoy_high_month']`.
+
+In the next figure, the blue line is the core year rate and the green line is services less energy. Shelter is not a line on that figure. Shelter rose `{python} fmt(stats['shelter_mom'])`% on the month after `{python} fmt(stats['shelter_mom_prior'])`%, and `{python} fmt(stats['shelter_yoy'])`% over the year. It does not reverse on the gasoline timetable.
+
+The Federal Reserve's two goals are stable prices and maximum employment. This post is the price side only. A same-month rise in consumer energy prices and producer energy prices is co-movement. It is not a measured lag from the producer index to the checkout.
+
+```{python}
+#| echo: true
+#| label: fig-core-services
+#| fig-cap: "The core year rate rose in September from its August low and remained below the May high. Services less energy services stayed above their February low."
+
+# Year rates, not month rates. Services less energy is not core CPI.
+core_path = monthly_calendar(cpi, ["core_yoy", "services_yoy"])
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(core_path.index, core_path["core_yoy"], color=COLORS["primary"], linewidth=1.8)
+ax.plot(core_path.index, core_path["services_yoy"], color=COLORS["secondary"], linewidth=1.6)
+label_end(ax, core_path["core_yoy"], COLORS["primary"], "Core")
+label_end(ax, core_path["services_yoy"], COLORS["secondary"], "Services less energy")
+extend_xlim(ax, core_path.index)
+quarter_ticks(ax, core_path.index)
+ax.set_ylabel("Change from a year earlier (%)")
+plt.tight_layout()
+fig.savefig(IMG_DIR / "core-services-yoy.png", dpi=150, bbox_inches="tight")
+```
+
+The lines end in `{python} stats['chart_end_month']`. A later CPI release is not a point on this figure.
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics via [FRED](https://fred.stlouisfed.org/series/CPILFENS), CPILFENS and CUUR0000SASLE. Year rates are not seasonally adjusted.
+:::
+
+## Producer prices jumped further
+
+Final demand rose `{python} fmt(stats['ppi_fd_mom'])`% after `{python} fmt(stats['ppi_fd_mom_prior'])`% in `{python} stats['prior_month']` and `{python} fmt(stats['ppi_fd_mom_july'])`% in `{python} stats['july_month']`. Goods rose `{python} fmt(stats['ppi_goods_mom'])`%, `{python} stats['ppi_goods_record_phrase']`. `{python} stats['ppi_energy_share_phrase'].capitalize()` of that goods increase was final-demand energy, which rose `{python} fmt(stats['ppi_energy_mom'])`%. Producer prices for gasoline rose `{python} fmt(stats['ppi_gasoline_mom'])`% and accounted for `{python} stats['ppi_gasoline_share_phrase']` of the goods increase. Foods rose `{python} fmt(stats['ppi_foods_mom'])`%. Goods less foods and energy rose `{python} fmt(stats['ppi_core_goods_mom'])`%. Services rose `{python} fmt(stats['ppi_services_mom'])`%, so the month was not only a goods story.
+
+The household gasoline index and the producer gasoline index are different objects. CPI gasoline rose `{python} fmt(stats['gasoline_mom'])`%. PPI gasoline rose `{python} fmt(stats['ppi_gasoline_mom'])`%. Margins for automotive fuels and lubricants retailing fell `{python} fmt(abs(stats['ppi_fuels_retailing_margin_mom']))`%. A margin is not a price at the pump, and this post does not turn one print into the other.
+
+The leftover on the producer side is also a different basket from core CPI. Final demand less foods, energy, and trade services rose `{python} fmt(stats['ppi_xfood_energy_trade_mom'])`% after `{python} fmt(stats['ppi_xfood_energy_trade_mom_prior'])`% in `{python} stats['prior_month']`, and `{python} fmt(stats['ppi_xfood_energy_trade_yoy'])`% over the year. Core CPI's year rate was `{python} fmt(stats['core_yoy'])`%. Putting those two year rates on one chart does not estimate how many months producer prices take to reach consumers. It shows that stripping food, energy, and trade margins still leaves a much hotter producer year rate.
+
+```{python}
+#| echo: true
+#| label: fig-ppi-cpi
+#| fig-cap: "PPI final demand's year rate moved above CPI, and the producer index that drops food, energy, and trade margins stayed well above core CPI."
+
+# Two panels, one idea each. Top is the headline pair. Bottom is the stripped pair.
+compare = monthly_calendar(ppi_cpi, ["ppi_fd_yoy", "headline_yoy", "ppi_x_yoy", "core_yoy"])
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]})
+axes[0].plot(compare.index, compare["ppi_fd_yoy"], color=COLORS["accent"], linewidth=1.8)
+axes[0].plot(compare.index, compare["headline_yoy"], color=COLORS["primary"], linewidth=1.8)
+label_end(axes[0], compare["ppi_fd_yoy"], COLORS["accent"], "PPI final demand")
+label_end(axes[0], compare["headline_yoy"], COLORS["primary"], "CPI")
+axes[0].set_ylabel("Change from a year earlier (%)")
+
+axes[1].plot(compare.index, compare["ppi_x_yoy"], color=COLORS["accent"], linewidth=1.8)
+axes[1].plot(compare.index, compare["core_yoy"], color=COLORS["primary"], linewidth=1.8)
+label_end(axes[1], compare["ppi_x_yoy"], COLORS["accent"], "Ex food, energy, trade")
+label_end(axes[1], compare["core_yoy"], COLORS["primary"], "Core CPI")
+axes[1].set_ylabel("Change from a year earlier (%)")
+extend_xlim(axes[1], compare.index, pad=0.42)
+quarter_ticks(axes[1], compare.index)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "ppi-cpi-yoy.png", dpi=150, bbox_inches="tight")
+```
+
+Both panels end in `{python} stats['chart_end_month']`.
+
+::: {.figure-source}
+Source: Bureau of Labor Statistics via [FRED](https://fred.stlouisfed.org/series/PPIFID), PPIFID, CPIAUCNS, WPUFD49116, and CPILFENS. Year rates are not seasonally adjusted.
+:::
+
+## The two releases together
+
+Three facts sit next to each other, and they are not the same fact. Gasoline was more than half of the CPI month, which is the household bill. Producer gasoline rose `{python} fmt(stats['ppi_gasoline_mom'])`% while retail fuel margins fell `{python} fmt(abs(stats['ppi_fuels_retailing_margin_mom']))`%, so the pump price and the producer price are two readings of one shock, not one number passed through. Core CPI's month stayed at `{python} fmt(stats['core_mom'])`%, and its year rate still rose because `{python} stats['dropout_month']` left the twelve-month window in @fig-year-rate-window. After food, energy, and trade margins are removed, producer prices are still `{python} fmt(stats['ppi_xfood_energy_trade_yoy'])`% over the year, against a core CPI year rate of `{python} fmt(stats['core_yoy'])`%.
+
+The `{python} stats['fomc_statement_date']` statement comes before the `{python} stats['latest_month']` PCE price index and the advance estimate of third-quarter GDP, both on `{python} stats['pce_gdp_date']`. That statement does not include new projections. PCE is the price index the Fed uses for its inflation goal, and it is outside this release.
+
+### What it means for
+
+**For the Fed:** The `{python} stats['fomc_statement_date']` decision does not update the dot plot. The price facts already in hand are a hotter CPI headline, a higher core year rate, and a producer index that stays hot after food, energy, and trade margins are removed. This post does not say which way the committee will vote.
+
+**For households:** Gasoline was `{python} fmt(stats['gasoline_yoy'])`% higher than a year earlier. Shelter was still up `{python} fmt(stats['shelter_yoy'])`% over the year, and a later drop in gasoline would not unwind that increase.
+
+**For investors:** PPI final demand, at `{python} fmt(stats['ppi_fd_yoy'])`% over the year, and core CPI, at `{python} fmt(stats['core_yoy'])`%, are different baskets.
+
+### What to watch
+
+The FOMC statement is `{python} stats['fomc_statement_date']` at `{python} stats['fomc_statement_time']`. There is no Summary of Economic Projections at that meeting.
+
+The advance estimate of third-quarter GDP and the September PCE price index are both scheduled for `{python} stats['pce_gdp_date']`.
+
+The next CPI release is `{python} stats['next_cpi_date']` at `{python} stats['next_cpi_time']`.
+
+## Limitations
+
+Energy is volatile, and one more hot month does not fix the path. Seasonal adjustment changes the gasoline month from `{python} fmt(stats['gasoline_nsa_mom'])`% to `{python} fmt(stats['gasoline_mom'])`%. The contribution bars are official Table 6 effects. The three plotted effects do not add to `{python} fmt(stats['headline_mom'])` at three decimals. They do at one decimal. The charts stop at `{python} stats['chart_end_month']`. A later revision is a new evaluation of these months.
+
+## Methodology
+
+| Series | What it measures | Source |
+| --- | --- | --- |
+| CPIAUCSL, CPIAUCNS | Headline CPI, monthly and yearly | [FRED](https://fred.stlouisfed.org/series/CPIAUCSL) |
+| CPILFESL, CPILFENS | Core CPI | [FRED](https://fred.stlouisfed.org/series/CPILFESL) |
+| CPIENGSL, CPIENGNS | Energy CPI | [FRED](https://fred.stlouisfed.org/series/CPIENGSL) |
+| CUSR0000SETB01, CUUR0000SETB01 | Gasoline | [FRED](https://fred.stlouisfed.org/series/CUSR0000SETB01) |
+| CPIUFDSL, CPIUFDNS | Food | [FRED](https://fred.stlouisfed.org/series/CPIUFDSL) |
+| CUSR0000SAH1, CUUR0000SAH1 | Shelter | [FRED](https://fred.stlouisfed.org/series/CUSR0000SAH1) |
+| CUSR0000SASLE, CUUR0000SASLE | Services less energy services | [FRED](https://fred.stlouisfed.org/series/CUSR0000SASLE) |
+| PPIFIS, PPIFID | PPI final demand | [FRED](https://fred.stlouisfed.org/series/PPIFIS) |
+| PPIDGS, PPIDSS, PPIDES, PPIDFS, WPSFD413 | PPI goods, services, energy, foods, and goods less food and energy | [FRED](https://fred.stlouisfed.org/series/PPIDGS) |
+| WPSFD49116, WPUFD49116 | PPI less foods, energy, and trade services | [FRED](https://fred.stlouisfed.org/series/WPSFD49116) |
+| CPI Table 6 | September contribution effects | [BLS archive](https://www.bls.gov/news.release/archives/cpi_10142026.htm) |
+| PPI news release | Producer gasoline and retail fuel margins | [BLS archive](https://www.bls.gov/news.release/archives/ppi_10152026.htm) |
+
+September's CPI month was an energy month, and gasoline was more than half of it. Producer prices rose by more, and the producer index that drops food, energy, and trade margins does not match core CPI. The next policy statement will not come with new projections. The price index the Fed prefers is published the next day.
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*

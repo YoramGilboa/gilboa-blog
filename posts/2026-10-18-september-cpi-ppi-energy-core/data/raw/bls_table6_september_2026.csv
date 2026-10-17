@@ -1,0 +1,6 @@
+component,relative_importance,percent_change,effect_pp,plot,inside_energy
+all_items,100.0,0.6,,0,0
+food,13.507,0.0,0.006,1,0
+energy,7.418,5.2,0.377,1,0
+gasoline,3.853,9.1,0.337,0,1
+core,79.075,0.3,0.265,1,0

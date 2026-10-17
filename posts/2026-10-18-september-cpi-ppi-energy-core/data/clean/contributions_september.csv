@@ -1,0 +1,6 @@
+component,relative_importance,percent_change,effect_pp,plot,inside_energy,label,official_headline_mom,plotted_effect_sum_pp,approx_pp
+all_items,100.0,0.6,,0,0,All items,0.6,0.648,0.6
+food,13.507,0.0,0.006,1,0,Food,0.6,0.648,0.0
+energy,7.418,5.2,0.377,1,0,Energy,0.6,0.648,0.38573599999999997
+gasoline,3.853,9.1,0.337,0,1,Gasoline,0.6,0.648,0.350623
+core,79.075,0.3,0.265,1,0,Core,0.6,0.648,0.237225
