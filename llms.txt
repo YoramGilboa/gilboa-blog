@@ -21,15 +21,16 @@ series, and includes methodology and limitations.
 
 ## Latest
 
+- [New Claims Are Low, and Payroll Growth Has Stalled](https://gilboa.blog/posts/2026-10-25-low-claims-stalled-payrolls/): Initial claims were 194,000 in the week ended October 17. September payrolls rose 29,000. Continuing claims were 1.728 million in the week ended October 10
 - [Energy Raised September CPI and PPI. Core Stayed Firmer.](https://gilboa.blog/posts/2026-10-18-september-cpi-ppi-energy-core/): CPI rose 0.6 percent in September, with gasoline more than half of the month. PPI final demand rose 1.3 percent. Core was 0.3 percent on the month and 2.6 percent over the year
 - [The Lower Core PCE Path Is a New Ruler](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): July core moved from 3.3 to 3.0 percent on a new price ruler; August core is 3.0 percent; Q2 GDP revised from 1.5 to 2.2 percent
 - [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
 - [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
-- [August CPI turned up on energy](https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/): Headline CPI +0.4 percent; gasoline +3.9 percent; core +0.3 percent
 
 ## Inflation
 
+- [August CPI turned up on energy](https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/): Headline CPI +0.4 percent; gasoline +3.9 percent; core +0.3 percent
 - [July PCE held at 3.7%](https://gilboa.blog/posts/2026-08-28-july-pce-jackson-hole/): Headline and core PCE unchanged; real spending flat
 - [July CPI and PPI](https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/): Soft consumer and producer prints after weak jobs
 - [June CPI](https://gilboa.blog/posts/2026-07-18-june-2026-cpi-energy-reversal-core-persistence/): Energy reversal after ceasefire; core and shelter linger
