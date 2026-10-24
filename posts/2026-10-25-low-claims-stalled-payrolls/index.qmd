@@ -171,7 +171,7 @@ cards = [
     ),
     (
         "Continued claims",
-        f"{fmt3(stats['continuing_claims_latest'] / 1000000)} million",
+        f"{fmt(stats['continuing_claims_latest'] / 1000000)}M",
         COLORS["primary"],
         f"week ended {stats['continuing_week_end']}",
     ),
@@ -183,7 +183,7 @@ cards = [
     ),
     (
         "Unemployment rate",
-        f"{fmt(stats['unrate_latest'])} percent",
+        f"{fmt(stats['unrate_latest'])}%",
         COLORS["neutral"],
         stats["payroll_month"],
     ),
