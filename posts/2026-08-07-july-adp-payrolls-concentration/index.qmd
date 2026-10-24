@@ -1,10 +1,10 @@
 ---
-title: "July ADP: Only 44k Jobs, 82% from Education & Health"
-pagetitle: "July ADP: Only 44k Jobs, 82% from Education & Health"
+title: "July ADP +44k Jobs, 82% in Education & Health"
+pagetitle: "July ADP +44k Jobs, 82% in Education & Health"
 date: "2026-08-07"
 author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization, inflation]
-description: "ADP private payrolls rose just 44,000 in July, with 82% of the gain in one sector. BLS later showed a net loss after revisions."
+description: "July 2026 ADP private payrolls rose only 44k, with 82% of the gain in education and health. Sector concentration charts and the link to the later BLS miss."
 image: images/july-adp-payroll-trend.png
 image-alt: "Monthly ADP private payroll changes and their three-month average through July 2026"
 toc: true
@@ -15,6 +15,32 @@ format:
   html:
     title-prefix: ""
 ---
+
+```{=html}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "July ADP +44k Jobs, 82% in Education & Health",
+  "description": "July 2026 ADP private payrolls rose only 44k, with 82% of the gain in education and health. Sector concentration charts and the link to the later BLS miss.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png",
+  "url": "https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
+```
 
 ```{python}
 #| echo: false
@@ -88,6 +114,15 @@ def fmt2(value):
 ADP estimated that private employers added only `{python} fmt(stats['adp_july_k'], 0)`,000 jobs in July. Education and health services supplied `{python} fmt(stats['adp_edu_health_share_pct'], 0)`% of that increase, a striking sign that hiring was not broad.
 
 Two days later, the Bureau of Labor Statistics, or BLS, reported that total nonfarm payrolls fell `{python} fmt(abs(stats['bls_july_total_k']), 0)`,000 and cut its earlier May and June estimates by a combined `{python} fmt(abs(stats['bls_two_month_revision_k']), 0)`,000. That mix of weak hiring, low layoffs, and still-firm pay growth gives the Federal Reserve reasons to watch both sides of its mandate rather than rush toward either a rate cut or an increase.
+
+::: {.callout-note}
+## Key facts
+
+- ADP private payrolls: +`{python} fmt(stats['adp_july_k'], 0)`k
+- `{python} fmt(stats['adp_edu_health_share_pct'], 0)`% of the gain was in education and health services
+- Two days later, BLS reported `{python} fmt_chg(stats['bls_july_total_k'], 0)`k nonfarm payrolls and large downward revisions
+- Source: ADP National Employment Report, July 2026
+:::
 
 ::: {.callout-note collapse="true"}
 ## Reproducing this analysis

@@ -40,8 +40,8 @@ series, and includes methodology and limitations.
 
 ## Labor market
 
-- [August jobs rebound composition](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
-- [July ADP](https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/): +44k private jobs, 82% in education and health
+- [August 2026 Jobs +162k: 62% Restaurants & Schools](https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/): Payroll rebound concentrated in restaurants and schools
+- [July ADP +44k Jobs, 82% in Education & Health](https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/): +44k private jobs, 82% in education and health
 - [June jobs report](https://gilboa.blog/posts/2026-07-03-june-jobs-report-soft-labor-market/): Soft payrolls and a labor-force drop
 - [June labor dashboard](https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/): Headline resilience vs slower hiring flows
 - [May jobs](https://gilboa.blog/posts/2026-06-06-may-2026-jobs-report-stabilization/): Stabilization at +172k
@@ -49,8 +49,8 @@ series, and includes methodology and limitations.
 ## Fed policy and growth
 
 - [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/): Dissents for a hike if inflation does not cool
-- [Q2 GDP and June PCE](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/): GDP +1.5%; private demand +3.9%
-- [June 2026 dot plot](https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/): 40 bp hawkish shift with rates on hold
+- [Q2 GDP 1.5% but Private Demand Hit 3.9%](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/): GDP +1.5%; private demand +3.9%
+- [June 2026 Dot Plot: 40 bp Hawkish Shift](https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/): 40 bp hawkish shift with rates on hold
 - [April FOMC](https://gilboa.blog/posts/2026-05-01-april-fomc-decision/): Dissents, dots, and the market wedge
 - [Q1 GDP revision](https://gilboa.blog/posts/2026-05-29-q1-gdp-revision-consumer-ai/): Consumer pullback vs AI equipment surge
 

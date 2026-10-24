@@ -1,10 +1,10 @@
 ---
-title: "Q2 GDP Slowed to 1.5%, but Private Demand Accelerated to 3.9%"
-pagetitle: "Q2 GDP Slowed to 1.5%, but Private Demand Accelerated to 3.9%"
+title: "Q2 GDP 1.5% but Private Demand Hit 3.9%"
+pagetitle: "Q2 GDP 1.5% but Private Demand Hit 3.9%"
 date: "2026-07-30"
 author: Yoram Gilboa
 categories: [economics, inflation, data visualization, federal reserve]
-description: "Q2 real GDP rose just 1.5%, but private domestic demand accelerated to 3.9%. Full breakdown of the advance estimate and June PCE."
+description: "Q2 2026 advance: real GDP slowed to 1.5% while private final sales accelerated to 3.9%. Contribution charts, consumer rebound, and June PCE implications."
 image: images/contribution-shift.png
 toc: true
 toc-location: right
@@ -14,6 +14,32 @@ format:
   html:
     title-prefix: ""
 ---
+
+```{=html}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Q2 GDP 1.5% but Private Demand Hit 3.9%",
+  "description": "Q2 2026 advance: real GDP slowed to 1.5% while private final sales accelerated to 3.9%. Contribution charts, consumer rebound, and June PCE implications.",
+  "datePublished": "2026-07-30",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png",
+  "url": "https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
+```
 
 ```{python}
 #| echo: false
@@ -150,6 +176,16 @@ def extend_x_for_labels(ax, series_index, pad_frac=0.12):
 ```
 
 The Bureau of Economic Analysis (BEA) released two linked prints on `{python} stats['release_date_us']`: the advance estimate of second-quarter GDP and the June personal income and outlays report. Real gross domestic product (GDP)^[Real GDP measures the inflation-adjusted value of goods and services produced in the United States. The advance estimate is the first of three BEA vintages for a quarter.] rose at a `{python} fmt(stats['gdp_growth_q2'])`% annualized rate in `{python} stats['latest_quarter']`, down from `{python} fmt(stats['gdp_growth_q1'])`% in Q1 and below the `{python} fmt(stats['gdp_growth_consensus'])`% consensus track. The softer headline is not the whole story. Real final sales to private domestic purchasers^[Private domestic final sales equal consumer spending plus private fixed investment. They strip out inventories, net exports, and government and are a cleaner read on private demand.] accelerated to `{python} fmt(stats['final_sales_private_q2'])`% from `{python} fmt(stats['final_sales_private_q1'])`% in Q1, opening a `{python} fmt(stats['demand_gap_q2'])` percentage-point gap between private demand and headline growth.
+
+::: {.callout-note}
+## Key facts
+
+- Q2 real GDP: +`{python} fmt(stats['gdp_growth_q2'])`% SAAR, down from +`{python} fmt(stats['gdp_growth_q1'])`%
+- Private final sales to domestic purchasers: +`{python} fmt(stats['final_sales_private_q2'])`% (a gap of +`{python} fmt(stats['demand_gap_q2'])` percentage points)
+- Real consumer spending: +`{python} fmt(stats['pce_growth_q2'])`%
+- June core PCE: `{python} fmt(stats['core_pce_yoy_june'])`% over the year
+- Source: BEA advance estimate and Personal Income and Outlays, `{python} stats['release_date']`
+:::
 
 That gap is the release's main interaction: consumer spending and equipment investment still supported demand, while inventories, net exports, and government subtracted enough to pull the total down. The same-day June personal consumption expenditures (PCE) price data add a second interaction across horizons. Headline PCE prices fell `{python} fmt_chg(stats['pce_mom_june'])`% month-over-month^[Month-over-month (m/m) is the change from one month to the next.], lowering the year-over-year rate to `{python} fmt(stats['pce_yoy_june'])`% from `{python} fmt(stats['pce_yoy_may'])`% in May. Core PCE, which excludes food and energy and is the Federal Reserve's preferred inflation gauge, rose `{python} fmt_chg(stats['core_pce_mom_june'])`% on the month and stood `{python} fmt(stats['core_pce_yoy_june'])`% above a year earlier. Monthly relief is real; a clear return of core prices to the 2% target is not.
 

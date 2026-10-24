@@ -1,9 +1,10 @@
 ---
-title: "The June 2026 FOMC Dot Plot: A 40 Basis Point Hawkish Shift, With Rates on Hold"
+title: "June 2026 Dot Plot: 40 bp Hawkish Shift"
+pagetitle: "June 2026 Dot Plot: 40 bp Hawkish Shift"
 date: "2026-06-20"
 author: Yoram Gilboa
 categories: [economics, federal reserve, fomc, interest rates, inflation, labor market]
-description: "The June 17 FOMC held the federal funds rate at 3.50-3.75%, but the median end-2026 dot jumped 40 basis points to 3.8% and nine participants now project at least one hike. A read of the SEP, the data behind it, and the gap to market pricing."
+description: "June 2026 FOMC held rates but the median end-2026 dot shifted 40 bp hawkish. Full SEP comparison, participant scatter, and what that path implies for policy."
 image: images/june-2026-dot-plot-shift.png
 image-alt: "Strip-plot comparison of the March and June 2026 SEP dot distributions for the end-2026 federal funds rate, with medians and the current target-range midpoint highlighted."
 toc: true
@@ -11,6 +12,32 @@ toc-location: right
 code-fold: true
 code-summary: "Show code"
 ---
+
+```{=html}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "June 2026 Dot Plot: 40 bp Hawkish Shift",
+  "description": "June 2026 FOMC held rates but the median end-2026 dot shifted 40 bp hawkish. Full SEP comparison, participant scatter, and what that path implies for policy.",
+  "datePublished": "2026-06-20",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/images/june-2026-dot-plot-shift.png",
+  "url": "https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
+```
 
 ```{python}
 #| echo: false
@@ -141,6 +168,15 @@ HTML(html)
 The Federal Open Market Committee left the federal funds target range unchanged at `{python} stats['current_rate_range']`% on June 17, but the path it projects for the next eighteen months moved sharply higher. The median end-2026 dot rose to `{python} fmt(stats['june_sep_funds_eoy2026'])`% from `{python} fmt(stats['march_sep_funds_eoy2026'])`% in March, a `{python} stats['funds_shift_bp_2026']` basis point upward revision in a single Summary of Economic Projections cycle. Nine of the eighteen participants who submitted projections now see at least one rate hike before year-end. The 2026 PCE inflation projection climbed to `{python} fmt(stats['june_sep_pce_2026'])`% from `{python} fmt(stats['march_sep_pce_2026'])`%.
 
 Incoming data tell a messier story underneath that hawkish revision. Headline CPI rose to `{python} fmt(stats['may_cpi_yoy'])`% in `{python} stats['latest_cpi_month']`, almost entirely on a `{python} fmt(stats['may_energy_yoy'])`% year-over-year jump in the energy index, while core CPI ran a cooler `{python} fmt(stats['may_core_cpi_yoy'])`%. Payrolls added `{python} fmt(stats['may_payrolls_k'])`k, well above the `{python} fmt(stats['consensus_payrolls_k'])`k consensus, and unemployment held at `{python} fmt(stats['may_unrate'])`%. The June meeting was the first to be presided over by a new Chair, and it was the first in this cycle to combine a hold with a clearly hawkish projection set. This post walks through what the dot plot changed, what the data underneath says, and where market pricing stands relative to the Committee's revised path.
+
+::: {.callout-note}
+## Key facts
+
+- The FOMC held the federal funds rate at `{python} stats['current_rate_range']`%
+- The median 2026 dot shifted `{python} stats['funds_shift_bp_2026']` basis points higher
+- This post includes the full SEP comparison and the participant scatter
+- Source: June 2026 FOMC statement and Summary of Economic Projections
+:::
 
 ::: {.callout-note collapse="true"}
 ## Note on data
