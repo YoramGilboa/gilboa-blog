@@ -1,0 +1,66 @@
+{
+  "retrieved_for": "October 22, 2026 weekly claims and October 2, 2026 Employment Situation",
+  "reproduction_mode": "committed_snapshot",
+  "output_dir": "data/raw",
+  "claims_release_url": "https://www.dol.gov/ui/data.pdf",
+  "bls_archive_url": "https://www.bls.gov/news.release/archives/empsit_10022026.htm",
+  "fomc_statement_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+  "fred": "https://fred.stlouisfed.org/",
+  "fred_vintage": {
+    "weekly_realtime_start": "2026-10-22",
+    "weekly_realtime_end": "2026-10-22",
+    "monthly_realtime_start": "2026-10-02",
+    "monthly_realtime_end": "2026-10-02",
+    "observation_start": "1967-01-01",
+    "observation_end": {
+      "initial_claims": "2026-10-17",
+      "continuing_claims": "2026-10-10",
+      "monthly": "2026-09-01"
+    }
+  },
+  "snapshot_sha256": {
+    "fred_monthly.csv": "4ad2fe0e84c79529eee23181f7b27b062cb179dd02c78e26ad8a92382dd2e33f",
+    "fred_weekly.csv": "13673e00f0de73895d61ebcd307a68f8976208c6d1440fe9f9bf626a49075c02"
+  },
+  "weekly_series": {
+    "initial_claims": "ICSA",
+    "claims_4wk": "IC4WSA",
+    "continuing_claims": "CCSA",
+    "continuing_4wk": "CC4WSA",
+    "insured_rate": "IURSA"
+  },
+  "monthly_series": {
+    "payems": "PAYEMS",
+    "unrate": "UNRATE",
+    "civpart": "CIVPART",
+    "ahe": "CES0500000003",
+    "usrec": "USREC"
+  },
+  "latest_observation": {
+    "payems": "2026-09-01",
+    "unrate": "2026-09-01",
+    "civpart": "2026-09-01",
+    "ahe": "2026-09-01",
+    "usrec": "2026-09-01",
+    "initial_claims": "2026-10-17",
+    "claims_4wk": "2026-10-17",
+    "continuing_claims": "2026-10-10",
+    "continuing_4wk": "2026-10-10",
+    "insured_rate": "2026-10-10"
+  },
+  "prose_only_series": [
+    "IURSA",
+    "UNRATE",
+    "CIVPART",
+    "CES0500000003"
+  ],
+  "notes": [
+    "Exact reproduction reads data/raw and does not download.",
+    "--refresh writes data/raw/refresh/ and does not replace the committed CSVs.",
+    "Weekly series use realtime_end 2026-10-22. Monthly series use realtime_end 2026-10-02.",
+    "observation_end alone does not freeze later revisions.",
+    "The prior week's advance claims print, 199,000, is not in the revised FRED vintage. It is transcribed in 04.",
+    "The payroll confidence interval and the July-August revision are transcribed from the October 2 BLS archive.",
+    "The funds-rate range is the September 16, 2026 decision, not an October result."
+  ]
+}

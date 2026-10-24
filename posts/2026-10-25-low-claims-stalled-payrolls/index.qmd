@@ -1,0 +1,504 @@
+---
+title: "New Claims Are Low, and Payroll Growth Has Stalled"
+pagetitle: "October 2026: initial claims 194,000, payrolls +29,000"
+date: "2026-10-25"
+author: Yoram Gilboa
+categories: [economics, labor market, federal reserve, data visualization]
+description: "Initial claims were 194,000 in the week ended October 17. September payrolls rose 29,000. Continuing claims were 1.728 million in the week ended October 10."
+image: images/payrolls-claims.png
+image-alt: "Two panels from January 2022 through October 26. Monthly payroll changes end at plus 29,000 in September 26. Weekly initial claims end at 194,000."
+title-block-banner: true
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    return f"{float(value):.{digits}f}"
+
+
+def fmt0(value):
+    return f"{float(value):,.0f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def fmt3(value):
+    return f"{float(value):.3f}"
+
+
+def short_year(label):
+    """Print 2026 as 26. The full year stays in the stats file."""
+    return str(label).replace("2026", "26")
+
+
+for key, value in list(stats.items()):
+    if isinstance(value, str):
+        stats[key] = short_year(value)
+
+
+def extend_xlim(ax, index, pad=0.12):
+    span = index[-1] - index[0]
+    ax.set_xlim(index[0], index[-1] + span * pad)
+
+
+def year_ticks(ax):
+    ax.xaxis.set_major_locator(mdates.YearLocator(5))
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda value, _pos: short_year(mdates.num2date(value).strftime("%Y")))
+    )
+
+
+def year_span_ticks(ax, index):
+    """Tick January of each year that contains data. Do not add an empty next year."""
+    years = range(int(index[0].year), int(index[-1].year) + 1)
+    ax.set_xticks([pd.Timestamp(year=year, month=1, day=1) for year in years])
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda value, _pos: short_year(mdates.num2date(value).strftime("%Y")))
+    )
+
+
+def quarter_ticks(ax):
+    ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=[1, 4, 7, 10]))
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda value, _pos: short_year(mdates.num2date(value).strftime("%b\n%Y")))
+    )
+```
+
+Initial claims, new filings for unemployment insurance, were `{python} fmt0(stats['claims_latest'])` in the week ended `{python} stats['claims_week_end']`. Nonfarm payrolls, the jobs on employer payrolls outside farm work, rose `{python} fmt0(stats['payroll_change_k'] * 1000)` in `{python} stats['payroll_month']`. The two prints answer different questions. A filing count is not the net change in jobs.
+
+Continued claims, the people still on unemployment insurance after a filing, were `{python} fmt3(stats['continuing_claims_latest'] / 1000000)` million in the week ended `{python} stats['continuing_week_end']`. This year that stock reached `{python} fmt3(stats['continuing_claims_2026_max'] / 1000000)` million in the week ended `{python} stats['continuing_2026_max_week_end']`. The latest week is up from the week before it, and it is still below that high.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The complete pipeline is included with this post:
+
+- `scripts/01_fetch_data.py` checks the committed snapshots and does not download. Weekly claims are the `{python} stats['claims_release_date']` Department of Labor vintage. Payrolls, unemployment, participation, and earnings are the `{python} stats['payroll_release_date']` Employment Situation.
+- `scripts/02_clean_data.py` calculates the monthly payroll change, the three-month average of those changes, and the earnings year rate. Charts only plot those columns.
+- `scripts/04_compute_stats.py` writes every prose and card value to `stats/summary_stats.json`.
+
+Run the scripts in that order from this post's folder, then render `index.qmd`. pandas handles the tables and matplotlib draws the figures. The claims source is the [Department of Labor weekly release](https://www.dol.gov/ui/data.pdf). The payroll source is the [archived Employment Situation](https://www.bls.gov/news.release/archives/empsit_10022026.htm).
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+Initial claims and continued claims in the charts are seasonally adjusted. The chart uses the revised level of the prior week. The advance figure quoted in the text is not a separate point. The monthly payroll change is a difference in employment levels, in thousands of jobs. The three-month line is the average of the last three monthly changes, not an annualized rate. A claims week is shaded when its Saturday falls in an NBER recession month.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; "
+    "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+    "align-items: center; min-height: 132px;"
+)
+label_style = (
+    "font-size: 0.78rem; color: #64748b; min-height: 2.55rem; "
+    "display: flex; align-items: center; text-align: center;"
+)
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    (
+        "Initial claims",
+        fmt0(stats["claims_latest"]),
+        COLORS["primary"],
+        f"week ended {stats['claims_week_end']}",
+    ),
+    (
+        "Continued claims",
+        f"{fmt3(stats['continuing_claims_latest'] / 1000000)} million",
+        COLORS["primary"],
+        f"week ended {stats['continuing_week_end']}",
+    ),
+    (
+        "September payrolls",
+        f"+{fmt0(stats['payroll_change_k'] * 1000)}",
+        COLORS["secondary"],
+        stats["payroll_release_date"],
+    ),
+    (
+        "Unemployment rate",
+        f"{fmt(stats['unrate_latest'])} percent",
+        COLORS["neutral"],
+        stats["payroll_month"],
+    ),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+HTML(
+    f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.25rem 0 1.0rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+    Department of Labor weekly claims and BLS Employment Situation | {stats['data_current_as_of']}
+</p>
+"""
+)
+```
+
+## How low initial claims are
+
+The four-week average is the Department of Labor's average of the last four weeks of initial claims. It was `{python} fmt0(stats['claims_4wk_avg'])` in the week ended `{python} stats['claims_week_end']`, down `{python} fmt0(abs(stats['claims_4wk_wow_change']))` from the previous week's revised average. The week ended `{python} stats['claims_prior_week_end']` was revised up by `{python} fmt0(stats['claims_prior_week_revision'])`, from `{python} fmt0(stats['claims_prior_week_advance'])` to `{python} fmt0(stats['claims_prior_week'])`. The latest week's decline of `{python} fmt0(abs(stats['claims_wow_change']))` is measured from that revised level.
+
+The upper panel is the full sample of weekly initial claims, beginning `{python} stats['series_start']`, with recession months shaded. The lower panel is the recent window. There the blue line is weekly initial claims and the gray line is the four-week average.
+
+```{python}
+#| echo: true
+#| label: fig-claims-history
+#| fig-cap: "Seasonally adjusted initial claims were 194,000 in the week ended October 17, 26, one of four weeks since 1970 at or below that level. The sample low was 162,000 in the week ended November 30, 1968."
+#| fig-alt: "Two panels. The upper panel is weekly initial claims from January 1967 through the week ended October 17, 26, with recession shading. The lower panel, from 2024, shows weekly claims in blue and the four-week average in gray. The latest week is 194,000 and the sample low is 162,000 in the week ended November 30, 1968."
+
+# Full sample on top, recent window below. Levels are plotted in thousands.
+# Missing weeks stay missing so a gap is not closed.
+claims = pd.read_csv(CLEAN_DIR / "claims_weekly.csv", index_col="date", parse_dates=True).sort_index()
+recessions = pd.read_csv(CLEAN_DIR / "recessions.csv", index_col="date", parse_dates=True).sort_index()
+icsa = claims["initial_claims"]
+icsa_k = icsa / 1000.0
+recent = claims.loc["2024-01-01":]
+recent_k = recent["initial_claims"] / 1000.0
+recent_avg_k = recent["claims_4wk_avg"] / 1000.0
+
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), gridspec_kw={"height_ratios": [2.2, 1.4]})
+
+rec_months = set(recessions.index[recessions["usrec"] == 1].to_period("M"))
+in_rec = [stamp.to_period("M") in rec_months for stamp in icsa.index]
+start = None
+prev = None
+for stamp, flag in zip(icsa.index, in_rec):
+    if flag and start is None:
+        start = stamp
+    if start is not None and not flag:
+        axes[0].axvspan(start, prev, color=COLORS["recession"], alpha=0.08, linewidth=0)
+        start = None
+    prev = stamp
+if start is not None:
+    axes[0].axvspan(start, icsa.index[-1], color=COLORS["recession"], alpha=0.08, linewidth=0)
+
+axes[0].plot(icsa.index, icsa_k, color=COLORS["primary"], linewidth=1.8)
+record_stamp = icsa.idxmin()
+latest_stamp = icsa.dropna().index[-1]
+for stamp, offset, ha in ((record_stamp, (8, 10), "left"), (latest_stamp, (-4, 12), "right")):
+    level = float(icsa.loc[stamp])
+    axes[0].scatter(
+        stamp, level / 1000.0, s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8
+    )
+    axes[0].annotate(
+        f"{level:,.0f}",
+        xy=(stamp, level / 1000.0),
+        xytext=offset,
+        textcoords="offset points",
+        color=COLORS["primary"],
+        fontsize=8,
+        fontweight="bold",
+        ha=ha,
+        va="bottom",
+    )
+axes[0].set_ylabel("Initial claims\n(thousands)")
+axes[0].set_xlim(icsa.index[0], latest_stamp + pd.Timedelta(days=120))
+year_ticks(axes[0])
+
+axes[1].plot(recent.index, recent_k, color=COLORS["primary"], linewidth=1.8)
+axes[1].plot(recent.index, recent_avg_k, color=COLORS["neutral"], linewidth=1.6)
+low_stamp = recent["initial_claims"].idxmin()
+end_stamp = recent["initial_claims"].dropna().index[-1]
+for stamp, offset, ha in ((low_stamp, (-8, 10), "right"), (end_stamp, (6, 0), "left")):
+    level = float(recent.loc[stamp, "initial_claims"])
+    axes[1].scatter(
+        stamp, level / 1000.0, s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8
+    )
+    axes[1].annotate(
+        f"{level:,.0f}",
+        xy=(stamp, level / 1000.0),
+        xytext=offset,
+        textcoords="offset points",
+        color=COLORS["primary"],
+        fontsize=8,
+        fontweight="bold",
+        ha=ha,
+        va="bottom" if offset[1] else "center",
+    )
+axes[1].set_ylabel("Initial claims\n(thousands)")
+year_span_ticks(axes[1], recent.index)
+extend_xlim(axes[1], recent.index, 0.1)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "claims-history.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [Department of Labor initial claims via FRED ICSA and IC4WSA](https://fred.stlouisfed.org/series/ICSA); recession months from [FRED USREC](https://fred.stlouisfed.org/series/USREC).
+:::
+
+The lowest week in the sample was `{python} fmt0(stats['record_low_claims'])`, in the week ended `{python} stats['record_low_week_end']`. The lowest week of 1969 was `{python} fmt0(stats['low_1969_claims'])`, in the week ended `{python} stats['low_1969_week_end']`. Both are below the latest week. Since 1970, `{python} fmt0(stats['weeks_at_or_below_latest_since_1970'])` weeks have been at or below `{python} fmt0(stats['claims_latest'])`, and the latest week is one of them. The lowest of those weeks was `{python} fmt0(stats['trough_since_1970_claims'])` in the week ended `{python} stats['trough_since_1970_week_end']`.
+
+| Week ended | Initial claims |
+| --- | --- |
+| `{python} stats['week_2022_end']` | `{python} fmt0(stats['week_2022_claims'])` |
+| `{python} stats['week_2026_04_end']` | `{python} fmt0(stats['week_2026_04_claims'])` |
+| `{python} stats['trough_since_1970_week_end']` | `{python} fmt0(stats['trough_since_1970_claims'])` |
+| `{python} stats['claims_week_end']` | `{python} fmt0(stats['claims_latest'])` |
+
+: Weeks since 1970 with seasonally adjusted initial claims at or below the latest week. {#tbl-low-weeks}
+
+::: {.figure-source}
+Source: [Department of Labor initial claims via FRED ICSA](https://fred.stlouisfed.org/series/ICSA).
+:::
+
+The full sample has `{python} fmt0(stats['sample_weeks'])` weeks, and `{python} fmt0(stats['weeks_at_or_below_latest_full_sample'])` of them were at or below the latest level. Most of that longer count sits in the late 1960s, so this post uses the since-1970 count.
+
+## Net payroll growth has stalled
+
+The bars below are the monthly change in nonfarm payrolls. The green line is the average of the last three of those monthly changes. The lower panel is weekly initial claims. Payrolls count a net change in jobs. Claims count new filings. The figure keeps those measurements on separate panels.
+
+```{python}
+#| echo: true
+#| label: fig-payrolls-claims
+#| fig-cap: "The monthly change in nonfarm payrolls and weekly initial claims are different measurements. September payrolls rose 29,000 while the latest claims week was 194,000."
+#| fig-alt: "Two panels from January 2022 through October 26. The upper panel shows monthly payroll changes as bars and the three-month average as a green line, ending at plus 29,000 in September 26. The lower panel is weekly initial claims, ending at 194,000."
+
+# Monthly changes and the three-month average are columns on the clean file.
+# This cell only plots them. Weekly claims stay on their own calendar.
+payrolls = pd.read_csv(CLEAN_DIR / "payrolls_monthly.csv", index_col="date", parse_dates=True).sort_index()
+claims = pd.read_csv(CLEAN_DIR / "claims_weekly.csv", index_col="date", parse_dates=True).sort_index()
+pay = payrolls.loc["2022-01-01":]
+weekly = claims.loc["2022-01-01":, "initial_claims"]
+
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]})
+
+bar_colors = [COLORS["primary"] if value >= 0 else COLORS["accent"] for value in pay["payems_change"].fillna(0)]
+axes[0].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+axes[0].bar(pay.index, pay["payems_change"], width=20, color=bar_colors, edgecolor="white")
+axes[0].plot(pay.index, pay["payems_change_3m"], color=COLORS["secondary"], linewidth=1.8)
+last_pay = pay["payems_change"].dropna().index[-1]
+last_value = float(pay.loc[last_pay, "payems_change"])
+span = float(pay["payems_change"].max() - pay["payems_change"].min())
+axes[0].text(
+    last_pay,
+    last_value + span * 0.04,
+    f"{last_value:+.0f}k",
+    color=COLORS["neutral"],
+    fontsize=8,
+    ha="center",
+    va="bottom",
+)
+axes[0].set_ylabel("Monthly change\n(thousands of jobs)")
+
+axes[1].plot(weekly.index, weekly / 1000.0, color=COLORS["primary"], linewidth=1.8)
+end = weekly.dropna().index[-1]
+end_level = float(weekly.loc[end])
+axes[1].scatter(end, end_level / 1000.0, s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8)
+axes[1].annotate(
+    f"{end_level:,.0f}",
+    xy=(end, end_level / 1000.0),
+    xytext=(6, 0),
+    textcoords="offset points",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    va="center",
+)
+axes[1].set_ylabel("Initial claims\n(thousands)")
+year_span_ticks(axes[1], weekly.dropna().index)
+extend_xlim(axes[1], weekly.dropna().index, 0.08)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "payrolls-claims.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS payrolls via FRED PAYEMS](https://fred.stlouisfed.org/series/PAYEMS); [Department of Labor initial claims via FRED ICSA](https://fred.stlouisfed.org/series/ICSA).
+:::
+
+Payrolls rose `{python} fmt0(stats['payroll_change_k'] * 1000)` in `{python} stats['payroll_month']`. The three-month average of the monthly change was `{python} fmt0(stats['payroll_3m_avg_k'] * 1000)`.
+
+The panel above does not show the full payroll series. Leave out recession months, and leave out the `{python} fmt0(stats['post_recession_months'])` months after each recession ended. In the months that remain, back to `{python} stats['expansion_sample_month']`, the median monthly change was `{python} fmt0(stats['expansion_change_median_k'] * 1000)`. `{python} fmt0(stats['expansion_months_change_le_latest'])` of `{python} fmt0(stats['expansion_months_prior'])` earlier months in that set had a change as low as September's or lower. `{python} fmt0(stats['expansion_months_3m_le_latest'])` of `{python} fmt0(stats['expansion_months_3m_prior'])` had a three-month average as low as September's or lower. That is a comparison with other non-recession months. It does not say September was a recession.
+
+The October employment situation is dated `{python} stats['october_jobs_date']`, and that print is not on the figure. BLS described the September change as little changed. The approximate 90 percent confidence interval is plus or minus `{python} fmt0(stats['payroll_ci_k'] * 1000)`, so the reported estimate is not statistically distinguishable from zero. The interval describes the monthly estimate. It does not test whether September differed from August. The `{python} stats['payroll_release_date']` release also revised July and August down by a combined `{python} fmt0(abs(stats['payroll_revision_jul_aug_k']) * 1000)`.
+
+The unemployment rate is not a line on this figure. It edged from `{python} fmt(stats['unrate_prior'])` percent to `{python} fmt(stats['unrate_latest'])` percent. The labor force participation rate is also prose only. It rose from `{python} fmt(stats['civpart_prior'])` percent to `{python} fmt(stats['civpart_latest'])` percent, so the small payroll gain is not a story about people leaving the labor force. Average hourly earnings, the usual hourly pay of private-sector workers, are prose only as well. They rose `{python} fmt(stats['ahe_yoy_pct'])` percent over the year.
+
+Low-hire, low-fire, as used here, means few new filings and a small net change in jobs. It is not a published count of hires. September hires are not in this post. That count arrives with the Job Openings and Labor Turnover Survey on `{python} stats['jolts_release_date']`.
+
+## Continued claims are a stock, not a firing count
+
+Continued claims are people who remain on unemployment insurance. They are not the week's new filings, and they are not nonfarm payrolls. In the figure the blue line is continued claims and the gray line is the four-week average of continued claims. The insured unemployment rate, continued claims as a percent of jobs covered by unemployment insurance, is not a line on the figure. It was `{python} fmt(stats['insured_rate_prior'])` percent in the week ended `{python} stats['continuing_prior_week_end']` and `{python} fmt(stats['insured_rate_latest'])` percent in the week ended `{python} stats['continuing_week_end']`.
+
+```{python}
+#| echo: true
+#| label: fig-continuing-claims
+#| fig-cap: "Continued claims were 1.728 million in the week ended October 10, 26, the week before the October employment survey week. The series is the stock of insured unemployment, not initial claims and not payrolls."
+#| fig-alt: "Continued claims in blue and the four-week average in gray, from January 26 through the week ended October 10, 26. The latest level is 1.728 million."
+
+# Continued claims end one week before the latest initial-claims week. Keep that end date.
+claims = pd.read_csv(CLEAN_DIR / "claims_weekly.csv", index_col="date", parse_dates=True).sort_index()
+window = claims.loc["2026-01-01":"2026-10-10", ["continuing_claims", "continuing_4wk_avg"]]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+ax.plot(window.index, window["continuing_claims"] / 1_000_000, color=COLORS["primary"], linewidth=1.8)
+ax.plot(window.index, window["continuing_4wk_avg"] / 1_000_000, color=COLORS["neutral"], linewidth=1.6)
+
+level = window["continuing_claims"].dropna()
+end = level.index[-1]
+end_value = float(level.loc[end])
+high = level.idxmax()
+high_value = float(level.loc[high])
+ax.scatter(end, end_value / 1_000_000, s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8)
+ax.annotate(
+    f"{end_value / 1_000_000:.3f} million",
+    xy=(end, end_value / 1_000_000),
+    xytext=(6, 0),
+    textcoords="offset points",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    va="center",
+)
+ax.scatter(high, high_value / 1_000_000, s=40, color=COLORS["primary"], zorder=5, edgecolors="white", linewidth=0.8)
+ax.annotate(
+    f"{high_value / 1_000_000:.3f} million",
+    xy=(high, high_value / 1_000_000),
+    xytext=(6, 6),
+    textcoords="offset points",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    va="bottom",
+)
+ax.set_ylabel("Continued claims\n(millions)")
+quarter_ticks(ax)
+extend_xlim(ax, window.index, 0.2)
+
+plt.tight_layout()
+fig.savefig(IMG_DIR / "continuing-claims.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [Department of Labor continued claims via FRED CCSA and CC4WSA](https://fred.stlouisfed.org/series/CCSA).
+:::
+
+The stock was `{python} fmt3(stats['continuing_claims_latest'] / 1000000)` million in the week ended `{python} stats['continuing_week_end']`, up `{python} fmt0(stats['continuing_claims_wow_change'])` from the week ended `{python} stats['continuing_prior_week_end']`. The high for the year was `{python} fmt3(stats['continuing_claims_2026_max'] / 1000000)` million in the week ended `{python} stats['continuing_2026_max_week_end']`. The low for the year was `{python} fmt3(stats['continuing_claims_2026_min'] / 1000000)` million in the week ended `{python} stats['continuing_2026_min_week_end']`. The week ended `{python} stats['continuing_aug29_week_end']` was `{python} fmt3(stats['continuing_claims_aug29'] / 1000000)` million, still above the latest reading. A one-week increase inside that range is not a new high. It is also not the October survey week's continued claims. Those are released on `{python} stats['next_claims_date']`.
+
+## What is known before the October report
+
+The payroll and household surveys refer to the week, or the pay period, that includes the 12th of the month. In October that date is `{python} stats['survey_week_includes_date']`. The initial-claims week that includes it ended `{python} stats['survey_week_end']`, the same week as the latest claims print. Continued claims in hand stop at `{python} stats['continuing_week_end']`, the prior week.
+
+The Federal Open Market Committee meets from `{python} stats['fomc_meeting_start']` through `{python} stats['fomc_decision_date']`. The federal funds target range is still `{python} fmt2(stats['funds_rate_low'])` percent to `{python} fmt2(stats['funds_rate_high'])` percent, the range set on `{python} stats['funds_rate_decision_date']`. This meeting does not publish a new Summary of Economic Projections. The filings, the payroll change, and the continued-claims stock are the labor facts already in hand. They are not a prediction of the vote.
+
+## Putting the counts together
+
+Initial claims were `{python} fmt0(stats['claims_latest'])` in the week ended `{python} stats['claims_week_end']`. Nonfarm payrolls rose `{python} fmt0(stats['payroll_change_k'] * 1000)` in `{python} stats['payroll_month']`. Continued claims were `{python} fmt3(stats['continuing_claims_latest'] / 1000000)` million in the week ended `{python} stats['continuing_week_end']`, below the high in the week ended `{python} stats['continuing_2026_max_week_end']`. Few new filings and a small net job gain can be true together, because the filing count does not measure hiring and the payroll count does not measure layoffs. The continued-claims stock does not turn the claims print into a hiring boom, and the latest uptick does not make a new high for the year.
+
+### What it means for
+
+**For the Fed.** The committee goes into the `{python} stats['fomc_decision_date']` meeting with few new filings and a September payroll estimate that BLS described as little changed. This post does not say what the committee should do.
+
+**For households.** A low initial-claims number means fewer people filed a new claim that week. It does not mean employers added a large number of jobs. Continued claims are people still on benefits, and that count is below where it stood in the week ended `{python} stats['continuing_2026_max_week_end']`.
+
+**For investors.** The labor facts in hand are the `{python} fmt0(stats['claims_latest'])` claims print, the `{python} fmt0(stats['payroll_change_k'] * 1000)` payroll change, and earnings growth of `{python} fmt(stats['ahe_yoy_pct'])` percent over the year.
+
+### What to watch
+
+- The FOMC statement on `{python} stats['fomc_decision_date']`.
+- The advance estimate of GDP and the September personal income and outlays release on `{python} stats['gdp_pce_date']`. The claims report that day, `{python} stats['next_claims_date']`, includes continued claims for the October survey week.
+- The September Job Openings and Labor Turnover Survey on `{python} stats['jolts_release_date']`.
+- The October employment situation on `{python} stats['october_jobs_date']`.
+
+## Limitations
+
+Initial claims miss a layoff that never becomes a filing. Continued claims are insured unemployment, not the household survey's count of unemployed people. Payrolls are a net change, and this post does not contain September or October hires and separations.
+
+The September payroll change is a first print. It will be revised on `{python} stats['october_jobs_date']`. The confidence interval applies to that monthly change, not to the gap between August and September. The claims headline is the seasonally adjusted advance figure, and the prior week was revised. Historical comparisons use this FRED vintage. A later revision can move an older week. October payrolls are not in the data.
+
+## Methodology
+
+| Series | What it measures | Source |
+| --- | --- | --- |
+| ICSA | Initial claims, seasonally adjusted | [FRED](https://fred.stlouisfed.org/series/ICSA) |
+| IC4WSA | Four-week average of initial claims | [FRED](https://fred.stlouisfed.org/series/IC4WSA) |
+| CCSA | Continued claims, seasonally adjusted | [FRED](https://fred.stlouisfed.org/series/CCSA) |
+| CC4WSA | Four-week average of continued claims | [FRED](https://fred.stlouisfed.org/series/CC4WSA) |
+| IURSA | Insured unemployment rate | [FRED](https://fred.stlouisfed.org/series/IURSA) |
+| PAYEMS | Nonfarm payroll employment | [FRED](https://fred.stlouisfed.org/series/PAYEMS) |
+| UNRATE | Unemployment rate | [FRED](https://fred.stlouisfed.org/series/UNRATE) |
+| CIVPART | Labor force participation rate | [FRED](https://fred.stlouisfed.org/series/CIVPART) |
+| CES0500000003 | Average hourly earnings, total private | [FRED](https://fred.stlouisfed.org/series/CES0500000003) |
+| USREC | NBER recession months | [FRED](https://fred.stlouisfed.org/series/USREC) |
+| Employment Situation archive | September payroll confidence interval and the July-August revision | [BLS archive](https://www.bls.gov/news.release/archives/empsit_10022026.htm) |
+| FOMC statement | Target range set at the September meeting | [Federal Reserve](https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm) |
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*
