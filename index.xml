@@ -11944,7 +11944,7 @@ Figure&nbsp;4: Shelter and services outside shelter remained above the reference
   <media:content url="https://gilboa.blog/posts/2026-09-12-august-cpi-energy-core-fomc/images/august-cpi-headline-core.png" medium="image" type="image/png" height="162" width="144"/>
 </item>
 <item>
-  <title>The Jobs Rebound Was Restaurants and Schools</title>
+  <title>August 2026 Jobs +162k: 62% Restaurants &amp; Schools</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/</link>
   <description><![CDATA[ 
@@ -11953,9 +11953,50 @@ Figure&nbsp;4: Shelter and services outside shelter remained above the reference
 
 
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "August 2026 Jobs +162k: 62% Restaurants & Schools",
+  "description": "August 2026 nonfarm payrolls rose 162k, beating forecasts, but 62% came from restaurants and schools. Sector charts, revisions, and FOMC implications.",
+  "datePublished": "2026-09-04",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/images/august-jobs-rebound.png",
+  "url": "https://gilboa.blog/posts/2026-09-06-august-jobs-rebound-composition/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
 <p>The August jobs report was a beat, not a boom. Nonfarm payrolls rose +162k, against a <a href="https://www.wsj.com/economy/jobs/august-jobs-report-unemployment-c9da2f0c">Wall Street Journal survey of economists</a> at +53k and a prior-12-month average of +31k. The Bureau of Labor Statistics also revised June and July up by a combined +55k, so July’s first-print scare is smaller than it looked.</p>
 <p>The catch is composition. Food services and drinking places plus local government education supplied 62.3% of the monthly gain. Average hourly earnings rose 0.3% on the month and 3.1% over the year. That is a labor market that hired in restaurants and schools after a weak July. It is not one that suddenly tightened heading into the 9/16 FOMC.</p>
-<div id="36db2cab" class="cell" data-execution_count="2">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key facts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Nonfarm payrolls: +162k, above a +53k economist survey</li>
+<li>62.3% of the gain came from food services and local government education</li>
+<li>Average hourly earnings: 3.1% over the year</li>
+<li>Source: BLS Employment Situation, 9/4/2026</li>
+</ul>
+</div>
+</div>
+<div id="693668ae" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -18489,7 +18530,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
   <media:content url="https://gilboa.blog/posts/2026-08-14-july-cpi-ppi-dual-mandate/images/cpi-headline-core-yoy.png" medium="image" type="image/png" height="88" width="144"/>
 </item>
 <item>
-  <title>July ADP: Only 44k Jobs, 82% from Education &amp; Health</title>
+  <title>July ADP +44k Jobs, 82% in Education &amp; Health</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/</link>
   <description><![CDATA[ 
@@ -18498,10 +18539,51 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 
 
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "July ADP +44k Jobs, 82% in Education & Health",
+  "description": "July 2026 ADP private payrolls rose only 44k, with 82% of the gain in education and health. Sector concentration charts and the link to the later BLS miss.",
+  "datePublished": "2026-08-07",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png",
+  "url": "https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
 <p>ADP estimated that private employers added only 44,000 jobs in July. Education and health services supplied 82% of that increase, a striking sign that hiring was not broad.</p>
 <p>Two days later, the Bureau of Labor Statistics, or BLS, reported that total nonfarm payrolls fell 23,000 and cut its earlier May and June estimates by a combined 103,000. That mix of weak hiring, low layoffs, and still-firm pay growth gives the Federal Reserve reasons to watch both sides of its mandate rather than rush toward either a rate cut or an increase.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key facts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>ADP private payrolls: +44k</li>
+<li>82% of the gain was in education and health services</li>
+<li>Two days later, BLS reported -23k nonfarm payrolls and large downward revisions</li>
+<li>Source: ADP National Employment Report, July 2026</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -18510,7 +18592,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The full Python pipeline and every chart block are included with this post:</p>
 <ul>
@@ -18523,7 +18605,7 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -18532,13 +18614,13 @@ Figure&nbsp;4: Real average hourly earnings were nearly flat in July, limiting t
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>ADP and BLS do not measure the same group of jobs with the same method. ADP uses anonymized payroll records from its clients and covers private employment. The BLS establishment survey collects reports from employers and covers private plus government jobs. This post compares monthly changes and direction, not the two employment levels.</p>
 </div>
 </div>
 </div>
-<div id="597225fa" class="cell" data-execution_count="2">
+<div id="27a2d692" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.3rem 0;"><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP private payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #2e5984;">+44k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">ADP education and health share</div><div style="font-size: 1.55rem; font-weight: 700; color: #007c91;">82%</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">BLS total payrolls</div><div style="font-size: 1.55rem; font-weight: 700; color: #9b3a32;">-23k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div><div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 0.9rem; text-align: center; min-height: 118px;"><div style="font-size: 0.78rem; color: #64748b; min-height: 2.4rem;">Initial claims, four-week average</div><div style="font-size: 1.55rem; font-weight: 700; color: #4f7c63;">199k</div><div style="font-size: 0.72rem; color: #64748b;">July 2026</div></div></div>
 </div>
@@ -20201,7 +20283,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
   <media:content url="https://gilboa.blog/posts/2026-08-07-july-adp-payrolls-concentration/images/july-adp-payroll-trend.png" medium="image" type="image/png" height="86" width="144"/>
 </item>
 <item>
-  <title>Q2 GDP Slowed to 1.5%, but Private Demand Accelerated to 3.9%</title>
+  <title>Q2 GDP 1.5% but Private Demand Hit 3.9%</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/</link>
   <description><![CDATA[ 
@@ -20210,10 +20292,52 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
 
 
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Q2 GDP 1.5% but Private Demand Hit 3.9%",
+  "description": "Q2 2026 advance: real GDP slowed to 1.5% while private final sales accelerated to 3.9%. Contribution charts, consumer rebound, and June PCE implications.",
+  "datePublished": "2026-07-30",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/images/contribution-shift.png",
+  "url": "https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
 <p>The Bureau of Economic Analysis (BEA) released two linked prints on 07/30/2026: the advance estimate of second-quarter GDP and the June personal income and outlays report. Real gross domestic product (GDP)<sup>1</sup> rose at a 1.5% annualized rate in Q2 2026, down from 2.1% in Q1 and below the 2.1% consensus track. The softer headline is not the whole story. Real final sales to private domestic purchasers<sup>2</sup> accelerated to 3.9% from 1.7% in Q1, opening a 2.4 percentage-point gap between private demand and headline growth.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key facts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Q2 real GDP: +1.5% SAAR, down from +2.1%</li>
+<li>Private final sales to domestic purchasers: +3.9% (a gap of +2.4 percentage points)</li>
+<li>Real consumer spending: +3.2%</li>
+<li>June core PCE: 3.3% over the year</li>
+<li>Source: BEA advance estimate and Personal Income and Outlays, July 30, 2026</li>
+</ul>
+</div>
+</div>
 <p>That gap is the release’s main interaction: consumer spending and equipment investment still supported demand, while inventories, net exports, and government subtracted enough to pull the total down. The same-day June personal consumption expenditures (PCE) price data add a second interaction across horizons. Headline PCE prices fell -0.1% month-over-month<sup>3</sup>, lowering the year-over-year rate to 3.7% from 4.1% in May. Core PCE, which excludes food and energy and is the Federal Reserve’s preferred inflation gauge, rose +0.1% on the month and stood 3.3% above a year earlier. Monthly relief is real; a clear return of core prices to the 2% target is not.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -20222,7 +20346,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The Python code used to generate each chart is included in this post. Expand any chart block to see the full implementation. The complete data pipeline is:</p>
 <ul>
@@ -20234,7 +20358,7 @@ Figure&nbsp;5: ADP pay growth held at 4.4% for job stayers but accelerated to 7.
 </div>
 </div>
 </div>
-<div id="6ad95667" class="cell" data-execution_count="2">
+<div id="110fdff3" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -35371,7 +35495,7 @@ Source: FRED/BLS (UNRATE).
   <media:content url="https://gilboa.blog/posts/2026-06-27-june-labor-market-resilience-energy-shock/images/june-2026-labor-market-dashboard.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>The June 2026 FOMC Dot Plot: A 40 Basis Point Hawkish Shift, With Rates on Hold</title>
+  <title>June 2026 Dot Plot: 40 bp Hawkish Shift</title>
   <dc:creator>Yoram Gilboa</dc:creator>
   <link>https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/</link>
   <description><![CDATA[ 
@@ -35380,7 +35504,30 @@ Source: FRED/BLS (UNRATE).
 
 
 
-<div id="d6ee518d" class="cell" data-execution_count="2">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "June 2026 Dot Plot: 40 bp Hawkish Shift",
+  "description": "June 2026 FOMC held rates but the median end-2026 dot shifted 40 bp hawkish. Full SEP comparison, participant scatter, and what that path implies for policy.",
+  "datePublished": "2026-06-20",
+  "dateModified": "2026-10-24",
+  "author": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa",
+    "url": "https://gilboa.blog/about.html"
+  },
+  "image": "https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/images/june-2026-dot-plot-shift.png",
+  "url": "https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://gilboa.blog/#person",
+    "name": "Yoram Gilboa"
+  }
+}
+</script>
+<div id="57d92f84" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -35419,7 +35566,25 @@ Source: FRED/BLS (UNRATE).
 <p>The Federal Open Market Committee left the federal funds target range unchanged at 3.50-3.75% on June 17, but the path it projects for the next eighteen months moved sharply higher. The median end-2026 dot rose to 3.8% from 3.4% in March, a 40 basis point upward revision in a single Summary of Economic Projections cycle. Nine of the eighteen participants who submitted projections now see at least one rate hike before year-end. The 2026 PCE inflation projection climbed to 3.6% from 2.7%.</p>
 <p>Incoming data tell a messier story underneath that hawkish revision. Headline CPI rose to 4.2% in May 2026, almost entirely on a 23.0% year-over-year jump in the energy index, while core CPI ran a cooler 2.8%. Payrolls added 172k, well above the 88k consensus, and unemployment held at 4.3%. The June meeting was the first to be presided over by a new Chair, and it was the first in this cycle to combine a hold with a clearly hawkish projection set. This post walks through what the dot plot changed, what the data underneath says, and where market pricing stands relative to the Committee’s revised path.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key facts
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The FOMC held the federal funds rate at 3.50-3.75%</li>
+<li>The median 2026 dot shifted 40 basis points higher</li>
+<li>This post includes the full SEP comparison and the participant scatter</li>
+<li>Source: June 2026 FOMC statement and Summary of Economic Projections</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -35428,7 +35593,7 @@ Source: FRED/BLS (UNRATE).
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Official statistics in this post come from the Federal Reserve’s Summary of Economic Projections (SEP), FRED, the BLS, and CME FedWatch where noted. The June 17, 2026 SEP medians and dot distribution are taken from the Federal Reserve’s <a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm">June 2026 projection materials</a>; the March comparison is from the <a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260318.htm">March 18, 2026 projection materials</a>. Realized federal funds and Treasury yields are from FRED (<code>FEDFUNDS</code>, <code>DGS1</code>, <code>DGS2</code>, <code>DGS10</code>); inflation and labor numbers come from FRED’s redistribution of the BLS releases (<code>CPIAUCSL</code>, <code>CPILFESL</code>, <code>CPIENGSL</code>, <code>PAYEMS</code>, <code>UNRATE</code>). Market-implied policy paths are approximated from CME FedWatch and the 2-year Treasury yield. The June SEP shows 18 participant dots rather than the usual 19; the new Chair did not submit a projection for this cycle.</p>
 </div>
