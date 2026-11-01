@@ -1,0 +1,467 @@
+---
+title: "Private Demand Outran the 3.4% GDP Print"
+pagetitle: "October 2026 BEA: real GDP 3.4%, private demand 4.9%"
+date: "2026-10-31"
+author: Yoram Gilboa
+categories: [economics, inflation, labor market, federal reserve, data visualization]
+description: "Real GDP rose 3.4% and private domestic final sales rose 4.9%. Imports and inventories swung the headline, and September real spending nearly stalled."
+image: images/gdp-private-demand.png
+image-alt: "Quarterly annual rates through Q3 26 for real GDP and private domestic final sales."
+title-block-banner: true
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+body-classes: compact-charts
+css: ../../styles.css
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import re
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as handle:
+    stats = json.load(handle)
+
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+    "recession": "#888888",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(value, digits=1):
+    return f"{float(value):.{digits}f}"
+
+
+def fmt0(value):
+    return f"{float(value):,.0f}"
+
+
+def fmt2(value):
+    return f"{float(value):.2f}"
+
+
+def short_year(label):
+    """Chart ticks print 2026 as 26. Prose dates stay in full form."""
+    return str(label).replace("2026", "26")
+
+
+_MONTHS = (
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+)
+
+
+def _one_date(match):
+    month, day, year = int(match.group(1)), int(match.group(2)), match.group(3)
+    if 1 <= month <= 12:
+        return f"{_MONTHS[month - 1]} {day}, {year}"
+    return match.group(0)
+
+
+def prose_date(value):
+    """Turn 10/29/2026 into October 29, 2026, including dates inside a sentence."""
+    return re.sub(r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b", _one_date, str(value))
+
+
+for key, value in list(stats.items()):
+    if isinstance(value, str) and "/" in value:
+        stats[key] = prose_date(value)
+
+
+def extend_xlim(ax, index, pad=0.12):
+    span = index[-1] - index[0]
+    ax.set_xlim(index[0], index[-1] + span * pad)
+
+
+def year_span_ticks(ax, index, step=1):
+    start = int(index[0].year)
+    end = int(index[-1].year)
+    years = range(start, end + 1, step)
+    ax.set_xticks([pd.Timestamp(year=year, month=1, day=1) for year in years])
+    ax.xaxis.set_major_formatter(
+        plt.FuncFormatter(lambda value, _pos: short_year(mdates.num2date(value).strftime("%Y")))
+    )
+```
+
+On `{python} stats['gdp_release_date']` the Bureau of Economic Analysis released its first estimate of third-quarter output. Real GDP rose at a `{python} fmt(stats['gdp_saar'])`% annual rate, up from `{python} fmt(stats['gdp_saar_prior'])`% in `{python} stats['prior_quarter']`. An annual rate takes that quarter's pace and scales it to a full year. It is not a forecast.
+
+Private domestic demand ran faster than that headline. Real final sales to private domestic purchasers rose `{python} fmt(stats['pdfp_saar'])`%, after `{python} fmt(stats['pdfp_saar_prior'])`% in the prior quarter. The same morning, real consumer spending in `{python} stats['latest_month']` rose `{python} stats['real_pce_mom_phrase']`%. A strong quarter and a stalled final month are two different facts.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python that draws each chart is in this post. Open a code block to see it. The data pipeline for this post is:
+
+- `scripts/01_fetch_data.py` checks the saved FRED snapshot and does not download on a normal run
+- `scripts/02_clean_data.py` builds the % changes used in the charts
+- `scripts/04_compute_stats.py` writes `stats/summary_stats.json`, which is the source of the numbers in the text
+
+GDP and the personal income accounts are the `{python} stats['gdp_release_date']` vintage. The Employment Cost Index is the `{python} stats['eci_release_date']` vintage. Payrolls are the `{python} stats['payroll_release_date']` Employment Situation. Initial claims are the `{python} stats['gdp_release_date']` vintage. Primary pages: [BEA GDP advance estimate](https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026), [BEA personal income and outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), and the [BLS Employment Cost Index](https://www.bls.gov/news.release/eci.nr0.htm).
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+The annualized change in computer prices is calculated from the published price index. BEA's headline tables do not print that rate. The constant-dollar wage change and the private health-benefit change are copied from the BLS news release. They are not recomputed from a price index in this file. The advance estimate is the first of three published looks at the quarter. BEA's next look is scheduled for `{python} stats['next_gdp_date']`.
+:::
+
+```{python}
+#| echo: false
+
+card_style = (
+    "background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+    "padding: 0.85rem 0.65rem 0.75rem; display: flex; flex-direction: column; "
+    "align-items: center; justify-content: flex-start; text-align: center; "
+    "min-height: 7.4rem; box-sizing: border-box;"
+)
+label_style = (
+    "font-size: 0.78rem; line-height: 1.25; color: #64748b; font-weight: 400; "
+    "min-height: 2.4rem; display: flex; align-items: flex-end;"
+)
+value_style = (
+    "font-size: 1.9rem; line-height: 1.05; font-weight: 400; "
+    "margin: 0.4rem 0 0.3rem; font-variant-numeric: tabular-nums;"
+)
+sub_style = "font-size: 0.75rem; line-height: 1.3; color: #64748b; font-weight: 400;"
+
+cards = [
+    ("Real GDP", f"{fmt(stats['gdp_saar'])}%", COLORS["primary"], stats["latest_quarter"]),
+    ("Private final sales", f"{fmt(stats['pdfp_saar'])}%", COLORS["accent"], stats["latest_quarter"]),
+    ("Real private wages", f"{fmt(stats['eci_wages_real_yoy'])}%", COLORS["secondary"], stats["latest_month"]),
+    ("Saving rate", f"{fmt(stats['saving_rate'])}%", COLORS["neutral"], stats["latest_month"]),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(9.25rem, 1fr));
+            gap: 0.75rem; margin: 1.25rem 0 0; align-items: stretch;">
+{cards_html}
+</div>
+<p style="font-size: 0.82rem; line-height: 1.45; color: #64748b; text-align: center;
+          font-weight: 400; margin: 0.6rem 0 1.2rem;">
+  Advance estimate {stats['latest_quarter']} and personal income for {stats['latest_month']}. Source: BEA and BLS.
+</p>
+"""
+HTML(html)
+```
+
+## What the three measures count
+
+Real GDP is the inflation-adjusted value of final goods and services produced in the United States. Imports are subtracted, because the measure is domestic production, not everything residents buy.
+
+Real final sales to private domestic purchasers leave out inventories, net exports, and government. What remains is household consumption plus private fixed investment: equipment, structures, intellectual property, and housing bought to be used. That is the private-demand rate in the first chart.
+
+Final sales of domestic product keep government and trade and remove only the inventory change. They are not a line on the first chart. When GDP and those final sales move apart, inventories are the wedge.
+
+The Employment Cost Index, or ECI, holds the mix of jobs fixed and tracks what employers pay. Wages are one part. Benefits are the other. Hiring a different mix of workers does not by itself move the index. The ECI is on the third chart. Payrolls and unemployment claims are not.
+
+## Real GDP and private demand
+
+In `{python} stats['latest_quarter']`, real GDP rose `{python} fmt(stats['gdp_saar'])`% and private domestic final sales rose `{python} fmt(stats['pdfp_saar'])`%. In `{python} stats['prior_quarter']` those rates were `{python} fmt(stats['gdp_saar_prior'])`% and `{python} fmt(stats['pdfp_saar_prior'])`%. Consumer spending, which is inside private demand, rose at `{python} fmt(stats['pce_saar'])`% in both quarters. Its contribution was `{python} fmt2(stats['pce_pp_prior'])` pp, then `{python} fmt2(stats['pce_pp'])` pp. A contribution in pp is how many points that piece added to the GDP % rate. Household spending grew at the same rate in both quarters. The faster GDP print came from the other pieces.
+
+The blue line below is real GDP. The red line is real final sales to private domestic purchasers. Both end in `{python} stats['latest_quarter']`. Final sales of domestic product, which slowed from `{python} fmt(stats['final_sales_saar_prior'])`% to `{python} fmt(stats['final_sales_saar'])`%, are not drawn.
+
+```{python}
+#| echo: true
+#| label: fig-gdp-private-demand
+#| fig-cap: "Real GDP accelerated in the third quarter, and private domestic final sales stayed faster than that headline."
+#| fig-alt: "Two quarterly lines through Q3 26. Private domestic final sales end above real GDP."
+
+growth = pd.read_csv(CLEAN_DIR / "gdp_quarterly.csv", index_col="date", parse_dates=True).sort_index()
+# These columns are already annualized percent changes.
+window = growth.loc["2022-01-01":].copy()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+series = [
+    ("gdp_saar", "Real GDP", COLORS["primary"]),
+    ("pdfp_saar", "Private domestic final sales", COLORS["accent"]),
+]
+for column, name, color in series:
+    ax.plot(window.index, window[column], color=color, linewidth=1.9, zorder=3)
+    last_x = window.index[-1]
+    last_y = float(window[column].iloc[-1])
+    ax.scatter(last_x, last_y, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    ax.text(last_x, last_y, f"  {name} {last_y:.1f}%", color=color, fontsize=8, fontweight="bold", va="center")
+
+ax.set_ylabel("Percent, annual rate")
+ax.axhline(0, color=COLORS["neutral"], linewidth=0.8)
+year_span_ticks(ax, window.index)
+extend_xlim(ax, window.index, 0.28)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-private-demand.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA GDP advance estimate](https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026), `{python} stats['gdp_release_date']` vintage, via FRED series A191RL1Q225SBEA and PB0000031Q225SBEA.
+:::
+
+What this chart shows in plain English. GDP sped up from `{python} fmt(stats['gdp_saar_prior'])`% to `{python} fmt(stats['gdp_saar'])`%, and private demand stayed faster, at `{python} fmt(stats['pdfp_saar'])`%. The `{python} fmt(stats['gdp_saar'])`% headline is therefore a slower pace than private demand. Do not read the blue line as household and business spending. Earlier quarters on the chart sometimes had GDP on top. This quarter does not.
+
+## Where the headline came from
+
+The bars below are `{python} stats['latest_quarter']` contributions to real GDP, in pp. Consumer spending, structures, residential investment, inventories, net exports, and government are published BEA lines. The equipment-and-IP bar is not one of those lines. It adds the published equipment contribution (`{python} fmt2(stats['equipment_pp'])` pp) to the published intellectual-property contribution (`{python} fmt2(stats['ip_pp'])` pp). The sum is `{python} fmt2(stats['equipment_ip_pp'])` pp. Those seven bars add to `{python} fmt2(stats['contribution_sum'])` pp. The headline prints as `{python} fmt(stats['gdp_saar'])`% after rounding.
+
+BEA said the equipment increase was led by information processing equipment, mainly computers and peripheral equipment. Computers and peripherals contributed `{python} fmt2(stats['computers_pp'])` pp inside that equipment line.
+
+::: {.callout-note}
+## Computer prices, calculated
+
+The computers and peripherals price index rose at a calculated `{python} fmt(stats['computers_price_ann'])`% annual rate in `{python} stats['latest_quarter']`, after `{python} fmt(stats['computers_price_ann_prior'])`% in `{python} stats['prior_quarter']`. Those rates come from the published price index. BEA does not print them as a headline rate. The rise is composition inside equipment spending, and it is not a measure of AI output.
+:::
+
+```{python}
+#| echo: true
+#| label: fig-contributions
+#| fig-cap: "Third-quarter contributions to real GDP. The equipment and intellectual-property bar is the sum of two published lines."
+#| fig-alt: "Horizontal bars for Q3 26 contributions to real GDP. Net exports are a large negative bar. Consumer spending is the longest positive bar."
+
+contrib = pd.read_csv(CLEAN_DIR / "gdp_quarterly.csv", index_col="date", parse_dates=True).sort_index()
+latest = contrib.index[-1]
+# equipment_ip_pp is already the sum of the two published contribution series.
+rows = [
+    ("Consumer spending", float(contrib.loc[latest, "pce_pp"])),
+    ("Equipment and IP", float(contrib.loc[latest, "equipment_ip_pp"])),
+    ("Structures", float(contrib.loc[latest, "structures_pp"])),
+    ("Residential", float(contrib.loc[latest, "residential_pp"])),
+    ("Government", float(contrib.loc[latest, "government_pp"])),
+    ("Inventories", float(contrib.loc[latest, "inventories_pp"])),
+    ("Net exports", float(contrib.loc[latest, "net_exports_pp"])),
+]
+rows = list(reversed(rows))
+labels = [name for name, _ in rows]
+values = [value for _, value in rows]
+colors = [COLORS["primary"] if value >= 0 else COLORS["accent"] for value in values]
+y = np.arange(len(labels))
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+ax.barh(y, values, color=colors, edgecolor="white", height=0.62)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+span = max(abs(min(values)), abs(max(values)))
+pad = span * 0.03
+for i, value in enumerate(values):
+    ax.text(
+        value + (pad if value >= 0 else -pad),
+        y[i],
+        f"{value:+.2f}",
+        va="center",
+        ha="left" if value >= 0 else "right",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+ax.set_yticks(y)
+ax.set_yticklabels(labels)
+ax.set_xlabel("Contribution to real GDP, percentage points")
+low, high = min(values), max(values)
+width = high - low
+ax.set_xlim(low - width * 0.22, high + width * 0.16)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "gdp-contributions.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA contributions to percent change in real GDP](https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026), `{python} stats['gdp_release_date']` vintage, via FRED. Equipment and intellectual property are summed for one bar.
+:::
+
+What this chart shows in plain English. Inventories swung to `{python} fmt2(stats['inventories_pp'])` pp and net exports to `{python} fmt2(stats['net_exports_pp'])` pp, while consumer spending stayed near `{python} fmt2(stats['pce_pp'])` pp. Those bars, after rounding, are the `{python} fmt(stats['gdp_saar'])`% headline. The speedup is not a jump in household spending. BEA did not publish the equipment-and-IP bar as one line. It is the sum of two published contributions, `{python} fmt2(stats['equipment_pp'])` pp and `{python} fmt2(stats['ip_pp'])` pp. Imports inside net exports rose at a `{python} fmt(stats['imports_saar'])`% annual rate. BEA said petroleum led the export drop, and capital goods except automotive led the import rise.
+
+Government contributed `{python} fmt2(stats['government_pp'])` pp. Federal spending, which is not its own bar, contributed `{python} fmt2(stats['federal_pp'])` pp. BEA said smaller sales from the Strategic Petroleum Reserve raised measured government spending, and that the oil is counted elsewhere, so the total GDP figure does not change. Residential investment contributed `{python} fmt2(stats['residential_pp'])` pp. Housing did not make the headline faster.
+
+## Wages and prices
+
+In the quarter, wages rose `{python} fmt(stats['eci_wages_qoq'])`%, compensation `{python} fmt(stats['eci_comp_qoq'])`%, and benefits `{python} fmt(stats['eci_benefits_qoq'])`%. Over the year those rates were `{python} fmt(stats['eci_wages_yoy'])`%, `{python} fmt(stats['eci_comp_yoy'])`%, and `{python} fmt(stats['eci_benefits_yoy'])`%. Private health benefits rose `{python} fmt(stats['eci_private_health_yoy'])`%. Benefits were the faster piece.
+
+The official real wage for private industry was `{python} fmt(stats['eci_wages_real_yoy'])`% over the year. BLS gets that by comparing wages with the consumer price index. It is not a line on the chart. Blue is ECI wages, `{python} fmt(stats['eci_wages_yoy'])`% in `{python} stats['latest_quarter']`. Red is the PCE price index that quarter, `{python} fmt(stats['pce_yoy'])`%. The gap is `{python} fmt(stats['wage_minus_pce'])` pp.
+
+```{python}
+#| echo: true
+#| label: fig-eci-gap
+#| fig-cap: "ECI wage growth has been running behind the PCE price index's year rate. The gap on this chart is not the official CPI-based real wage."
+#| fig-alt: "Two lines from 2022 through Q3 26. ECI wages and salaries over the year end below the PCE price index over the year."
+
+eci = pd.read_csv(CLEAN_DIR / "eci_quarterly.csv", index_col="date", parse_dates=True).sort_index()
+# wages_yoy uses the not-seasonally-adjusted ECI. pce_yoy is the PCE price
+# index in the last month of that quarter. Both columns are already rates.
+gap = eci.loc["2022-01-01":, ["wages_yoy", "pce_yoy"]].copy()
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+wage_lines = [
+    ("wages_yoy", "ECI wages", COLORS["primary"], "bottom"),
+    ("pce_yoy", "PCE prices", COLORS["accent"], "top"),
+]
+for column, name, color, valign in wage_lines:
+    ax.plot(gap.index, gap[column], color=color, linewidth=1.9, zorder=3)
+    last_x = gap.index[-1]
+    last_y = float(gap[column].iloc[-1])
+    ax.scatter(last_x, last_y, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    ax.text(last_x, last_y, f"  {name} {last_y:.1f}%", color=color, fontsize=8, fontweight="bold", va=valign)
+
+ax.set_ylabel("Percent change from a year earlier")
+year_span_ticks(ax, gap.index)
+extend_xlim(ax, gap.index, 0.18)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "eci-wage-gap.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS Employment Cost Index](https://www.bls.gov/news.release/eci.nr0.htm), `{python} stats['eci_release_date']` vintage, and the [BEA PCE price index](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), `{python} stats['gdp_release_date']` vintage, via FRED. The official constant-dollar wage print uses the CPI, not this PCE comparison.
+:::
+
+What this chart shows in plain English. Official real wages were `{python} fmt(stats['eci_wages_real_yoy'])`% over the year. On the chart, wage growth ends below PCE prices, a gap of `{python} fmt(stats['wage_minus_pce'])` pp. Beside a `{python} fmt(stats['gdp_saar'])`% GDP rate, that is not a story of fatter paychecks. Do not treat the chart gap as the official CPI figure. Benefits rose faster than wages, so part of the pay package is in benefit costs rather than cash.
+
+September prices use a different window from the quarterly pace. On the seasonally adjusted PCE price index, `{python} stats['latest_month']` rose `{python} fmt(stats['pce_mom'])`%, and the year rate moved from `{python} fmt(stats['pce_yoy_prior'])`% to `{python} fmt(stats['pce_yoy'])`% because that month replaced the same month a year earlier, when the index rose `{python} fmt(stats['pce_dropout_mom_hundredths'])`%. Core follows the same step: `{python} fmt(stats['core_mom'])`% on the month and `{python} fmt(stats['core_yoy'])`% over the year. The quarter's own price pace slowed to `{python} fmt(stats['pce_price_ann'])`% from `{python} fmt(stats['pce_price_ann_prior'])`% for the headline index, and to `{python} fmt(stats['core_price_saar'])`% from `{python} fmt(stats['core_price_saar_prior'])`% for core, because a year rate still contains the earlier months. Those monthly rates are not lines on the chart.
+
+## Saving and September spending
+
+Real consumer spending in `{python} stats['latest_month']` rose `{python} stats['real_pce_mom_phrase']`%, or `{python} fmt(stats['real_pce_mom'])`% at one decimal. That is about `{python} fmt(stats['real_pce_dollar'])` billion dollars at a yearly pace, not the cash spent that month. Spending before prices rose `{python} fmt(stats['nominal_pce_mom'])`%. Income and after-tax income each rose `{python} fmt(stats['income_mom'])`%. After prices, after-tax income was `{python} fmt(stats['real_dpi_mom'])`% in the month, and `{python} fmt(stats['real_dpi_saar'])`% at an annual rate for the quarter after `{python} fmt(stats['real_dpi_saar_prior'])`% in `{python} stats['prior_quarter']`.
+
+The saving rate was `{python} fmt(stats['saving_rate'])`%, down from `{python} fmt(stats['saving_rate_prior'])`% in `{python} stats['prior_month']`. It is saving as a share of disposable income. In the figure, the top panel's blue line is the monthly change in real spending and the green line is the monthly change in real disposable income. The bottom panel is the saving rate. All three end in `{python} stats['latest_month']`.
+
+```{python}
+#| echo: true
+#| label: fig-household
+#| fig-cap: "Real spending was nearly flat in September, real disposable income fell, and the saving rate edged down."
+#| fig-alt: "Two panels from January 24 through September 26. Real spending and real disposable income are monthly % changes. The saving rate ends at the latest month."
+
+household = pd.read_csv(CLEAN_DIR / "pce_monthly.csv", index_col="date", parse_dates=True).sort_index()
+household = household.loc["2024-01-01":].copy()
+
+fig, axes = plt.subplots(
+    2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]}
+)
+axes[0].plot(household.index, household["real_pce_mom"], color=COLORS["primary"], linewidth=1.9, zorder=3)
+axes[0].plot(household.index, household["real_dpi_mom"], color=COLORS["secondary"], linewidth=1.7, zorder=3)
+axes[0].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+for column, name, color, valign in (
+    ("real_pce_mom", "Real spending", COLORS["primary"], "bottom"),
+    ("real_dpi_mom", "Real disposable income", COLORS["secondary"], "top"),
+):
+    last_x = household.index[-1]
+    last_y = float(household[column].iloc[-1])
+    axes[0].scatter(last_x, last_y, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    axes[0].text(last_x, last_y, f"  {name} {last_y:.1f}%", color=color, fontsize=8, fontweight="bold", va=valign)
+axes[0].set_ylabel("Monthly percent change")
+
+axes[1].plot(household.index, household["saving"], color=COLORS["accent"], linewidth=1.9, zorder=3)
+last_x = household.index[-1]
+last_y = float(household["saving"].iloc[-1])
+axes[1].scatter(last_x, last_y, s=40, color=COLORS["accent"], zorder=5, edgecolors="white", linewidth=0.8)
+axes[1].text(last_x, last_y, f"  Saving rate {last_y:.1f}%", color=COLORS["accent"], fontsize=8, fontweight="bold", va="center")
+axes[1].set_ylabel("Saving rate, percent")
+year_span_ticks(axes[1], household.index)
+extend_xlim(axes[1], household.index, 0.32)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "household-september.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BEA personal income and outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), `{python} stats['gdp_release_date']` vintage, via FRED series PCEC96, DSPIC96, and PSAVERT.
+:::
+
+What this chart shows in plain English. Real spending ended near `{python} fmt(stats['real_pce_mom'])`%, real after-tax income at `{python} fmt(stats['real_dpi_mom'])`%, and the saving rate at `{python} fmt(stats['saving_rate'])`%. The consumption rate inside the `{python} fmt(stats['gdp_saar'])`% GDP print was `{python} fmt(stats['pce_saar'])`% for the whole quarter. Do not read that quarterly rate as the pace of `{python} stats['latest_month']`. The last month stalled.
+
+Payrolls and claims are not on this figure. Nonfarm payrolls rose `{python} fmt0(stats['payroll_change'])`,000 in `{python} stats['latest_month']`, from the Employment Situation released on `{python} stats['payroll_release_date']`. Initial claims were `{python} fmt0(stats['claims_latest'])` in the week ended `{python} stats['claims_week']`. Few new filings and a small net job gain are different facts.
+
+## Putting it together
+
+The `{python} fmt(stats['gdp_saar'])`% headline is strong private demand, plus an inventory boost, minus a large import drag, while household pay lagged prices.
+
+Real GDP rose `{python} fmt(stats['gdp_saar'])`%. Real final sales to private domestic purchasers rose `{python} fmt(stats['pdfp_saar'])`%. Final sales of domestic product rose `{python} fmt(stats['final_sales_saar'])`%. Those are three rates.
+
+Computers contributed `{python} fmt2(stats['computers_pp'])` pp inside equipment, and imports contributed `{python} fmt2(stats['imports_pp'])` pp. BEA did not publish how many of those machines were made abroad. Inventories contributed `{python} fmt2(stats['inventories_pp'])` pp after `{python} fmt2(stats['inventories_pp_prior'])` pp. Private demand was faster than GDP, and GDP was faster than final sales of domestic product because inventories added. In `{python} stats['latest_month']`, real spending rose `{python} stats['real_pce_mom_phrase']`% and the official real wage was `{python} fmt(stats['eci_wages_real_yoy'])`%. The quarter's spending rate does not describe September.
+
+## What it means
+
+For the Fed. Private demand was firm. September PCE prices were up `{python} fmt(stats['pce_yoy'])`% over the year, core was up `{python} fmt(stats['core_yoy'])`%, and the quarterly price pace was a slower `{python} fmt(stats['pce_price_ann'])`%. ECI wages did not accelerate. Payrolls rose `{python} fmt0(stats['payroll_change'])`,000, and new unemployment filings were low. The year rate, the quarterly price pace, and the GDP headline are three different facts.
+
+For households. Spending in the national accounts grew at a `{python} fmt(stats['pce_saar'])`% annual rate, and September did not extend it. Real after-tax income fell in the month. The saving rate is `{python} fmt(stats['saving_rate'])`%. Private-industry wages were `{python} fmt(stats['eci_wages_real_yoy'])`% after inflation over the year, while health benefits rose `{python} fmt(stats['eci_private_health_yoy'])`%. With saving that low and real wages negative, September real spending stalled even while the quarterly consumption rate looked steady. More of the compensation gain is in benefit costs than in the paycheck.
+
+For investors. The equipment gain and the import drag are one quarter's accounts. Inventory and trade often move when BEA fills in more data. The next estimate is due `{python} stats['next_gdp_date']`, with the October income report the same morning. Until then, `{python} fmt(stats['gdp_saar'])`% is the advance GDP print and `{python} fmt(stats['pdfp_saar'])`% is the private-demand print beside it.
+
+For P&C insurance. Health benefits rose `{python} fmt(stats['eci_private_health_yoy'])`% over the year. That is an employer medical-cost index, not a loss ratio. PCE prices are up `{python} fmt(stats['pce_yoy'])`% over the year even though the quarterly pace slowed to `{python} fmt(stats['pce_price_ann'])`%. A claims trend read off the quarter alone would miss the year rate. The `{python} fmt(stats['saving_rate'])`% saving rate and the drop in real wages are a household-budget backdrop for personal auto and homeowners. They are not a premium forecast.
+
+## What to watch next
+
+The second estimate of third-quarter GDP, and the October personal income and outlays report, are scheduled for `{python} stats['next_gdp_date']`. Before that, the BLS calendar lists the Job Openings and Labor Turnover Survey on `{python} stats['jolts_date']`, the Employment Situation on `{python} stats['jobs_date']`, the Consumer Price Index on `{python} stats['cpi_date']`, and the Producer Price Index on `{python} stats['ppi_date']`. The dates are from the [BLS November schedule](https://www.bls.gov/schedule/2026/11_sched_list.htm) and the BEA release note. Those later releases are not in this file yet. The open questions are whether October hiring stays near September's `{python} fmt0(stats['payroll_change'])`,000, and whether the next GDP pass revises inventories, imports, or equipment.
+
+## Limitations
+
+This is the advance estimate, the first of three published looks at the quarter. Inventories, exports, and imports often change when more complete source data arrive. BEA says the equipment estimate rests primarily on import data, so the next GDP revision can move that line. The equipment-and-IP bar adds two published contributions. It is a grouping, not a BEA line. The bars add to `{python} fmt2(stats['contribution_sum'])` pp, which rounds to the `{python} fmt(stats['gdp_saar'])`% headline. No fixed-weight shortcut was used for GDP. The ECI holds employment weights fixed by design.
+
+The wage chart's gap uses PCE inflation. The BLS real-wage figure uses the CPI. The two rates are different numbers. The computer-price rates in the note above are calculated from the published index. The September dollar figure is a change in a yearly pace, measured in chained 2017 dollars. It is not the cash households spent that month.
+
+## Takeaway
+
+Real GDP rose `{python} fmt(stats['gdp_saar'])`%, and private domestic final sales rose `{python} fmt(stats['pdfp_saar'])`%. Consumer spending grew at `{python} fmt(stats['pce_saar'])`% in both quarters. Inventories added, imports subtracted, and computers were a large piece of equipment. That is a composition fact, and it is not a measure of AI output. In `{python} stats['latest_month']`, real spending rose `{python} stats['real_pce_mom_phrase']`%, the saving rate was `{python} fmt(stats['saving_rate'])`%, and private-industry real wages were `{python} fmt(stats['eci_wages_real_yoy'])`% over the year. Hold both prints in view: `{python} fmt(stats['gdp_saar'])`% is the first official GDP rate, and `{python} fmt(stats['pdfp_saar'])`% is the private-demand rate beside it. Inventories and trade are the lines most likely to move next.
+
+## How this post was built
+
+The charts and the numbers in the text use a saved snapshot of public series, not a fresh download at reading time. GDP and the personal income accounts are the `{python} stats['gdp_release_date']` BEA vintage. The ECI is the `{python} stats['eci_release_date']` BLS vintage. Payrolls are the `{python} stats['payroll_release_date']` Employment Situation. Initial claims are the `{python} stats['gdp_release_date']` vintage. Each chart's code is in the page. Open "Show code" under a figure to see the plot. The collapsed note near the top names the three pipeline scripts and the agency pages.
+
+| Series in plain English | What this post uses | Source |
+| --- | --- | --- |
+| Real GDP and private domestic final sales | Quarterly annualized growth through `{python} stats['latest_quarter']` | [BEA advance estimate](https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026). FRED: A191RL1Q225SBEA, PB0000031Q225SBEA. |
+| Contributions, including equipment, intellectual property, inventories, trade, housing, and government | Contributions in pp. Equipment and IP are summed for one bar. | Same BEA vintage. Computers are B935RY2Q224SBEA. |
+| PCE prices, real spending, real disposable income, and the saving rate | September changes and the quarterly price pace | [BEA personal income and outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026). FRED: PCEPI, PCEPILFE, PCEC96, DSPIC96, PSAVERT. |
+| Employment Cost Index | Wages, benefits, compensation, health benefits, and the CPI-based real wage | [BLS Employment Cost Index](https://www.bls.gov/news.release/eci.nr0.htm). |
+| Payrolls and initial claims | September payroll change and the latest claims week. Prose only. | [Employment Situation archive](https://www.bls.gov/news.release/archives/empsit_10022026.htm) and [FRED ICSA](https://fred.stlouisfed.org/series/ICSA). |
+
+::: {.figure-source}
+Source: Bureau of Economic Analysis and Bureau of Labor Statistics, vintages listed above.
+:::
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*

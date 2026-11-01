@@ -1,0 +1,14 @@
+{
+  "source_note": "MANUAL transcription of published prints that are not a FRED percent-change series in this snapshot. source: BLS Employment Cost Index news release, October 30, 2026, https://www.bls.gov/news.release/eci.nr0.htm and BEA Personal Income and Outlays, September 2026, https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+  "eci_url": "https://www.bls.gov/news.release/eci.nr0.htm",
+  "bea_pce_url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+  "bea_gdp_url": "https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026",
+  "eci_wages_real_private_yoy": -0.6,
+  "eci_private_health_yoy": 6.4,
+  "real_pce_mom_phrase": "less than 0.1",
+  "schedule_url": "https://www.bls.gov/schedule/2026/11_sched_list.htm",
+  "jolts_date": "11/3/2026",
+  "jobs_date": "11/6/2026",
+  "cpi_date": "11/10/2026",
+  "ppi_date": "11/13/2026"
+}
