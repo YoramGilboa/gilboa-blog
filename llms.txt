@@ -21,12 +21,12 @@ series, and includes methodology and limitations.
 
 ## Latest
 
+- [Private Demand Outran the 3.4% GDP Print](https://gilboa.blog/posts/2026-10-31-what-the-3-4-actually-means/): Real GDP rose 3.4% and private domestic final sales rose 4.9%. September real spending was nearly flat and the saving rate was 3.8%
 - [New Claims Are Low, and Payroll Growth Has Stalled](https://gilboa.blog/posts/2026-10-25-low-claims-stalled-payrolls/): Initial claims were 194,000 in the week ended October 17. September payrolls rose 29,000. Continuing claims were 1.728 million in the week ended October 10
 - [Energy Raised September CPI and PPI. Core Stayed Firmer.](https://gilboa.blog/posts/2026-10-18-september-cpi-ppi-energy-core/): CPI rose 0.6 percent in September, with gasoline more than half of the month. PPI final demand rose 1.3 percent. Core was 0.3 percent on the month and 2.6 percent over the year
 - [The Lower Core PCE Path Is a New Ruler](https://gilboa.blog/posts/2026-10-10-august-pce-q2-third-print/): July core moved from 3.3 to 3.0 percent on a new price ruler; August core is 3.0 percent; Q2 GDP revised from 1.5 to 2.2 percent
 - [September payrolls stalled](https://gilboa.blog/posts/2026-10-04-september-payrolls-stalled-revision/): Nonfarm payrolls rose 29,000; July and August revised down 60,000 combined
 - [What Wednesday's PCE has to do after the hike](https://gilboa.blog/posts/2026-09-26-august-pce-setup-q2-third/): Setup for August PCE, the Q2 GDP third estimate, and the 2026 annual update. July core PCE 3.3 percent; Q2 GDP 1.5 percent
-- [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
 
 ## Inflation
 
@@ -48,6 +48,7 @@ series, and includes methodology and limitations.
 
 ## Fed policy and growth
 
+- [September 2026 FOMC hike](https://gilboa.blog/posts/2026-09-17-september-fomc-hike-dot-plot/): 25 bp hike to 3.75-4.00 percent; 2026 median dot 4.1 percent
 - [July FOMC minutes](https://gilboa.blog/posts/2026-08-21-fomc-minutes-dual-mandate/): Dissents for a hike if inflation does not cool
 - [Q2 GDP 1.5% but Private Demand Hit 3.9%](https://gilboa.blog/posts/2026-07-30-q2-gdp-june-pce/): GDP +1.5%; private demand +3.9%
 - [June 2026 Dot Plot: 40 bp Hawkish Shift](https://gilboa.blog/posts/2026-06-20-fed-dot-plot-june-2026-hawkish-shift/): 40 bp hawkish shift with rates on hold
