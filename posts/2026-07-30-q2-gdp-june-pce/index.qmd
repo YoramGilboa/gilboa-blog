@@ -1,10 +1,10 @@
 ---
-title: "Q2 GDP 1.5% but Private Demand Hit 3.9%"
-pagetitle: "Q2 GDP 1.5% but Private Demand Hit 3.9%"
+title: "Q2 2026 GDP 1.5% but Private Demand Hit 3.9%"
+pagetitle: "Q2 2026 GDP 1.5% but Private Demand Hit 3.9%"
 date: "2026-07-30"
 author: Yoram Gilboa
 categories: [economics, inflation, data visualization, federal reserve]
-description: "Q2 2026 advance: real GDP slowed to 1.5% while private final sales accelerated to 3.9%. Contribution charts, consumer rebound, and June PCE implications."
+description: "Q2 2026 real GDP slowed to 1.5 percent from 2.1 percent. Private final sales rose to 3.9 percent from 1.7 percent, and June core PCE stood at 3.3 percent."
 image: images/contribution-shift.png
 toc: true
 toc-location: right
@@ -20,10 +20,10 @@ format:
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Q2 GDP 1.5% but Private Demand Hit 3.9%",
-  "description": "Q2 2026 advance: real GDP slowed to 1.5% while private final sales accelerated to 3.9%. Contribution charts, consumer rebound, and June PCE implications.",
+  "headline": "Q2 2026 GDP 1.5% but Private Demand Hit 3.9%",
+  "description": "Q2 2026 real GDP slowed to 1.5 percent from 2.1 percent. Private final sales rose to 3.9 percent from 1.7 percent, and June core PCE stood at 3.3 percent.",
   "datePublished": "2026-07-30",
-  "dateModified": "2026-10-24",
+  "dateModified": "2026-11-07",
   "author": {
     "@type": "Person",
     "@id": "https://gilboa.blog/#person",

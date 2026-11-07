@@ -4,7 +4,7 @@ pagetitle: "September 2026 BEA: core PCE 3.0%, Q2 GDP revised to 2.2%"
 date: "2026-10-10"
 author: Yoram Gilboa
 categories: [economics, inflation, federal reserve, data visualization]
-description: "Core PCE is 3.0 percent on the year after a measurement revision. July core moved from 3.3 to 3.0 percent. Q2 GDP was revised up from 1.5 to 2.2 percent."
+description: "July core PCE was revised from 3.3 percent to 3.0 percent. August core PCE is 3.0 percent, and Q2 real GDP was revised from 1.5 percent to 2.2 percent."
 image: images/pce-yoy.png
 image-alt: "Headline and core PCE inflation over the year through August 26, with a 2 percent reference line"
 toc: true

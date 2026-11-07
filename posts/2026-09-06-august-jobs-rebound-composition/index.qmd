@@ -4,7 +4,7 @@ pagetitle: "August 2026 Jobs +162k: 62% Restaurants & Schools"
 date: "2026-09-04"
 author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization]
-description: "August 2026 nonfarm payrolls rose 162k, beating forecasts, but 62% came from restaurants and schools. Sector charts, revisions, and FOMC implications."
+description: "August 2026 payrolls rose 162,000 versus a 53,000 survey, but 62 percent came from restaurants and schools. June and July were revised up 55,000 combined."
 image: images/august-jobs-rebound.png
 image-alt: "Monthly U.S. nonfarm payroll changes and the three-month average through August 2026"
 toc: true
@@ -22,9 +22,9 @@ format:
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "August 2026 Jobs +162k: 62% Restaurants & Schools",
-  "description": "August 2026 nonfarm payrolls rose 162k, beating forecasts, but 62% came from restaurants and schools. Sector charts, revisions, and FOMC implications.",
+  "description": "August 2026 payrolls rose 162,000 versus a 53,000 survey, but 62 percent came from restaurants and schools. June and July were revised up 55,000 combined.",
   "datePublished": "2026-09-04",
-  "dateModified": "2026-10-24",
+  "dateModified": "2026-11-07",
   "author": {
     "@type": "Person",
     "@id": "https://gilboa.blog/#person",

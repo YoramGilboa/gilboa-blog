@@ -1,10 +1,10 @@
 ---
-title: "July ADP +44k Jobs, 82% in Education & Health"
-pagetitle: "July ADP +44k Jobs, 82% in Education & Health"
+title: "July 2026 ADP +44k Jobs, 82% in Education & Health"
+pagetitle: "July 2026 ADP +44k Jobs, 82% in Education & Health"
 date: "2026-08-07"
 author: Yoram Gilboa
 categories: [economics, labor market, federal reserve, data visualization, inflation]
-description: "July 2026 ADP private payrolls rose only 44k, with 82% of the gain in education and health. Sector concentration charts and the link to the later BLS miss."
+description: "July 2026 ADP private payrolls rose 44,000, and about 82 percent of that gain was education and health. BLS nonfarm payrolls fell 23,000 in the same month."
 image: images/july-adp-payroll-trend.png
 image-alt: "Monthly ADP private payroll changes and their three-month average through July 2026"
 toc: true
@@ -21,10 +21,10 @@ format:
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "July ADP +44k Jobs, 82% in Education & Health",
-  "description": "July 2026 ADP private payrolls rose only 44k, with 82% of the gain in education and health. Sector concentration charts and the link to the later BLS miss.",
+  "headline": "July 2026 ADP +44k Jobs, 82% in Education & Health",
+  "description": "July 2026 ADP private payrolls rose 44,000, and about 82 percent of that gain was education and health. BLS nonfarm payrolls fell 23,000 in the same month.",
   "datePublished": "2026-08-07",
-  "dateModified": "2026-10-24",
+  "dateModified": "2026-11-07",
   "author": {
     "@type": "Person",
     "@id": "https://gilboa.blog/#person",

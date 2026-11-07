@@ -4,7 +4,7 @@ pagetitle: "June 2026 Dot Plot: 40 bp Hawkish Shift"
 date: "2026-06-20"
 author: Yoram Gilboa
 categories: [economics, federal reserve, fomc, interest rates, inflation, labor market]
-description: "June 2026 FOMC held rates but the median end-2026 dot shifted 40 bp hawkish. Full SEP comparison, participant scatter, and what that path implies for policy."
+description: "June 2026 FOMC held the federal funds rate at 3.50 to 3.75 percent, but the median end-2026 dot rose 40 basis points, from 3.4 percent to 3.8 percent."
 image: images/june-2026-dot-plot-shift.png
 image-alt: "Strip-plot comparison of the March and June 2026 SEP dot distributions for the end-2026 federal funds rate, with medians and the current target-range midpoint highlighted."
 toc: true
@@ -19,9 +19,9 @@ code-summary: "Show code"
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "June 2026 Dot Plot: 40 bp Hawkish Shift",
-  "description": "June 2026 FOMC held rates but the median end-2026 dot shifted 40 bp hawkish. Full SEP comparison, participant scatter, and what that path implies for policy.",
+  "description": "June 2026 FOMC held the federal funds rate at 3.50 to 3.75 percent, but the median end-2026 dot rose 40 basis points, from 3.4 percent to 3.8 percent.",
   "datePublished": "2026-06-20",
-  "dateModified": "2026-10-24",
+  "dateModified": "2026-11-07",
   "author": {
     "@type": "Person",
     "@id": "https://gilboa.blog/#person",
