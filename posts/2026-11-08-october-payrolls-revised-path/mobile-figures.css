@@ -1,0 +1,14 @@
+/* This draft only. The site stylesheet forces chart images to 800px
+   below 768px, which hides the latest point until the reader scrolls.
+   Scale these figures to the column instead. */
+@media (max-width: 767px) {
+  body.compact-charts #quarto-document-content .quarto-figure figure {
+    overflow-x: visible;
+  }
+
+  body.compact-charts #quarto-document-content .figure-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}

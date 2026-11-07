@@ -1,0 +1,15 @@
+Dated capture of the U.S. Department of Labor, Employment and Training Administration,
+Unemployment Insurance Weekly Claims release transmitted 8:30 a.m. Eastern on Thursday, November 5, 2026.
+
+Source page retrieved for this draft: https://www.dol.gov/newsroom/releases/eta
+The current PDF at https://www.dol.gov/ui/data.pdf is replaced each week. This file keeps the November 5 figures.
+
+Seasonally adjusted initial claims, week ending October 31, 2026: 189,000.
+Change: down 6,000 from the previous week's revised level.
+Previous week (ending October 24) revised to 195,000 from 194,000.
+Four-week moving average: 194,750.
+Seasonally adjusted insured unemployment, week ending October 24, 2026: 1,718,000, up 23,000.
+Insured unemployment rate: 1.1 percent.
+
+These figures match the FRED ICSA, IC4WSA, CCSA, and IURSA vintage with realtime bounds 2026-11-05.
+The week ending October 17, 2026, initial claims on that vintage: 195,000. That week includes the October payroll reference period.
