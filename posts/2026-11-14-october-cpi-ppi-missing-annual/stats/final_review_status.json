@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-11-14T17:45:56Z",
+  "reviewer": "blog-final-review",
+  "notes": "Accuracy, flow, and consistency pass. Locked macro snapshots match FRED release vintages. Human approved publication on 2026-11-14."
+}

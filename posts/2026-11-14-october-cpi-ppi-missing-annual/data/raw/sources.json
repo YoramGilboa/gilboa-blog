@@ -1,0 +1,114 @@
+{
+  "retrieved_for": "October 2026 CPI and PPI",
+  "reproduction_mode": "committed_snapshot",
+  "output_dir": "data/raw",
+  "cpi_release_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+  "ppi_release_url": "https://www.bls.gov/news.release/ppi.nr0.htm",
+  "productivity_release_url": "https://www.bls.gov/news.release/prod2.htm",
+  "cpi_table6_url": "https://www.bls.gov/news.release/cpi.t06.htm",
+  "cpi_gap_notice_url": "https://www.bls.gov/cpi/notices/2026/12m-changes-202610.htm",
+  "fred": "https://fred.stlouisfed.org/",
+  "fred_vintage": {
+    "cpi": {
+      "realtime_start": "2026-11-10",
+      "realtime_end": "2026-11-10",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-10-01"
+    },
+    "ppi": {
+      "realtime_start": "2026-11-13",
+      "realtime_end": "2026-11-13",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-10-01"
+    },
+    "productivity": {
+      "realtime_start": "2026-11-05",
+      "realtime_end": "2026-11-05",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-07-01"
+    },
+    "pce": {
+      "realtime_start": "2026-10-29",
+      "realtime_end": "2026-10-29",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-09-01"
+    },
+    "earnings": {
+      "realtime_start": "2026-11-06",
+      "realtime_end": "2026-11-06",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-10-01"
+    },
+    "funds": {
+      "realtime_start": "2026-11-13",
+      "realtime_end": "2026-11-13",
+      "observation_start": "2015-01-01",
+      "observation_end": "2026-11-13"
+    }
+  },
+  "snapshot_sha256": {
+    "fred_cpi_monthly.csv": "86a8ceefd4131f1dec4afa6e77cb76ce21f4ee48b11ce40d05248b9a2ea76a20",
+    "fred_ppi_monthly.csv": "bff2c914d0abd5363f0f0010fa29e7fdd1fe516bbcd66512f368f6cf33d48b0b",
+    "fred_productivity_quarterly.csv": "97905a8dbcbb38fa6757f5d29a12b9698e7c02b2bcd5e8eada7e6af11e9ab787",
+    "fred_pce_monthly.csv": "bd721fb93a35658b8a02b6bd0d623be982998593ac1276ea873a7f89d1dbd230",
+    "fred_earnings_monthly.csv": "169478fb6a91a843e33f6bf73dd046a149548e4c98165c116357d6c89a2163bf",
+    "fred_funds_monthly.csv": "56a722c93e459519a1a399ba0b43da0e9857303f807ca2e7e788f3869fe452f8",
+    "bls_table6_october_2026.csv": "9358164c9b5a3a056026f57653f333b8462e0a9507de7429722822563011a955",
+    "manual_prints.json": "a718fbb8289d1770a0583d45e99f5a1efe58e7ccc667dcfc74b3fabd850a82d2"
+  },
+  "cpi_series": {
+    "headline_sa": "CPIAUCSL",
+    "headline_nsa": "CPIAUCNS",
+    "core_sa": "CPILFESL",
+    "core_nsa": "CPILFENS",
+    "food_sa": "CPIUFDSL",
+    "energy_sa": "CPIENGSL",
+    "shelter_sa": "CUSR0000SAH1",
+    "rent_sa": "CUSR0000SEHA",
+    "oer_sa": "CUSR0000SEHC",
+    "gasoline_sa": "CUSR0000SETB01",
+    "gasoline_nsa": "CUUR0000SETB01"
+  },
+  "ppi_series": {
+    "ppi_fd_sa": "PPIFIS",
+    "ppi_fd_nsa": "PPIFID",
+    "ppi_goods_sa": "PPIDGS",
+    "ppi_goods_nsa": "PPIFDG",
+    "ppi_services_sa": "PPIDSS",
+    "ppi_services_nsa": "PPIFDS",
+    "ppi_foods_sa": "PPIDFS",
+    "ppi_energy_sa": "PPIDES",
+    "ppi_core_goods_sa": "WPSFD413",
+    "ppi_x_sa": "WPSFD49116",
+    "ppi_x_nsa": "WPUFD49116"
+  },
+  "productivity_series": {
+    "prod_q_ann": "PRS85006092",
+    "prod_yoy": "PRS85006091",
+    "ulc_q_ann": "PRS85006112",
+    "ulc_yoy": "PRS85006111"
+  },
+  "pce_series": {
+    "pce": "PCEPI",
+    "core_pce": "PCEPILFE"
+  },
+  "earnings_series": {
+    "ahe": "CES0500000003"
+  },
+  "funds_series": {
+    "funds_upper": "DFEDTARU",
+    "funds_lower": "DFEDTARL"
+  },
+  "notes": [
+    "Exact reproduction reads data/raw and does not download.",
+    "python scripts/01_fetch_data.py --refresh writes data/raw/refresh/ only.",
+    "CPI realtime bounds are 2026-11-10. PPI bounds are 2026-11-13.",
+    "Productivity bounds are 2026-11-05. PCE bounds are 2026-10-29.",
+    "Earnings bounds are 2026-11-06. Funds bounds are 2026-11-13.",
+    "Table 6 rows used in the post are transcribed, not estimated.",
+    "# MANUAL: Table 6 source https://www.bls.gov/news.release/cpi.t06.htm",
+    "October 2025 CPI levels that FRED leaves blank stay blank.",
+    "observation_end alone does not freeze later revisions.",
+    "Funds are daily FRED series sampled at the last available reading in each month."
+  ]
+}

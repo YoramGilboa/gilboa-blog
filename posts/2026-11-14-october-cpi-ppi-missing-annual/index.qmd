@@ -1,0 +1,417 @@
+---
+title: "October Prices Rose, but the Annual CPI Comparison Is Missing"
+pagetitle: "October 2026 CPI: +0.4% on the month and PPI +6.5% year"
+date: "2026-11-14"
+author: Yoram Gilboa
+categories: [economics, inflation, federal reserve, data visualization]
+description: "Consumer prices rose 0.4 percent in October and core rose 0.3 percent. There is no official 12-month CPI rate. Producer prices rose 6.5 percent over the year."
+image: images/cpi-contributions.png
+image-alt: "October 26 CPI contributions: other core categories 0.126 percentage point, shelter 0.108, food 0.064, and energy 0.053."
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+body-classes: compact-charts
+format:
+  html:
+    title-prefix: ""
+---
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
+    stats = json.load(f)
+
+COLORS = {
+    "primary":    "#2e5984",
+    "accent":     "#8b0000",
+    "secondary":  "#6b8e6b",
+    "neutral":    "#4a4a4a",
+    "light":      "#b0b0b0",
+    "warning":    "#cc7722",
+    "fed_target": "#cc0000",
+    "recession":  "#888888",
+}
+
+plt.rcParams.update({
+    "font.family":       "Calibri",
+    "font.size":         10,
+    "axes.labelsize":    10,
+    "axes.titlesize":    11,
+    "xtick.labelsize":   9,
+    "ytick.labelsize":   9,
+    "legend.fontsize":   8,
+    "axes.spines.top":   False,
+    "axes.spines.right": False,
+    "axes.grid":         False,
+    "axes.linewidth":    0.5,
+    "lines.linewidth":   1.8,
+    "figure.facecolor":  "white",
+    "axes.facecolor":    "#fafafa",
+    "figure.dpi":        100,
+})
+
+def fmt(n, digits=1):
+    """Format a level. Floats default to one decimal."""
+    return f"{float(n):,.{digits}f}"
+
+def fmt_chg(n, digits=1):
+    """Format a signed change."""
+    return f"{float(n):+,.{digits}f}"
+
+def fmt2(n):
+    """Two decimals for a funds rate or a dollar wage."""
+    return f"{float(n):.2f}"
+
+def short_year(label):
+    """Print 2026 as 26. The stats file keeps the four-digit year."""
+    return str(label).replace("2026", "26")
+
+for key, value in list(stats.items()):
+    if isinstance(value, str):
+        stats[key] = short_year(value)
+```
+
+Consumer prices rose `{python} fmt(stats['cpi_mom'])`% in `{python} stats['latest_month']`, with increases across food, energy, shelter, and other core categories. Core prices, which exclude food and energy, rose `{python} fmt(stats['cpi_core_mom'])`%. Those monthly readings remain available even though the official annual comparison is missing.
+
+The consumer price index, or CPI, measures prices urban households pay. A 12-month change compares this month with the same month a year earlier. The Bureau of Labor Statistics did not collect survey prices in `{python} stats['gap_month']` during a lapse in appropriations, leaving that CPI base missing. Producer prices still have an annual comparison: final demand rose `{python} fmt(stats['ppi_yoy'])`% over the year. Meanwhile, third-quarter productivity rose `{python} fmt(stats['prod_q_ann'])`% at an annual rate and unit labor costs fell `{python} fmt(abs(stats['ulc_q_ann']))`%. Together, the releases show current price pressure and some quarterly labor-cost relief, not a complete annual consumer-inflation reading.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` fetches the release vintages from FRED and keeps the transcribed BLS table
+- `02_clean_data.py` computes month-to-month changes, 12-month changes, and the three-month pace
+- `04_compute_stats.py` writes the figures quoted in the text
+
+CPI uses the `{python} stats['cpi_release_date']` vintage. PPI uses `{python} stats['ppi_release_date']`. Productivity uses `{python} stats['productivity_release_date']`. The PCE price index uses the `{python} stats['pce_release_date']` vintage and stops in September. Earnings use the `{python} stats['ahe_release_date']` employment report. The default command checks the saved files and does not download a new copy.
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+CPI survey prices for `{python} stats['gap_month']` were not collected. The missing base prevents an official 12-month comparison for `{python} stats['latest_month']`. The charts leave that rate empty. A three-month pace is shown only when all four consecutive monthly index levels are present, so it also stays empty for windows crossing the gap. PPI indexes and the third-quarter productivity estimate are preliminary.
+:::
+
+```{python}
+#| echo: false
+
+card_style = ("background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+              "padding: 1.05rem 0.95rem; display: flex; flex-direction: column; "
+              "align-items: center; min-height: 132px;")
+label_style = ("font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; "
+               "min-height: 2.5rem; display: flex; align-items: center; text-align: center;")
+value_style = "font-size: 1.62rem; font-weight: 700; margin: 0.1rem 0 0.4rem 0; line-height: 1;"
+sub_style = "font-size: 0.74rem; color: #64748b;"
+
+cards = [
+    ("CPI, month", f"{fmt_chg(stats['cpi_mom'])}%", COLORS["primary"], stats["latest_month"]),
+    ("Core CPI, month", f"{fmt_chg(stats['cpi_core_mom'])}%", COLORS["secondary"], stats["latest_month"]),
+    ("PPI final demand, 12-month", f"{fmt_chg(stats['ppi_yoy'])}%", COLORS["accent"], stats["latest_month"]),
+    ("Productivity, quarterly", f"{fmt_chg(stats['prod_q_ann'])}%", COLORS["warning"], "Third quarter, annual rate"),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 1.1rem 0;">
+{cards_html}
+</div>
+<p style="font-size: 0.74rem; color: #94a3b8; text-align: center; margin-top: -0.45rem;">
+  Latest CPI and PPI month: {stats['latest_month']} | Sources: BLS CPI and PPI
+</p>
+"""
+HTML(html)
+```
+
+## What moved in October
+
+A contribution is the piece of the all-items change that one category accounts for. BLS publishes it as an effect, in percentage points. Energy prices rose `{python} fmt(stats['cpi_energy_mom'])`%, for example, but contributed `{python} fmt(stats['energy_effect'], 3)` percentage point to the CPI increase.
+
+The bars show shelter, food, energy, and other core categories. "Other core" is the core contribution after subtracting shelter. It bundles many categories; it is not one product. This division avoids counting shelter twice.
+
+```{python}
+#| echo: true
+#| label: fig-cpi-contributions
+#| fig-cap: "Shelter contributed 0.108 percentage point and other core categories 0.126 to October CPI. Food added 0.064 and energy 0.053. Their 0.351 total approximately matches the 0.350 unrounded index change, which rounds to 0.4 percent."
+#| fig-alt: "October 26 CPI contributions, largest first: other core 0.126 percentage point, shelter 0.108, food 0.064, and energy 0.053."
+
+# Four contributions from the BLS one-month table.
+# Core excluding shelter keeps shelter from being counted twice.
+bars = pd.read_csv(CLEAN_DIR / "cpi_contributions.csv").sort_values("effect_pp", ascending=False)
+bars["component"] = bars["component"].replace({"Core excluding shelter": "Other core"})
+colors = [COLORS["secondary"], COLORS["primary"], COLORS["warning"], COLORS["accent"]]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.2))
+ax.barh(bars["component"], bars["effect_pp"], color=colors, edgecolor="white", height=0.65)
+ax.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+for name, value in zip(bars["component"], bars["effect_pp"]):
+    ax.text(value + bars["effect_pp"].max() * 0.03, name, f"{value:.3f}", fontsize=8, color=COLORS["neutral"], va="center")
+ax.invert_yaxis()
+ax.set_xlabel("Contribution, percentage points")
+ax.set_xticks([0, 0.04, 0.08, 0.12])
+ax.set_xlim(0, bars["effect_pp"].max() * 1.35)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "cpi-contributions.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS CPI news release](https://www.bls.gov/news.release/cpi.nr0.htm), `{python} stats['cpi_release_date']`, Table 6.
+:::
+
+Shelter prices rose `{python} fmt(stats['cpi_shelter_mom'])`%. Shelter includes rent, owners' equivalent rent, and smaller components such as lodging away from home. Owners' equivalent rent estimates what a homeowner would pay to rent their home. Rent rose `{python} fmt(stats['cpi_rent_mom'])`%, and owners' equivalent rent rose `{python} fmt(stats['cpi_oer_mom'])`%.
+
+Shelter's `{python} fmt(stats['shelter_effect'], 3)` percentage-point contribution accounts for `{python} fmt(stats['shelter_share_of_unrounded_month'])`% of the unrounded CPI increase, but only `{python} fmt(stats['shelter_share_of_rounded_month'])`% if divided by the rounded `{python} fmt(stats['cpi_mom'])`% print. The unrounded denominator explains BLS's description of shelter as accounting for over thirty percent of the increase.[^contribution-rounding]
+
+Food prices rose `{python} fmt(stats['cpi_food_mom'])`%, with groceries up `{python} fmt(stats['cpi_food_home_mom'])`% and food away from home up `{python} fmt(stats['cpi_food_away_mom'])`%. Energy rose `{python} fmt(stats['cpi_energy_mom'])`% after September's `{python} fmt(stats['cpi_energy_sep_mom'])`% increase. The headline monthly CPI change slowed from `{python} fmt(stats['cpi_sep_mom'])`% in September, but price increases were not confined to energy.
+
+Gasoline rose `{python} fmt(stats['cpi_gasoline_mom'])`% after seasonal adjustment and fell `{python} fmt(abs(stats['cpi_gasoline_nsa_mom']))`% before adjustment. Seasonal adjustment removes the usual calendar pattern. These are adjusted and unadjusted readings of the same price series, not conflicting observations.
+
+[^contribution-rounding]: Food, energy, and core effects sum to `{python} fmt(stats['effects_sum'], 3)` percentage point. The all-items index change is approximately `{python} fmt(stats['cpi_mom_unrounded'], 3)`% before rounding. Effects and index changes are published at different precision, so the reconciliation is approximate.
+
+## The missing annual rate
+
+September has a 12-month CPI rate of `{python} fmt(stats['cpi_sep_yoy'])`% for all items and `{python} fmt(stats['cpi_core_sep_yoy'])`% for core. October does not. The gray core CPI 12-month line therefore ends in September. Its earlier break marks the missing `{python} stats['gap_month']` index itself.
+
+The blue core CPI three-month pace annualizes three consecutive monthly changes. October's `{python} fmt(stats['cpi_core_ann3'])`% pace uses July's index as the starting level and the August, September, and October changes. It does not reconstruct the missing annual comparison. Windows crossing the missing index stay empty; the blue line resumes only when four consecutive levels are available. The headline three-month pace, not drawn, is `{python} fmt(stats['cpi_ann3'])`%, with September's large energy increase still in the window.
+
+The red line is the 12-month change in core producer prices, excluding foods, energy, and trade services. It reaches `{python} fmt(stats['ppi_core_yoy'])`% in October. The green line is core PCE, the personal consumption expenditures price index excluding food and energy. It measures consumer prices through the national accounts and ends at `{python} fmt(stats['core_pce_yoy'])`% in September. The dashed reference is the Fed's `{python} fmt(stats['fed_target'], 0)`% longer-run target for headline PCE inflation, not a target for every line.
+
+```{python}
+#| echo: true
+#| label: fig-inflation-paths
+#| fig-cap: "Core CPI runs at a 3.7 percent three-month annualized pace in October, but its official 12-month rate ends at September's 2.6 percent. Core PPI is 4.9 percent over the year; core PCE is 3.1 percent through September. The dashed line is the longer-run headline PCE target."
+#| fig-alt: "Four lines from 2024 to 26. Blue core CPI three-month pace ends at 3.7, with windows crossing October 2025 omitted. Gray core CPI 12-month rate stops at September 26's 2.6. Red core PPI ends at 4.9 and green core PCE at September's 3.1. A dashed line marks the 2 percent headline PCE target."
+
+# Cleaned rates only. A missing month stays a break in the line.
+start = pd.Timestamp("2024-01-01")
+end = pd.Timestamp("2026-10-01")
+cpi = pd.read_csv(CLEAN_DIR / "cpi_monthly.csv", index_col="date", parse_dates=True).loc[start:end]
+ppi = pd.read_csv(CLEAN_DIR / "ppi_monthly.csv", index_col="date", parse_dates=True).loc[start:end]
+pce = pd.read_csv(CLEAN_DIR / "pce_monthly.csv", index_col="date", parse_dates=True).loc[start:end]
+
+series = [
+    (cpi["cpi_core_ann3"], "CPI pace", COLORS["primary"], 0.28),
+    (cpi["cpi_core_yoy"], "CPI year", COLORS["neutral"], -0.32),
+    (ppi["ppi_core_yoy"], "PPI core", COLORS["accent"], 0.20),
+    (pce["core_pce_yoy"], "Core PCE", COLORS["secondary"], 0.03),
+]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.6))
+for values, name, color, nudge in series:
+    ax.plot(values.index, values, color=color, linewidth=1.8)
+    last = values.dropna()
+    x_end = last.index[-1]
+    y_end = float(last.iloc[-1])
+    ax.scatter(x_end, y_end, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    ax.text(x_end, y_end + nudge, f"  {name}\n  {y_end:.1f}", color=color, fontsize=8, fontweight="bold", va="center")
+
+ax.axhline(2, color=COLORS["fed_target"], linestyle="--", linewidth=1, alpha=0.5)
+ax.text(pd.Timestamp("2025-01-01"), 1.55, "PCE target: 2%", color=COLORS["fed_target"], fontsize=8)
+# No arrow. An arrow toward the last gray point reads as a label on that rate.
+ax.text(
+    pd.Timestamp("2024-08-01"),
+    5.15,
+    "October CPI:\nno 12-month rate",
+    fontsize=8,
+    color=COLORS["neutral"],
+    zorder=5,
+    bbox={"boxstyle": "round,pad=0.3", "facecolor": "#fafafa", "edgecolor": COLORS["light"], "alpha": 0.95},
+)
+ax.set_xlim(start, pd.Timestamp("2027-04-01"))
+ax.set_ylim(1.35, 5.65)
+ax.set_ylabel("Percent")
+ax.set_xticks(pd.to_datetime(["2024-01-01", "2025-01-01", "2026-01-01"]))
+
+def short_tick(value, _pos):
+    stamp = mdates.num2date(value)
+    year = "26" if stamp.year == 2026 else str(stamp.year)
+    return stamp.strftime("%b\n") + year
+
+ax.xaxis.set_major_formatter(plt.FuncFormatter(short_tick))
+plt.tight_layout()
+fig.savefig(IMG_DIR / "inflation-paths.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: FRED CPI vintage `{python} stats['cpi_release_date']`, FRED PPI vintage `{python} stats['ppi_release_date']`, and FRED PCE vintage `{python} stats['pce_release_date']`. The `{python} stats['latest_month']` CPI 12-month rate is omitted because BLS did not publish it.
+:::
+
+September PCE, released `{python} stats['pce_release_date']`, rose `{python} fmt(stats['pce_mom'])`% on the month and `{python} fmt(stats['pce_yoy'])`% over the year. Core PCE rose `{python} fmt(stats['core_pce_mom'])`% on the month, with its annual rate edging up from August's `{python} fmt(stats['core_pce_yoy_prior'])`% to `{python} fmt(stats['core_pce_yoy'])`%. October PCE is `{python} stats['october_pce_status']`, so the green line cannot describe October consumer prices.
+
+## Producer prices
+
+The producer price index, or PPI, measures prices producers receive. Final demand covers goods, services, and construction sold to the final buyer. It rose `{python} fmt(stats['ppi_mom'])`% in October, with goods up `{python} fmt(stats['ppi_goods_mom'])`% and services up `{python} fmt(stats['ppi_services_mom'])`%. The core measure here excludes foods, energy, and trade services, meaning wholesaler and retailer margins. It rose `{python} fmt(stats['ppi_core_mom'])`%.
+
+The annual picture is stronger: final demand rose `{python} fmt(stats['ppi_yoy'])`%, goods `{python} fmt(stats['ppi_goods_yoy'])`%, services `{python} fmt(stats['ppi_services_yoy'])`%, and core `{python} fmt(stats['ppi_core_yoy'])`%. The top panel shows seasonally adjusted monthly changes. The bottom shows unadjusted 12-month changes, with the same category order and a different scale.
+
+```{python}
+#| echo: true
+#| label: fig-ppi-month-year
+#| fig-cap: "Goods rose 0.5 percent in October and 10.2 percent over the year. Final demand rose 0.3 percent on the month and 6.5 percent over the year. Core excludes foods, energy, and trade services. SA means seasonally adjusted; NSA means unadjusted."
+#| fig-alt: "Two panels of horizontal bars for final demand, goods, services, and less food, energy, and trade. The October changes are 0.3, 0.5, 0.2, and 0.5 percent. The 12-month changes are 6.5, 10.2, 5.0, and 4.9 percent."
+
+# One October row. The month is seasonally adjusted. The year is not.
+ppi = pd.read_csv(CLEAN_DIR / "ppi_monthly.csv", index_col="date", parse_dates=True)
+row = ppi.loc[pd.Timestamp("2026-10-01")]
+labels = ["Final demand", "Goods", "Services", "Core"]
+mom_cols = ["ppi_mom", "ppi_goods_mom", "ppi_services_mom", "ppi_core_mom"]
+yoy_cols = ["ppi_yoy", "ppi_goods_yoy", "ppi_services_yoy", "ppi_core_yoy"]
+mom = [float(row[col]) for col in mom_cols]
+yoy = [float(row[col]) for col in yoy_cols]
+
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), gridspec_kw={"height_ratios": [2.2, 1.4]})
+for axis, values, title in (
+    (axes[0], mom, "October change, percent (SA)"),
+    (axes[1], yoy, "12-month change, percent (NSA)"),
+):
+    axis.barh(labels, values, color=COLORS["primary"], edgecolor="white", height=0.65)
+    axis.axvline(0, color=COLORS["neutral"], linewidth=0.8)
+    for name, value in zip(labels, values):
+        axis.text(value + max(values) * 0.03, name, f"{value:.1f}", fontsize=8, color=COLORS["neutral"], va="center")
+    axis.set_xlabel(title)
+    axis.set_xlim(0, max(values) * 1.28)
+axes[0].set_xticks([0, 0.2, 0.4, 0.6])
+axes[1].set_xticks([0, 4, 8, 12])
+plt.tight_layout()
+fig.savefig(IMG_DIR / "ppi-month-year.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS PPI news release](https://www.bls.gov/news.release/ppi.nr0.htm), `{python} stats['ppi_release_date']`. Twelve-month rates use the not-seasonally-adjusted indexes.
+:::
+
+Inside goods, foods rose `{python} fmt(stats['ppi_foods_mom'])`%, energy fell `{python} fmt(abs(stats['ppi_energy_mom']))`%, and goods excluding food and energy rose `{python} fmt(stats['ppi_goods_ex_food_energy_mom'])`%. The release revised September's final-demand increase from `{python} fmt(stats['ppi_sep_mom_previously_published'])`% to `{python} fmt(stats['ppi_sep_mom'])`%.
+
+CPI and PPI both rose in October, but they cover different buyers and price baskets. Their shared timing does not establish a fixed producer-to-consumer pass-through.
+
+## Productivity and unit labor costs
+
+Labor productivity is output per hour in the nonfarm business sector. Unit labor costs are hourly compensation divided by productivity. Stronger productivity can therefore offset rising compensation.
+
+In the third quarter, output rose `{python} fmt(stats['output_q_ann'])`% while hours rose `{python} fmt(stats['hours_q_ann'])`%, both at annual rates. Productivity consequently rose `{python} fmt(stats['prod_q_ann'])`%. It outpaced hourly compensation growth of `{python} fmt(stats['hourly_comp_q_ann'])`%, leaving unit labor costs down `{python} fmt(abs(stats['ulc_q_ann']))`%. These figures annualize the quarter's change; they are not year-over-year growth.
+
+Over four quarters, productivity rose `{python} fmt(stats['prod_yoy'])`% and hourly compensation rose `{python} fmt(stats['hourly_comp_yoy'])`%, leaving unit labor costs up `{python} fmt(stats['ulc_yoy'])`%. The latest quarterly decline is relief, but it does not erase the annual increase.
+
+The top panel shows quarterly annual rates: blue productivity and red unit labor costs. The bottom shows four-quarter changes: green productivity and orange unit labor costs. The endpoint label "Labor costs" means unit labor costs. October average hourly earnings come from a different survey and period; they are not plotted.
+
+```{python}
+#| echo: true
+#| label: fig-productivity-costs
+#| fig-cap: "Third-quarter productivity rose 3.6 percent and unit labor costs fell 0.7 percent at an annual rate. Over four quarters, productivity rose 2.1 percent and unit labor costs rose 2.4 percent."
+#| fig-alt: "Two panels. The top shows quarterly annual rates, with productivity at 3.6 and unit labor costs at minus 0.7 in the third quarter of 26. The bottom shows four-quarter rates, with productivity at 2.1 and unit labor costs at 2.4."
+
+# Top panel: quarterly annual rates. Bottom panel: change from a year earlier.
+start = pd.Timestamp("2023-01-01")
+prod = pd.read_csv(CLEAN_DIR / "productivity_quarterly.csv", index_col="date", parse_dates=True).loc[start:]
+
+fig, axes = plt.subplots(2, 1, figsize=(8.0, 7.0), sharex=True, gridspec_kw={"height_ratios": [2.2, 1.4]})
+top_lines = [
+    (prod["prod_q_ann"], "Productivity", COLORS["primary"], 0.28),
+    (prod["ulc_q_ann"], "Labor costs", COLORS["accent"], 0.05),
+]
+for values, name, color, nudge in top_lines:
+    axes[0].plot(values.index, values, color=color, linewidth=1.8)
+    x_end, y_end = values.index[-1], float(values.iloc[-1])
+    axes[0].scatter(x_end, y_end, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    axes[0].text(x_end, y_end + nudge, f"  {name}\n  {y_end:.1f}", color=color, fontsize=8, fontweight="bold", va="center")
+axes[0].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+axes[0].set_ylabel("Percent, annual rate")
+
+bottom_lines = [
+    (prod["prod_yoy"], "Productivity", COLORS["secondary"], -0.16),
+    (prod["ulc_yoy"], "Labor costs", COLORS["warning"], 0.28),
+]
+for values, name, color, nudge in bottom_lines:
+    axes[1].plot(values.index, values, color=color, linewidth=1.8)
+    x_end, y_end = values.index[-1], float(values.iloc[-1])
+    axes[1].scatter(x_end, y_end, s=40, color=color, zorder=5, edgecolors="white", linewidth=0.8)
+    axes[1].text(x_end, y_end + nudge, f"  {name}\n  {y_end:.1f}", color=color, fontsize=8, fontweight="bold", va="center")
+axes[1].axhline(0, color=COLORS["neutral"], linewidth=0.8)
+axes[1].set_ylabel("Percent, from a year earlier")
+
+def short_year_tick(value, _pos):
+    year = mdates.num2date(value).year
+    return "26" if year == 2026 else str(year)
+
+axes[1].xaxis.set_major_formatter(plt.FuncFormatter(short_year_tick))
+for axis in axes:
+    axis.set_xlim(prod.index[0], pd.Timestamp("2027-06-01"))
+    axis.set_xticks(pd.to_datetime(["2023-01-01", "2024-01-01", "2025-01-01", "2026-01-01"]))
+plt.tight_layout()
+fig.savefig(IMG_DIR / "productivity-costs.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [BLS Productivity and Costs, third quarter 26 preliminary](https://www.bls.gov/news.release/prod2.htm), `{python} stats['productivity_release_date']`.
+:::
+
+These estimates are preliminary. A later national-accounts estimate can revise output and therefore productivity. The next GDP estimate is scheduled for `{python} stats['gdp_second_date']`; revised productivity follows on `{python} stats['productivity_revised_date']`.
+
+## Putting it together
+
+October consumer prices rose across several categories. The missing year-earlier CPI base limits the annual comparison, not the monthly evidence. Producer prices have an elevated annual increase. Productivity reduced unit labor costs in the latest quarter, although those costs still rose over four quarters. The useful connection is current price pressure alongside quarterly cost relief, with incomplete annual consumer evidence.
+
+### What it means for
+
+**For the Fed.** The funds target range is `{python} fmt2(stats['funds_lower'])` to `{python} fmt2(stats['funds_upper'])`%. September's median year-end projection is `{python} fmt(stats['sep_end_2026_median'])`% for the target-range midpoint. That is a conditional projection of appropriate policy, not a December commitment. The Committee still has October PCE and a productivity revision to consider before completing its next meeting.
+
+**For households.** Average hourly earnings rose `{python} fmt(stats['ahe_yoy'])`% over the year and `{python} fmt(stats['ahe_mom'])`% in October, to `{python} fmt2(stats['ahe_level'])` dollars. These are averages for private payroll employees, not every household's pay. Subtracting inflation approximately estimates real-wage growth; the exact calculation divides the wage growth factor by the price growth factor. Without October's official annual CPI rate, this post cannot make that annual purchasing-power comparison.
+
+**For investors.** The `{python} fmt(stats['cpi_core_ann3'])`% core CPI pace captures recent momentum, while `{python} fmt(stats['ppi_core_yoy'])`% core PPI captures a year of producer-price change. Neither supplies the missing annual consumer rate. Watch whether forthcoming consumer data confirm persistent pressure, rather than treating one monthly print as a policy forecast.
+
+## What to watch next
+
+October retail sales are `{python} stats['october_retail_sales_status']` and scheduled for `{python} stats['retail_sales_date']`. The late-October meeting minutes follow on `{python} stats['minutes_date']`. October PCE and the second GDP estimate are scheduled for `{python} stats['next_pce_date']`. The productivity revision arrives on `{python} stats['productivity_revised_date']`, when the next policy meeting begins; that meeting ends on `{python} stats['fomc_end_date']`. November CPI follows on `{python} stats['next_cpi_date']`. Check which annual rates BLS publishes rather than assuming the next release resolves the gap.
+
+## Limitations
+
+This post does not reconstruct the missing CPI base or estimate its effects on the survey. Shelter contributions are the published BLS effects, not independently estimated weights. PPI can be revised for several months, and productivity depends on output estimates that can also change. The CPI, PPI, PCE, earnings, and productivity measures differ in coverage and timing; their comparison does not establish causation.
+
+## Methodology & Data
+
+| Series | What it measures | Source |
+| --- | --- | --- |
+| CPI, all items and core | Consumer prices, month and the September 12-month rate | [BLS CPI](https://www.bls.gov/news.release/archives/cpi_11102026.htm), `{python} stats['cpi_release_date']`. FRED: CPIAUCSL, CPIAUCNS, CPILFESL, CPILFENS. |
+| CPI contributions | Effect of food, energy, shelter, and core on the October month | [BLS Table 6](https://www.bls.gov/news.release/cpi.t06.htm). |
+| Why the CPI annual is missing | `{python} stats['gap_month']` survey prices were not collected | [BLS notice](https://www.bls.gov/cpi/notices/2026/12m-changes-202610.htm). |
+| PPI final demand and core | Producer prices, month and 12-month rate | [BLS PPI](https://www.bls.gov/news.release/archives/ppi_11132026.htm), `{python} stats['ppi_release_date']`. FRED: PPIFIS, PPIFID, WPSFD49116, WPUFD49116. |
+| Productivity and unit labor costs | Nonfarm business, quarterly annual rate and four-quarter change | [BLS Productivity and Costs](https://www.bls.gov/news.release/prod2.htm). FRED: PRS85006092, PRS85006091, PRS85006112, PRS85006111. |
+| PCE prices | September headline and core, the latest published month | [BEA Personal Income and Outlays, September 26](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026). FRED: PCEPI, PCEPILFE. |
+| Average hourly earnings | October pay for all private employees | [BLS Employment Situation](https://www.bls.gov/news.release/archives/empsit_11062026.htm), `{python} stats['ahe_release_date']`. FRED: CES0500000003. |
+| Federal funds target | Last available daily reading in each month; September year-end projection | FRED: DFEDTARU, DFEDTARL. [September projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm) and [meeting calendar](https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm). |
+
+: Data sources used in this analysis. Twelve-month CPI and PPI rates use indexes that are not seasonally adjusted. Monthly CPI and PPI changes in the text use seasonally adjusted indexes unless the sentence says otherwise.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`. CPI released `{python} stats['cpi_release_date']`. PPI released `{python} stats['ppi_release_date']`. October PCE is `{python} stats['october_pce_status']`.*

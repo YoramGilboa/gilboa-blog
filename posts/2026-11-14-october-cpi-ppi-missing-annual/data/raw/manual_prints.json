@@ -1,0 +1,14 @@
+{
+  "output_q_ann": 3.7,
+  "hours_q_ann": 0.1,
+  "hourly_comp_q_ann": 2.9,
+  "hourly_comp_yoy": 4.5,
+  "real_comp_q_ann": 1.1,
+  "ppi_sep_mom_previously_published": 1.3,
+  "sep_end_2026_median": 4.1,
+  "notes": [
+    "# MANUAL: productivity components are from the BLS preliminary release, source https://www.bls.gov/news.release/prod2.htm",
+    "# MANUAL: the previously published September PPI month is from the October 15, 2026 release, source https://www.bls.gov/news.release/archives/ppi_10152026.htm",
+    "# MANUAL: the end-2026 median dot is from the September 16, 2026 Summary of Economic Projections, source https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm"
+  ]
+}
