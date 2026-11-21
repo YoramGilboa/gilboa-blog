@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "reviewed_at": "2026-11-21T22:13:15Z",
+  "reviewer": "blog-final-review",
+  "notes": "New review of the editorial pass. The prior PASS was not reused. The opening now leads with AI inflation pressure and a conditional financing scenario, then the meeting, the November 18 release, and the later listing. Vote counts stay in prose and come from stats. Tile labels name the policy rate, the Treasury yield, the first trade versus the offering price, and the second-day close-to-close change. Claims were checked against the October minutes, the decision statement, the release notice, the September projections, FRED DGS10, the Forbes first-session article, and the Motley Fool second-session page. Saved listing notes still do not record article text versus a quote label or a retrieval time; the draft says so and does not claim an archive. One wording fix kept two separate 'many' inflation comments from being joined by 'because.' Lint, snapshot verification, and draft preflight passed. Title and all four tiles were inspected at desktop and 400px: headings, units, and baselines are visible, text is not clipped, and the page does not overflow. Charts were not redesigned. The post remains draft:true for human approval."
+}

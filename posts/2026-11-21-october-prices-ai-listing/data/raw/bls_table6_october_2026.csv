@@ -1,0 +1,14 @@
+component,relative_importance,percent_change,effect_pp,plot
+all_items,100.000,0.4,,0
+food,13.447,0.5,0.064,1
+food_at_home,8.162,0.4,0.036,0
+food_away,5.285,0.5,0.027,0
+energy,7.649,0.7,0.053,1
+gasoline,4.080,1.0,0.042,0
+electricity,2.513,0.9,0.023,0
+utility_gas,0.732,-0.8,-0.006,0
+core,78.905,0.3,0.234,0
+shelter,35.238,0.3,0.108,1
+rent,7.707,0.2,0.016,0
+owners_equivalent_rent,25.853,0.3,0.083,0
+all_items_less_shelter,64.762,0.4,0.243,0

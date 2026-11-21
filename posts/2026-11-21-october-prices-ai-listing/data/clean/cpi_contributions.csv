@@ -1,0 +1,5 @@
+component,effect_pp,order
+Food,0.064,1
+Energy,0.053,2
+Shelter,0.108,3
+Core excluding shelter,0.126,4

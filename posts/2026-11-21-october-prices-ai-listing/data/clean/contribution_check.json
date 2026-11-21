@@ -1,0 +1,17 @@
+{
+  "published_effect_sum": 0.351,
+  "unrounded_cpi_mom": 0.3502845690429357,
+  "shelter_effect": 0.108,
+  "core_ex_shelter_effect": 0.126,
+  "share_of_rounded_0_4": 26.999999999999996,
+  "share_of_unrounded_month": 30.832074702885937,
+  "missing_headline_months": [
+    "2025-10"
+  ],
+  "missing_core_three_month_windows": [
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01"
+  ]
+}

@@ -1,0 +1,440 @@
+---
+title: "The Fed Discussed AI Inflation Pressure and Financing Risk"
+pagetitle: "November 2026 FOMC Minutes: AI Risk and Yield 5.04%"
+date: "2026-11-21"
+author: Yoram Gilboa
+categories: [economics, federal reserve, fomc, interest rates, markets, data visualization]
+description: "The funds rate stayed at 3.75 to 4 percent. Minutes discuss AI inflation pressure and a financing scenario. The 10-year yield was 5.04 percent on November 19."
+image: images/yield-backdrop.png
+image-alt: "10-year Treasury yield from June 1, 26, through November 19, 26, ending at 5.04 percent. A gray line marks the meeting decision and a red line marks the first trading day."
+toc: true
+toc-location: right
+code-fold: true
+code-summary: "Show code"
+title-block-banner: true
+body-classes: compact-charts
+format:
+  html:
+    title-prefix: ""
+---
+
+```{=html}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Fed Discussed AI Inflation Pressure and Financing Risk",
+  "description": "The funds rate stayed at 3.75 to 4 percent. Minutes discuss AI inflation pressure and a financing scenario. The 10-year yield was 5.04 percent on November 19.",
+  "datePublished": "2026-11-21",
+  "dateModified": "2026-11-21",
+  "author": {"@type": "Person", "@id": "https://gilboa.blog/#person", "name": "Yoram Gilboa"},
+  "publisher": {"@type": "Person", "@id": "https://gilboa.blog/#person", "name": "Yoram Gilboa"},
+  "mainEntityOfPage": "https://gilboa.blog/posts/2026-11-21-october-prices-ai-listing/",
+  "image": "https://gilboa.blog/posts/2026-11-21-october-prices-ai-listing/images/yield-backdrop.png"
+}
+</script>
+```
+
+```{python}
+#| echo: false
+#| warning: false
+
+import json
+import warnings
+from pathlib import Path
+
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+from IPython.display import HTML
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+POST_DIR = Path(".").resolve()
+CLEAN_DIR = POST_DIR / "data" / "clean"
+IMG_DIR = POST_DIR / "images"
+STATS_DIR = POST_DIR / "stats"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
+
+with open(STATS_DIR / "summary_stats.json", encoding="utf-8") as f:
+    stats = json.load(f)
+
+# One palette. The Treasury yield stays blue. The listing bars reuse the same hues.
+COLORS = {
+    "primary": "#2e5984",
+    "accent": "#8b0000",
+    "secondary": "#6b8e6b",
+    "neutral": "#4a4a4a",
+    "light": "#b0b0b0",
+    "warning": "#cc7722",
+    "fed_target": "#cc0000",
+}
+
+plt.rcParams.update({
+    "font.family": "Calibri",
+    "font.size": 10,
+    "axes.labelsize": 10,
+    "axes.titlesize": 11,
+    "xtick.labelsize": 9,
+    "ytick.labelsize": 9,
+    "legend.fontsize": 8,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": False,
+    "axes.linewidth": 0.5,
+    "lines.linewidth": 1.8,
+    "figure.facecolor": "white",
+    "axes.facecolor": "#fafafa",
+    "figure.dpi": 100,
+})
+
+
+def fmt(n, digits=1):
+    """Format a level. Floats default to one decimal."""
+    return f"{float(n):,.{digits}f}"
+
+
+def fmt_chg(n, digits=1):
+    """Format a signed change."""
+    return f"{float(n):+,.{digits}f}"
+
+
+def fmt2(n):
+    """Two decimals for a yield or a reported share price."""
+    return f"{float(n):.2f}"
+
+
+def fmt_usd(n):
+    """Dollar sign stays inside the expression so Markdown does not treat it as math."""
+    return f"${float(n):,.2f}"
+
+
+def short_year(label):
+    """Print 2026 as 26. The stats file keeps the four-digit year."""
+    return str(label).replace("2026", "26")
+
+
+def month_tick(value, _pos=None):
+    """Month ticks. Only 2026 is shortened."""
+    stamp = mdates.num2date(value)
+    year = "26" if stamp.year == 2026 else str(stamp.year)
+    return f"{stamp.strftime('%b')}\n{year}"
+
+
+def short_stamp(stamp):
+    """US month/day from a timestamp. Only 2026 is shortened."""
+    year = "26" if stamp.year == 2026 else str(stamp.year)
+    return f"{stamp.month}/{stamp.day}/{year}"
+
+
+for key, value in list(stats.items()):
+    if isinstance(value, str):
+        stats[key] = short_year(value)
+```
+
+Many participants discussed AI investment as a source of inflation pressure. Demand for products used in the buildout was straining supply and raising prices of technology-related consumer goods. In the same record, the staff said leasing that does not appear as an ordinary loan, and financing between related AI firms, could magnify losses if the investment returns disappointed. Almost all participants commented on that disappointing-returns scenario, and many commented on an AI-related revaluation of asset prices should one occur. Those financing comments are conditional on the returns disappointing. The [minutes of the October meeting](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) are the source for this account.
+
+The Committee met on `{python} stats['fomc_meeting_start']` and `{python} stats['fomc_decision_date']`. The [minutes release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm) is dated `{python} stats['minutes_date']`, and it says the descriptions use only information available at the meeting. Anthropic's initial public offering (IPO), the company's first sale of shares to public investors, began trading the next day, `{python} stats['ipo_open_date']`. That order does not establish what caused the price changes. The minutes do not name Anthropic or this offering.
+
+The target range for the federal funds rate, an overnight interest rate on loans between banks, stayed at `{python} fmt2(stats['funds_lower'])` to `{python} fmt2(stats['funds_upper'])`%. `{python} stats['vote_for_hold']` voting members favored leaving the rate unchanged; `{python} stats['vote_for_hike']` favored a quarter-percentage-point increase. The [October decision statement](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm) records that vote. The participant counts above are the discussion. The vote counts are the members who set the range.
+
+::: {.callout-note collapse="true"}
+## Reproducing this analysis
+
+The Python code used to generate each chart is included in this post. Click on any code block to see the full implementation. The complete data pipeline includes:
+
+- `01_fetch_data.py` checks the saved FRED vintages and does not download
+- `02_clean_data.py` writes the cleaned yield file the chart plots
+- `04_compute_stats.py` writes the figures quoted in the text, including the listing comparisons
+
+The 10-year yield uses the `{python} stats['yield_release_date']` H.15 vintage and ends on `{python} stats['dgs10_latest_date']`. Listing prices are transcribed market reports, with the source links beside the price comparison. The pipeline still checks the CPI, PPI, and PCE files behind the one-paragraph backdrop. The default command checks the saved files and does not download a new copy.
+:::
+
+::: {.callout-note collapse="true"}
+## Note on data
+
+The inflation figures in the bridge are the same locked October prints as the November 14 post. This post does not fill the missing CPI year rate. The 10-year yield is an official series. The vintage date and the last observation date are different, and a link to the live series is not a copy of the saved vintage. Listing prices are market reports through `{python} stats['ipo_day2_date']`. October PCE is `{python} stats['october_pce_status']`.
+:::
+
+```{python}
+#| echo: false
+
+card_style = ("background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; "
+              "padding: 1.05rem 0.8rem 1.15rem 0.8rem; display: flex; flex-direction: column; "
+              "align-items: center; min-height: 176px; min-width: 0;")
+label_style = ("font-size: 0.78rem; color: #64748b; letter-spacing: 0.01em; "
+               "line-height: 1.35; min-height: 3.3rem; display: flex; align-items: center; "
+               "text-align: center;")
+value_style = ("font-size: 1.62rem; font-weight: 700; margin: 0.2rem 0 0.5rem 0; "
+               "line-height: 1.15; text-align: center;")
+sub_style = ("font-size: 0.74rem; color: #64748b; line-height: 1.4; text-align: center; "
+             "min-height: 2.8rem;")
+
+cards = [
+    ("Fed policy interest rate",
+     f"{fmt2(stats['funds_lower'])} to {fmt2(stats['funds_upper'])}%",
+     COLORS["primary"],
+     f"Target range set {stats['fomc_decision_date']}"),
+    ("10-year Treasury yield",
+     f"{fmt(stats['dgs10_latest'], 2)}%",
+     COLORS["primary"],
+     f"Observed {stats['dgs10_latest_date']}"),
+    ("First trade above offering price",
+     f"{fmt_chg(stats['ipo_open_vs_offer_pct'])}%",
+     COLORS["accent"],
+     f"{fmt_usd(stats['ipo_open'])} first trade; {fmt_usd(stats['ipo_offer'])} offer"),
+    ("Second-day stock-price change",
+     f"{fmt_chg(stats['ipo_day2_vs_day1_pct'])}%",
+     COLORS["warning"],
+     f"{fmt_usd(stats['ipo_day2_close'])} versus {fmt_usd(stats['ipo_day1_close'])} at the previous close"),
+]
+
+cards_html = "".join(
+    f'<div style="{card_style}">'
+    f'<div style="{label_style}">{title}</div>'
+    f'<div style="{value_style} color: {color};">{value}</div>'
+    f'<div style="{sub_style}">{sub}</div>'
+    f"</div>"
+    for title, value, color, sub in cards
+)
+
+html = f"""
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+            gap: 0.9rem; margin: 1.4rem 0 0.85rem 0;">
+{cards_html}
+</div>
+"""
+HTML(html)
+```
+
+The yield card is an annualized rate observed on `{python} stats['dgs10_latest_date']`, not a one-day return and not the `{python} stats['yield_release_date']` vintage date. The offering price is the price paid by investors allocated shares in the IPO. It is not the price paid by every later buyer. The stock-price card compares the `{python} stats['ipo_day2_date']` close with the previous close on `{python} stats['ipo_open_date']`.
+
+## The inflation prints are unchanged
+
+[October prices rose, but the annual CPI comparison is missing](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/) already covered the October inflation prints. In `{python} stats['latest_month']`, consumer prices rose `{python} fmt(stats['cpi_mom'])`% and core prices rose `{python} fmt(stats['cpi_core_mom'])`%. There is still no official 12-month CPI rate, because `{python} stats['gap_month']` was not collected. Producer prices rose `{python} fmt(stats['ppi_yoy'])`% over the year. CPI was released `{python} stats['cpi_release_date']` and PPI `{python} stats['ppi_release_date']`, both after the decision on `{python} stats['fomc_decision_date']`. Those prints have not changed. They are background, not a new result.
+
+## What the minutes say
+
+### The policy judgment
+
+Most participants supported holding the target range at this meeting. Many of them wanted more information before deciding the stance that would return inflation to the Committee's `{python} fmt(stats['fed_target'], 0)`% goal. The staff estimate in hand was that total PCE inflation was `{python} fmt(stats['pce_yoy'])`% in `{python} stats['pce_month']`. Most participants said inflation pressures were broad based. Many called the AI buildout a material source of inflation risk. Many also observed that demand for those products was straining supply and raising prices. Those comments are about prices. They are separate from the valuation scenario below, and the [October minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) record them.
+
+For the months ahead, almost all participants judged that further increases would likely be appropriate under baseline outlooks broadly consistent with the September projections. That projection's median funds rate at `{python} stats['sep_horizon']` was `{python} fmt(stats['sep_end_2026_median'])`% in the [September Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm). A couple of participants said an increase of more than a quarter point could warrant consideration at the next meeting if the inflation data were unfavorable. Participants also said later decisions would depend on the incoming data, the outlook, and the balance of risks. The judgment is conditional. It is not a vote on the December meeting. The [October minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) record that judgment.
+
+### Financial-stability comments
+
+The staff briefing used severe scenarios, not a forecast that those scenarios would occur. The staff highlighted how fast debt tied to the AI buildout had grown. Some of that financing is leasing that does not appear as an ordinary loan, and some of it runs between related AI firms. The staff's point was that those links could magnify losses if the investment returns disappointed. Elevated asset valuations and hedge-fund leverage were the vulnerabilities the staff called most salient. Stronger bank and household balance sheets were described as a buffer. The staff did not report that an AI bubble had been established. This paragraph follows the [staff assessment in the minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm).
+
+In the discussion that followed, almost all participants commented on the disappointing-returns scenario, and many commented on an AI-related revaluation of asset prices should it occur. Most observed that AI-related debt had grown quickly, much of it through financing structures that are complex and hard to see through. Several participants said financial conditions were still supportive of growth, citing elevated equity valuations and widely available credit. A majority, though, noted tighter conditions since the September meeting, including wider credit spreads for some higher-risk and AI-related borrowers. Several stressed that monetary policy was not the right tool for addressing financial-stability risk directly. This paragraph follows the [participants' discussion in the minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm).
+
+### What the manager reported about markets
+
+The manager's account covers the intermeeting period, which ended before `{python} stats['fomc_decision_date']`. It is not a description of the listing. On net, the manager said nominal Treasury yields were little changed over that window, after a rise into early October on stronger data and a later pullback. In that account, the pullback came with uncertainty about AI firms' revenue and about the pace of data-center construction, and with concern over French government debt. Equity prices in the AI infrastructure segment rose earlier in the period. Risk sentiment then worsened after two leading AI firms reported revenue growth below what investors expected, and after a hyperscaler laid out spending plans that needed more financing than investors had anticipated. The minutes do not give those firms' names. The manager also said that a higher rate level had already been weighing on equity prices and raising credit spreads before this intermeeting period. This paragraph follows the [market manager's account in the minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm).
+
+## The yield backdrop
+
+The official series in the `{python} stats['yield_release_date']` H.15 vintage ends on `{python} stats['dgs10_latest_date']`. The last observation is `{python} fmt(stats['dgs10_latest'], 2)`%. The vintage date and that observation date are not the same, and the file has no yield for `{python} stats['ipo_day2_date']`. The [live DGS10 series](https://fred.stlouisfed.org/series/DGS10) may contain later observations or revisions. That page is the current series, not a frozen copy of the saved vintage. The high in this file is `{python} fmt(stats['dgs10_high_2026'], 2)`% on `{python} stats['dgs10_high_2026_date']`, before the meeting. The yield was `{python} fmt(stats['dgs10_meeting_day'], 2)`% on the decision date, `{python} fmt(stats['dgs10_week_ago'], 2)`% on `{python} stats['dgs10_week_ago_date']`, and `{python} fmt(stats['dgs10_minutes_day'], 2)`% when the minutes came out.
+
+A nominal Treasury yield mixes expected short-term rates, compensation for inflation, and a term premium. This post does not split those parts. A higher discount rate lowers the present value of cash flows that arrive far in the future, but a Treasury yield is not the whole required return on an equity. The path does not show that this mechanism produced the two closes.
+
+The blue line is the 10-year Treasury yield. The labeled peak is the high in this window. The gray line is the meeting decision, and the red line is the first trading day. The minutes were released one day before that red line. One day is too narrow to draw as its own mark on this window.
+
+```{python}
+#| echo: true
+#| label: fig-yield-backdrop
+#| fig-cap: "The 10-year yield ended this H.15 vintage at 5.04 percent on November 19. The gray line marks the meeting decision. The red line marks the first trading day, the day after the minutes. The marks are dates, not identified causes."
+#| fig-alt: "Blue line of the 10-year yield from June 26 to November 19, 26. The peak is 5.31 percent on October 5 and the last point is 5.04 percent. A gray dashed line marks October 28 and a red dashed line marks November 19."
+
+# Cleaned H.15 yields only. Holiday blanks stay off the line because the axis is a date.
+yields = pd.read_csv(CLEAN_DIR / "yields_daily.csv", index_col="date", parse_dates=True)
+yields = yields.loc["2026-06-01":].dropna(subset=["dgs10"])
+
+fig, ax = plt.subplots(figsize=(8.0, 4.8))
+ax.plot(yields.index, yields["dgs10"], color=COLORS["primary"])
+
+high_x = yields["dgs10"].idxmax()
+high_y = float(yields.loc[high_x, "dgs10"])
+last_x = yields.index.max()
+last_y = float(yields.iloc[-1]["dgs10"])
+for x_val, y_val in ((high_x, high_y), (last_x, last_y)):
+    ax.scatter([x_val], [y_val], s=40, color=COLORS["primary"], edgecolor="white", linewidth=0.8, zorder=4)
+
+ax.annotate(
+    f"{high_y:.2f}%",
+    xy=(high_x, high_y),
+    xytext=(0, 8),
+    textcoords="offset points",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    ha="center",
+    va="bottom",
+    annotation_clip=False,
+    zorder=5,
+)
+ax.annotate(
+    f"{last_y:.2f}%\n{short_stamp(last_x)}",
+    xy=(last_x, last_y),
+    xytext=(8, 0),
+    textcoords="offset points",
+    color=COLORS["primary"],
+    fontsize=8,
+    fontweight="bold",
+    ha="left",
+    va="center",
+    annotation_clip=False,
+    zorder=5,
+)
+
+meeting = pd.to_datetime(stats["fomc_decision_date"], format="%m/%d/%y")
+listing = pd.to_datetime(stats["ipo_open_date"], format="%m/%d/%y")
+ax.axvline(meeting, color=COLORS["neutral"], linewidth=1.0, linestyle="--", zorder=1)
+ax.axvline(listing, color=COLORS["accent"], linewidth=1.0, linestyle="--", zorder=1)
+
+ax.set_ylabel("10-year yield, percent")
+ax.xaxis.set_major_locator(mdates.MonthLocator())
+ax.xaxis.set_major_formatter(plt.FuncFormatter(month_tick))
+start, end = yields.index.min(), yields.index.max()
+ax.set_xlim(start, end + (end - start) * 0.16)
+y_min = float(yields["dgs10"].min())
+y_max = float(yields["dgs10"].max())
+pad = (y_max - y_min) * 0.16
+ax.set_ylim(y_min - pad * 0.25, y_max + pad)
+ax.text(
+    0.02,
+    0.98,
+    (
+        f"Gray line: meeting ended {stats['fomc_decision_date']}\n"
+        f"Red line: listing {stats['ipo_open_date']}\n"
+        f"Minutes were {stats['minutes_date']}, one day earlier.\n"
+        "Dates, not identified causes."
+    ),
+    transform=ax.transAxes,
+    fontsize=8,
+    color=COLORS["neutral"],
+    ha="left",
+    va="top",
+    bbox={"boxstyle": "round,pad=0.25", "fc": "#fafafa", "ec": "none", "alpha": 0.92},
+    zorder=5,
+)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "yield-backdrop.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [FRED DGS10](https://fred.stlouisfed.org/series/DGS10), saved H.15 vintage `{python} stats['yield_release_date']`, through `{python} stats['dgs10_latest_date']`. The live page can add later observations or revisions. Meeting and release dates: [the FOMC minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) and the [minutes release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm).
+:::
+
+## The reported price path
+
+The second close was `{python} fmt_usd(stats['ipo_day2_close'])` on `{python} stats['ipo_day2_date']`. That was `{python} fmt_chg(stats['ipo_day2_vs_open_pct'])`% versus the first trade of `{python} fmt_usd(stats['ipo_open'])`, and `{python} fmt_chg(stats['ipo_day2_vs_offer_pct'])`% versus the offering price of `{python} fmt_usd(stats['ipo_offer'])`. The second close was below the first trade, and it remained above the offering price. The table carries the other baselines. The saved reports stop on `{python} stats['ipo_day2_date']`.
+
+| Comparison | Change | Baseline |
+| --- | --- | --- |
+| Offer to open | `{python} fmt_chg(stats['ipo_open_vs_offer_pct'])`% | First trade versus the offering price |
+| Open to first close | `{python} fmt_chg(stats['ipo_day1_vs_open_pct'])`% | First close versus the first trade |
+| Close to close | `{python} fmt_chg(stats['ipo_day2_vs_day1_pct'])`% | Second close versus the first close |
+| Open to second close | `{python} fmt_chg(stats['ipo_day2_vs_open_pct'])`% | Second close versus the first trade |
+| Offer to second close | `{python} fmt_chg(stats['ipo_day2_vs_offer_pct'])`% | Second close versus the offering price |
+
+: Each change uses the baseline in that row. Buying at the offer and buying at the open are different starting points.
+
+The [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) states the offering price, the first trade, and the first close in the article text. That page also records earlier prices from the same session. On the [Motley Fool page for the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/), the close used here appears with the label "As of 4:00 p.m. ET." The article sentence on that page describes a decline as of 11:15 a.m. ET, which is a different observation. The notes saved with this draft do not record that split, and the draft does not keep a copy of either page.
+
+Gray is the offering price, red is the first trade, blue is the first close, and orange is the second close. The offer is the primary sale. The other three bars are secondary-market reports.
+
+```{python}
+#| echo: true
+#| label: fig-listing-prices
+#| fig-cap: "The four reported prices are the offering price, the first trade, the first close, and the next session's close. The offer is the primary sale price, not a secondary-market trade."
+#| fig-alt: "Four bars for reported Anthropic prices: offer 83 dollars, open 111.50 on November 19, 26, first close 97.17 that day, and second close 88.91 on November 20, 26."
+
+prices = pd.Series(
+    {
+        "Offer": stats["ipo_offer"],
+        "Open": stats["ipo_open"],
+        "First close": stats["ipo_day1_close"],
+        "Second close": stats["ipo_day2_close"],
+    }
+)
+tick_labels = [
+    "Offer",
+    f"Open\n{stats['ipo_open_date']}",
+    f"First close\n{stats['ipo_open_date']}",
+    f"Second close\n{stats['ipo_day2_date']}",
+]
+bar_colors = [COLORS["neutral"], COLORS["accent"], COLORS["primary"], COLORS["warning"]]
+
+fig, ax = plt.subplots(figsize=(8.0, 4.5))
+positions = list(range(len(prices)))
+ax.bar(positions, prices.values, color=bar_colors, width=0.72)
+span = float(prices.max() - prices.min())
+pad = span * 0.08
+for pos, value in zip(positions, prices.values):
+    ax.text(
+        pos,
+        value + pad,
+        f"{value:,.2f}",
+        ha="center",
+        va="bottom",
+        fontsize=8,
+        color=COLORS["neutral"],
+    )
+ax.set_xticks(positions)
+ax.set_xticklabels(tick_labels)
+ax.set_ylabel("Reported price, dollars")
+ax.set_ylim(0, float(prices.max()) + pad * 4)
+plt.tight_layout()
+fig.savefig(IMG_DIR / "listing-prices.png", dpi=150, bbox_inches="tight")
+```
+
+::: {.figure-source}
+Source: [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) for the offer, the open, and the first close in the article text. [Motley Fool page on the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) for the second close shown with a 4:00 p.m. ET label. Market reports, not an official series. No retrieval time is saved with this draft.
+:::
+
+## What this can and cannot show
+
+The minutes establish a dated record. Participants discussed the disappointing-returns scenario, and many discussed an AI-related revaluation should it occur, at the meeting that ended `{python} stats['fomc_decision_date']`. That record became public on `{python} stats['minutes_date']`. Trading began on `{python} stats['ipo_open_date']`, with the 10-year yield at `{python} fmt(stats['dgs10_latest'], 2)`% on the last day in the vintage. The four reported prices show an open above the offer, a second close below the first close, and a second close still above the offer.
+
+The same record does not establish that participants discussed this offering, that publishing the minutes caused the two closes, or that a revaluation had been found rather than talked about as a scenario. Two sessions cannot separate cash-flow news from discount rates, or from any other report that arrived with them.
+
+October PCE, due `{python} stats['next_pce_date']`, is the next official reading of the index in the Fed's `{python} fmt(stats['fed_target'], 0)`% goal. It can update the inflation picture the Committee will have before the meeting on `{python} stats['fomc_start_date']` to `{python} stats['fomc_end_date']`. It will not identify why these two closes printed where they did. This post does not guess that vote.
+
+## Limitations
+
+The minutes are a summary. "Almost all," "many," and "most" are the Federal Reserve's own counts, not a roll call a reader can recompute. The text does not name Anthropic.
+
+The yield file ends on `{python} stats['dgs10_latest_date']` because that is the last observation in the `{python} stats['yield_release_date']` H.15 vintage. The second trading day is not in it. Listing prices are market reports, and another outlet's figure for the same session can differ. A comparison with the offer is not the gain earned by every holder.
+
+CPI and PPI for October were released after the meeting. Reading the minutes as a comment on those prints misdates the discussion.
+
+## Methodology & Data
+
+The charts plot the cleaned yield column and the transcribed listing prices. They do not recompute those prices. The listing comparisons in the text are written by the stats step from those transcribed prices. The inflation figures in the bridge come from the same locked vintages as the November 14 post and are not re-estimated here.
+
+| Series | What it measures | Source |
+| --- | --- | --- |
+| October CPI month and the missing year rate | Unchanged backdrop. This post does not re-estimate it. | [November 14 post](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/). [BLS CPI archive](https://www.bls.gov/news.release/archives/cpi_11102026.htm). [BLS notice on the missing month](https://www.bls.gov/cpi/notices/2026/12m-changes-202610.htm). |
+| PPI year rate | Unchanged producer backdrop | [BLS PPI archive](https://www.bls.gov/news.release/archives/ppi_11132026.htm), `{python} stats['ppi_release_date']`. |
+| September PCE | Published year rate matching the staff estimate at the meeting | [BEA Personal Income and Outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), `{python} stats['pce_release_date']`. |
+| Funds target and the vote | Target range for the federal funds rate, and the vote | [FOMC statement](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm). |
+| Participants' discussion | Policy judgment, financing comments, and the manager's market account | [FOMC minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm). Published `{python} stats['minutes_date']` per the [release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm). |
+| September projections median | Median the minutes describe as broadly consistent with the baseline | [Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm). |
+| 10-year yield | Annualized constant-maturity Treasury yield | [FRED DGS10](https://fred.stlouisfed.org/series/DGS10). Saved H.15 vintage `{python} stats['yield_release_date']`, last observation `{python} stats['dgs10_latest_date']`. The live page can contain later observations or revisions. |
+| Listing prices | Reported offer, open, and two closes | First-session article text and the second-session quote label, linked beside the comparison table. Not an official series. |
+
+: Sources for this follow-up. The bridge uses the October CPI and PPI prints only as background.
+
+## References
+
+**Federal Reserve documents.** The [October decision statement](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm) records the target range and the vote. The [October minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) record the staff assessment, the participants' discussion, and the market manager's account. The [minutes release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm) gives the publication date. The [September projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm) are the source for the median funds rate only.
+
+**Treasury-yield data.** [FRED DGS10](https://fred.stlouisfed.org/series/DGS10) is the live constant-maturity series. This post plots the saved H.15 vintage of `{python} stats['yield_release_date']`, through `{python} stats['dgs10_latest_date']`. The live page can show later observations or revisions.
+
+**Listing-price reports.** The [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) states the offering price, the first trade, and the first close. The [Motley Fool page on the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) is the source for the second close. The price section says which figures come from article text and which come from the quote label.
+
+**Previous inflation analysis.** [October prices rose, but the annual CPI comparison is missing](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/) is the earlier post. This follow-up does not re-estimate those prints.
+
+---
+
+*Data current as of `{python} stats['data_current_as_of']`. `{python} stats['release_note']`*
