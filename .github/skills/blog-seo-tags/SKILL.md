@@ -49,6 +49,7 @@ Follow posts.instructions.md. Then count the characters.
 - 50-65 characters. Cap 70. If under 50, add a second print. If over 70, cut
   words, not the prints
 - Must not be a copy of `title:`
+- Keep the four-digit year. The body may print 2026 as 26.
 - Compact range punctuation is allowed here (`3.75-4.00%`) so the string fits
 
 ## description (dek and meta)

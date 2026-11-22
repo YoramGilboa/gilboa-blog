@@ -6,7 +6,9 @@ argument-hint: "<post directory>"
 
 # Blog chart review
 
-This is a visual-only gate.
+This is a visual-only gate. Run it once after the last chart change.
+A later prose-only edit does not reopen it. Do not render the homepage to
+manufacture a draft card. The production listing hides drafts on purpose.
 
 ## Workflow
 
@@ -30,7 +32,11 @@ This is a visual-only gate.
    - fragility if values move;
    - frontier/record charts must not show confusing non-record scatter dots;
    - dual-meaning series (e.g. total vs active params vs expert counts) clearly
-     labeled in caption and/or on-chart notes.
+     labeled in caption and/or on-chart notes;
+   - a teaching figure's caption says which series it illustrates, and that a
+     related series follows the same step. Adjusted and unadjusted readings
+     in one picture are labeled, and the subtraction row is the one the
+     caption names. A multi-line chart's labels match the sentence above it.
 6. Review the homepage listing card for one description, correct categories,
    date/author, and preview image.
 7. Confirm frontmatter has `pagetitle` distinct from `title`, `description`,

@@ -42,7 +42,33 @@ These three YAML fields do different jobs. Do not copy one into the others.
 - `pagetitle:` is the browser tab, the Google `<title>`, and `og:title`.
   It includes month, year, the release name, and the key print or prints.
   Aim for 50–65 characters. Cap at 70. Count the characters. It does not
-  have to equal `title:`.
+  have to equal `title:`. The year in `pagetitle:` stays four digits.
+
+## Reader-facing years
+
+In the body, chart ticks, tables, and `image-alt`, print the calendar year
+2026 as 26 (`August 26`, `9/30/26`). Other years stay four digits
+(`August 25`, `2025`). Apply this once in the setup cell to string values
+loaded from stats, and in chart tick formatters. Do not edit each sentence
+by hand.
+
+Keep the four-digit year in `pagetitle:`, frontmatter `date:`, URLs, and the
+Quarto published line.
+
+## Year rate and a month change
+
+When a section shows both, a year rate compares a month with the same month
+a year earlier. From one month to the next, the year rate changes by the new
+month's price change minus the price change in the month that drops out of
+the twelve-month window.
+
+Say that for the headline series in two sentences, with both month changes
+and the move in the year rate. Say the other series are calculated the same
+way. Do not print index levels or gross ratios unless the human asks.
+
+If two columns would show the same published one-decimal rate, show
+hundredths and put one number in each cell. Give the earlier evaluation,
+the updated month, and the new month their own columns.
 
 - Remove `draft: true` only when publishing.
 - Use `description-meta:` only when SEO text must differ from visible listing
@@ -131,6 +157,22 @@ Reference example: `posts/2026-07-25-kimi-k3-open-weights-sovereign-ai/`.
   sentence. Use bullets only for two or more parallel items.
 - End with a conclusion, limitations when needed, methodology/data table, and
   an italicized data-currency note.
+
+### IPO and public-market prices
+
+Define a stock-market debut and an initial public offering (IPO) before
+using "listing" as shorthand. Distinguish the IPO allocation price from
+the first public trade. A closing price is an end-of-day observation, not
+another offering.
+
+Introduce the reported prices in chronological order before comparing
+returns. Use dated labels or "day-one close" and "day-two close"
+consistently in prose, cards, tables, and charts. Every percentage change
+must name its starting price. Do not imply that a gain from the IPO price
+is the return earned by every later buyer.
+
+When comparing a policy record with a later market debut, explain why both
+belong in the post and keep chronology separate from causation.
 
 ### Multi-metric and composite scores
 

@@ -64,8 +64,8 @@ named the live URL.
    - `bash scripts/check_post.sh posts/drafts/YYYY-MM-DD-slug/index.qmd --allow-draft`
    - PowerShell: `.\scripts\check_post.ps1 posts\drafts\YYYY-MM-DD-slug\index.qmd -AllowDraft`
 7. Run `blog-seo-tags` on the draft (`pagetitle:`, `description:`, and
-   `categories:`; not the H1 `title:`), then `blog-chart-review`, then
-   `blog-final-review`.
+   `categories:`; not the H1 `title:`), then one `blog-chart-review` after
+   the charts are stable, then one `blog-final-review`.
 8. After human approval, remove `draft: true`, move the post and freeze cache
    to published paths, and rerender.
 9. Run the local release gate:
@@ -96,12 +96,29 @@ Copilot factory order is `.github/skills/blog-post-create/SKILL.md` (same
 SEO step as 3b). The prompt `.github/prompts/new-post.prompt.md` launches
 that skill.
 
-After any narrative, chart, data, or SEO-meta fix, re-run the editor (Grok:
-`blog-editor`; Copilot: `blog-final-review` plus chart review if visuals
-changed) **without being asked**. If the ship bar is not met, keep looping
-with the named owner (`seo_tags` owns pagetitle, description, and
-categories). If it is met, stop and show the human. Do not ask which skill
-is next when the review already named an owner.
+## Drafting pace
+
+Render the charts once, when the chart code is finished. Render the
+canonical post page once, at the review gate. Show sentence edits in
+`index.qmd` and wait until that section is stable before rendering again.
+Render again only when a number, a chart, or a sentence the human asked to
+see on the page has changed.
+
+A prose-only render reuses frozen cell output. Render that post qmd only.
+Do not render the homepage, and do not edit `_quarto.yml` to put a draft on
+the listing. Before the release audit, delete a leftover
+`_freeze/posts/drafts/<slug>/` from a preview.
+
+Take one desktop look at the charts after the last chart change. A later
+prose edit does not reopen the chart gate.
+
+One editor gate and one final-review file. Fold external notes in before
+that gate. If the gate fails, fix the named items together and re-score
+once. Do not rescore, and do not rewrite `stats/final_review_status.json`,
+after each paragraph. If the bar is met, stop and show the human. Do not
+ask which skill is next when the review already named an owner. `seo_tags`
+owns pagetitle, description, and categories. Re-open chart review only when
+a fix changes a figure.
 
 In sessions longer than ~15 turns, suggest the user run /compact after post approval and before publishing.
 
@@ -183,7 +200,8 @@ Before merging a post into `main`, confirm:
   captions have source lines;
 - every inline expression is fully backticked in `index.qmd`;
 - the homepage card has one description and a valid preview image;
-- `_freeze/` has only current outputs for the post;
+- `_freeze/` has only current outputs for the post, and no leftover
+  `_freeze/posts/drafts/<slug>/`;
 - no unverified `# MANUAL:`, placeholder, or TODO value ships;
 - the data-currency note is accurate;
 - draft factory artifacts (`generated/*` reviews, `regen_charts.py`) are not

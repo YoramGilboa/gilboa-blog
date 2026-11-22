@@ -36,7 +36,8 @@ of FRED series IDs and BEA table codes.
 Return a compact table with status, identifier, official description,
 frequency, and latest date. Summarize counts of `VALID`, `STALE`, and `INVALID`.
 Do not write fetch code until all required identifiers are valid and freshness
-is understood.
+is understood. The fetch script still locks the release snapshot per
+pipelines.instructions.md. This check does not replace that lock.
 
 Useful registration URLs:
 

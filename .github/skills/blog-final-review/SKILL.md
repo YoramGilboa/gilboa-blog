@@ -33,6 +33,8 @@ Evaluate:
 3. **Consistency**
    - caveats match methodology and "Note on data";
    - terminology and units are stable;
+   - IPO and public-market prices follow posts.instructions.md: the event
+     sequence, dated closing prices, and return baselines are explicit;
    - audience implications follow from the analysis;
    - no single-item bullet lists; no bare `{python}` expressions;
    - underperformance peers shown when a "weaker" section exists;
@@ -44,14 +46,23 @@ Evaluate:
      the H1 `title:` here;
    - `title`, `description`, and `pagetitle` are three distinct fields.
      Fail an H1 that uses "X, not Y" when Y is a different kind of claim
-     from X.
+     from X. The dek adds the link from **Connect the dots** in
+     `blog-post-create`. It does not restate the H1;
+   - the closing section states that join as separate facts. Fail a close
+     that restates one print as several findings, or that calls two baskets
+     the same series;
+   - a year-rate figure that shows both an adjusted month and an unadjusted
+     month says which row is subtracted. A teaching figure's caption says
+     which series it illustrates, and that a related series follows the same
+     step. The sentence above a multi-line chart names the lines.
 
 Apply only low-risk wording, transition, and terminology fixes directly. Do
 not auto-fix high-impact analytical issues; return FAIL with remediation.
 
 ## Status artifact
 
-Write `stats/final_review_status.json` on every run:
+Write `stats/final_review_status.json` at this gate. Do not rewrite it for a
+later sentence edit unless the human asks for another review.
 
 ```json
 {

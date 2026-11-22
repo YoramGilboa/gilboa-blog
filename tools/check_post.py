@@ -3,6 +3,11 @@
 
 This script is the Python source of truth for preflight behavior. The
 PowerShell wrapper in scripts/check_post.ps1 forwards to this script.
+
+Excluded drafts render in a temporary, post-local Quarto project using the
+site's inspected configuration. Output and freeze go to the canonical root
+locations without changing the production configuration or homepage.
+Missing review HTML is an error, including with --skip-render.
 """
 
 from __future__ import annotations
@@ -11,9 +16,14 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import validate_expressions
+import validate_rendered_output
 
 
 MAX_RENDERED_FIGURE_WIDTH = 850
@@ -25,6 +35,7 @@ def run_cmd(args: list[str], cwd: Path | None = None, env: dict[str, str] | None
         cwd=str(cwd) if cwd else None,
         env=env,
         text=True,
+        encoding="utf-8",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
@@ -87,8 +98,11 @@ def add_preflight_checks(content: str, post_dir: Path, allow_draft: bool) -> tup
         issues.append("Remove wildcard imports.")
 
     stats_path = post_dir / "stats" / "summary_stats.json"
-    if ("stats[" in content or "summary_stats.json" in content) and not stats_path.exists():
-        issues.append("The post references stats but stats\\summary_stats.json is missing.")
+    if "summary_stats.json" in content and not stats_path.exists():
+        issues.append("The post loads stats\\summary_stats.json but the file is missing.")
+
+    for error in validate_expressions.check_post(post_dir / "index.qmd"):
+        issues.append(f"Inline expression check: {error}")
 
     final_review_path = post_dir / "stats" / "final_review_status.json"
     if not allow_draft:
@@ -132,6 +146,50 @@ def run_pipeline(post_dir: Path, repo_root: Path) -> int:
     return 0
 
 
+def draft_project_config(repo_root: Path, relative_post: str, env: dict[str, str]) -> dict:
+    inspected = run_cmd(["quarto", "inspect", str(repo_root)], cwd=repo_root, env=env)
+    if inspected.returncode != 0:
+        raise RuntimeError(f"Unable to inspect the site configuration:\n{inspected.stderr}")
+    config = json.loads(inspected.stdout)["config"]
+    config["project"] = {
+        "type": "website",
+        "output-dir": str(rendered_html_path(repo_root, relative_post).parent),
+        "render": ["index.qmd"],
+    }
+    config["draft-mode"] = "unlinked"
+    website = config["website"]
+    website["draft-mode"] = "unlinked"
+    site_url = website["site-url"].rstrip("/")
+    website["site-url"] = site_url + "/" + Path(relative_post).parent.as_posix()
+
+    def asset(value: str) -> str:
+        path = repo_root / value
+        if path.is_file():
+            return os.path.relpath(path, (repo_root / relative_post).parent).replace("\\", "/")
+        return value
+
+    website["favicon"] = asset(website["favicon"])
+    for section in (website.get("navbar", {}), website.get("page-footer", {})):
+        for side in ("left", "right"):
+            items = section.get(side, [])
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                if isinstance(item, dict) and "href" in item:
+                    href = item["href"]
+                    if not href.startswith(("https://", "http://", "mailto:", "#")):
+                        target = Path(href).with_suffix(".html") if href.endswith(".qmd") else Path(href)
+                        item["href"] = site_url + ("/" if href == "index.qmd" else "/" + target.as_posix().lstrip("/"))
+    html = config["format"]["html"]
+    if isinstance(html.get("theme"), str):
+        html["theme"] = asset(html["theme"])
+    html["css"] = [asset(value) for value in html.get("css", [])]
+    for value in html.get("include-in-header", []):
+        if isinstance(value, dict) and "file" in value:
+            value["file"] = asset(value["file"])
+    return config
+
+
 def run_render(repo_root: Path, relative_post: str) -> int:
     env = os.environ.copy()
     quarto_python = repo_root / ".venv" / "Scripts" / "python.exe"
@@ -151,9 +209,42 @@ def run_render(repo_root: Path, relative_post: str) -> int:
     freeze_before = run_cmd(["git", "status", "--porcelain", "--", "_freeze"], cwd=repo_root, env=env).stdout
 
     print(f"Rendering {relative_post}")
-    render = subprocess.run(["quarto", "render", relative_post], cwd=str(repo_root), env=env, check=False)
-    if render.returncode != 0:
-        return render.returncode
+    post_dir = (repo_root / relative_post).parent
+    is_draft = Path(relative_post).parts[:2] == ("posts", "drafts")
+    config_path = post_dir / "_quarto.yml"
+    local_freeze = post_dir / "_freeze"
+    local_output = post_dir / ".review-site"
+    if is_draft:
+        if config_path.exists() or local_freeze.exists() or local_output.exists():
+            raise RuntimeError(f"Remove or resolve the existing draft-local project/freeze before review: {post_dir}")
+        config = draft_project_config(repo_root, relative_post, env)
+        config["project"]["output-dir"] = str(local_output)
+        with config_path.open("x", encoding="utf-8") as handle:
+            json.dump(config, handle, indent=2)
+    try:
+        render = subprocess.run(["quarto", "render", str(repo_root / relative_post)], cwd=str(repo_root), env=env, check=False)
+        if render.returncode != 0:
+            return render.returncode
+        if is_draft:
+            if not (local_output / "index.html").is_file():
+                raise RuntimeError(f"Quarto did not create the draft review page: {local_output}")
+            shutil.copytree(local_output, rendered_html_path(repo_root, relative_post).parent, dirs_exist_ok=True)
+            for value in [*config["format"]["html"].get("css", []), config["website"]["favicon"]]:
+                source = (post_dir / value).resolve()
+                if source.is_file():
+                    target = repo_root / "_site" / source.relative_to(repo_root)
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source, target)
+            if (local_freeze / "index").is_dir():
+                target = repo_root / "_freeze" / Path(relative_post).parent / "index"
+                shutil.copytree(local_freeze / "index", target, dirs_exist_ok=True)
+    finally:
+        if is_draft:
+            config_path.unlink()
+            if local_freeze.exists():
+                shutil.rmtree(local_freeze)
+            if local_output.exists():
+                shutil.rmtree(local_output)
 
     freeze_after = run_cmd(["git", "status", "--porcelain", "--", "_freeze"], cwd=repo_root, env=env).stdout
     if freeze_after != freeze_before:
@@ -174,13 +265,14 @@ def add_rendered_output_checks(repo_root: Path, relative_post: str, post_file: P
 
     rendered_html = rendered_html_path(repo_root, relative_post)
     if not rendered_html.exists():
-        warnings.append(f"Rendered HTML not found for post-review checks: {rendered_html.relative_to(repo_root)}")
+        issues.append(f"Rendered HTML not found for post-review checks: {rendered_html.relative_to(repo_root)}")
         return issues, warnings
 
     html = rendered_html.read_text(encoding="utf-8")
 
-    if "{python}" in html:
-        issues.append("Rendered HTML still contains raw {python} inline expressions.")
+    html_errors, html_warnings = validate_rendered_output.check_html(rendered_html)
+    issues.extend(f"Rendered output check: {error}" for error in html_errors)
+    warnings.extend(f"Rendered output check: {warning}" for warning in html_warnings)
 
     caption_count = len(re.findall(r'<figcaption\b', html))
     source_count = len(re.findall(r'class="figure-source"', html))
@@ -262,7 +354,11 @@ def main() -> int:
             return rc
 
     if not args.skip_render:
-        rc = run_render(repo_root, relative_post)
+        try:
+            rc = run_render(repo_root, relative_post)
+        except (RuntimeError, OSError, ValueError, KeyError) as exc:
+            print(f"Render failed: {exc}", file=sys.stderr)
+            return 1
         if rc != 0:
             return rc
 

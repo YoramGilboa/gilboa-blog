@@ -32,6 +32,16 @@ is the work.
    subsections.
 6. Stop and obtain explicit chart-plan approval before chart implementation
    unless the human already ordered full orchestration.
+7. Name the join in **Connect the dots** below. The dek adds that link. It
+   does not restate the H1.
+
+## Connect the dots
+
+The join is two or more official facts that are easy to treat as one fact. State each fact, then only the link the release or the stats support.
+
+When two surveys print the same shock in one month, they are different objects. Same-month movement is co-movement. A margin or a basket difference is the link only when that print is in the plan. Do not turn one survey's print into the other's. The leftover after removing food and energy on one index is not the other index's core. Name both baskets.
+
+When a month change and a year rate diverge, plan the twelve-month window: the month that enters and the month that leaves. If the published month is seasonally adjusted and the year rate is not, each box shows both readings and the subtraction uses the unadjusted row. If the picture is drawn for the headline series, the caption says the other series follows the same step. A reader who sees only the figure must get that.
 
 ## 2. Data
 
@@ -63,7 +73,11 @@ Follow `.github/instructions/posts.instructions.md`:
 - dates from stats, US month/day; sparse bold; no single-item bullet lists;
 - interpretive captions and standalone `.figure-source` lines;
 - dual-meaning chart series labeled; no non-record scatter under frontiers;
-- conclusion, audience implications, limitations, methodology, and data date.
+- conclusion, audience implications, limitations, methodology, and data date;
+- the closing section states the **Connect the dots** join as separate
+  sentences. Name the series. Do not open with "Its" for the index. The
+  sentence above a multi-line chart names which line is which. A series that
+  is only in the prose is not a line on that figure.
 
 ## 3b. SEO tags and meta
 
@@ -74,20 +88,21 @@ Then continue.
 
 ## 4. Review
 
+Follow `.github/copilot-instructions.md` **Drafting pace**.
+
 1. Run `python tools/validate_expressions.py <post-dir>` and fix any missing
    stats keys or unbackticked inline expressions before rendering.
-2. Render the draft with the root `.venv`.
+2. Render the post qmd once, with frozen cells if the charts already ran.
+   Do not render the homepage.
 3. Run `python tools/validate_rendered_output.py <post-dir>` and fix any raw
    `{python}`, `NaN`, `undefined`, or `None%` in the rendered HTML.
-4. Invoke `blog-chart-review`.
-5. Fix and rerender until desktop and 400px chart checks pass.
-6. Invoke `blog-final-review`.
-7. If the review fails, fix with the named owner and rerun the review
-   **without asking** which skill is next. Owner `seo_tags` means re-run
-   `blog-seo-tags` (pagetitle, description, categories). If prose changes
-   affect charts, rerun both reviews.
-8. Require `stats/final_review_status.json` to contain `PASS`. Then stop and
-   show the human.
+4. Invoke `blog-chart-review` once, after the last chart change.
+5. Invoke `blog-final-review` once.
+6. If that review fails, fix the named items together and rerun the failed
+   gate once. Owner `seo_tags` means re-run `blog-seo-tags`. Re-open chart
+   review only when a fix changes a figure.
+7. Require `stats/final_review_status.json` to contain `PASS`. Then stop and
+   show the human. Do not rewrite that file for a later sentence edit.
 
 ## 5. Human handoff and publication
 
