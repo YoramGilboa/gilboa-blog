@@ -1,10 +1,10 @@
 ---
 title: "The Fed Discussed AI Inflation Pressure and Financing Risk"
-pagetitle: "November 2026 FOMC Minutes: AI Risk and Yield 5.04%"
+pagetitle: "November 2026 FOMC Minutes: 5.04% Yield and Anthropic IPO"
 date: "2026-11-21"
 author: Yoram Gilboa
 categories: [economics, federal reserve, fomc, interest rates, markets, data visualization]
-description: "The funds rate stayed at 3.75 to 4 percent. Minutes discuss AI inflation pressure and a financing scenario. The 10-year yield was 5.04 percent on November 19."
+description: "The Fed held rates at 3.75 to 4 percent. The 10-year yield was 5.04 percent at Anthropic's debut, after minutes discussed AI inflation and financing risks."
 image: images/yield-backdrop.png
 image-alt: "10-year Treasury yield from June 1, 26, through November 19, 26, ending at 5.04 percent. A gray line marks the meeting decision and a red line marks the first trading day."
 toc: true
@@ -24,9 +24,9 @@ format:
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "The Fed Discussed AI Inflation Pressure and Financing Risk",
-  "description": "The funds rate stayed at 3.75 to 4 percent. Minutes discuss AI inflation pressure and a financing scenario. The 10-year yield was 5.04 percent on November 19.",
+  "description": "The Fed held rates at 3.75 to 4 percent. The 10-year yield was 5.04 percent at Anthropic's debut, after minutes discussed AI inflation and financing risks.",
   "datePublished": "2026-11-21",
-  "dateModified": "2026-11-21",
+  "dateModified": "2026-11-22",
   "author": {"@type": "Person", "@id": "https://gilboa.blog/#person", "name": "Yoram Gilboa"},
   "publisher": {"@type": "Person", "@id": "https://gilboa.blog/#person", "name": "Yoram Gilboa"},
   "mainEntityOfPage": "https://gilboa.blog/posts/2026-11-21-october-prices-ai-listing/",
@@ -132,9 +132,11 @@ for key, value in list(stats.items()):
         stats[key] = short_year(value)
 ```
 
-Many participants discussed AI investment as a source of inflation pressure. Demand for products used in the buildout was straining supply and raising prices of technology-related consumer goods. In the same record, the staff said leasing that does not appear as an ordinary loan, and financing between related AI firms, could magnify losses if the investment returns disappointed. Almost all participants commented on that disappointing-returns scenario, and many commented on an AI-related revaluation of asset prices should one occur. Those financing comments are conditional on the returns disappointing. The [minutes of the October meeting](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) are the source for this account.
+The Fed's October meeting raised two distinct concerns about AI investment: pressure on prices today, and financing losses if future returns disappoint. Many participants discussed the AI buildout as a source of inflation pressure. The staff separately warned that leasing commitments and financing between related AI firms could magnify losses if the investments earned less than expected. These were conditional risks, not a finding that an AI bubble had burst. The [October meeting minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) record both concerns.
 
-The Committee met on `{python} stats['fomc_meeting_start']` and `{python} stats['fomc_decision_date']`. The [minutes release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm) is dated `{python} stats['minutes_date']`, and it says the descriptions use only information available at the meeting. Anthropic's initial public offering (IPO), the company's first sale of shares to public investors, began trading the next day, `{python} stats['ipo_open_date']`. That order does not establish what caused the price changes. The minutes do not name Anthropic or this offering.
+The Committee met on `{python} stats['fomc_meeting_start']` and `{python} stats['fomc_decision_date']`. Its minutes became public on `{python} stats['minutes_date']`. Anthropic shares began public trading the next day, `{python} stats['ipo_open_date']`, following its initial public offering (IPO), its first sale of shares to public investors. This post puts that stock-market debut beside the Fed's discussion and the Treasury-yield backdrop. It does not treat the debut as proof of the Fed's concerns or as a reaction caused by the minutes. The minutes do not name Anthropic, and the [release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm) says they describe only information available at the October meeting.
+
+The reported price sequence is simple. Investors allocated shares in the IPO paid `{python} fmt_usd(stats['ipo_offer'])` per share. The first public-market trade was at `{python} fmt_usd(stats['ipo_open'])`, and the stock ended that day at `{python} fmt_usd(stats['ipo_day1_close'])`. It ended the next trading day, `{python} stats['ipo_day2_date']`, at `{python} fmt_usd(stats['ipo_day2_close'])`. A "close" means the share price at the end of a trading day. It is not another share offering. The [price section below](#anthropics-first-two-trading-days) separates the dates and starting prices used in each comparison.
 
 The target range for the federal funds rate, an overnight interest rate on loans between banks, stayed at `{python} fmt2(stats['funds_lower'])` to `{python} fmt2(stats['funds_upper'])`%. `{python} stats['vote_for_hold']` voting members favored leaving the rate unchanged; `{python} stats['vote_for_hike']` favored a quarter-percentage-point increase. The [October decision statement](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm) records that vote. The participant counts above are the discussion. The vote counts are the members who set the range.
 
@@ -145,15 +147,15 @@ The Python code used to generate each chart is included in this post. Click on a
 
 - `01_fetch_data.py` checks the saved FRED vintages and does not download
 - `02_clean_data.py` writes the cleaned yield file the chart plots
-- `04_compute_stats.py` writes the figures quoted in the text, including the listing comparisons
+- `04_compute_stats.py` writes the figures quoted in the text, including the share-price comparisons
 
-The 10-year yield uses the `{python} stats['yield_release_date']` H.15 vintage and ends on `{python} stats['dgs10_latest_date']`. Listing prices are transcribed market reports, with the source links beside the price comparison. The pipeline still checks the CPI, PPI, and PCE files behind the one-paragraph backdrop. The default command checks the saved files and does not download a new copy.
+The 10-year yield uses the `{python} stats['yield_release_date']` H.15 vintage and ends on `{python} stats['dgs10_latest_date']`. The IPO and public-market prices are transcribed market reports, with source links beside the price comparison. The pipeline still checks the CPI, PPI, and PCE files behind the one-paragraph backdrop. The default command checks the saved files and does not download a new copy.
 :::
 
 ::: {.callout-note collapse="true"}
 ## Note on data
 
-The inflation figures in the bridge are the same locked October prints as the November 14 post. This post does not fill the missing CPI year rate. The 10-year yield is an official series. The vintage date and the last observation date are different, and a link to the live series is not a copy of the saved vintage. Listing prices are market reports through `{python} stats['ipo_day2_date']`. October PCE is `{python} stats['october_pce_status']`.
+The inflation figures in the bridge are the same locked October prints as the November 14 post. This post does not fill the missing CPI year rate. The 10-year yield is an official series. The vintage date and the last observation date are different, and a link to the live series is not a copy of the saved vintage. The share prices are market reports through `{python} stats['ipo_day2_date']`. October PCE is `{python} stats['october_pce_status']`.
 :::
 
 ```{python}
@@ -179,14 +181,14 @@ cards = [
      f"{fmt(stats['dgs10_latest'], 2)}%",
      COLORS["primary"],
      f"Observed {stats['dgs10_latest_date']}"),
-    ("First trade above offering price",
+    ("First public trade above IPO price",
      f"{fmt_chg(stats['ipo_open_vs_offer_pct'])}%",
      COLORS["accent"],
-     f"{fmt_usd(stats['ipo_open'])} first trade; {fmt_usd(stats['ipo_offer'])} offer"),
-    ("Second-day stock-price change",
+     f"{stats['ipo_open_date']}: {fmt_usd(stats['ipo_open'])} first trade; {fmt_usd(stats['ipo_offer'])} IPO price"),
+    ("Day-two change from previous close",
      f"{fmt_chg(stats['ipo_day2_vs_day1_pct'])}%",
      COLORS["warning"],
-     f"{fmt_usd(stats['ipo_day2_close'])} versus {fmt_usd(stats['ipo_day1_close'])} at the previous close"),
+     f"{stats['ipo_day2_date']}: {fmt_usd(stats['ipo_day2_close'])}; previous close {fmt_usd(stats['ipo_day1_close'])}"),
 ]
 
 cards_html = "".join(
@@ -207,7 +209,7 @@ html = f"""
 HTML(html)
 ```
 
-The yield card is an annualized rate observed on `{python} stats['dgs10_latest_date']`, not a one-day return and not the `{python} stats['yield_release_date']` vintage date. The offering price is the price paid by investors allocated shares in the IPO. It is not the price paid by every later buyer. The stock-price card compares the `{python} stats['ipo_day2_date']` close with the previous close on `{python} stats['ipo_open_date']`.
+The yield card is an annualized interest rate, not a daily investment return. The IPO price applies to investors allocated shares before public trading, not to everyone who later bought the stock. The day-two card measures the change from the `{python} stats['ipo_open_date']` closing price to the `{python} stats['ipo_day2_date']` closing price.
 
 ## The inflation prints are unchanged
 
@@ -229,20 +231,20 @@ In the discussion that followed, almost all participants commented on the disapp
 
 ### What the manager reported about markets
 
-The manager's account covers the intermeeting period, which ended before `{python} stats['fomc_decision_date']`. It is not a description of the listing. On net, the manager said nominal Treasury yields were little changed over that window, after a rise into early October on stronger data and a later pullback. In that account, the pullback came with uncertainty about AI firms' revenue and about the pace of data-center construction, and with concern over French government debt. Equity prices in the AI infrastructure segment rose earlier in the period. Risk sentiment then worsened after two leading AI firms reported revenue growth below what investors expected, and after a hyperscaler laid out spending plans that needed more financing than investors had anticipated. The minutes do not give those firms' names. The manager also said that a higher rate level had already been weighing on equity prices and raising credit spreads before this intermeeting period. This paragraph follows the [market manager's account in the minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm).
+The manager's account covers the period between Fed meetings, ending before `{python} stats['fomc_decision_date']`. It therefore predates Anthropic's stock-market debut. On net, the manager said nominal Treasury yields were little changed over that window, after a rise into early October on stronger data and a later pullback. In that account, the pullback came with uncertainty about AI firms' revenue and about the pace of data-center construction, and with concern over French government debt. Equity prices in the AI infrastructure segment rose earlier in the period. Risk sentiment then worsened after two leading AI firms reported revenue growth below what investors expected, and after a large cloud-computing company laid out spending plans that needed more financing than investors had anticipated. The minutes do not give those firms' names. The manager also said that a higher rate level had already been weighing on equity prices and raising credit spreads before this period. This paragraph follows the [market manager's account in the minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm).
 
 ## The yield backdrop
 
 The official series in the `{python} stats['yield_release_date']` H.15 vintage ends on `{python} stats['dgs10_latest_date']`. The last observation is `{python} fmt(stats['dgs10_latest'], 2)`%. The vintage date and that observation date are not the same, and the file has no yield for `{python} stats['ipo_day2_date']`. The [live DGS10 series](https://fred.stlouisfed.org/series/DGS10) may contain later observations or revisions. That page is the current series, not a frozen copy of the saved vintage. The high in this file is `{python} fmt(stats['dgs10_high_2026'], 2)`% on `{python} stats['dgs10_high_2026_date']`, before the meeting. The yield was `{python} fmt(stats['dgs10_meeting_day'], 2)`% on the decision date, `{python} fmt(stats['dgs10_week_ago'], 2)`% on `{python} stats['dgs10_week_ago_date']`, and `{python} fmt(stats['dgs10_minutes_day'], 2)`% when the minutes came out.
 
-A nominal Treasury yield mixes expected short-term rates, compensation for inflation, and a term premium. This post does not split those parts. A higher discount rate lowers the present value of cash flows that arrive far in the future, but a Treasury yield is not the whole required return on an equity. The path does not show that this mechanism produced the two closes.
+A nominal Treasury yield mixes expected short-term rates, compensation for inflation, and a term premium, the extra compensation investors require for holding a longer-term bond. This post does not split those parts. Higher required returns reduce what investors will pay today for cash flows expected far in the future. That makes rates relevant to growth stocks, but a Treasury yield is not the whole return investors require from a stock. This yield path does not establish why Anthropic's share price fell during its first two trading days.
 
-The blue line is the 10-year Treasury yield. The labeled peak is the high in this window. The gray line is the meeting decision, and the red line is the first trading day. The minutes were released one day before that red line. One day is too narrow to draw as its own mark on this window.
+The blue line is the 10-year Treasury yield. The labeled peak is the high in this window. The gray line marks the Fed's meeting decision, and the red line marks Anthropic's first public trading day. The minutes were released one day before that red line. At this chart's scale, a separate release-date line would sit almost on top of it. On a phone, swipe horizontally within the chart to see the full date range.
 
 ```{python}
 #| echo: true
 #| label: fig-yield-backdrop
-#| fig-cap: "The 10-year yield ended this H.15 vintage at 5.04 percent on November 19. The gray line marks the meeting decision. The red line marks the first trading day, the day after the minutes. The marks are dates, not identified causes."
+#| fig-cap: "The 10-year yield ended this H.15 vintage at 5.04 percent on November 19. Gray marks the Fed's decision; red marks Anthropic's first public trading day, one day after the minutes were released. These dates do not establish what caused the stock-price changes."
 #| fig-alt: "Blue line of the 10-year yield from June 26 to November 19, 26. The peak is 5.31 percent on October 5 and the last point is 5.04 percent. A gray dashed line marks October 28 and a red dashed line marks November 19."
 
 # Cleaned H.15 yields only. Holiday blanks stay off the line because the axis is a date.
@@ -305,7 +307,7 @@ ax.text(
     0.98,
     (
         f"Gray line: meeting ended {stats['fomc_decision_date']}\n"
-        f"Red line: listing {stats['ipo_open_date']}\n"
+        f"Red line: Anthropic trading begins {stats['ipo_open_date']}\n"
         f"Minutes were {stats['minutes_date']}, one day earlier.\n"
         "Dates, not identified causes."
     ),
@@ -325,43 +327,54 @@ fig.savefig(IMG_DIR / "yield-backdrop.png", dpi=150, bbox_inches="tight")
 Source: [FRED DGS10](https://fred.stlouisfed.org/series/DGS10), saved H.15 vintage `{python} stats['yield_release_date']`, through `{python} stats['dgs10_latest_date']`. The live page can add later observations or revisions. Meeting and release dates: [the FOMC minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm) and the [minutes release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm).
 :::
 
-## The reported price path
+## Anthropic's first two trading days
 
-The second close was `{python} fmt_usd(stats['ipo_day2_close'])` on `{python} stats['ipo_day2_date']`. That was `{python} fmt_chg(stats['ipo_day2_vs_open_pct'])`% versus the first trade of `{python} fmt_usd(stats['ipo_open'])`, and `{python} fmt_chg(stats['ipo_day2_vs_offer_pct'])`% versus the offering price of `{python} fmt_usd(stats['ipo_offer'])`. The second close was below the first trade, and it remained above the offering price. The table carries the other baselines. The saved reports stop on `{python} stats['ipo_day2_date']`.
+The IPO price and the public-market prices answer different questions. The IPO price is what investors allocated shares paid before trading began. The first public trade is what a buyer paid when trading started. Each day's closing price is a later market observation, not another sale by the company.
 
-| Comparison | Change | Baseline |
+| Stage | When | Reported price per share |
 | --- | --- | --- |
-| Offer to open | `{python} fmt_chg(stats['ipo_open_vs_offer_pct'])`% | First trade versus the offering price |
-| Open to first close | `{python} fmt_chg(stats['ipo_day1_vs_open_pct'])`% | First close versus the first trade |
-| Close to close | `{python} fmt_chg(stats['ipo_day2_vs_day1_pct'])`% | Second close versus the first close |
-| Open to second close | `{python} fmt_chg(stats['ipo_day2_vs_open_pct'])`% | Second close versus the first trade |
-| Offer to second close | `{python} fmt_chg(stats['ipo_day2_vs_offer_pct'])`% | Second close versus the offering price |
+| IPO allocation | Before public trading | `{python} fmt_usd(stats['ipo_offer'])` |
+| First public trade | `{python} stats['ipo_open_date']`, trading begins | `{python} fmt_usd(stats['ipo_open'])` |
+| Day-one close | `{python} stats['ipo_open_date']`, end of trading | `{python} fmt_usd(stats['ipo_day1_close'])` |
+| Day-two close | `{python} stats['ipo_day2_date']`, end of trading | `{python} fmt_usd(stats['ipo_day2_close'])` |
 
-: Each change uses the baseline in that row. Buying at the offer and buying at the open are different starting points.
+: Anthropic's reported IPO price followed by three public-market observations, in chronological order.
 
-The [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) states the offering price, the first trade, and the first close in the article text. That page also records earlier prices from the same session. On the [Motley Fool page for the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/), the close used here appears with the label "As of 4:00 p.m. ET." The article sentence on that page describes a decline as of 11:15 a.m. ET, which is a different observation. The notes saved with this draft do not record that split, and the draft does not keep a copy of either page.
+By the end of day two, the stock was down `{python} fmt(abs(stats['ipo_day2_vs_day1_pct']))`% from the previous day's close and `{python} fmt(abs(stats['ipo_day2_vs_open_pct']))`% from its first public trade. It was still `{python} fmt(stats['ipo_day2_vs_offer_pct'])`% above the IPO price. Those statements are consistent: each uses a different starting price. An IPO investor and someone who bought the first public trade did not pay the same amount.
 
-Gray is the offering price, red is the first trade, blue is the first close, and orange is the second close. The offer is the primary sale. The other three bars are secondary-market reports.
+| Price comparison | Change | Starting price |
+| --- | --- | --- |
+| IPO price to first public trade | `{python} fmt_chg(stats['ipo_open_vs_offer_pct'])`% | `{python} fmt_usd(stats['ipo_offer'])` IPO price |
+| First public trade to day-one close | `{python} fmt_chg(stats['ipo_day1_vs_open_pct'])`% | `{python} fmt_usd(stats['ipo_open'])` first public trade |
+| Day-one close to day-two close | `{python} fmt_chg(stats['ipo_day2_vs_day1_pct'])`% | `{python} fmt_usd(stats['ipo_day1_close'])` day-one close |
+| First public trade to day-two close | `{python} fmt_chg(stats['ipo_day2_vs_open_pct'])`% | `{python} fmt_usd(stats['ipo_open'])` first public trade |
+| IPO price to day-two close | `{python} fmt_chg(stats['ipo_day2_vs_offer_pct'])`% | `{python} fmt_usd(stats['ipo_offer'])` IPO price |
+
+: Each percentage compares the ending price with the starting price in its row. A positive change from the IPO price can coexist with a decline after public trading begins.
+
+The [Forbes report on the first trading day](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) is the saved source attribution for the IPO price, first public trade, and day-one close. The [Motley Fool page on the second trading day](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) shows the day-two price with the quote label "As of 4:00 PM ET" and the date `{python} stats['ipo_day2_date']`. Its article text describes an earlier, 11:15 a.m. observation, which is not the closing price used here. Neither page is archived with this post, and the original transcription has no retrieval timestamp.
+
+The chart follows the same sequence as the first table. Gray is the IPO price, red is the first public trade, blue is the day-one close, and orange is the day-two close. On a phone, swipe horizontally within the chart to see all four prices.
 
 ```{python}
 #| echo: true
 #| label: fig-listing-prices
-#| fig-cap: "The four reported prices are the offering price, the first trade, the first close, and the next session's close. The offer is the primary sale price, not a secondary-market trade."
-#| fig-alt: "Four bars for reported Anthropic prices: offer 83 dollars, open 111.50 on November 19, 26, first close 97.17 that day, and second close 88.91 on November 20, 26."
+#| fig-cap: "Anthropic's day-two closing price remained above its IPO price but below its first public trade and day-one close. The gray bar is the price paid in the IPO; the other bars are public-market observations."
+#| fig-alt: "Anthropic prices in chronological order: IPO price 83 dollars before trading; first public trade 111.50 and day-one close 97.17 on November 19, 26; day-two close 88.91 on November 20, 26."
 
 prices = pd.Series(
     {
-        "Offer": stats["ipo_offer"],
-        "Open": stats["ipo_open"],
-        "First close": stats["ipo_day1_close"],
-        "Second close": stats["ipo_day2_close"],
+        "IPO price": stats["ipo_offer"],
+        "First public trade": stats["ipo_open"],
+        "Day-one close": stats["ipo_day1_close"],
+        "Day-two close": stats["ipo_day2_close"],
     }
 )
 tick_labels = [
-    "Offer",
-    f"Open\n{stats['ipo_open_date']}",
-    f"First close\n{stats['ipo_open_date']}",
-    f"Second close\n{stats['ipo_day2_date']}",
+    "IPO price\nBefore trading",
+    f"First public trade\n{stats['ipo_open_date']}",
+    f"Day-one close\n{stats['ipo_open_date']}",
+    f"Day-two close\n{stats['ipo_day2_date']}",
 ]
 bar_colors = [COLORS["neutral"], COLORS["accent"], COLORS["primary"], COLORS["warning"]]
 
@@ -382,46 +395,48 @@ for pos, value in zip(positions, prices.values):
     )
 ax.set_xticks(positions)
 ax.set_xticklabels(tick_labels)
-ax.set_ylabel("Reported price, dollars")
+ax.set_ylabel("Reported share price, dollars")
 ax.set_ylim(0, float(prices.max()) + pad * 4)
 plt.tight_layout()
 fig.savefig(IMG_DIR / "listing-prices.png", dpi=150, bbox_inches="tight")
 ```
 
 ::: {.figure-source}
-Source: [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) for the offer, the open, and the first close in the article text. [Motley Fool page on the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) for the second close shown with a 4:00 p.m. ET label. Market reports, not an official series. No retrieval time is saved with this draft.
+Source: [Forbes report on the first trading day](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) is the saved attribution for the IPO price, first public trade, and day-one close. [Motley Fool page on the second trading day](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) shows the day-two close with a 4:00 p.m. ET label. Market reports, not an official price series. The original transcription has no retrieval timestamp.
 :::
 
 ## What this can and cannot show
 
-The minutes establish a dated record. Participants discussed the disappointing-returns scenario, and many discussed an AI-related revaluation should it occur, at the meeting that ended `{python} stats['fomc_decision_date']`. That record became public on `{python} stats['minutes_date']`. Trading began on `{python} stats['ipo_open_date']`, with the 10-year yield at `{python} fmt(stats['dgs10_latest'], 2)`% on the last day in the vintage. The four reported prices show an open above the offer, a second close below the first close, and a second close still above the offer.
+The Fed's discussion and Anthropic's debut are separate evidence. The minutes document concerns about AI inflation pressure and losses if investment returns disappoint. Anthropic's first two trading days show a different, narrower fact: the stock began public trading above its IPO price, then fell while remaining above that IPO price at the end of day two.
 
-The same record does not establish that participants discussed this offering, that publishing the minutes caused the two closes, or that a revaluation had been found rather than talked about as a scenario. Two sessions cannot separate cash-flow news from discount rates, or from any other report that arrived with them.
+**For markets:** A gain from the IPO price is not the same as a gain for someone who bought after trading began. The relevant starting price depends on when the shares were bought. These price comparisons also exclude fees and do not measure every investor's return.
 
-October PCE, due `{python} stats['next_pce_date']`, is the next official reading of the index in the Fed's `{python} fmt(stats['fed_target'], 0)`% goal. It can update the inflation picture the Committee will have before the meeting on `{python} stats['fomc_start_date']` to `{python} stats['fomc_end_date']`. It will not identify why these two closes printed where they did. This post does not guess that vote.
+**For the Fed:** October PCE, due `{python} stats['next_pce_date']`, is the next official reading of the price index used for its `{python} fmt(stats['fed_target'], 0)`% inflation goal. It can update the inflation picture before the meeting on `{python} stats['fomc_start_date']` to `{python} stats['fomc_end_date']`. It cannot explain this stock's first two trading days.
+
+The timing does not establish that the minutes caused the share-price declines, that participants discussed this IPO, or that their conditional financing scenario occurred. Two trading days cannot separate changes in expected earnings from changes in required returns or other news. This post does not predict the next rate vote.
 
 ## Limitations
 
 The minutes are a summary. "Almost all," "many," and "most" are the Federal Reserve's own counts, not a roll call a reader can recompute. The text does not name Anthropic.
 
-The yield file ends on `{python} stats['dgs10_latest_date']` because that is the last observation in the `{python} stats['yield_release_date']` H.15 vintage. The second trading day is not in it. Listing prices are market reports, and another outlet's figure for the same session can differ. A comparison with the offer is not the gain earned by every holder.
+The yield file ends on `{python} stats['dgs10_latest_date']` because that is the last observation in the `{python} stats['yield_release_date']` H.15 vintage. It has no observation for Anthropic's second trading day. The share prices are transcribed market reports, not an archived official price series. The original transcription has no retrieval timestamp, and another outlet's figure for the same trading day can differ.
 
 CPI and PPI for October were released after the meeting. Reading the minutes as a comment on those prints misdates the discussion.
 
 ## Methodology & Data
 
-The charts plot the cleaned yield column and the transcribed listing prices. They do not recompute those prices. The listing comparisons in the text are written by the stats step from those transcribed prices. The inflation figures in the bridge come from the same locked vintages as the November 14 post and are not re-estimated here.
+The charts plot the cleaned yield column and the transcribed IPO and public-market prices. They do not recompute those prices. The stats step calculates each percentage change as ending price divided by starting price, minus one, expressed as a percentage. The inflation figures in the bridge come from the same locked vintages as the November 14 post and are not re-estimated here.
 
 | Series | What it measures | Source |
 | --- | --- | --- |
 | October CPI month and the missing year rate | Unchanged backdrop. This post does not re-estimate it. | [November 14 post](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/). [BLS CPI archive](https://www.bls.gov/news.release/archives/cpi_11102026.htm). [BLS notice on the missing month](https://www.bls.gov/cpi/notices/2026/12m-changes-202610.htm). |
 | PPI year rate | Unchanged producer backdrop | [BLS PPI archive](https://www.bls.gov/news.release/archives/ppi_11132026.htm), `{python} stats['ppi_release_date']`. |
-| September PCE | Published year rate matching the staff estimate at the meeting | [BEA Personal Income and Outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), `{python} stats['pce_release_date']`. |
+| September PCE | Later published year rate matching the staff estimate. The meeting used the estimate, not this subsequent release. | [BEA Personal Income and Outlays](https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026), `{python} stats['pce_release_date']`. |
 | Funds target and the vote | Target range for the federal funds rate, and the vote | [FOMC statement](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm). |
 | Participants' discussion | Policy judgment, financing comments, and the manager's market account | [FOMC minutes](https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm). Published `{python} stats['minutes_date']` per the [release notice](https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm). |
 | September projections median | Median the minutes describe as broadly consistent with the baseline | [Summary of Economic Projections](https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm). |
 | 10-year yield | Annualized constant-maturity Treasury yield | [FRED DGS10](https://fred.stlouisfed.org/series/DGS10). Saved H.15 vintage `{python} stats['yield_release_date']`, last observation `{python} stats['dgs10_latest_date']`. The live page can contain later observations or revisions. |
-| Listing prices | Reported offer, open, and two closes | First-session article text and the second-session quote label, linked beside the comparison table. Not an official series. |
+| Anthropic share prices | IPO price, first public trade, and closing prices on the first two trading days | Forbes attribution in the saved notes and the Motley Fool quote label, linked beside the comparison tables. Not an official series. |
 
 : Sources for this follow-up. The bridge uses the October CPI and PPI prints only as background.
 
@@ -431,7 +446,7 @@ The charts plot the cleaned yield column and the transcribed listing prices. The
 
 **Treasury-yield data.** [FRED DGS10](https://fred.stlouisfed.org/series/DGS10) is the live constant-maturity series. This post plots the saved H.15 vintage of `{python} stats['yield_release_date']`, through `{python} stats['dgs10_latest_date']`. The live page can show later observations or revisions.
 
-**Listing-price reports.** The [Forbes report on the first session](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) states the offering price, the first trade, and the first close. The [Motley Fool page on the second session](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) is the source for the second close. The price section says which figures come from article text and which come from the quote label.
+**Share-price reports.** The [Forbes report on the first trading day](https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-stock-closes-day-at-97-up-more-than-17/) is the attribution saved for the IPO price, first public trade, and day-one close. The [Motley Fool page on the second trading day](https://www.fool.com/investing/2026/11/20/why-anthropic-stock-is-falling-today/) supplies the day-two close through its dated 4:00 p.m. quote label, not the earlier observation in the article text.
 
 **Previous inflation analysis.** [October prices rose, but the annual CPI comparison is missing](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/) is the earlier post. This follow-up does not re-estimate those prints.
 
