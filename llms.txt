@@ -21,7 +21,7 @@ series, and includes methodology and limitations.
 
 ## Latest
 
-- [The Fed Discussed AI Inflation Pressure and Financing Risk](https://gilboa.blog/posts/2026-11-21-october-prices-ai-listing/): The funds rate stayed at 3.75 to 4 percent. October minutes discuss AI inflation pressure and a financing scenario. The 10-year yield was 5.04 percent on November 19
+- [The Fed Discussed AI Inflation Pressure and Financing Risk](https://gilboa.blog/posts/2026-11-21-october-prices-ai-listing/): The Fed held rates at 3.75 to 4 percent. October minutes discussed AI inflation and financing risks. The 10-year yield was 5.04 percent at Anthropic's debut. Its November 20 close was 8.5 percent below the previous day's close but 7.1 percent above the IPO price. Timing does not establish causation
 - [October Prices Rose, but the Annual CPI Comparison Is Missing](https://gilboa.blog/posts/2026-11-14-october-cpi-ppi-missing-annual/): October CPI rose 0.4 percent and core rose 0.3 percent. There is no official 12-month CPI rate. PPI final demand rose 6.5 percent over the year
 - [Payrolls Look Firmer. More Workers Are Short of Hours.](https://gilboa.blog/posts/2026-11-08-october-payrolls-revised-path/): October payrolls rose 165,000 and prior months were revised up 84,000. Unemployment decreased to 4.1 percent and U-6 rose to 7.9 percent
 - [Private Demand Outran the 3.4% GDP Print](https://gilboa.blog/posts/2026-10-31-what-the-3-4-actually-means/): Real GDP rose 3.4% and private domestic final sales rose 4.9%. September real spending was nearly flat and the saving rate was 3.8%
